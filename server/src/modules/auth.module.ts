@@ -28,8 +28,8 @@ import { UpdateInfoController } from './auth/update-info/update-info.controller'
           port: 587, 
           secure: false, // true for port 465, false for other ports
           auth: {
-            user: 'noteapp08@gmail.com',  // your Gmail email address
-            pass: 'mamr dvbi vwgs cpcz',   // your Gmail app password
+            user: 'africanooresturant@gmail.com',  // your Gmail email address
+            pass: 'ucsx hvrc zyvc yycy',   // your Gmail app password
           },
         },
         defaults: {

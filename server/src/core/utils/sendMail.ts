@@ -20,7 +20,7 @@ export class MailService {
     `;
 
     await this.mailService.sendMail({
-      from: '"Africano Resturant" <noteapp08@gmail.com>',  
+      from: '"Africano Resturant" <africanooresturant@gmail.com>',  
       to: `${email}`,            
       subject: `otb confirmation`,        
       html: message,                             
