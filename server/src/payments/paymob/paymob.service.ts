@@ -3,7 +3,7 @@ import { Injectable, Body } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
-import { Order } from 'src/core/schema/order.schema';
+import { Order } from 'src/core/schemas/order.schema';
 
 @Injectable()
 export class PaymobService {
