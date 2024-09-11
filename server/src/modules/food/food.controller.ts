@@ -6,13 +6,16 @@ import {
   Delete,
   Body,
   Param,
-  Query
+  Query,
+  Headers,
+  HttpException,
+  HttpStatus
 } from '@nestjs/common';
 import { FoodService } from './food.service';
 
 @Controller('api/foods')
 export class FoodController {
-  constructor(private readonly foodsService: FoodService) {}
+  constructor(private readonly foodsService: FoodService) { }
 
   @Post()
   create(@Body() foodDto: any) {
@@ -28,8 +31,8 @@ export class FoodController {
     @Query('minPrice') minPrice?: number,
     @Query('maxPrice') maxPrice?: number,
   ) {
-    const filters = { category, name, minPrice, maxPrice }; 
-    return this.foodsService.findAll(filters , +page, +limit);
+    const filters = { category, name, minPrice, maxPrice };
+    return this.foodsService.findAll(filters, +page, +limit);
   }
 
   @Get(':id')
@@ -45,5 +48,14 @@ export class FoodController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.foodsService.delete(id);
+  }
+
+  @Post('/review/:id')
+  addReview(@Param('id') id: any, @Body() body: any, @Headers() header) {
+    const { token } = header
+    if (!token) {
+      throw new HttpException('Token not provided', HttpStatus.FORBIDDEN)
+    }
+    return this.foodsService.addReview(id, body, token)
   }
 }

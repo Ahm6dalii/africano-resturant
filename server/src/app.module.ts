@@ -12,11 +12,12 @@ import { AuthModule } from './modules/auth.module';
 
 import { FoodModule } from './modules/food/food.module';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { NotifictionsModule } from './modules/notifictions/notifictions.module';
 @Module({
-  imports: [ CartModule, CategoriesModule,  FoodModule,PaymobModule,OrderModule,MongooseModule.forRoot("mongodb+srv://ahmedalielian20:C0bvgRQxLNKLlIux@affricano-cluster.4smjx.mongodb.net/affricano?retryWrites=true&w=majority&appName=affricano-cluster")],
+  imports: [NotifictionsModule, AuthModule, CartModule, CategoriesModule, FoodModule, PaymobModule, OrderModule, MongooseModule.forRoot("mongodb+srv://ahmedalielian20:C0bvgRQxLNKLlIux@affricano-cluster.4smjx.mongodb.net/affricano?retryWrites=true&w=majority&appName=affricano-cluster")],
 
-controllers: [AppController],
+  controllers: [AppController],
 
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

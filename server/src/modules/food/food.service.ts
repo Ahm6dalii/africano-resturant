@@ -10,13 +10,21 @@ import { Food } from '../../core/schemas/food.schema';
 import { CreateFoodDto } from '../../core/dto/food.dto';
 import { UpdateFoodDto } from '../../core/dto/food.dto';
 import { Category } from 'src/core/schemas/categories.schema';
+import { User } from 'src/core/schemas/user.schema';
+import { NotifictionsGateway } from '../notifictions/notifictions.gateway';
+import { NotifictionsService } from '../notifictions/notifictions.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class FoodService {
   constructor(
     @InjectModel(Food.name) private foodModel: Model<Food>,
     @InjectModel(Category.name) private categoryModel: Model<Category>,
-  ) {}
+    @InjectModel(User.name) private userModel: Model<User>,
+    private readonly notificationService: NotifictionsService,
+    private readonly notificationGateway: NotifictionsGateway,
+    private _jwtservice: JwtService
+  ) { }
 
   async create(createFoodDto: CreateFoodDto): Promise<Food> {
     const categoryName = await this.categoryModel.findOne({
@@ -90,4 +98,39 @@ export class FoodService {
       throw new NotFoundException(`Food with ID ${id} not found`);
     }
   }
+
+
+
+  async addReview(id: any, body: any, token) {
+    const { text } = body
+
+    try {
+      const decoded = this._jwtservice.verify(token, { secret: "mo2" });
+      if (!decoded) {
+        throw new HttpException('invalid token', HttpStatus.FORBIDDEN);
+      }
+      const { userId } = decoded
+      const food = await this.foodModel.findById(id).exec();
+      if (!food) {
+        throw new Error('Food not found');
+      }
+      const newReview = { text: body.text, user: userId };
+      const addedReview = await this.foodModel
+        .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true }).populate('review.user', 'name').exec();
+      const users = await this.userModel.find().exec();
+      const notifications = users.map(user => ({
+        user: user._id,
+        type: 'review_added',
+        relatedId: addedReview._id,
+        message: `A new review was added to the article: ${addedReview.name} by ${addedReview.review[0].user.name}`,
+      }));
+      await this.notificationService.createNotification(notifications);
+      this.notificationGateway.sendNotificationToAll(notifications);
+      return { message: 'Review added successfully', addedReview, notifications };
+    } catch (error) {
+      console.log(error);
+      throw new HttpException('Error adding review', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
 }
