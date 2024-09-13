@@ -7,6 +7,10 @@ import { Category, CategorySchema } from 'src/core/schemas/categories.schema';
 import { User, UserSchema } from 'src/core/schemas/user.schema';
 import { NotifictionsModule } from '../notifictions/notifictions.module';
 import { JwtService } from '@nestjs/jwt';
+import { MulterModule } from '@nestjs/platform-express';
+import multer from 'multer';
+import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
+
 
 @Module({
   imports: [NotifictionsModule,
@@ -17,6 +21,7 @@ import { JwtService } from '@nestjs/jwt';
     ]),
   ],
   controllers: [FoodController],
-  providers: [FoodService, JwtService],
+
+  providers: [FoodService,CloudinaryService, JwtService],
 })
 export class FoodModule { }

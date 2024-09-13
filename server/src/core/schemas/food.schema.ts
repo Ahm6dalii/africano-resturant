@@ -11,15 +11,14 @@ export class Food extends Document {
   @Prop()
   description: string;
 
-  @Prop({
-    required: true,
-    type: mongoose.Schema.Types.Mixed,
-  })
-  price: {
-    S?: number;
-    M?: number;
-    L?: number;
-  };
+
+  @Prop({ required: true })
+  amount: number;
+
+  @Prop({ required: true })
+  quantity: number;
+
+
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,

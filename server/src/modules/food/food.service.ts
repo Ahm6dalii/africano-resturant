@@ -15,6 +15,7 @@ import { NotifictionsGateway } from '../notifictions/notifictions.gateway';
 import { NotifictionsService } from '../notifictions/notifictions.service';
 import { JwtService } from '@nestjs/jwt';
 
+
 @Injectable()
 export class FoodService {
   constructor(
@@ -26,9 +27,14 @@ export class FoodService {
     private _jwtservice: JwtService
   ) { }
 
+
   async create(createFoodDto: CreateFoodDto): Promise<Food> {
+    console.log(createFoodDto);
+    
+    createFoodDto.amount=Math.ceil(createFoodDto.amount)
+
     const categoryName = await this.categoryModel.findOne({
-      name: createFoodDto.name,
+      name: createFoodDto.category,
     });
     if (!categoryName) {
       throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
@@ -81,6 +87,7 @@ export class FoodService {
   }
 
   async update(id: string, updateFoodDto: UpdateFoodDto): Promise<Food> {
+    updateFoodDto.amount=Math.ceil(updateFoodDto.amount)
     const food = await this.foodModel
       .findByIdAndUpdate(id, updateFoodDto, {
         new: true,
@@ -98,6 +105,7 @@ export class FoodService {
       throw new NotFoundException(`Food with ID ${id} not found`);
     }
   }
+
 
 
 
@@ -132,5 +140,6 @@ export class FoodService {
       throw new HttpException('Error adding review', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
 
 }
