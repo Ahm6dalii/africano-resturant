@@ -19,6 +19,7 @@ import { UpdatePaswordController } from './auth/update-pasword/update-pasword.co
 import { UpdateInfoService } from './auth/update-info/update-info.service';
 import { UpdateInfoController } from './auth/update-info/update-info.controller';
 import { CartModule } from './cart/cart.module';
+import { PaymentWebhookModule } from './payment-webhook/payment-webhook.module';
 
 
 @Module({
@@ -37,7 +38,8 @@ import { CartModule } from './cart/cart.module';
           from: '"Note App" <noteapp08@gmail.com>', // default sender address
         },
       }),
-    CartModule,],
+    CartModule,
+    PaymentWebhookModule,],
     controllers: [SigninController,SignupController, ConfirmEmailController, ResendOtbController, ResetPasswordController, UpdatePaswordController, UpdateInfoController],
     providers: [SigninService,SignupService,JwtService,MailService, ConfirmEmailService, ResendOtbService, ResetPasswordService, UpdatePaswordService, UpdateInfoService,],
 })

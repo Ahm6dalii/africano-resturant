@@ -19,8 +19,12 @@ export class FoodService {
   ) {}
 
   async create(createFoodDto: CreateFoodDto): Promise<Food> {
+    console.log(createFoodDto);
+    
+    createFoodDto.amount=Math.ceil(createFoodDto.amount)
+
     const categoryName = await this.categoryModel.findOne({
-      name: createFoodDto.name,
+      name: createFoodDto.category,
     });
     if (!categoryName) {
       throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
@@ -73,6 +77,7 @@ export class FoodService {
   }
 
   async update(id: string, updateFoodDto: UpdateFoodDto): Promise<Food> {
+    updateFoodDto.amount=Math.ceil(updateFoodDto.amount)
     const food = await this.foodModel
       .findByIdAndUpdate(id, updateFoodDto, {
         new: true,

@@ -1,37 +1,73 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, Body } from '@nestjs/common';
+import { Injectable, Body, HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
+import { Cart } from 'src/core/schemas/cart.schema';
+import { Delivery } from 'src/core/schemas/delivery.schema';
 import { Order } from 'src/core/schemas/order.schema';
 
 @Injectable()
 export class PaymobService {
-    constructor(@InjectModel(Order.name) private orderModel: Model<Order>,private readonly httpService: HttpService) {}
+    constructor(@InjectModel(Order.name) private orderModel: Model<Order>,
+     @InjectModel(Cart.name) private cartModel: Model<Cart>,
+     @InjectModel(Delivery.name) private deliveryModel: Model<Delivery>,
+     private _jwtservice:JwtService
+    ,private readonly httpService: HttpService) {}
 
-    async createPaymentIntention(body,param): Promise<any> {
-      console.log(param);
+    async createPaymentIntention(body,param,token): Promise<any> {
+      const decoded= this._jwtservice.verify(token,{secret:"mo2"});
+      const myCart=await this.cartModel.findOne({userId:decoded.userId}).populate("items.items","name amount quantity image description -_id")
+      const deliveyPrice=await this.deliveryModel.findOne()
+      
+      
+      if(!myCart){
+        throw new HttpException('no cart exist',HttpStatus.NOT_FOUND)
+      }
+     
       
       const apiUrl = 'https://accept.paymob.com/v1/intention/';
       const headers = {
         'Content-Type': 'application/json',
         'Authorization':"Token egy_sk_test_1c71ccc75a2761762253e30052d7196cabe79a9c80aa8340c5f3fe824603d63d"
       };
-      body.redirection_url=`${body.redirection_url}/allOrders`
-      console.log(body.redirection_url);
+      body.redirection_url=`${body.redirection_url}/payment-webhook/?token=${token}&redirectURL=${body.redirection_url}/allOrder`
       
-      
-     const data=body
-  
+      let allItems=myCart.items.map(item=> item) 
+      allItems.forEach(item=>item.amount = Math.ceil(item.amount))
+      allItems.forEach(item=>item.amount*=100)
+   
+      const delivery={
+               "name": "delivery",
+              "amount":Number(deliveyPrice.price)*100,
+              "description": "Delivery Price",
+              "quantity": 1,
+              "image":"http://google.com"
+      }
+        
+     const data={
+         "amount": (myCart.totalPrice*100)+(Number(deliveyPrice.price)*100),
+      "currency": "EGP",
+        "expiration": 5800,
+       "payment_methods": [4828775],
+       "items":[...allItems,delivery],
+    ...body,
+     }
+     
+     
   
       try {
         const response = await firstValueFrom(
           this.httpService.post(`${apiUrl}`, data, { headers })
         );
-        const {intention_detail,billing_data}=response.data
-        const myorder=await this.orderModel.insertMany({userId:'123',intention_detail})
-        console.log(myorder);
-        
+        const {intention_detail}=response.data
+        intention_detail.amount /= 100;
+        intention_detail.items.forEach(item => {
+            item.amount /= 100;
+        });
+        // const myorder=await this.orderModel.insertMany({userId:decoded.userId,intention_detail})
+        // this.removeAllCartItems(token)
         return response.data;
       } catch (error) {
         console.error('Error creating Paymob intention:', error);
@@ -40,6 +76,17 @@ export class PaymobService {
     }
   
 
+    async removeAllCartItems(token): Promise<void> {
+      const decoded=this._jwtservice.verify(token,{secret:"mo2"});
   
+      const cart = await this.cartModel.findOne({ userId:decoded.userId });
+      if (!cart) {
+        throw new NotFoundException('Cart not found');
+      }
+    
+      cart.items = [];
+      cart.totalPrice=0;
+      return await this.cartModel.findByIdAndUpdate(cart._id, {$set:{items:[],totalPrice:0}},{new:true});
+    }
     
 }
