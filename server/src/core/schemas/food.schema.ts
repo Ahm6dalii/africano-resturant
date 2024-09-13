@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, Types } from 'mongoose';
 import { Category } from './categories.schema';
+import { User } from './user.schema';
 
 @Schema()
 export class Food extends Document {
@@ -10,11 +11,13 @@ export class Food extends Document {
   @Prop()
   description: string;
 
+
   @Prop({ required: true })
   amount: number;
 
   @Prop({ required: true })
   quantity: number;
+
 
   @Prop({
     required: true,
@@ -25,6 +28,9 @@ export class Food extends Document {
 
   @Prop()
   image: string;
+  @Prop({ type: [{ text: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } }] })
+  review: { text: string; user: User }[];
+
 }
 
 export const FoodSchema = SchemaFactory.createForClass(Food);
