@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -14,6 +15,7 @@ import { User } from 'src/core/schemas/user.schema';
 import { NotifictionsGateway } from '../notifictions/notifictions.gateway';
 import { NotifictionsService } from '../notifictions/notifictions.service';
 import { JwtService } from '@nestjs/jwt';
+import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 
 
 @Injectable()
@@ -25,10 +27,18 @@ export class FoodService {
     private readonly notificationService: NotifictionsService,
     private readonly notificationGateway: NotifictionsGateway,
     private _jwtservice: JwtService
+    ,private readonly cloudinaryService: CloudinaryService
   ) { }
 
+  options= {
+    width: 1870,
+    height: 1250,
+    crop:'fill',
+    gravity: 'auto',
+    folder: 'Africano/Test'
+  }
 
-  async create(createFoodDto: CreateFoodDto): Promise<Food> {
+  async create(createFoodDto: CreateFoodDto,file:any): Promise<Food> {
     console.log(createFoodDto);
     
     createFoodDto.amount=Math.ceil(createFoodDto.amount)
@@ -40,6 +50,13 @@ export class FoodService {
       throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
     }
     createFoodDto.category = categoryName._id;
+
+    //Upload Img
+    const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
+      throw new BadRequestException('Invalid file type.');
+    });
+    
+    createFoodDto.image=foodImage.url;
     return this.foodModel.create(createFoodDto);
   }
 
@@ -86,8 +103,15 @@ export class FoodService {
     return food;
   }
 
-  async update(id: string, updateFoodDto: UpdateFoodDto): Promise<Food> {
-    updateFoodDto.amount=Math.ceil(updateFoodDto.amount)
+  async update(id: string, updateFoodDto: UpdateFoodDto,file:any) {
+    console.log(updateFoodDto);
+    if(updateFoodDto.amount){
+      updateFoodDto.amount=Math.ceil(Number(updateFoodDto.amount))
+    }
+    const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
+      throw new BadRequestException('Invalid file type.');
+    });
+    updateFoodDto.image=foodImage.url
     const food = await this.foodModel
       .findByIdAndUpdate(id, updateFoodDto, {
         new: true,

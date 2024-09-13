@@ -12,7 +12,9 @@ export class User {
     @Prop({required:true})
     password:string;
 
-
+    @Prop() 
+    image: string;
+    
     @Prop({
         type: String,
         default: () => Math.floor(100000 + Math.random() * 900000).toString(), // Generates a random 6-digit OTP code
@@ -39,8 +41,7 @@ export class User {
       @Prop({ required: true }) 
       phone: string;
     
-      @Prop() 
-      image: string;
+     
 
 }
 export const UserSchema = SchemaFactory.createForClass(User);
