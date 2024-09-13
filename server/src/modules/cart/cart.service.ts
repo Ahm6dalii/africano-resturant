@@ -28,17 +28,17 @@ export class CartService {
     async deleteProduct(param,token): Promise<Cart> {
         const decoded=this._jwtservice.verify(token,{secret:"mo2"});
 
-        // Step 1: Find the user's cart
+        // comment 1: Find the user's cart
         const cart = await this.cartModel.findOne({ userId: decoded.userId });
         if (!cart) throw new NotFoundException('Cart not found');
     
-        // Step 2: Find the product in the cart and remove it
+        // comment 2: Find the product in the cart and remove it
         const itemIndex = cart.items.findIndex(item => item.items.toString() === param);
         if (itemIndex === -1) throw new NotFoundException('Product not found in cart');
     
         cart.items.splice(itemIndex, 1);  // Remove the item from the cart
     
-        // Step 3: Recalculate the total price after removal
+        // comment 3: Recalculate the total price after removal
         cart.totalPrice =await this.calculateTotalPrice(cart);
     
         // Save and return the updated cart
