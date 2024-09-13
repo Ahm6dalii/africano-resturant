@@ -11,12 +11,17 @@ import { CreateFoodDto } from '../../core/dto/food.dto';
 import { UpdateFoodDto } from '../../core/dto/food.dto';
 import { Category } from 'src/core/schemas/categories.schema';
 
+
 @Injectable()
 export class FoodService {
   constructor(
     @InjectModel(Food.name) private foodModel: Model<Food>,
     @InjectModel(Category.name) private categoryModel: Model<Category>,
-  ) {}
+  ) {
+
+  
+  }
+
 
   async create(createFoodDto: CreateFoodDto): Promise<Food> {
     console.log(createFoodDto);
@@ -95,4 +100,6 @@ export class FoodService {
       throw new NotFoundException(`Food with ID ${id} not found`);
     }
   }
+
+
 }

@@ -6,16 +6,33 @@ import {
   Delete,
   Body,
   Param,
-  Query
+  Query,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException
 } from '@nestjs/common';
 import { FoodService } from './food.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 
 @Controller('api/foods')
 export class FoodController {
-  constructor(private readonly foodsService: FoodService) {}
-
+  constructor(private readonly foodsService: FoodService ,private readonly cloudinaryService: CloudinaryService) {}
+   options= {
+    width: 1870,
+    height: 1250,
+    crop:'fill',
+    gravity: 'auto',
+    folder: 'Africano/Food'
+  }
   @Post()
-  create(@Body() foodDto: any) {
+  @UseInterceptors(FileInterceptor('file'))
+  async create(@Body() foodDto: any,@UploadedFile() file: Express.Multer.File) {
+   const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
+      throw new BadRequestException('Invalid file type.');
+    });
+    foodDto.image=foodImage.url
+    console.log(foodDto)
     return this.foodsService.create(foodDto);
   }
 

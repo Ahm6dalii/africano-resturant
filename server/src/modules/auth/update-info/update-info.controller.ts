@@ -1,16 +1,32 @@
-import { Body, Controller, Headers, HttpException, HttpStatus, Patch, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Headers, HttpException, HttpStatus, Patch, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { UpdateInfoService } from './update-info.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 
 @Controller('update-info')
 export class UpdateInfoController {
-    constructor(private readonly _updateInfoService: UpdateInfoService) {}
-@Patch()
-updateInfo(@Body() body:any ,@Headers() header){
+    constructor(private readonly _updateInfoService: UpdateInfoService,private readonly cloudinaryService: CloudinaryService) {}
+    options= {
+        width: 1870,
+        height: 1250,
+        crop:'fill',
+        gravity: 'auto',
+        folder: 'Africano/Food'
+      }
+@Patch()  
+@UseInterceptors(FileInterceptor('file'))
+async updateInfo(@Body() body:any ,@Headers() header,@UploadedFile() file: Express.Multer.File){
     const {token} =header
     console.log(token);
     if (!token) {
         throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
+    const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
+        throw new BadRequestException('Invalid file type.');
+      });
+      if(body.image)body.image=foodImage.url
+      console.log(body);
+      
 return this._updateInfoService.updateInfo(body,token)
 }
 }
