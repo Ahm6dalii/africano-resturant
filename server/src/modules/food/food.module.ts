@@ -4,6 +4,9 @@ import { FoodService } from './food.service';
 import { FoodController } from './food.controller';
 import { Food, FoodSchema } from '../../core/schemas/food.schema';
 import { Category, CategorySchema } from 'src/core/schemas/categories.schema';
+import { MulterModule } from '@nestjs/platform-express';
+import multer from 'multer';
+import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -13,6 +16,6 @@ import { Category, CategorySchema } from 'src/core/schemas/categories.schema';
     ]),
   ],
   controllers: [FoodController],
-  providers: [FoodService],
+  providers: [FoodService,CloudinaryService],
 })
 export class FoodModule {}
