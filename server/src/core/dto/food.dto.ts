@@ -19,7 +19,7 @@ export class CreateFoodDto {
 
   @IsNumber()
   @IsNotEmpty()
-  price: number;
+  amount: number;
 
 
   @IsNotEmpty()
@@ -39,7 +39,7 @@ export class UpdateFoodDto {
   description: string;
 
   @IsOptional()
-  price: number;
+  amount: number;
 
   @IsOptional()
   category: string;

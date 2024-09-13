@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Category } from './../../core/schemas/categories.schema';
 import { Model } from 'mongoose';
@@ -17,6 +17,12 @@ export class CategoriesService {
     return this.categoryModel.findById(id);
   }
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+    const categoryName = await this.categoryModel.findOne({
+      name: createCategoryDto.name,
+    });
+    if (categoryName) {
+      throw new HttpException('Category Already exist', HttpStatus.CONFLICT);
+    }
     return this.categoryModel.create(createCategoryDto);
   }
   async update(id: string, updateCategoryDto: any): Promise<Category> {

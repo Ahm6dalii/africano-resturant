@@ -8,12 +8,20 @@ export class Cart extends Document {
   userId: Types.ObjectId; 
 
   @Prop([{
-    items: { type: Types.ObjectId, ref: 'Product', required: true },
+    items: { type: Types.ObjectId, ref: 'Food', required: true },
+    amount:Number,
+    description:String,
+    name:String,
+    image:String,
     quantity: { type: Number, required: true, min: 1 }
   }])
 
   items: Array<{
     items: Types.ObjectId;
+    amount:number,
+    description:string,
+    name:string,
+    image:string,
     quantity: number;
   }>;
 
