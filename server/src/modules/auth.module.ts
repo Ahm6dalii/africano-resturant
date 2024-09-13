@@ -21,6 +21,8 @@ import { UpdateInfoController } from './auth/update-info/update-info.controller'
 import { CartModule } from './cart/cart.module';
 import { PaymentWebhookModule } from './payment-webhook/payment-webhook.module';
 import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
+import { ChangeImgProfileController } from './auth/change-img-profile/change-img-profile.controller';
+import { ChangeImgProfileService } from './auth/change-img-profile/change-img-profile.service';
 
 
 @Module({
@@ -41,7 +43,7 @@ import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service'
       }),
     CartModule,
     PaymentWebhookModule,],
-    controllers: [SigninController,SignupController, ConfirmEmailController, ResendOtbController, ResetPasswordController, UpdatePaswordController, UpdateInfoController],
-    providers: [SigninService,SignupService,JwtService,MailService, ConfirmEmailService, ResendOtbService, ResetPasswordService, UpdatePaswordService, UpdateInfoService,CloudinaryService],
+    controllers: [ChangeImgProfileController,SigninController,SignupController, ConfirmEmailController, ResendOtbController, ResetPasswordController, UpdatePaswordController, UpdateInfoController],
+    providers: [ChangeImgProfileService,SigninService,SignupService,JwtService,MailService, ConfirmEmailService, ResendOtbService, ResetPasswordService, UpdatePaswordService, UpdateInfoService,CloudinaryService],
 })
 export class AuthModule {}

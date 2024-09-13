@@ -6,13 +6,7 @@ import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service'
 @Controller('update-info')
 export class UpdateInfoController {
     constructor(private readonly _updateInfoService: UpdateInfoService,private readonly cloudinaryService: CloudinaryService) {}
-    options= {
-        width: 1870,
-        height: 1250,
-        crop:'fill',
-        gravity: 'auto',
-        folder: 'Africano/Food'
-      }
+
 @Patch()  
 @UseInterceptors(FileInterceptor('file'))
 async updateInfo(@Body() body:any ,@Headers() header,@UploadedFile() file: Express.Multer.File){
@@ -21,12 +15,9 @@ async updateInfo(@Body() body:any ,@Headers() header,@UploadedFile() file: Expre
     if (!token) {
         throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
-    const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
-        throw new BadRequestException('Invalid file type.');
-      });
-      if(body.image)body.image=foodImage.url
+   
       console.log(body);
       
-return this._updateInfoService.updateInfo(body,token)
+return this._updateInfoService.updateInfo(body,token,file)
 }
 }
