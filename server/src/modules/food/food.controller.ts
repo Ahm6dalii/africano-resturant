@@ -32,6 +32,14 @@ export class FoodController {
     return this.foodsService.findAll(filters , +page, +limit);
   }
 
+  @Get('cat')
+  async findAllByCategory(
+    @Query('category') category: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1,
+  ) {
+    return this.foodsService.findAllByCategory(category , limit, page);
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.foodsService.findOne(id);
