@@ -4,21 +4,33 @@ import { Category } from './categories.schema';
 
 @Schema()
 export class Food extends Document {
-  @Prop({ required: true })
-  name: string;
+  @Prop({type:Object, required: true })
+  name: object;
 
-  @Prop()
-  description: string;
+  @Prop({required: true, 
+    type: Object, 
+    default: {} 
+  })
+  description: object;
 
-  @Prop({ required: true })
-  amount: number;
+  @Prop({ 
+    required: true, 
+    type: Object, 
+    default: {} 
+  })
+  amount: {
+    S?: number;
+    M?: number;
+    L?: number;
+    R?: number;  
+  };
 
   @Prop({ required: true })
   quantity: number;
 
   @Prop({
     required: true,
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: 'Category',
   })
   category: Category;

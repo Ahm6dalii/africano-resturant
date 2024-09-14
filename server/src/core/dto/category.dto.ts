@@ -11,21 +11,24 @@ export class CreateCategoryDto {
   @MinLength(2)
   @MaxLength(10)
   @IsNotEmpty()
-  name: string;
+  name: object;
 
   @IsOptional()
   @IsString()
-  description: string;
-
+  description: object;
+  @IsOptional()
+image:string;
 }
 
 export class UpdateCategoryDto {
   @MinLength(2)
   @MaxLength(10)
   @IsOptional()
-  name: string;
+  name: object;
 
   @IsOptional()
-  description: string;
+  description: object;
+  @IsOptional()
+image:string;
 
 }
