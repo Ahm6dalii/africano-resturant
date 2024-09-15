@@ -17,8 +17,15 @@ export class PaymobService {
     ,private readonly httpService: HttpService) {}
 
     async createPaymentIntention(body,param,token): Promise<any> {
+      console.log(body);
+      
       const decoded= this._jwtservice.verify(token,{secret:"mo2"});
-      const myCart=await this.cartModel.findOne({userId:decoded.userId}).populate("items.items","name amount quantity image description -_id")
+      console.log(decoded);
+      
+      const myCart= await this.cartModel.findOne({userId:decoded.userId})
+      // const {items:{items,size,...paymobobj}}=myCart
+      console.log(myCart);
+      
       const deliveyPrice=await this.deliveryModel.findOne()
       
       
@@ -35,9 +42,12 @@ export class PaymobService {
       body.redirection_url=`${body.redirection_url}/payment-webhook/?token=${token}&redirectURL=${body.redirection_url}/allOrder`
       
       let allItems=myCart.items.map(item=> item) 
+      allItems.forEach(item=> {item.description=item.description['en'] ,item.name=item.name['en']})
+    console.log(allItems);
+    
       allItems.forEach(item=>item.amount = Math.ceil(item.amount))
       allItems.forEach(item=>item.amount*=100)
-   
+      
       const delivery={
                "name": "delivery",
               "amount":Number(deliveyPrice.price)*100,
@@ -54,14 +64,20 @@ export class PaymobService {
        "items":[...allItems,delivery],
     ...body,
      }
+     console.log(data);
      
      
   
       try {
+        console.log('dsdsdsd')
+        
         const response = await firstValueFrom(
           this.httpService.post(`${apiUrl}`, data, { headers })
         );
+        console.log(response);
+        
         const {intention_detail}=response.data
+        
         intention_detail.amount /= 100;
         intention_detail.items.forEach(item => {
             item.amount /= 100;

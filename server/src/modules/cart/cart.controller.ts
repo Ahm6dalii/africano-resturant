@@ -6,12 +6,22 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post(':id')
-  addToCart(@Param('id') param:any,@Body() body:any,@Headers() header){
-    const {token} =header
+  addToCart(
+    @Param('id') param: string, 
+    @Body() body: { size: string }, 
+    @Headers() header: { token: string }
+  ) {
+    const { token } = header;
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
-  }
-    return  this.cartService.addToCartt(param,token)
+    }
+    const { size } = body;
+    console.log("get size mow mo2  ",size);
+
+    if (!size) {
+      throw new HttpException('Size not provided', HttpStatus.BAD_REQUEST);
+    }
+    return this.cartService.addToCartt(param, size, token);
   }
 
   @Get()
@@ -30,12 +40,18 @@ return this.cartService.getAllProduct();
   }
      //  delete item
   @Delete(':id')
-  deleteProduct(@Param('id') param:any,@Headers() header){
+  deleteProduct(@Param('id') param:any,@Headers() header,@Body() body:any){
     const {token} =header
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
   }
-    return this.cartService.deleteProduct(param,token)
+  const { size } = body;
+  console.log("get size mow mo2  ",size);
+
+  if (!size) {
+    throw new HttpException('Size not provided', HttpStatus.BAD_REQUEST);
+  }
+    return this.cartService.deleteProduct(param,size,token)
   }
   @Delete()
   deleteAllCart(@Param('id') param:any,@Headers() header){
