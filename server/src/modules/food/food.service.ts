@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model ,Types } from 'mongoose';
 import { Food } from '../../core/schemas/food.schema';
 import { CreateFoodDto } from '../../core/dto/food.dto';
 import { UpdateFoodDto } from '../../core/dto/food.dto';
@@ -79,12 +79,12 @@ export class FoodService {
     }
     const foods = await this.foodModel
       .find()
-      // .sort({ _id: -1 })
+      .sort({ _id: -1 })
 
-      // .skip(skip)
-      // .limit(limit)
-      // .populate({ path: 'category', select: 'name' })
-      // .exec();
+      .skip(skip)
+      .limit(limit)
+      .populate({ path: 'category', select: 'name' })
+      .exec();
     const total = await this.foodModel.countDocuments();
 
     return {
@@ -130,6 +130,26 @@ export class FoodService {
     }
   }
 
+  async findAllByCategory(category: any, limit: number, page: number) {
+  // Extract category from query parameters
+  
+    if (!category) {
+      throw new BadRequestException('Category ID is required');
+    }
+  
+    const skip = (page - 1) * limit;  // Pagination logic
+    const categoryObjectId = new Types.ObjectId(category);
+  
+    const items = await this.foodModel
+      .find({ category: categoryObjectId })
+      .skip(skip)
+      .limit(limit)
+      .populate({ path: 'category', select: 'name' })
+      .exec();
+  
+    return items;
+  }
+  
 
 
 
