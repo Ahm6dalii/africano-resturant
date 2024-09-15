@@ -14,10 +14,10 @@ export class CreateCategoryDto {
   name: object;
 
   @IsOptional()
-  @IsString()
   description: object;
   @IsOptional()
-image:string;
+   image:string;
+
 }
 
 export class UpdateCategoryDto {
@@ -30,5 +30,6 @@ export class UpdateCategoryDto {
   description: object;
   @IsOptional()
 image:string;
+
 
 }

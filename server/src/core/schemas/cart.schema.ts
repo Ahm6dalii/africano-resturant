@@ -29,7 +29,7 @@ export class Cart extends Document {
   }>;
 
   @Prop({ default: 0 })
-  totalPrice: number; // Calculate this dynamically or store it directly
+  totalPrice: number; // Calculate this dynamically or store it dirct
 }
 
 export const CartSchema = SchemaFactory.createForClass(Cart);

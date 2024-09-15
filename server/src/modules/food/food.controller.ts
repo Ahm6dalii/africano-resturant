@@ -6,17 +6,29 @@ import {
   Delete,
   Body,
   Param,
-  Query
+  Query,
+  Headers,
+  HttpException,
+  HttpStatus,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
+  Patch
 } from '@nestjs/common';
 import { FoodService } from './food.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 
 @Controller('api/foods')
 export class FoodController {
-  constructor(private readonly foodsService: FoodService) {}
+
+  constructor(private readonly foodsService: FoodService ,private readonly cloudinaryService: CloudinaryService) {}
+  
 
   @Post()
-  create(@Body() foodDto: any) {
-    return this.foodsService.create(foodDto);
+  @UseInterceptors(FileInterceptor('file'))
+  async create(@Body() foodDto: any,@UploadedFile() file: Express.Multer.File) {
+    return this.foodsService.create(foodDto,file);
   }
 
   @Get()
@@ -28,8 +40,8 @@ export class FoodController {
     @Query('minPrice') minPrice?: number,
     @Query('maxPrice') maxPrice?: number,
   ) {
-    const filters = { category, name, minPrice, maxPrice }; 
-    return this.foodsService.findAll(filters , +page, +limit);
+    const filters = { category, name, minPrice, maxPrice };
+    return this.foodsService.findAll(filters, +page, +limit);
   }
 
   @Get(':id')
@@ -37,13 +49,24 @@ export class FoodController {
     return this.foodsService.findOne(id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() foodDto: any) {
-    return this.foodsService.update(id, foodDto);
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('file'))
+  async update(@Param('id') id: string, @Body() foodDto: any,@UploadedFile() file: Express.Multer.File) {
+
+    return this.foodsService.update(id, foodDto,file);
   }
 
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.foodsService.delete(id);
+  }
+
+  @Post('/review/:id')
+  addReview(@Param('id') id: any, @Body() body: any, @Headers() header) {
+    const { token } = header
+    if (!token) {
+      throw new HttpException('Token not provided', HttpStatus.FORBIDDEN)
+    }
+    return this.foodsService.addReview(id, body, token)
   }
 }
