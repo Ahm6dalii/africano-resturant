@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 let apiLinkSlice = createSlice({
     name: 'apiLink',
     initialState: {
-        link: 'https://e-learning-api-amber.vercel.app'
+        link: 'http://localhost:3000'
     },
     reducers: {
     }
