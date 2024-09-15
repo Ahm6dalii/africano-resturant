@@ -38,7 +38,7 @@ return this.cartService.getAllProduct();
     const cart = await this.cartService.updateQuantity(body,param,token);
     return cart;
   }
-
+     //  delete item
   @Delete(':id')
   deleteProduct(@Param('id') param:any,@Headers() header,@Body() body:any){
     const {token} =header

@@ -12,11 +12,22 @@ import { AuthModule } from './modules/auth.module';
 
 import { FoodModule } from './modules/food/food.module';
 import { CategoriesModule } from './modules/categories/categories.module';
-@Module({
-  imports: [ CartModule,CategoriesModule,AuthModule,FoodModule,PaymobModule,OrderModule,MongooseModule.forRoot("mongodb+srv://ahmedalielian20:C0bvgRQxLNKLlIux@affricano-cluster.4smjx.mongodb.net/affricano?retryWrites=true&w=majority&appName=affricano-cluster")],
+import { NotifictionsModule } from './modules/notifictions/notifictions.module';
 
-controllers: [AppController],
+import { MulterModule } from '@nestjs/platform-express';
+import { CloudinaryModule } from './core/utils/cloudinary/cloudinary.module';
+//  adding cart
+@Module({
+  imports: [ ConfigModule.forRoot({
+    isGlobal: true,  // Makes the configuration available globally
+    envFilePath: '.env',  // Specify the .env file
+  }) , MulterModule.register({
+    dest: './src/uploads', // Specify the destination folder
+  }),NotifictionsModule,CloudinaryModule,CartModule,CategoriesModule,AuthModule,FoodModule,PaymobModule,OrderModule,MongooseModule.forRoot("mongodb+srv://ahmedalielian20:C0bvgRQxLNKLlIux@affricano-cluster.4smjx.mongodb.net/affricano?retryWrites=true&w=majority&appName=affricano-cluster")],
+
+
+  controllers: [AppController],
 
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
