@@ -23,6 +23,9 @@ export class CloudinaryService {
         gravity: options?.gravity || 'center', // Default gravity
       folder: options.folder || 'default_folder'
       };
+      console.log(file,"ssfdfdsddsds");
+      
+
 
       const uploadStream = cloudinary.uploader.upload_stream(
         uploadOptions,

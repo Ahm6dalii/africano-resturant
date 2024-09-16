@@ -106,10 +106,14 @@ export class CartService {
 }
 
 
-      async addToCartt(param, size, token): Promise<Cart> {
+      async addToCartt(param, size,itemNum ,token): Promise<Cart> {
+        console.log(itemNum);
+        
         const decoded = this._jwtservice.verify(token, { secret: "mo2" });
-        const addToCartDto = { productId: param, quantity: 1 };
+        const addToCartDto = { productId: param, quantity: itemNum?itemNum:1 };
         const { productId, quantity } = addToCartDto;
+        console.log(quantity,'dfdfdfdfs');
+        
         console.log(productId);
         console.log("get size now mo2  ", size);
         

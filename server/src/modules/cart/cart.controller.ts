@@ -8,20 +8,20 @@ export class CartController {
   @Post(':id')
   addToCart(
     @Param('id') param: string, 
-    @Body() body: { size: string }, 
+    @Body() body: { size: string,quantity:number }, 
     @Headers() header: { token: string }
   ) {
     const { token } = header;
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
-    const { size } = body;
+    const { size,quantity} = body;
     console.log("get size mow mo2  ",size);
 
     if (!size) {
       throw new HttpException('Size not provided', HttpStatus.BAD_REQUEST);
     }
-    return this.cartService.addToCartt(param, size, token);
+    return this.cartService.addToCartt(param, size, quantity, token);
   }
 
   @Get()

@@ -6,9 +6,13 @@ export const CloudinaryProvider = {
   inject: [ConfigService],
   useFactory: (configService: ConfigService) => {
     return cloudinary.config({
-      cloud_name: configService.get<string>('CLOUDINARY_NAME'),
-      api_key: configService.get<string>('CLOUDINARY_API_KEY'),
-      api_secret: configService.get<string>('CLOUDINARY_API_SECRET'),
+      cloud_name: 'dbifogzji', 
+      api_key: '327869157563271', 
+      api_secret: 'ryj3rsHXH8Rec1y6rnaluPjX1yg' // Click 'View API Keys' above to copy your API secret
+
+      // cloud_name: configService.get<string>('CLOUDINARY_NAME'),
+      // api_key: configService.get<string>('CLOUDINARY_API_KEY'),
+      // api_secret: configService.get<string>('CLOUDINARY_API_SECRET'),
     });
   },
 };
