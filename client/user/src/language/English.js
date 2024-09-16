@@ -1,14 +1,5 @@
 export const En = {
-  regiter: "Register",
-  signIn: "Sign In",
-  signUp: "Sign Up",
-  home: "Home",
-  contact: "Contact",
-  about: "About",
-  favorit: "Favorite",
-  setting: "Setting",
-  logout: "Logout",
-  Logo: "Africano",
+
   update_info: "Update Your Information",
   name: "Name",
   address: "Address",
@@ -35,3 +26,40 @@ export const En = {
   required_confirm_pass: "Confirm New Password is required",
   match_confirm_pass: "Passwords must match",
 };   
+export const En={
+    //Navebar
+    regiter:'Register',
+    signIn:'Sign In',
+    signUp:'Sign Up',
+    home:"Home",
+    contact:"Contact",
+    about:"About",
+    menu:"Menu" ,
+    setting:"Setting",
+    logout:"Logout",
+    logo :"Africano",
+    categories:"Categories",
+    //Food Card
+    confirm:"Confirm",
+    order:"Order",
+    selectSize:"Select Size",
+
+    //Food catogery
+    pizza:"Pizza",
+    pasta:"Pasta",
+    appetizers:"Appetizers",
+    salad:"Salad",
+    drinks:"Drinks",
+    // hero
+    heroAfricano:"AFRICANO Resturant,",
+    heroDesc:"WE SERVE AUTHENTIC PIZZA AND PASTA",
+    heroCaption:"Delighting you with authentic pizzas and pastas, crafted with passion and fresh ingredients!",
+    OrderNow:"Order Now",
+    vistUs:"Vist Us",
+    // footer
+    footerDesc:"Serving authentic pizza and pasta with passion and fresh ingredients.",
+    DeliveryContact:"Delivery & Contact",
+    Phone:"Phone:",
+    FollowUs:"Follow Us",
+    copyright:"© 2024 Africano Restaurant. All Rights Reserved.",
+}   
