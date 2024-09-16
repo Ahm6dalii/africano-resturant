@@ -1,5 +1,4 @@
 export const En = {
-
   update_info: "Update Your Information",
   name: "Name",
   address: "Address",
@@ -25,8 +24,8 @@ export const En = {
   required_password: "New Password is required" , 
   required_confirm_pass: "Confirm New Password is required",
   match_confirm_pass: "Passwords must match",
-};   
-export const En={
+    
+
     //Navebar
     regiter:'Register',
     signIn:'Sign In',
@@ -43,6 +42,44 @@ export const En={
     confirm:"Confirm",
     order:"Order",
     selectSize:"Select Size",
+
+
+    // register data
+    loginForm:"Sign IN",
+    maxName:"Must be 15 characters or less",
+    minName:"Must be 3 characters or more",
+    requireFname:"Please enter your frist name",
+    requireLname:"Please enter your last name",
+    invalidEmail:"Invalid email address",
+    reqEmail:"Please enter your email",
+    invalidPhone:"Phone number must start with 01 and have exactly 11 digits",
+    reqPhone:"Please enter your Mobile Number",
+    minPassword:"Password must be at least 8 characters",
+    containLetters:"Password must contain letters.",
+    containNumbers:"Password must contain numbers.",
+    reqPassword:"Please create a password",
+    matchPassword:"Passwords must match",
+    reqConfirmPassword:"Please re-enter the password",
+    forgetPassword:"Forgot Password?",
+    
+
+
+
+    register:"Register",
+    fristName:"Frist Name",
+    lastName:"Last Name",
+    Password:"Password",
+    email:"Email Address",
+    phoneNumber:"Mobile Number",
+    confirmPassword:"Confirm Password",
+    haveAccount:"Already on Africano?",
+    newToAfricano:"New to Africano?",
+    joinNow:"Join Now",
+
+
+
+    // login data
+  
 
     //Food catogery
     pizza:"Pizza",
