@@ -15,11 +15,17 @@ export default function CatogeryTab() {
         .then(({data}) =>{
             // console.log(data,'dfsdfsdfssd');
             setData(data)
+            navigate(`/menu/${data[0]?._id}`); 
         }).catch((err)=>{
           console.log(err);     
         })
       }
 
+
+
+//     useEffect(()=>{
+//       getAllFood() 
+//     },[])
 
       useEffect(() => {
         getAllFood();
@@ -27,14 +33,19 @@ export default function CatogeryTab() {
             navigate(`/menu/66e5be963dd3a0cb85617de0`);
         }
     }, [id, navigate]);
+
     
 
 
   return (
     <>
-    <ul className='flex flex-wrap flex-row gap-5 mb-4 w-fit m-auto '>
-    {data?.map(item=>{
-        return  <li  key={data._id} className=' ' title={`${item.name[language]}`} >
+    <ul className='flex flex-wrap flex-row gap-5 mb-4 m-auto '>
+    {data?.map((item,index)=>{
+        return  <li  key={index} className=' ' title={`${item.name[language]}`} >
+//     <ul className='flex flex-wrap flex-row gap-5 mb-4 w-fit m-auto '>
+//     {data?.map(item=>{
+//         return  <li  key={data._id} className=' ' title={`${item.name[language]}`} >
+//  main
             <NavLink to={item._id} className={(({isActive})=>'transition duration-300 p-1 ' +  (isActive?' font-semibold border-b-2 border-b-orange-200   text-orange-500 ':'font-light'))}>{item.name[language]}</NavLink>
       </li>
         
