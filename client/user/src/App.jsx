@@ -12,6 +12,7 @@ import Cart from './pages/cart/Cart'
 import Food from './components/food/Food'
 import FoodCatogery from './components/food-catogery/FoodCatogery'
 import Menu from './pages/menu/Menu'
+import Categories from './pages/categories/Categories'
 
 function App() {
 
@@ -27,7 +28,8 @@ function App() {
     <Route path='' element={<Home></Home>}></Route>
     <Route path='/about' element={ <About></About>}></Route>
     <Route path='/contact' element={ <Contact></Contact>}></Route>
-    <Route path='/menu' element={ <Menu></Menu>} >
+    <Route path='/categories' element={ <Categories></Categories>}></Route>
+    <Route path='/menu' element={ <Menu></Menu>}>
     <Route path='/menu/:id' element={<FoodCatogery></FoodCatogery>}></Route>
     </Route>
     <Route path='/setting' element={<ProtectedRoot><Setting></Setting></ProtectedRoot>}>

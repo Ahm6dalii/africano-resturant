@@ -19,6 +19,7 @@ export function Navbaar() {
     { name: translation.menu, href: "menu" },
     { name: translation.contact, href: "contact" },
     { name: translation.about, href: "about" },
+    {name:translation.categories, href:'categories'},
   ];
 
   const dropDownLink = [
