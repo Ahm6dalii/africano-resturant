@@ -27,13 +27,13 @@ export default function Food({data}) {
     // useEffect(()=>{
     //   getAllFood()
     // },[])
-    useEffect(()=>{
+    // useEffect(()=>{
 
-    },[data])
+    // },[data])
   return (
     <>
     <div className="grid grid-cols-1  sm:grid-cols-2  md:grid-cols-3  xl:grid-cols-4 gap-4">
-      {data?.map((item,index)=> <Card id={index} lang={language} desc={item?.description } name={item?.name} amount={item?.amount} imaUrl={item?.image}></Card>)}      
+      {data?.map((item,index)=> <Card key={index} id={item._id} lang={language} desc={item?.description } name={item?.name} amount={item?.amount} imaUrl={item?.image}></Card>)}      
     </div>
 
     </>

@@ -1,14 +1,22 @@
+
 import { useSelector } from "react-redux"
 import image1 from "../../assets/affricanoImg/1.jpg"
 import image2 from "../../assets/affricanoImg/2.jpg"
 import image3 from "../../assets/affricanoImg/5.jpg"
 import { Link } from "react-router-dom"
+
+import React, { useRef, useState } from 'react'
+import Food from '../../components/food/Food'
+import CatogeryTab from './../../components/catogery-tabs/CatogeryTab';
+import FoodCatogery from '../../components/food-catogery/FoodCatogery';
+import axios from 'axios';
+
 export default function Home() {
   const {translation}=useSelector(state=>state.lang)
 
 
-  return (
-    <>
+
+  return  <>
  <div className="min-h-scree">
     
 
@@ -66,6 +74,7 @@ export default function Home() {
         </div>
       </main>
     </div>
+
     </>
-  )
+  
 }
