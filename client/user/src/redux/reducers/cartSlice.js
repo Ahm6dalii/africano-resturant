@@ -3,24 +3,20 @@ const storage=JSON.parse(localStorage.getItem("card"))
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: storage?storage:[],
+  initialState: {num:storage?storage:0},
   reducers: {
     addToCart: (state, action) => {
-      state.push(action.payload);
-      localStorage.setItem("card",JSON.stringify(state))
+      console.log(action);
+      
+      state.num=action.payload
+      localStorage.setItem("card",JSON.stringify(state.num))
     },
-    removeFromCart: (state, action) => {
-    let flited=state.filter((course) => course.id !== action.payload.id)
-             localStorage.setItem("card",JSON.stringify(flited))
-      return flited;
-
-    },
-    clearCart: () => {
+    clearCart: (state) => {
       localStorage.removeItem("card")
-      return [];
+      state.num=0
     },
   },
 });
 
-export const { addToCart, removeFromCart,clearCart } = cartSlice.actions;
+export const { addToCart,clearCart } = cartSlice.actions;
 export let cartReducer = cartSlice.reducer;

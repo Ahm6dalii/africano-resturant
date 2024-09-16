@@ -5,11 +5,12 @@ import { changeMode } from "../../redux/reducers/modeSlice";
 import { changeLang } from "../../redux/reducers/languageSlice";
 import { style } from "framer-motion/client";
 import navStyle from "./navbar.module.css";
-
+import logo from "../../assets/logo/logo-dr.png";
 export function Navbaar() {
   const { translation } = useSelector((state) => state.lang);
   const { mode } = useSelector((state) => state.mode);
   const { language } = useSelector((state) => state.lang);
+  const { num } = useSelector((state) => state.cart);
   console.log(language);
 
   const dispatch = useDispatch();
@@ -32,27 +33,33 @@ export function Navbaar() {
   };
 
   const customTheme = {
-   "link": {
-    "base": "block py-2 pl-3 pr-4 md:p-0",
-    "active": {
-      "on": "bg-cyan-700 text-white dark:text-white md:bg-transparent md:text-cyan-700",
-      "off": "border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
+    link: {
+      base: "block py-2 pl-3 pr-4 md:p-0",
+      active: {
+        on: "bg-cyan-700 text-white dark:text-white md:bg-transparent md:text-cyan-700",
+        off: "border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white",
+      },
+      disabled: {
+        on: "text-gray-400 hover:cursor-not-allowed dark:text-gray-600",
+        off: "",
+      },
     },
-    "disabled": {
-      "on": "text-gray-400 hover:cursor-not-allowed dark:text-gray-600",
-      "off": ""
-    },
-  },}
+  };
 
   return (
     <>
-      <div className="dark:bg-black">
-        <Navbar theme={customTheme} fluid rounded className=" container dark:bg-black  m-auto">
-          <Navbar.Brand href="https://flowbite-react.com">
-            {/* <img src="/favicon.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite React Logo" /> */}
-            <span className="self-center whitespace-nowrap text-xl font-semibold  dark:text-white">
+      <div className="dark:bg-black bg-zinc-200 shadow">
+        <Navbar
+          theme={customTheme}
+          fluid
+          rounded
+          className="py-1 container dark:bg-black bg-gray-200  m-auto"
+        >
+          <Navbar.Brand className="" href="https://flowbite-react.com">
+            <img src={logo} className="w-[80px]  " alt="Flowbite React Logo" />
+            {/* <span className="self-center whitespace-nowrap text-xl font-semibold  dark:text-white">
              {translation.logo}
-            </span>
+            </span> */}
           </Navbar.Brand>
           <div className="flex md:order-2">
             <Dropdown
@@ -83,9 +90,11 @@ export function Navbaar() {
           </div>
           <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]}`}>
             {navLink.map((navItem, index) => (
-              <NavLink 
-                className={(({ isActive }) =>
-                  isActive ? ` ${navStyle.active} dark:text-white` : navStyle.link) 
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? ` ${navStyle.active} dark:text-white`
+                    : navStyle.link
                 }
                 key={index}
                 to={navItem.href}
@@ -94,7 +103,7 @@ export function Navbaar() {
               </NavLink>
             ))}
 
-            <div className="flex gap-3 item">
+            <div className="flex gap-3 items-center">
               {/* Language */}
               <select
                 className="select py-[1px] px-2 w-[70px]  max-w-xs ms-auto dark:text-black dark:bg-slate-300"
@@ -141,7 +150,26 @@ export function Navbaar() {
                   </svg>
                 )}
               </label>
-            </div>
+
+             {/* Cart */}
+       <div className="relative">
+         <svg
+           xmlns="http://www.w3.org/2000/svg"
+           className="h-5 w-5"
+           fill="none"
+           viewBox="0 0 24 24"
+           stroke="currentColor">
+           <path
+             strokeLinecap="round"
+             strokeLinejoin="round"
+             strokeWidth="2"
+             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+         </svg>
+         <span className=" text-orange-500 font-semibold  absolute -top-4 left-1" >{num}</span>
+       </div>
+       </div>
+  
+
           </Navbar.Collapse>
         </Navbar>
       </div>
