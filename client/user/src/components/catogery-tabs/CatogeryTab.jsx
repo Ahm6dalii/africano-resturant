@@ -27,8 +27,6 @@ export default function CatogeryTab() {
             navigate(`/menu/66e5be963dd3a0cb85617de0`);
         }
     }, [id, navigate]);
-    
-
 
   return (
     <>

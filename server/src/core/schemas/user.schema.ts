@@ -38,7 +38,7 @@ export class User {
       })
       address: string;
     
-      @Prop({ required: true }) 
+      @Prop({ required: false }) 
       phone: string;
     
      

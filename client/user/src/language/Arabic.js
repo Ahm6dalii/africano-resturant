@@ -10,7 +10,7 @@ export const Ar = {
     setting: "الإعدادات",
     logout: "تسجيل الخروج",
     logo: "أفريكانو",
-    categories:"التصنيفات",
+    categories: "التصنيفات",
 
     //Food Card
     confirm: "تأكيد",
@@ -23,5 +23,17 @@ export const Ar = {
     pasta: "باستا",
     appetizers: "مقبلات",
     salad: "سلطة",
-    drinks: "مشروبات"
+    drinks: "مشروبات",
+    // hero
+    heroAfricano: "مطعم أفريكانو",
+    heroDesc: "نقدم البيتزا والمعكرونة الأصيلة",
+    heroCaption: "نسعدك ببيتزا ومعكرونة أصلية، محضرة بشغف ومكونات طازجة!",
+    OrderNow: "اطلب الآن",
+    vistUs: "زرنا",
+    // footer
+    footerDesc: "نقدم البيتزا والمعكرونة الأصيلة بشغف ومكونات طازجة.",
+    DeliveryContact: "التوصيل والتواصل",
+    Phone: "الهاتف:",
+    FollowUs: "تابعنا",
+    copyright: "© 2024 مطعم أفريكانو. جميع الحقوق محفوظة.",
 }
