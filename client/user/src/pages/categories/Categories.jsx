@@ -29,7 +29,7 @@ export default function Categories() {
         <h1 className="text-3xl  text-center font-bold py-7 tracking-tight text-gray-900 dark:text-white">{translation.categories}</h1>
         <div className="grid grid-cols-12">
         {categories.map((category, index) => {
-            return <Category key={index} category={category} />; // Pass the category prop here
+            return <Category key={index} category={category} />; 
         })}
         </div>
     </div>}

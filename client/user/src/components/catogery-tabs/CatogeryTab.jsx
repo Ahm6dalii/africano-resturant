@@ -34,9 +34,6 @@ export default function CatogeryTab() {
         }
     }, [id, navigate]);
 
-    
-
-
   return (
     <>
     <ul className='flex flex-wrap flex-row gap-5 mb-4 m-auto '>

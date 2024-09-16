@@ -19,6 +19,7 @@ export class signUpDto {
     @IsOptional()
     address: string;
     @IsString()
+    @IsOptional()
     phone: string;
 }
 
