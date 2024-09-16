@@ -10,7 +10,7 @@ export const En={
     setting:"Setting",
     logout:"Logout",
     logo :"Africano",
-
+    categories:"Categories",
     //Food Card
     confirm:"Confirm",
     order:"Order",

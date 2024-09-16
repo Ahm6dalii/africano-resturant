@@ -44,7 +44,6 @@ export default function FoodCatogery() {
 
   return (
     <>
-     <div>FoodCatogery</div>
      {!isloading?<Food data={data}/>:<Loading/>}
       {dataPagination?.totalPages!=1? <Paginations getNext={setPage} currentPage={dataPagination?.page} totalPages={dataPagination?.totalPages}></Paginations>:''}
     </>
