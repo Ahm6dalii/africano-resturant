@@ -1,3 +1,4 @@
+
 import './App.css'
 import Home from './pages/home/Home'
 import About from './pages/about/About'
@@ -11,14 +12,20 @@ import Contact from './pages/cotact/Contact'
 import Cart from './pages/cart/Cart'
 import Login from './pages/login/Login';
 import Register from './pages/register/Register'
+import Food from './components/food/Food'
+import FoodCatogery from './components/food-catogery/FoodCatogery'
+import Menu from './pages/menu/Menu'
+import Categories from './pages/categories/Categories'
+import UpdateUserInfo from "./pages/updateUserInfo/UpdateUserInfo";
+import UpdatePassword from './pages/updatePassword/UpdatePassword';
+import OrderList from './pages/orderList/OrderList';
 
 function App() {
-
-  const queryClient = new QueryClient()
-
+  const queryClient = new QueryClient();
 
   return (
     <>
+
 <QueryClientProvider client={queryClient}>
    <BrowserRouter >
    <Routes>
@@ -29,8 +36,15 @@ function App() {
     <Route path='/register' element={ <Register></Register>}></Route>
 
     <Route path='/contact' element={ <Contact></Contact>}></Route>
+    <Route path='/categories' element={ <Categories></Categories>}></Route>
+    <Route path='/menu' element={ <Menu></Menu>}>
+    <Route path='/menu/:id' element={<FoodCatogery></FoodCatogery>}></Route>
+    </Route>
     <Route path='/setting' element={<ProtectedRoot><Setting></Setting></ProtectedRoot>}>
     </Route>
+    <Route path="/updateinfo" element={<UpdateUserInfo />}></Route>
+    <Route path="/updatepass" element={<UpdatePassword />}></Route>
+    <Route path="/order" element={<OrderList />}></Route>
     <Route path="/cart" element={<ProtectedRoot><Cart /></ProtectedRoot>}></Route>     
     <Route path='*' element={<NotFound></NotFound>}></Route>
     </Route>

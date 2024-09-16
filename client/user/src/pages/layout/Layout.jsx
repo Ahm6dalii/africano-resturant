@@ -11,11 +11,13 @@ export default function () {
 
   return (
     <>
-    <div className={`${mode=='light'?'':'dark'}`}>
+    <div className={` font-['Open_Sans'] ${mode=='light'?'':'dark'}`}>
     <div dir={language=='ar'?'rtl':'ltr'}  className={`   dark:bg-slate-900 dark:text-white` } >
     <Navbaar></Navbaar>
-    <div className={`min-h-[90vh]  m-auto ${mode=='light'?style.bgImgWhite:style.bgImgDark}`}>
+    <div className={`md:px-15 ${mode=='light'?style.bgImgWhite:style.bgImgDark}`}>
+    <div className={`min-h-[90vh] container px-15 py-5  m-auto `}>
     <Outlet></Outlet>  
+    </div>
     </div>
     <Footer></Footer>
     </div>
