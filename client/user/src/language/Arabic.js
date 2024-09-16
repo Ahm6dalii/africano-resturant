@@ -1,3 +1,40 @@
 export const Ar = {
- 
-};
+  signIn: 'تسجيل الدخول',
+  signUp: 'التسجيل',
+  home: 'الصفحة الرئيسية',
+  contact: 'الاتصال بنا',
+  about: 'عنّا',
+  favorit: 'المفضلة',
+  setting: 'الإعدادات',
+  logout: 'الخروج',
+  Logo: 'أفريكانو',
+
+  // register data
+  loginForm: 'تسجيل الدخول',
+  maxName: 'يجب أن يكون 15 حرفًا أو أقل',
+  minName: 'يجب أن يكون 3 أحرف أو أكثر',
+  requireFname: 'الرجاء إدخال الاسم الأول',
+  requireLname: 'الرجاء إدخال الاسم الأخير',
+  invalidEmail: 'عنوان بريد إلكتروني غير صالح',
+  reqEmail: 'الرجاء إدخال بريدك الإلكتروني',
+  invalidPhone:"يجب أن يبدأ رقم الهاتف بـ 01 ويتكون من 11 رقمًا ",
+  reqPhone:"الرجاء إدخال رقم الموبيل",
+  minPassword: 'يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل',
+  containLetters: 'يجب أن تحتوي كلمة المرور على حروف.',
+  containNumbers: 'يجب أن تحتوي كلمة المرور على أرقام.',
+  reqPassword: 'الرجاء إنشاء كلمة مرور',
+  matchPassword: 'يجب أن تتطابق كلمات المرور',
+  reqConfirmPassword: 'الرجاء إعادة إدخال كلمة المرور',
+  forgetPassword:"نسيت كلمة المرور",
+
+  register: 'إنشاء حساب جديد',
+  fristName: 'الاسم الأول',
+  lastName: 'الاسم الأخير',
+  Password: 'كلمة المرور',
+  email: ' البريد الإلكتروني',
+  phoneNumber:'رقم موبيل',
+  confirmPassword: 'تأكيد كلمة المرور',
+  haveAccount: 'هل لديك حساب بالفعل على Africano؟',
+  newToAfricano:"عضو جديد لدى Africano ؟",
+  joinNow:"الانضمام الان",
+}
