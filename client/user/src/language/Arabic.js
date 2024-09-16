@@ -10,6 +10,7 @@ export const Ar = {
     setting: "الإعدادات",
     logout: "تسجيل الخروج",
     logo: "أفريكانو",
+    categories:"التصنيفات",
 
     //Food Card
     confirm: "تأكيد",
