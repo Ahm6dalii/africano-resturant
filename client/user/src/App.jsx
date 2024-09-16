@@ -9,6 +9,9 @@ import ProtectedRoot from './pages/protectedRoot/ProtectedRoot'
 import Setting from './pages/setting/Setting'
 import Contact from './pages/cotact/Contact'
 import Cart from './pages/cart/Cart'
+import Food from './components/food/Food'
+import FoodCatogery from './components/food-catogery/FoodCatogery'
+import Menu from './pages/menu/Menu'
 
 function App() {
 
@@ -24,6 +27,9 @@ function App() {
     <Route path='' element={<Home></Home>}></Route>
     <Route path='/about' element={ <About></About>}></Route>
     <Route path='/contact' element={ <Contact></Contact>}></Route>
+    <Route path='/menu' element={ <Menu></Menu>} >
+    <Route path='/menu/:id' element={<FoodCatogery></FoodCatogery>}></Route>
+    </Route>
     <Route path='/setting' element={<ProtectedRoot><Setting></Setting></ProtectedRoot>}>
     </Route>
     <Route path="/cart" element={<ProtectedRoot><Cart /></ProtectedRoot>}></Route>     

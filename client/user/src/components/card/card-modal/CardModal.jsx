@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Modal } from 'flowbite-react';
 import CardPrice from '../card-price/CardPrice';
+import { useSelector } from 'react-redux';
+import DecIncCount from '../Dec-Inc-count/DecIncCount';
 
 export default function CardModal({ i, amount, name }) {
   const [openModal, setOpenModal] = useState(false);
@@ -8,6 +10,8 @@ export default function CardModal({ i, amount, name }) {
   const amountArray = Object.entries(amount);
   const [quantity, setQuantity] = useState(1);
   const [orderData, setOrderData] = useState(null);
+  const { translation,language } = useSelector((state) => state.lang);
+  const {mode}=useSelector(state=>state.mode)
 
   // Create a ref to attach to the modal body
   const modalRef = useRef();
@@ -59,20 +63,19 @@ export default function CardModal({ i, amount, name }) {
 
   return (
     <>
-      <Button
-        className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-lg text-sm dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-        onClick={() => setOpenModal(true)}
+      <Button className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-lg text-sm dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+      onClick={() => setOpenModal(true)}
       >
-        Toggle modal
+        {translation.order}
       </Button>
 
-      <Modal show={openModal} size="xl" onClose={onCloseModal} popup={true}>
+      <Modal className={`${mode=='light'?'':'dark'}`} show={openModal} size="xl" onClose={onCloseModal} popup={true}>
         <div ref={modalRef}>
-          <Modal.Header />
-          <Modal.Body>
-            <h2 className="text-center font-bold text-xl text-orange-500">{name}</h2>
-            <h4 className="font-bold">Select Size</h4>
-            <div className="flex flex-col mb-5">
+          <Modal.Header className='dark:bg-gray-300 dark:text-black ' />
+          <Modal.Body className='dark:bg-slate-300 dark:text-black' dir={language=='ar'?'rtl':'ltr'} > 
+            <h2  className="text-center font-bold text-xl text-orange-500">{name}</h2>
+            <h4  className="font-bold">{translation.selectSize}</h4>
+            <div  className="flex flex-col mb-5">
               {amountArray.map((item) => (
                 <CardPrice
                   key={item[0]} // Ensure key prop is unique
@@ -83,33 +86,15 @@ export default function CardModal({ i, amount, name }) {
               ))}
             </div>
 
-            <div className="flex items-center justify-center space-x-4 mb-2">
-              {/* Decrease Button */}
-              <button
-                onClick={decreaseQuantity}
-                className="bg-red-300 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300"
-              >
-                -
-              </button>
-
-              {/* Quantity Display */}
-              <span className="text-xl font-bold">{quantity}</span>
-
-              {/* Increase Button */}
-              <button
-                onClick={increaseQuantity}
-                className="bg-orange-200 text-white px-4 py-2 rounded hover:bg-orange-400 transition duration-300"
-              >
-                +
-              </button>
-            </div>
+            <DecIncCount increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} quantity={quantity} />
+                     
             <div className="w-full">
               <Button
                 disabled={!selectedPrice}
                 onClick={handleOrder}
                 className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
               >
-                Confirm
+                {translation.confirm}
               </Button>
             </div>
           </Modal.Body>

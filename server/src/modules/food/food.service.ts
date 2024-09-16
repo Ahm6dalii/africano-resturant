@@ -68,8 +68,14 @@ export class FoodService {
     const skip = (page - 1) * limit;
 
     const query: any = {};
+    console.log(filters.category);
+    
+    let  categoryObjectId = new Types.ObjectId(filters.category);
+    console.log(categoryObjectId);
     if (filters.category) {
-      query.category = filters.category;
+      query.category =  categoryObjectId;
+     return  await this.foodModel
+      .find({category:categoryObjectId})
     }
     if (filters.name) {
       query.name = { $regex: filters.name, $options: 'i' };
@@ -79,8 +85,7 @@ export class FoodService {
     }
     const foods = await this.foodModel
       .find()
-      .sort({ _id: -1 })
-
+      .sort({ _id: 1 })
       .skip(skip)
       .limit(limit)
       .populate({ path: 'category', select: 'name' })
@@ -146,8 +151,19 @@ export class FoodService {
       .limit(limit)
       .populate({ path: 'category', select: 'name' })
       .exec();
-  
-    return items;
+      const total = await this.foodModel
+      .find({ category: categoryObjectId }).countDocuments();
+
+      const totalPages = Math.ceil(total / limit);
+
+    // return items;
+    return {
+      total,
+      totalPages,
+      page,
+      limit,
+      data:items,
+    };
   }
   
 
