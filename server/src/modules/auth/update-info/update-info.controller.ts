@@ -10,6 +10,7 @@ export class UpdateInfoController {
 @Patch()  
 @UseInterceptors(FileInterceptor('file'))
 async updateInfo(@Body() body:any ,@Headers() header,@UploadedFile() file: Express.Multer.File){
+
     console.log(file,'sdsdssds');
 
     const {token} =header
