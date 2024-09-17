@@ -80,6 +80,7 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
         
         const response = await axios.post(`${link}/signup`, formObj);
         console.log('Success:', response.data);
+
         toast.success('User Successfully Created !')
         disableTimeOut= setTimeout(() => {
           navigate('./confirm')     
@@ -88,6 +89,7 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
         console.error('Error:', error);
         toast.error(error.response?.data?.message)
         setErrorMessage(error.response?.data?.message); 
+
         
       } finally {
         setLoading(false);  

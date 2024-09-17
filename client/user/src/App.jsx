@@ -19,6 +19,9 @@ import Categories from './pages/categories/Categories'
 import UpdateUserInfo from "./pages/updateUserInfo/UpdateUserInfo";
 import UpdatePassword from './pages/updatePassword/UpdatePassword';
 import OrderList from './pages/orderList/OrderList';
+import ForgetPass from './pages/forgetPass/ForgetPass'
+import EnterOtp from './pages/enterOtp/EnterOtp'
+import ConfirmEmail from './pages/confirmEmail/ConfirmEmail'
 
 function App() {
   const queryClient = new QueryClient();
@@ -34,6 +37,9 @@ function App() {
     <Route path='/about' element={ <About></About>}></Route>
     <Route path='/login' element={ <Login></Login>}></Route>
     <Route path='/register' element={ <Register></Register>}></Route>
+    <Route path='/forgot-password/:path' element={ <ForgetPass></ForgetPass>}></Route>
+    <Route path='/resetPass' element={ <EnterOtp></EnterOtp>}></Route>
+    <Route path='/confirm' element={ <ConfirmEmail></ConfirmEmail>}></Route>
 
     <Route path='/contact' element={ <Contact></Contact>}></Route>
     <Route path='/categories' element={ <Categories></Categories>}></Route>
