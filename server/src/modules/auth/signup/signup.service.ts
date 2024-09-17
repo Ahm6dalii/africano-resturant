@@ -17,9 +17,10 @@ export class SignupService {
         let user = await this.userModel.findOne({ email: body.email })
         if (user) throw new HttpException('already registerde', HttpStatus.CONFLICT);
         // console.log(body);
+        body.image='https://res.cloudinary.com/dbifogzji/image/upload/v1726598405/Africano/user-profile/wbn7vr7zmkrnh3lhdr3j.jpg'
         body.password = await bcrypt.hash(body.password, 10);
         const addedUser= await this.userModel.create(body)
         this._MailService.sendMail(addedUser.email,addedUser.OTBCode)
-        return {message:"success",addedUser}
+        return {message:"User Created Successfully"}
     }
 }
