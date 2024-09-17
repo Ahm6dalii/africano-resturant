@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const Login = () => {
@@ -103,9 +103,9 @@ const Login = () => {
         </button>
 
         <div className="mt-4 text-center">
-          <a href="/forgot-password" className="text-blue-500 hover:text-blue-700">
-          {translation.forgetPassword }
-          </a>
+          <Link to={"/forgot-password/resetpass"} className="text-blue-500 hover:text-blue-700">
+          {translation.forgetPassword}
+          </Link>
           <p className='dark:text-white'>{translation.newToAfricano }  <span className='text-blue-500 hover:text-blue-700'><a href="/register">{translation.joinNow }</a></span></p> 
         </div>
         

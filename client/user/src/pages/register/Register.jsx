@@ -72,7 +72,7 @@ const Register = () => {
         const response = await axios.post('http://localhost:3000/signup', formObj);
         console.log('Success:', response.data);
         alert('Signup successful!');
-        navigate('/')
+        navigate('/confirm')
       } catch (error) {
         
         console.error('Error:', error.response ? error.response.data : error.message);
