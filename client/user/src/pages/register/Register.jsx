@@ -1,18 +1,26 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-const Register = () => {
+import { Link, useNavigate } from 'react-router-dom';
+import LabelIcon from '../../components/ReactI-cons/label/LabelIcon';
+import PhoneIcon from '../../components/ReactI-cons/phoneIcon/PhoneIcon';
+import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
+import toast, { LoaderIcon } from 'react-hot-toast';
+import LockIcon from './../../components/ReactI-cons/lockIcon/LockIcon';
+import { List } from 'flowbite-react';
+import { HiXCircle } from 'react-icons/hi';
+import { LoginModal } from '../../components/modal/login/modal.login';
+const Register = ({  onSwitchToRegister,setOpenModal}) => {
   const { translation } = useSelector(state => state.lang)
+  const {link } = useSelector(state => state.apiLink)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false);  // For loading state
-  const [errorMessage, setErrorMessage] = useState("");  // For error state
+  const [errorMessage, setErrorMessage] = useState("");  // For error state 
   const navigate=useNavigate()
+  let disableTimeOut;
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
@@ -26,7 +34,7 @@ const Register = () => {
       phoneNumber: '',
       password: '',
       address:'',
-      // confirmPassword: '',
+      confirmPassword: '',
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -65,35 +73,53 @@ const Register = () => {
       console.log(formObj);
       console.log(values);
       setLoading(true);  
+      setErrorMessage('')
       const { confirmPassword, ...formData } = values;
 
       try {
         
-        const response = await axios.post('http://localhost:3000/signup', formObj);
+        const response = await axios.post(`${link}/signup`, formObj);
         console.log('Success:', response.data);
-        alert('Signup successful!');
-        navigate('/confirm')
-      } catch (error) {
+
+        toast.success('User Successfully Created !')
+        disableTimeOut= setTimeout(() => {
+          navigate('./confirm')     
+        }, 1000);
+      } catch (error) {  
+        console.error('Error:', error);
+        toast.error(error.response?.data?.message)
+        setErrorMessage(error.response?.data?.message); 
+
         
-        console.error('Error:', error.response ? error.response.data : error.message);
-        setErrorMessage('Signup failed. Please try again.'); 
       } finally {
         setLoading(false);  
       }
     },
    
   });
+  useEffect(()=>{
+    return()=>{
+       clearTimeout(disableTimeOut)
+    }
+  },[])
 
   return (
-    <div className="flex justify-center items-center py-6  ">
+    <div className="flex justify-center items-center ">
       <form
         onSubmit={formik.handleSubmit}
-        className="border-solid border-2  p-8 rounded-lg shadow-2xl max-w-md  w-full dark:text-black"
+        className=" p-8 rounded-lg  max-w-md  w-full dark:text-black"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center dark:text-white">{translation.register } </h2>
+         
+        <h2 className="text-2xl font-bold mb-6 text-center dark:text-white flex items-center gap-2 justify-center">
+        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+</svg>
+
+          {translation.register } </h2>
 
         <div className="mb-4">
-          <label htmlFor="firstName" className="block text-gray-700 dark:text-white">
+          <label htmlFor="firstName" className="flex gap-1 items-center text-gray-700 dark:text-white">
+            <LabelIcon/>
           {translation.fristName }
           </label>
           <input
@@ -108,14 +134,15 @@ const Register = () => {
             {...formik.getFieldProps('firstName')}
           />
           {formik.touched.firstName && formik.errors.firstName ? (
-            <div className="text-red-500 text-sm mt-1">
-              {formik.errors.firstName}
-            </div>
+             <List>
+             <List.Item className='text-red-600 dark:text-red-500 dark:text-red-500' icon={HiXCircle}>{formik.errors.firstName}</List.Item>
+           </List>
           ) : null}
         </div>
 
         <div className="mb-4">
-          <label htmlFor="lastName" className="block text-gray-700 dark:text-white">
+          <label htmlFor="lastName" className=" text-gray-700 dark:text-white flex gap-1 items-center">
+          <LabelIcon/>
           {translation.lastName }
           </label>
           <input
@@ -130,14 +157,16 @@ const Register = () => {
             {...formik.getFieldProps('lastName')}
           />
           {formik.touched.lastName && formik.errors.lastName ? (
-            <div className="text-red-500 text-sm mt-1">
-              {formik.errors.lastName}
-            </div>
+           
+            <List>
+            <List.Item className='text-red-600 dark:text-red-500' icon={HiXCircle}>{formik.errors.lastName}</List.Item>
+          </List>
           ) : null}
         </div>
 
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 dark:text-white">
+          <label htmlFor="email" className="flex gap-1 items-center text-gray-700 dark:text-white">
+            <EmailIcon/>
           {translation.email }
           </label>
           <input
@@ -152,13 +181,17 @@ const Register = () => {
             {...formik.getFieldProps('email')}
           />
           {formik.touched.email && formik.errors.email ? (
-            <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+            <List>
+            <List.Item className='text-red-600 dark:text-red-500' icon={HiXCircle}>{formik.errors.email}</List.Item>
+          </List>
           ) : null}
         </div>
 
          {/* Phone Number */}
          <div className="mb-4">
-          <label htmlFor="phoneNumber" className="block text-gray-700 dark:text-white">
+
+          <label htmlFor="phoneNumber" className="flex gap-1 items-center text-gray-700 dark:text-white">
+            <PhoneIcon/>
             {translation.phoneNumber}
           </label>
           <input
@@ -173,13 +206,17 @@ const Register = () => {
             {...formik.getFieldProps('phoneNumber')}
           />
           {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-            <div className="text-red-500 text-sm mt-1">{formik.errors.phoneNumber}</div>
+            <List>
+            <List.Item className='text-red-600 dark:text-red-500 ' icon={HiXCircle}>{formik.errors.phoneNumber}</List.Item>
+          </List>
           ) : null}
         </div>
 
 
         <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 dark:text-white">
+          <label htmlFor="password" className="flex gap-1 items-center text-gray-700 dark:text-white">
+          <LockIcon/>
+
           {translation.Password }
           </label>
               <div className='relative'>  
@@ -195,20 +232,21 @@ const Register = () => {
                   {...formik.getFieldProps('password')}
                 />
                   <div className="absolute top-0 right-0 p-2">
-                      <button className="m-0 p-0">
+                      <button type='button' className="m-0 p-0">
                           <i onClick={handleShowPassword} className="fas text-dark fa-eye"></i>
                       </button>
                   </div>
                 </div>
           {formik.touched.password && formik.errors.password ? (
-            <div className="text-red-500 text-sm mt-1">
-              {formik.errors.password}
-            </div>
+            <List>
+            <List.Item className='text-red-600 dark:text-red-500 ' icon={HiXCircle}>{formik.errors.password}</List.Item>
+          </List>
           ) : null}
         </div>
 
         <div className="mb-4">
-          <label htmlFor="confirmPassword" className="block text-gray-700 dark:text-white">
+          <label htmlFor="confirmPassword" className="flex gap-1 items-center text-gray-700 dark:text-white">
+          <LockIcon/>
           {translation.confirmPassword }
           </label>
           <input
@@ -216,26 +254,33 @@ const Register = () => {
             name="confirmPassword"
             type="password"
             className={`mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 ${
-              formik.touched.confirmPassword && formik.errors.confirmPassword
+              formik.touched.confirmPassword && formik.errors.confirmPassword       
                 ? 'border-red-500'
                 : ''
             }`}
             {...formik.getFieldProps('confirmPassword')}
           />
           {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div className="text-red-500 text-sm mt-1">
-              {formik.errors.confirmPassword}
-            </div>
+        
+            <List>
+              <List.Item className='text-red-600 dark:text-red-500' icon={HiXCircle}>{formik.errors.confirmPassword}</List.Item>
+            </List>
           ) : null}
         </div>
-
+ 
+        {errorMessage?
+           <List   >
+             <List.Item className='text-red-600 flex w-fit text-xl m-auto b dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errorMessage}</List.Item>
+           </List>:null}  
         <button
           type="submit"
           className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
         >
-          {translation.signUp }
+          {loading?<i className='fa-solid fa-spin fa-spinner'></i>
+          :translation.signUp}
+        
         </button>
-        <p className='dark:text-white'>{translation.haveAccount } <span className='text-blue-500 hover:text-blue-700'><a href="/login">{translation.signIn }</a></span></p> 
+        <p onClick={setOpenModal} className='dark:text-white'>{translation.haveAccount  }   <span className='text-blue-500 hover:text-blue-700 dark:text-yellow-200'><Link to={'/'}> {translation.home}</Link></span></p> 
       </form>
     </div>
   );
@@ -247,8 +292,3 @@ export default Register;
 
 
 
- // Make the POST request to your backend API
-     // Success response handling
-     // Handle error
-      // Show error message
-      // Hide loading spinner
