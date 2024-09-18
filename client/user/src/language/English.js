@@ -39,6 +39,9 @@ export const En = {
   logout: 'Logout',
   logo: 'Africano',
   categories: 'Categories',
+  changeimg:"Change Profile Pic",
+  updateinfo:"Update Info",
+  updatepass:"Update Password",
   // Food Card
   confirm: 'Confirm',
   order: 'Order',
@@ -129,18 +132,20 @@ export const En = {
     FollowUs:"Follow Us",
     copyright:"© 2024 Africano Restaurant. All Rights Reserved.",
     // otp
-    sendotpforchange:"send otp to your email",
-    sendotp:"send otp",
-    resendotp:"didn't get otp : send otp again ?",
-    otpsucess:"otp had been sent to your email",
-    enterotp:"enter otp",
-    confirmOtptoReset:"Confirm otp to reset password",
+    sendotpforchange:"Send OTP to your email",
+    sendotp:"Send OTP",
+    resendotp:"didn't get OTP : send otp again ?",
+    otpsucess:"OTP had been sent to your email",
+    enterotp:"Enter OTP",
+    confirmOtptoReset:"Confirm OTP to reset password",
     reqOtp:"OTP is required",
     resetpass:"Reset Password",
     newPass:"New Password ",
-    resetsuccess:"password has been reset successfully",
-    confirmsuccess:"email has been confirmed successfully",
-    confirmAcount:"enter otp sent to your email to confrm account",
+    resetsuccess:"Password has been reset successfully",
+    confirmsuccess:"Email has been confirmed successfully",
+    confirmAcount:"Enter OTP sent to your email to confrm account",
     confirmacount:"Confrm Account",
+
+
 
 }   

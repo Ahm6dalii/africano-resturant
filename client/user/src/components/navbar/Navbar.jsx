@@ -28,6 +28,9 @@ export function Navbaar() {
 
   const dropDownLink = [
     { name: translation.setting, href: "setting" },
+    { name: translation.updateinfo, href: "updateinfo" },
+    { name: translation.updatepass, href: "updatepass" },
+    { name: translation.changeimg, href: "changeimg" },
   ];
 
   const logout=()=>{
@@ -68,13 +71,14 @@ export function Navbaar() {
             </span> */}
              
           </Navbar.Brand>
-          {user?<div className="flex md:order-2">
+          {user?<div className="flex md:order-2 ">
             <Dropdown
               arrowIcon={false}
               inline
               label={
                 <Avatar
                   alt="User settings"
+                  className="me-4"
                   img={userInfo?.image}
                   rounded
                 />
@@ -88,13 +92,17 @@ export function Navbaar() {
               </Dropdown.Header>
 
               {dropDownLink.map((dropItem, index) => (
+                 <NavLink to={dropItem.href}>
                 <Dropdown.Item key={index}>
-                  <NavLink to={dropItem.href}>{dropItem.name}</NavLink>{" "}
+                 {dropItem.name}
                 </Dropdown.Item>
+                </NavLink>
               ))}
+               <NavLink to={'/'} onClick={logout}>
                 <Dropdown.Item>
-                  <NavLink to={'/'} onClick={logout}>{translation.logout}</NavLink>
+                 {translation.logout}
                 </Dropdown.Item>
+                </NavLink>
             </Dropdown>
               <Navbar.Toggle />
 
@@ -102,17 +110,7 @@ export function Navbaar() {
             <LoginModal className="flex md:order-2"/>
             <Navbar.Toggle />
             </div>}
-          
-            {/* <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? ` ${navStyle.active} dark:text-white`
-                    : navStyle.link
-                }
-                to={'/login'}
-              >
-                login
-              </NavLink> */}
+         
              
           <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]}`}>
             {navLink.map((navItem, index) => (

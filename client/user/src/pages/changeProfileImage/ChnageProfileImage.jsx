@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Avatar, Button, Modal, FileInput } from "flowbite-react";
 import axios from "axios"; 
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfileImg } from "../../redux/reducers/userAuthSlice";
+import toast from "react-hot-toast";
 
 const ProfileImage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [currentProfileImage, setCurrentProfileImage] = useState();
+  const { user,userInfo } = useSelector((state) => state.auth);
+  const dispatch=useDispatch()
 
   // Handle opening and closing the modal
   const openModal = () => setIsModalOpen(true);
@@ -23,22 +29,30 @@ const ProfileImage = () => {
 
   // Handle form submission (upload the image)
   const onSubmit = async () => {
-
+console.log(user);
+setLoading(true)
     const formData = new FormData();
     formData.append("file", selectedFile);
     axios
       .put("http://localhost:3000/change-profile-img", formData,{
         headers: {
           "Content-Type": "multipart/form-data",
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiN2FtYm96byIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwidXNlcklkIjoiNjZkZDZkNzZjMTBiOTJmZjJhYzFiZmEwIiwiaWF0IjoxNzI1OTczOTI3fQ.frwSYsfA2frNOH6bHcbbMwyJHjCVrCWijCi3IcsHiqM",
+          token:`${user}`,
         },
       })
       .then(({ data }) => {
         console.log(data);
+        setLoading(false)
+        dispatch(changeProfileImg(data.updatedUser.image))
+        toast.success("Profile Image Updated Successfuly")
+        setIsModalOpen(false)
+        setPreviewUrl('')
       })
       .catch((err) => {
-        console.log("error" , err);
+        setLoading(false)
+        if(err.response.data.message){
+          toast.error("Fail to Update Profile Image ")
+        }
       });
 
   };
@@ -46,7 +60,7 @@ const ProfileImage = () => {
   return (
     <div className="flex flex-col items-center space-y-4">
       {/* Profile Image */}
-      <Avatar img={currentProfileImage} size="lg" rounded={true} />
+      <Avatar img={userInfo.image} size="lg" rounded={true} />
       <Button onClick={openModal} gradientDuoTone="purpleToBlue">
         Change Image
       </Button>
@@ -73,14 +87,15 @@ const ProfileImage = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={onSubmit} gradientDuoTone="purpleToBlue">
-            Submit
+          <Button onClick={previewUrl&&onSubmit} gradientDuoTone="purpleToBlue">
+            {isLoading?<i className="fa-solid fa-spin fa-spinner"></i>:"Submit"}
           </Button>
           <Button color="gray" onClick={closeModal}>
             Cancel
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </div>
   );
 };

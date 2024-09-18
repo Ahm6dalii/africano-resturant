@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "flowbite-react";
 import axios from "axios";
+import Loading from "../../components/loading/Loading";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]); // State to store user orders
+  const {link } = useSelector(state => state.apiLink)
+  const { user,userInfo } = useSelector((state) => state.auth);
+
   useEffect(() => {
     // Fetch orders when the component mounts
     const fetchOrders = async () => {
       try {
-        const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:3000/order/userOrders",
+          `${link}/order/userOrders`,
           {
-            headers: { token: `${token}` },
+            headers: { token: `${user}` },
           }
         );
         //console.log(response.data);
@@ -25,6 +28,9 @@ const OrderList = () => {
     fetchOrders();
   }, []);
 
+  if(!orders){
+    <Loading></Loading>
+  }
   console.log(orders);
   if (orders.length === 0) {
     return (

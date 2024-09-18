@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import { TextInput, Label, Button, Modal } from "flowbite-react";
+import { TextInput, Label, Button, Modal,List } from "flowbite-react";
 import axios from "axios";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import LabelIcon from "../../components/ReactI-cons/label/LabelIcon";
+import PhoneIcon from "../../components/ReactI-cons/phoneIcon/PhoneIcon";
+import AddressIcon from "../../components/ReactI-cons/AdressIcon/AddressIcon";
+import SettingIcon from "../../components/ReactI-cons/setting/settingIcon";
+import { HiXCircle } from "react-icons/hi";
+import { changeProfileInfo } from "../../redux/reducers/userAuthSlice";
+import toast from "react-hot-toast";
 
 
 
@@ -12,7 +19,10 @@ const UpdateUserInfo = () => {
 
   const { translation } = useSelector((state) => state.lang);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { user,userInfo } = useSelector((state) => state.auth);
+  const {link } = useSelector(state => state.apiLink)
+  const [isLoading, setLoading] = useState(false);
+  const dispatch=useDispatch()
   // Define the validation schema for name, address, and phone number
   const schema = yup.object({
     name: yup
@@ -42,141 +52,115 @@ const UpdateUserInfo = () => {
     resolver: yupResolver(schema),
     mode: "all",
   });
-
-  // const onSubmit = async (data) => {
-  //   data.file = data.file[0]; //
-  //   console.log(data);
-  //   // Upload image to the server using FormData
-  //   // const response = await axios.post(
-  //   //   "http://localhost:3000/upload",
-  //   //   formData,
-  //   //   {
-  //   //     headers: {
-  //   //       "Content-Type": "multipart/form-data",
-  //   //     },
-  //   //   }
-  //   // );
-  //   // console.log("Image uploaded:", response.data);
-  //   // data.image = response.data.image; // Update the image field with the uploaded image URL
-
-  //   // // Update user info on the server using the updated data
-  //   // const response = await axios.patch(
-  //   //   "http://localhost:3000/update-info",
-  //   //   data,
-  //   //   {
-  //   //     headers: {
-  //   //       Authorization: `Bearer ${token}`,
-  //   //     },
-  //   //   }
-  //   // );
-  //   // console.log("User Info Updated:", response.data);
-  //   // setIsModalOpen(true); // Display success message
-  //   // setIsModalOpen(true);
-  //   // setIsModalOpen(true); // Display success message
-
-  //   try {
-  //     const token = localStorage.getItem("token");
-
-  //     if (!token) {
-  //       throw new Error("Token not found. Please log in again.");
-  //     }
-
-  //     // const response = await axios.patch(
-  //     //   "http://localhost:3000/update-info",
-  //     //   data,
-  //     //   {
-  //     //     headers: {
-  //     //       "Content-Type": "multipart/form-data",
-  //     //       token: `${token}`,
-  //     //     },
-  //     //   }
-  //     // );
-
-  //     console.log("User Info Updated:", response.data);
-  //     setIsModalOpen(true);
-  //   } catch (error) {
-  //     console.error("Error updating user info:", error);
-  //   }
-  // };
+  
+ 
   const onSubmit = (data) => {
+    setLoading(true)
     data.file = data.file[0];
     console.log(data);
     axios
-      .patch("http://localhost:3000/update-info", data, {
+      .patch(`${link}/update-info`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiN2FtYm96byIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwidXNlcklkIjoiNjZkZDZkNzZjMTBiOTJmZjJhYzFiZmEwIiwiaWF0IjoxNzI1OTczOTI3fQ.frwSYsfA2frNOH6bHcbbMwyJHjCVrCWijCi3IcsHiqM",
+          token:`${user}`,
         },
       })
       .then(({ data }) => {
         console.log(data);
+        const {name,address,phone,image}=data.updatedUser;
+        dispatch(changeProfileInfo({name,address,phone,image}))
+        setLoading(false)
+        toast.success("User Info Updated Successfuly")
       })
       .catch((err) => {
-        console.log("error");
+        console.log("error",err);
+        setLoading(false)
+        if(err?.response?.data.message)
+        {
+          toast.error("Faile to Update User Info")
+
+        }
       });
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold text-center mb-6">
+    <div className="container mx-auto p-4 dark:text-black">
+      <h1 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-3 dark:text-white ">
+       <SettingIcon/>
         {translation.update_info}
       </h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg"
+        className="max-w-md mx-auto dark:bg p-8 rounded-lg "
       >
         {/* Name field */}
         <div className="mb-4">
-          <Label htmlFor="name" value={translation.name} />
+          <div className="flex items-center gap-1">
+          <LabelIcon></LabelIcon>
+          <Label className="dark:text-white" htmlFor="name" value={translation.name} />
+          </div>
           <TextInput
             id="name"
             name="name"
             type="text"
+            color={"white"}
             placeholder={translation.name}
             {...register("name")}
           />
           {errors.name && (
-            <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>
+            <List   >
+            <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errors.name.message}</List.Item>
+          </List>
           )}
         </div>
 
         {/* Address field */}
         <div className="mb-4">
-          <Label htmlFor="address" value={translation.address} />
+        <div className="flex items-center gap-1">
+          <AddressIcon/>
+          <Label className="dark:text-white" htmlFor="address" value={translation.address} />
+        </div>
           <TextInput
             id="address"
             name="address"
             type="text"
+            color={"white"}
             placeholder={translation.address}
             {...register("address")}
           />
           {errors.address && (
-            <p className="mt-2 text-sm text-red-500">
-              {errors.address.message}
-            </p>
+              <List   >
+              <List.Item className='text-red-600 flex  text-sm  dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errors.address.message}</List.Item>
+            </List> 
           )}
         </div>
 
         {/* Phone number field */}
         <div className="mb-4">
-          <Label htmlFor="phone" value={translation.phone} />
+        <div className="flex items-center gap-1">
+          <PhoneIcon></PhoneIcon>
+          <Label className="dark:text-white " htmlFor="phone" value={translation.phone} />
+        </div>
           <TextInput
             id="phone"
             name="phone"
             type="text"
+            className=""
+            color={"white"}
             placeholder={translation.phone}
             {...register("phone")}
           />
           {errors.phone && (
-            <p className="mt-2 text-sm text-red-500">{errors.phone.message}</p>
+             <List   >
+             <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errors.phone.message}</List.Item>
+           </List>
           )}
         </div>
 
         {/* Image field */}
         <div className="mb-4">
-          <Label htmlFor="image" value={translation.image} />
+          <Label className="dark:text-white" htmlFor="image" value={translation.image} />
           <input
             id="file"
             name="file"
@@ -184,7 +168,7 @@ const UpdateUserInfo = () => {
             accept="file/*"
             placeholder={translation.image}
             {...register("file")}
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+            className="block w-full dark:text-dark dark:bg-white text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
           />
           {errors.image && (
             <p className="mt-2 text-sm text-red-500">{errors.image.message}</p>
@@ -192,8 +176,9 @@ const UpdateUserInfo = () => {
         </div>
 
         <div className="text-center">
-          <Button type="submit" gradientDuoTone="purpleToBlue">
-            {translation.updateButton}
+          <Button disabled={isLoading} type="submit" gradientDuoTone="purpleToBlue">
+            {isLoading?<i className="fa-solid fa-spin fa-spinner"></i>:translation.updateButton}
+           
           </Button>
         </div>
       </form>
