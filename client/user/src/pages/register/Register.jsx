@@ -41,7 +41,7 @@ const Register = () => {
       .email(`${translation.invalidEmail } `)
       .required(`${translation.reqEmail } `),
       phoneNumber: Yup.string()
-      .matches(/^01\d{9}$/, `${translation.invalidPhone}`) // Phone number must start with "01" and have exactly 11 digits
+      .matches(/^(010|011|012|015)\d{8}$/, `${translation.invalidPhone}`) // Phone number must start with "01" and have exactly 11 digits
       .required(`${translation.reqPhone}`),
       password: Yup.string()
         .min(8, `${translation.minPassword } `)
