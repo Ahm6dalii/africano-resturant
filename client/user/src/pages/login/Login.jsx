@@ -95,7 +95,7 @@ const Login = ({  onSwitchToRegister, closeModal}) => {
     </List>
           ) : null}
         </div>
-
+            
         <div className="mb-4">
           <label htmlFor="password" className="flex items-center gap-2 text-gray-700 dark:text-white">
             <LockIcon/>
