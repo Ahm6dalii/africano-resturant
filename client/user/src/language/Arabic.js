@@ -90,6 +90,34 @@ export const Ar = {
   Phone: 'الهاتف:',
   FollowUs: 'تابعنا',
   copyright: '© 2024 مطعم أفريكانو. جميع الحقوق محفوظة.',
+  
+  newToAfricano:"عضو جديد لدى Africano ؟",
+  joinNow:"الانضمام الان",
+  
+  update_info: "تعديل المعلومات الشخصية",
+  name: "الاسم",
+  address: "العنوان",
+  phone: "رقم الهاتف",
+  image: "صورة الملف الشخصي",
+  updateButton: "تحديث",
+  // menu: "قائمة الطعام",
+  change_pass: "تغيير كلمة السر",
+  current_pass: "كلمة السر الحالية",
+  new_pass: "كلمة السر الجديدة",
+  confirm_pass: "تأكيد كلمة السر الجديدة",
+  change_pass_btn: "تغيير كلمة السر",
+  required_name: "الاسم مطلوب",
+  min_char_name: "الاسم يجب ان يكون على الاقل حرفين",
+  required_address: "العنوان مطلوب",
+  min_char_address: "العنوان يجب ان يكون على الاقل خمسة احرف",
+  required_phone: "رقم الهاتف مطلوب",
+  match_phone: " رقم الهاتف غير صالح يجب ان يكون على الاقل 11 رقم.",
+  required_image: "الصورة مطلوبة",
+  min_char_pass: "كلمة السر يجب ان تكون على الاقل 8 احرف وارقام",
+  match_pass: "كلمة السر يجب ان تحتوي على الاقل حرف واحد ورقم واحد",
+  required_password: "كلمة السر الجديدة مطلوبة",
+  required_confirm_pass: "تأكيد كلمة السر الجديدة مطلوب",
+  match_confirm_pass: "يجب ان تكون كلمة السر وتأكيد كلمة السر متطابقان",
 
   // contact
   contactUs: 'تواصل معنا',
@@ -107,5 +135,37 @@ export const Ar = {
 
 
 
+    //Food catogery
+    pizza: "بيتزا",
+    pasta: "باستا",
+    appetizers: "مقبلات",
+    salad: "سلطة",
+    drinks: "مشروبات",
+    // hero
+    heroAfricano: "مطعم أفريكانو",
+    heroDesc: "نقدم البيتزا والمعكرونة الأصيلة",
+    heroCaption: "نسعدك ببيتزا ومعكرونة أصلية، محضرة بشغف ومكونات طازجة!",
+    OrderNow: "اطلب الآن",
+    vistUs: "زرنا",
+    // footer
+    footerDesc: "نقدم البيتزا والمعكرونة الأصيلة بشغف ومكونات طازجة.",
+    DeliveryContact: "التوصيل والتواصل",
+    Phone: "الهاتف:",
+    FollowUs: "تابعنا",
+    copyright: "© 2024 مطعم أفريكانو. جميع الحقوق محفوظة.",
+    // otp
+    sendotpforchange: "أرسل رمز التحقق إلى بريدك الإلكتروني",
+sendotp: "أرسل رمز التحقق",
+resendotp: "لم تستلم رمز التحقق؟ أعد إرساله؟",
+otpsucess: "تم إرسال رمز التحقق إلى بريدك الإلكتروني",
+enterotp: "أدخل رمز التحقق",
+confirmOtptoReset: "أكد رمز التحقق لإعادة تعيين كلمة المرور",
+reqOtp: "رمز التحقق مطلوب",
+resetpass: "إعادة تعيين كلمة المرور",
+newPass: "كلمة مرور جديدة",
+resetsuccess: "تمت إعادة تعيين كلمة المرور بنجاح",
+confirmsuccess: "تم تأكيد البريد الإلكتروني بنجاح",
+confirmAcount: "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد الحساب",
+confirmacount: "تأكيد الحساب",
 
 }

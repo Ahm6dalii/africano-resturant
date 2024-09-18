@@ -15,6 +15,8 @@ export default function CardModal({ i, amount, name,itemId }) {
   const [orderData, setOrderData] = useState(null);
   const { translation,language } = useSelector((state) => state.lang);
   const {mode}=useSelector(state=>state.mode)
+  const {link } = useSelector(state => state.apiLink)
+
   const dispatch=useDispatch()
 
   // Create a ref to attach to the modal body
@@ -45,7 +47,7 @@ export default function CardModal({ i, amount, name,itemId }) {
 
   const AddToCard=async (id,data)=>{
     setLoading(true)
-    axios.post(`http://localhost:3000/cart/${id}`,data,{
+    axios.post(`${link}/cart/${id}`,data,{
       headers:{
         'Content-Type': 'application/json',
         token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiN2FtYm96byIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwidXNlcklkIjoiNjZkZDZkNzZjMTBiOTJmZjJhYzFiZmEwIiwiaWF0IjoxNzI1OTczOTI3fQ.frwSYsfA2frNOH6bHcbbMwyJHjCVrCWijCi3IcsHiqM"

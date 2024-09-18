@@ -1,4 +1,5 @@
 export const En = {
+
   update_info: 'Update Your Information',
   name: 'Name',
   address: 'Address',
@@ -18,6 +19,7 @@ export const En = {
   required_phone: 'Phone number is required',
   match_phone: 'Phone number is not valid. Must contain 11 digits.',
   required_image: 'Image is required',
+
 
   min_char_pass: 'Password should be at least 8 characters and numbers',
   match_pass: 'Password must contain at least one letter, one number',
@@ -108,7 +110,37 @@ export const En = {
 
 
   
+    //Food catogery
+    pizza:"Pizza",
+    pasta:"Pasta",
+    appetizers:"Appetizers",
+    salad:"Salad",
+    drinks:"Drinks",
+    // hero
+    heroAfricano:"AFRICANO Resturant,",
+    heroDesc:"WE SERVE AUTHENTIC PIZZA AND PASTA",
+    heroCaption:"Delighting you with authentic pizzas and pastas, crafted with passion and fresh ingredients!",
+    OrderNow:"Order Now",
+    vistUs:"Vist Us",
+    // footer
+    footerDesc:"Serving authentic pizza and pasta with passion and fresh ingredients.",
+    DeliveryContact:"Delivery & Contact",
+    Phone:"Phone:",
+    FollowUs:"Follow Us",
+    copyright:"© 2024 Africano Restaurant. All Rights Reserved.",
+    // otp
+    sendotpforchange:"send otp to your email",
+    sendotp:"send otp",
+    resendotp:"didn't get otp : send otp again ?",
+    otpsucess:"otp had been sent to your email",
+    enterotp:"enter otp",
+    confirmOtptoReset:"Confirm otp to reset password",
+    reqOtp:"OTP is required",
+    resetpass:"Reset Password",
+    newPass:"New Password ",
+    resetsuccess:"password has been reset successfully",
+    confirmsuccess:"email has been confirmed successfully",
+    confirmAcount:"enter otp sent to your email to confrm account",
+    confirmacount:"Confrm Account",
 
-
-
-}
+}   
