@@ -19,12 +19,12 @@ const Login = ({  onSwitchToRegister, closeModal}) => {
   const {link } = useSelector(state => state.apiLink)
   const [errorMessage, setErrorMessage] = useState("");  // For error state 
   const dispatch =useDispatch();
+  const navigate=useNavigate()
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
 } 
-  const navigate=useNavigate()
-  const formik = useFormik({
+const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -47,11 +47,14 @@ const Login = ({  onSwitchToRegister, closeModal}) => {
         console.log(data);
         dispatch(setUser(data?.token))
         toast.success("User Login Successfuly !")
+        navigate('/')
         closeModal()
       } catch (error) {
-        console.log(error);
-        
-        if(error.response?.data?.message)toast.error(error.response?.data?.message)
+        console.log(error);  
+        if(error.response?.data?.message)
+        {
+          toast.error(error.response?.data?.message)
+        }
         setErrorMessage(error.response?.data?.message )
       }finally{
         setLoading(false)

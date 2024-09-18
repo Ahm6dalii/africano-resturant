@@ -4,13 +4,20 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import LabelIcon from '../../components/ReactI-cons/label/LabelIcon';
+import { HiXCircle } from 'react-icons/hi';
+import { List } from 'flowbite-react';
+import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
+import CheckIcon from '../../components/ReactI-cons/CheckIcon/CheckIcon';
+import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
 
 const EnterOtp = () => {
     const { translation } = useSelector(state => state.lang)
     const [showPassword, setShowPassword] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [isloading, setIsLoading] = useState(false)
+    const {link } = useSelector(state => state.apiLink)
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
@@ -40,15 +47,14 @@ const EnterOtp = () => {
             setErrorMessage("")
             try {
                 // eslint-disable-next-line no-unused-vars
-                const response = await axios.post('http://localhost:3000/reset-password/reset', values);
+                const response = await axios.post(`${link}/reset-password/reset`, values);
                 toast.success(translation.resetsuccess, {
                     duration: 4000,
                     position: 'top-right',
                 })
-                setTimeout(() => {
                     setIsLoading(false)
                     navigate("/login")
-                }, 1500);
+             
             } catch (error) {
                 setErrorMessage(error.response?.data?.message)
                 setIsLoading(false)
@@ -58,14 +64,17 @@ const EnterOtp = () => {
 
     return (
         <div className="flex justify-center items-center pt-6">
-            <Toaster />
             <form
                 onSubmit={formik.handleSubmit}
-                className="border-solid border-2 p-8 rounded-lg shadow-2xl max-w-md w-full dark:text-white"
+                className="  p-8 rounded-lg  max-w-md w-full dark:text-white"
             >
-                <h2 className="text-2xl font-bold mb-6 text-center">{translation.confirmOtptoReset}</h2>
+                <h2 className="flex items-center justify-center gap-2 text-2xl font-bold mb-6 text-center">
+                    <CheckIcon/>
+                    {translation.confirmOtptoReset}
+                    </h2>
                 <div className="mb-4">
-                    <label htmlFor="otp" className="block text-gray-700 dark:text-white ">
+                    <label htmlFor="otp" className="flex items-center gap-1 text-gray-700 dark:text-white ">
+                        <LabelIcon/>
                         {translation.enterotp}
                     </label>
                     <input
@@ -79,14 +88,17 @@ const EnterOtp = () => {
                         {...formik.getFieldProps('otp')}
                     />
                     {formik.touched.otp && formik.errors.otp ? (
-                        <div className="text-red-500 text-sm mt-1">{formik.errors.otp}</div>
+                          <List   >
+                          <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.otp}</List.Item>
+                        </List>
                     ) : null}
                     <Link to={"/forgot-password/resetpass"} className="text-blue-500 hover:text-blue-700">
                         {translation.resendotp}
                     </Link>
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 dark:text-white ">
+                    <label htmlFor="email" className="flex items-center gap-1 text-gray-700 dark:text-white ">
+                       <EmailIcon/>
                         {translation.email}
                     </label>
                     <input
@@ -100,11 +112,14 @@ const EnterOtp = () => {
                         {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email ? (
-                        <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+                        <List   >
+                            <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.email}</List.Item>
+                          </List>
                     ) : null}
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="newPassword" className="block text-gray-700 dark:text-white">
+                    <label htmlFor="newPassword" className="flex items-center gap-1 text-gray-700 dark:text-white">
+                      <LockIcon/>
                         {translation.newPass}
                     </label>
                     <div className='relative'>
@@ -125,12 +140,15 @@ const EnterOtp = () => {
                         </div>
                     </div>
                     {formik.touched.newPassword && formik.errors.newPassword ? (
-                        <div className="text-red-500 text-sm mt-1">{formik.errors.newPassword}</div>
+                        <List   >
+                        <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.newPassword}</List.Item>
+                      </List>
                     ) : null}
                 </div>
-                <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+                {errorMessage&&<p className="text-red-500 text-sm mt-1">{errorMessage}</p>}
                 <button
                     type="submit"
+                    disabled={isloading}
                     className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
                 >
                     {isloading ? <i className='fas fa-spin fa-spinner'></i> : translation.resetpass}

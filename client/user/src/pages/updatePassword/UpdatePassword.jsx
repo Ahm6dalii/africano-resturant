@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { TextInput, Button, Label } from "flowbite-react";
+import { TextInput, Button, Label, List } from "flowbite-react";
 import axios from "axios";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import AddressIcon from "../../components/ReactI-cons/AdressIcon/AddressIcon";
+import LockIcon from "../../components/ReactI-cons/lockIcon/LockIcon";
+import { HiXCircle } from "react-icons/hi";
+import { toast } from 'react-hot-toast';
+import SettingIcon from "../../components/ReactI-cons/setting/settingIcon";
 
 // Schema using Yup
 
@@ -12,6 +17,10 @@ import { useSelector } from 'react-redux';
 const UpdatePassword = () => {
   // localization
   const { translation } = useSelector((state) => state.lang); 
+  const { user,userInfo } = useSelector((state) => state.auth);
+  const {link } = useSelector(state => state.apiLink)
+  const [isLoading, setLoading] = useState(false);
+  const dispatch=useDispatch()
   
   const schema = yup.object({
     newPassword: yup
@@ -37,78 +46,98 @@ const UpdatePassword = () => {
 
   // Handle form submission
   const onSubmit = async (data) => {
+    setLoading(true)
+
     try {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        alert("Token not found. Please log in again.");
-        return;
-      }
-
       // Send request to backend
       const response = await axios.put(
-        "http://localhost:3000/update-pasword",
+        `${link}/update-pasword`,
         {
           newPassword: data.newPassword,
         },
         {
           headers: {
-            token: `${token}`,
+            token: `${user}`,
           },
         }
       );
 
       // Display success message
       console.log("Password Updated:", response.data);
-      alert("Password updated successfully!");
+      toast.success("Password updated successfully!")
+      setLoading(false)
     } catch (error) {
       // Handle error
+      setLoading(false)
+      if(error?.response?.data?.message){
+        toast.error("Failed to update password. Please try again.")
+      }
       console.error("Error updating password:", error);
-      alert("Failed to update password. Please try again.");
+      
     }
   };
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-semibold text-center mb-6">
+      <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-6">
+      <SettingIcon/>
         {translation.change_pass}
       </h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg"
+        className="max-w-md mx-auto  p-8 rounded-lg "
       >
 
         {/* New Password */}
         <div className="mb-4">
+        <div className="flex items-center gap-1">
+          <LockIcon/>
           <Label htmlFor="newPassword" value={translation.new_pass} />
+        </div>
           <TextInput
             id="newPassword"
             name="newPassword"
             type="password"
+            color={'white'}
+            className="text-black"
             placeholder={translation.new_pass}
             {...register("newPassword")}
           />
-          <p className="text-red-500">{errors.newPassword?.message}</p>
+          {errors.newPassword&&
+              <List   >
+              <List.Item className='text-red-600 flex  text-sm  dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errors.newPassword?.message}</List.Item>
+            </List> 
+          }
         </div>
 
         {/* Confirm New Password */}
         <div className="mb-4">
-          <Label htmlFor="confirmPassword" value={translation.confirm_pass} />
+        <div className="flex items-center gap-1">
+        <LockIcon/>
+        <Label htmlFor="confirmPassword" value={translation.confirm_pass} />
+        </div>
           <TextInput
             id="confirmPassword"
             name="confirmPassword"
             type="password"
+            color={'white'}
+            className="text-black"
             placeholder={translation.confirm_pass}
             {...register("confirmPassword")}
           />
-          <p className="text-red-500">{errors.confirmPassword?.message}</p>
+           {errors.confirmPassword&&
+              <List   >
+              <List.Item className='text-red-600 flex  text-sm  dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errors.confirmPassword?.message}</List.Item>
+            </List> 
+          }
         </div>
 
         {/* Submit Button */}
         <div className="text-center">
-          <Button type="submit" gradientDuoTone="purpleToBlue">
-            {translation.change_pass_btn}
+          <Button disabled={isLoading} type="submit" gradientDuoTone="purpleToBlue">
+            {isLoading? <i className="fa-solid fa-spin fa-spinner"></i>:translation.change_pass_btn}
+           
           </Button>
         </div>
       </form>

@@ -12,7 +12,7 @@ export default function Categories() {
     const getAllCategories=async()=>{
         setIsLoading(true)
         try {
-            const {data} =await axios.get(`${link}}/api/categories`)
+            const {data} =await axios.get(`${link}/api/categories`)
             console.log(data);
             setCategories(data)
         } catch (error) {

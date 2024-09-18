@@ -83,7 +83,7 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
 
         toast.success('User Successfully Created !')
         disableTimeOut= setTimeout(() => {
-          navigate('./confirm')     
+          navigate('/confirm')     
         }, 1000);
       } catch (error) {  
         console.error('Error:', error);

@@ -36,22 +36,34 @@ function App() {
     <Route path='/about' element={ <About></About>}></Route>
     <Route path='/login' element={ <Login></Login>}></Route>
     <Route path='/register' element={ <Register></Register>}></Route>
+
+    <Route path='/contact' element={ <Contact></Contact>}></Route>
+    <Route path='/categories' element={ <Categories></Categories>}></Route>
+    <Route path='/menu' element={ <Menu></Menu>}>
+    <Route path='/menu/:id' element={<FoodCatogery></FoodCatogery>}></Route>
+    </Route>
+    <Route path='/setting' element={<ProtectedRoot><Setting></Setting></ProtectedRoot>}>
+    </Route>
     <Route path='/forgot-password/:path' element={ <ForgetPass></ForgetPass>}></Route>
     <Route path='/resetPass' element={ <EnterOtp></EnterOtp>}></Route>
     <Route path='/confirm' element={ <ConfirmEmail></ConfirmEmail>}></Route>
     <Route path="/contact" element={<Contact></Contact>}></Route>
-     <Route path="/updateinfo" element={<UpdateUserInfo />}></Route>
-     <Route path="/updatepass" element={<UpdatePassword />}></Route>
-    Route path="/changeimg" element={<ProfileImage />}></Route>
+    <Route path="/updateinfo" element={<UpdateUserInfo />}></Route>
+    <Route path="/updatepass" element={<UpdatePassword />}></Route>
+    <Route path="/changeimg" element={<ProfileImage />}></Route>
+    <Route path="/forgot-password" element={<ForgetPass />}></Route> 
+    <Route path="/OTP" element={<EnterOtp />}></Route> 
     <Route path="/order" element={<OrderList />}></Route>
-    <Route path="/cart" element={ <ProtectedRoot> <Cart /> </ProtectedRoot> } ></Route>
-     <Route path="*" element={<NotFound></NotFound>}></Route>
-       </Route>
-          </Routes>
-        </BrowserRouter>
-      </QueryClientProvider>
+    <Route path="/cart" element={<ProtectedRoot><Cart /></ProtectedRoot>}></Route>     
+    <Route path='*' element={<NotFound></NotFound>}></Route>
+    </Route>
+   </Routes>
+   </BrowserRouter>
+</QueryClientProvider>
     </>
   );
 }
+
+
 
 export default App;
