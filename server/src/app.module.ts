@@ -16,7 +16,7 @@ import { NotifictionsModule } from './modules/notifictions/notifictions.module';
 
 import { MulterModule } from '@nestjs/platform-express';
 import { CloudinaryModule } from './core/utils/cloudinary/cloudinary.module';
-
+//  adding cart
 @Module({
   imports: [ ConfigModule.forRoot({
     isGlobal: true,  // Makes the configuration available globally

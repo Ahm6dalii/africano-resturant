@@ -9,24 +9,27 @@ export class Cart extends Document {
 
   @Prop([{
     items: { type: Types.ObjectId, ref: 'Food', required: true },
-    amount:Number,
-    description:String,
-    name:String,
+    size: { type: String, required: true }, // Add this if not already present
+    amount: Number, // Use Map to store key-value pairs
+    description:Object,
+    name:Object,
     image:String,
     quantity: { type: Number, required: true, min: 1 }
   }])
 
   items: Array<{
     items: Types.ObjectId;
-    amount:number,
-    description:string,
-    name:string,
+    size: string;
+    amount: any; 
+    description:object,
+    name:object,
     image:string,
     quantity: number;
+    
   }>;
 
   @Prop({ default: 0 })
-  totalPrice: number; // Calculate this dynamically or store it directly
+  totalPrice: number; // Calculate this dynamically or store it dirct
 }
 
 export const CartSchema = SchemaFactory.createForClass(Cart);

@@ -12,7 +12,9 @@ import {
   HttpStatus,
   UseInterceptors,
   UploadedFile,
-  BadRequestException
+  BadRequestException,
+  Patch,
+  Req
 } from '@nestjs/common';
 import { FoodService } from './food.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -21,24 +23,13 @@ import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service'
 @Controller('api/foods')
 export class FoodController {
 
-  constructor(private readonly foodsService: FoodService ,private readonly cloudinaryService: CloudinaryService) {}
-   options= {
-    width: 1870,
-    height: 1250,
-    crop:'fill',
-    gravity: 'auto',
-    folder: 'Africano/Food'
-  }
+  constructor(private readonly foodsService: FoodService, private readonly cloudinaryService: CloudinaryService) { }
+
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  async create(@Body() foodDto: any,@UploadedFile() file: Express.Multer.File) {
-   const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
-      throw new BadRequestException('Invalid file type.');
-    });
-    foodDto.image=foodImage.url
-    console.log(foodDto)
-    return this.foodsService.create(foodDto);
+  async create(@Body() foodDto: any, @UploadedFile() file: Express.Multer.File) {
+    return this.foodsService.create(foodDto, file);
   }
 
   @Get()
@@ -54,14 +45,24 @@ export class FoodController {
     return this.foodsService.findAll(filters, +page, +limit);
   }
 
+  @Get('cat')
+  async findAllByCategory(
+    @Query('category') category: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1,
+  ) {
+    return this.foodsService.findAllByCategory(category, limit, page);
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.foodsService.findOne(id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() foodDto: any) {
-    return this.foodsService.update(id, foodDto);
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('file'))
+  async update(@Param('id') id: string, @Body() foodDto: any, @UploadedFile() file: Express.Multer.File) {
+
+    return this.foodsService.update(id, foodDto, file);
   }
 
   @Delete(':id')
@@ -70,11 +71,13 @@ export class FoodController {
   }
 
   @Post('/review/:id')
-  addReview(@Param('id') id: any, @Body() body: any, @Headers() header) {
+  addReview(@Param('id') id: any, @Body() body: any, @Headers() header, @Req() req) {
+    console.log(id, "id for review");
+
     const { token } = header
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN)
     }
-    return this.foodsService.addReview(id, body, token)
+    return this.foodsService.addReview(id, body, token, req)
   }
 }

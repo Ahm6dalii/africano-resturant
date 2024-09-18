@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CategoriesService } from './categories.service';
 import { CategoriesController } from './categories.controller';
 import { Category, CategorySchema } from '../../core/schemas/categories.schema'
+import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -10,6 +11,6 @@ import { Category, CategorySchema } from '../../core/schemas/categories.schema'
     ]),
   ],
   controllers: [CategoriesController],
-  providers: [CategoriesService],
+  providers: [CategoriesService, CloudinaryService],
 })
 export class CategoriesModule {}

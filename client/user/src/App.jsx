@@ -9,6 +9,8 @@ import ProtectedRoot from './pages/protectedRoot/ProtectedRoot'
 import Setting from './pages/setting/Setting'
 import Contact from './pages/cotact/Contact'
 import Cart from './pages/cart/Cart'
+import FoodDetails from './pages/FoodDetails/FoodDetails'
+import Order from './pages/order/Order'
 
 function App() {
 
@@ -17,21 +19,23 @@ function App() {
 
   return (
     <>
-<QueryClientProvider client={queryClient}>
-   <BrowserRouter >
-   <Routes>
-    <Route path='' element={<Layout ></Layout>}>
-    <Route path='' element={<Home></Home>}></Route>
-    <Route path='/about' element={ <About></About>}></Route>
-    <Route path='/contact' element={ <Contact></Contact>}></Route>
-    <Route path='/setting' element={<ProtectedRoot><Setting></Setting></ProtectedRoot>}>
-    </Route>
-    <Route path="/cart" element={<ProtectedRoot><Cart /></ProtectedRoot>}></Route>     
-    <Route path='*' element={<NotFound></NotFound>}></Route>
-    </Route>
-   </Routes>
-   </BrowserRouter>
-</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter >
+          <Routes>
+            <Route path='' element={<Layout ></Layout>}>
+              <Route path='' element={<Home></Home>}></Route>
+              <Route path='/food/:id' element={<FoodDetails></FoodDetails>}></Route>
+              <Route path='/order' element={<Order></Order>}></Route>
+              <Route path='/about' element={<About></About>}></Route>
+              <Route path='/contact' element={<Contact></Contact>}></Route>
+              <Route path='/setting' element={<ProtectedRoot><Setting></Setting></ProtectedRoot>}>
+              </Route>
+              <Route path="/cart" element={<Cart />}></Route>
+              <Route path='*' element={<NotFound></NotFound>}></Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </>
   );
 }
