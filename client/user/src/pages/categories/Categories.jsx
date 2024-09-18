@@ -7,10 +7,12 @@ export default function Categories() {
     const [categories,setCategories]=useState([])
     const {translation}=useSelector(state=>state.lang)
     const [isLoading,setIsLoading] = useState(true)
+    const {link } = useSelector(state => state.apiLink)
+
     const getAllCategories=async()=>{
         setIsLoading(true)
         try {
-            const {data} =await axios.get("http://localhost:3000/api/categories")
+            const {data} =await axios.get(`${link}}/api/categories`)
             console.log(data);
             setCategories(data)
         } catch (error) {

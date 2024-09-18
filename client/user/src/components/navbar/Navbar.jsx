@@ -6,15 +6,15 @@ import { changeLang } from "../../redux/reducers/languageSlice";
 import { style } from "framer-motion/client";
 import navStyle from "./navbar.module.css";
 import logo from "../../assets/logo/logo-dr.png";
-  import React, { useState } from "react";
-  import { Button, Modal, FileInput } from "flowbite-react";
-  import axios from "axios"; 
+import { LoginModal } from "../modal/login/modal.login";
+import { logOutUser } from "../../redux/reducers/userAuthSlice";
 export function Navbaar() {
-  const { translation } = useSelector((state) => state.lang);
   const { mode } = useSelector((state) => state.mode);
+  const { translation } = useSelector((state) => state.lang);
+  const { user,userInfo } = useSelector((state) => state.auth);
   const { language } = useSelector((state) => state.lang);
   const { num } = useSelector((state) => state.cart);
-  console.log(language);
+  console.log(user);
 
   const dispatch = useDispatch();
 
@@ -28,9 +28,11 @@ export function Navbaar() {
 
   const dropDownLink = [
     { name: translation.setting, href: "setting" },
-    { name: translation.logout, href: "/" },
   ];
 
+  const logout=()=>{
+    dispatch(logOutUser())
+  }
   const handleChangeLang = (e) => {
     console.log(e.target.value);
     dispatch(changeLang(e.target.value.toLowerCase()));
@@ -50,46 +52,6 @@ export function Navbaar() {
     },
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [currentProfileImage, setCurrentProfileImage] = useState();
-
-  // Handle opening and closing the modal
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
-  // Handle image selection
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  };
-
-  // Handle form submission (upload the image)
-  const onSubmit = async () => {
-
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    axios
-      .put("http://localhost:3000/change-profile-img", formData,{
-        headers: {
-          "Content-Type": "multipart/form-data",
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiN2FtYm96byIsImVtYWlsIjoiYWhtZWRAZ21haWwuY29tIiwidXNlcklkIjoiNjZkZDZkNzZjMTBiOTJmZjJhYzFiZmEwIiwiaWF0IjoxNzI1OTczOTI3fQ.frwSYsfA2frNOH6bHcbbMwyJHjCVrCWijCi3IcsHiqM",
-        },
-      })
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log("error" , err);
-      });
-
-  };
-
   return (
     <>
       <div className="dark:bg-black bg-zinc-200 shadow">
@@ -99,28 +61,29 @@ export function Navbaar() {
           rounded
           className="py-1 container dark:bg-black bg-gray-200  m-auto"
         >
-          <Navbar.Brand className="" href="https://flowbite-react.com">
+          <Navbar.Brand className="" >
             <img src={logo} className="w-[80px]  " alt="Flowbite React Logo" />
             {/* <span className="self-center whitespace-nowrap text-xl font-semibold  dark:text-white">
              {translation.logo}
             </span> */}
+             
           </Navbar.Brand>
-          <div className="flex md:order-2">
+          {user?<div className="flex md:order-2">
             <Dropdown
               arrowIcon={false}
               inline
               label={
                 <Avatar
                   alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  img={userInfo?.image}
                   rounded
                 />
               }
             >
               <Dropdown.Header>
-                <span className="block text-sm">Bonnie Green</span>
+                <span className="block text-sm"> {userInfo?.name}</span>
                 <span className="block truncate text-sm font-medium">
-                  name@flowbite.com
+                  {userInfo?.email}
                 </span>
               </Dropdown.Header>
 
@@ -129,72 +92,28 @@ export function Navbaar() {
                   <NavLink to={dropItem.href}>{dropItem.name}</NavLink>{" "}
                 </Dropdown.Item>
               ))}
-            </Dropdown>
-            {/* <Dropdown
-              arrowIcon={false}
-              inline
-              label={
-                <Avatar
-                  alt="User settings"
-                  img={currentProfileImage}
-                  onClick={openModal}
-                  className="cursor-pointer"
-                  rounded
-                />
-              }
-            >
-              <Dropdown.Header>
-                <span className="block text-sm">Bonnie Green</span>
-                <span className="block truncate text-sm font-medium">
-                  name@flowbite.com
-                </span>
-              </Dropdown.Header>
-
-              {dropDownLink.map((dropItem, index) => (
-                <Dropdown.Item key={index}>
-                  <NavLink to={dropItem.href}>{dropItem.name}</NavLink>
+                <Dropdown.Item>
+                  <NavLink to={'/'} onClick={logout}>{translation.logout}</NavLink>
                 </Dropdown.Item>
-              ))}
+            </Dropdown>
+              <Navbar.Toggle />
 
-              <Dropdown.Item>
-                <Button onClick={openModal} gradientDuoTone="purpleToBlue">
-                  Change Image
-                </Button>
-              </Dropdown.Item>
-            </Dropdown> */}
-
-            {/* Modal for Changing Profile Image */}
-            <Modal show={isModalOpen} size="md" onClose={closeModal}>
-              <Modal.Header>Change Profile Image</Modal.Header>
-              <Modal.Body>
-                <div className="space-y-4">
-                  {/* File Input */}
-                  <FileInput
-                    id="profileImage"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                  {/* Image Preview */}
-                  {previewUrl && (
-                    <img
-                      src={previewUrl}
-                      alt="Preview"
-                      className="w-40 h-40 rounded-full shadow-lg mx-auto"
-                    />
-                  )}
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button onClick={onSubmit} gradientDuoTone="purpleToBlue">
-                  Submit
-                </Button>
-                <Button color="gray" onClick={closeModal}>
-                  Cancel
-                </Button>
-              </Modal.Footer>
-            </Modal>
+          </div>:  <div className="flex md:order-2 items-center gap-4">
+            <LoginModal className="flex md:order-2"/>
             <Navbar.Toggle />
-          </div>
+            </div>}
+          
+            {/* <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? ` ${navStyle.active} dark:text-white`
+                    : navStyle.link
+                }
+                to={'/login'}
+              >
+                login
+              </NavLink> */}
+             
           <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]}`}>
             {navLink.map((navItem, index) => (
               <NavLink
@@ -258,27 +177,26 @@ export function Navbaar() {
                 )}
               </label>
 
-              {/* Cart */}
-              <div className="relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className=" text-orange-500 font-semibold  absolute -top-4 left-1">
-                  {num}
-                </span>
-              </div>
-            </div>
+             {/* Cart */}
+             {user&&<div className="relative">
+         <svg
+           xmlns="http://www.w3.org/2000/svg"
+           className="h-5 w-5"
+           fill="none"
+           viewBox="0 0 24 24"
+           stroke="currentColor">
+           <path
+             strokeLinecap="round"
+             strokeLinejoin="round"
+             strokeWidth="2"
+             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+         </svg>
+         <span className=" text-orange-500 font-semibold  absolute -top-4 left-1" >{num}</span>
+       </div>}
+      
+       </div>
+  
+
           </Navbar.Collapse>
         </Navbar>
       </div>

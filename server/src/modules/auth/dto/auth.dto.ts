@@ -21,6 +21,9 @@ export class signUpDto {
     @IsString()
     @IsOptional()
     phone: string;
+
+    @IsOptional()
+    image: string;
 }
 
 export class signInDto {

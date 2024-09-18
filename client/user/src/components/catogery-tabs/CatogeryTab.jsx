@@ -15,7 +15,10 @@ export default function CatogeryTab() {
         .then(({data}) =>{
             // console.log(data,'dfsdfsdfssd');
             setData(data)
-            navigate(`/menu/${data[0]?._id}`); 
+            if (!id) {
+              navigate(`/menu/${data[0]?._id}`);
+          }
+            // navigate(`/menu/${data[0]?._id}`); 
         }).catch((err)=>{
           console.log(err);     
         })
@@ -23,15 +26,13 @@ export default function CatogeryTab() {
     
 
 
-//     useEffect(()=>{
-//       getAllFood() 
-//     },[])
+    // useEffect(()=>{
+    //   getAllFood() 
+    // },[])
 
       useEffect(() => {
         getAllFood();
-        if (!id) {
-            navigate(`/menu/66e5be963dd3a0cb85617de0`);
-        }
+       
     }, [id, navigate]);
 
   return (
