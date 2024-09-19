@@ -97,7 +97,7 @@ export default function CardModal({ i, amount, name,itemId }) {
         {translation.order}
       </Button>
 
-      <Modal className={`${mode=='light'?'':'dark'}`} show={openModal} size="xl" onClose={onCloseModal} popup={true}>
+      <Modal  className={`${mode=='light'?'':'dark'}`} show={openModal} size="xl" onClose={onCloseModal} popup={true}>
         <div ref={modalRef}>
           <Modal.Header className='dark:bg-gray-300 dark:text-black ' />
           <Modal.Body className='dark:bg-slate-300 dark:text-black' dir={language=='ar'?'rtl':'ltr'} > 

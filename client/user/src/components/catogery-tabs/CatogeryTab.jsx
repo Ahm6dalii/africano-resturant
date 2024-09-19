@@ -37,7 +37,7 @@ export default function CatogeryTab() {
 
   return (
     <>
-    <ul className='flex flex-wrap flex-row gap-5 mb-4 m-auto '>
+    <ul className='flex flex-wrap flex-row gap-5  w-fit mb-4 m-auto '>
     {data?.map((item,index)=>{
         return  <li  key={index} className=' ' title={`${item.name[language]}`} >
   {/* <ul className='flex flex-wrap flex-row gap-5 mb-4 w-fit m-auto '> */}
