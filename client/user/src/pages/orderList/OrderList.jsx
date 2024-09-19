@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Table } from "flowbite-react";
 import axios from "axios";
 import Loading from "../../components/loading/Loading";
+import { useSelector } from "react-redux";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]); // State to store user orders
-  const {link } = useSelector(state => state.apiLink)
-  const { user,userInfo } = useSelector((state) => state.auth);
+  const { link } = useSelector(state => state.apiLink)
+  const { user, userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     // Fetch orders when the component mounts
@@ -28,7 +29,7 @@ const OrderList = () => {
     fetchOrders();
   }, []);
 
-  if(!orders){
+  if (!orders) {
     <Loading></Loading>
   }
   console.log(orders);
@@ -81,7 +82,7 @@ const OrderList = () => {
                   <div>No items available</div>
                 )}
               </Table.Cell>
-              <Table.Cell>{order.intention_detail.amount /100}</Table.Cell>
+              <Table.Cell>{order.intention_detail.amount / 100}</Table.Cell>
               <Table.Cell>{index + 1}</Table.Cell>
             </Table.Row>
           ))}

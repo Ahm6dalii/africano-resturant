@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.order{
+    background-image: url(./assets/media/reservation_1_bg.b7490614443dfebaabf1.png);
+
+}
+.orde{
+    background-image: url(./assets/media/reservation_side_elements.47336eee592a6e72d89b.png);
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: 160px;
+}
