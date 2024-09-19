@@ -1,6 +1,6 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { changeMode } from "../../redux/reducers/modeSlice";
 import { changeLang } from "../../redux/reducers/languageSlice";
 import { style } from "framer-motion/client";
@@ -8,12 +8,14 @@ import navStyle from "./navbar.module.css";
 import logo from "../../assets/logo/logo-dr.png";
 import { LoginModal } from "../modal/login/modal.login";
 import { logOutUser } from "../../redux/reducers/userAuthSlice";
+import useCart from "../../hooks/useCart";
 export function Navbaar() {
   const { mode } = useSelector((state) => state.mode);
   const { translation } = useSelector((state) => state.lang);
-  const { user,userInfo } = useSelector((state) => state.auth);
+  const { user, userInfo } = useSelector((state) => state.auth);
   const { language } = useSelector((state) => state.lang);
   const { num } = useSelector((state) => state.cart);
+  const { cart } = useCart()
   console.log(user);
 
   const dispatch = useDispatch();
@@ -23,17 +25,18 @@ export function Navbaar() {
     { name: translation.menu, href: "menu" },
     { name: translation.contact, href: "contact" },
     { name: translation.about, href: "about" },
-    {name:translation.categories, href:'categories'},
+    { name: translation.categories, href: 'categories' },
   ];
 
   const dropDownLink = [
     { name: translation.setting, href: "setting" },
+    { name: translation.userOrders, href: "userOrders/*" },
     { name: translation.updateinfo, href: "updateinfo" },
     { name: translation.updatepass, href: "updatepass" },
     { name: translation.changeimg, href: "changeimg" },
   ];
 
-  const logout=()=>{
+  const logout = () => {
     dispatch(logOutUser())
   }
   const handleChangeLang = (e) => {
@@ -69,9 +72,9 @@ export function Navbaar() {
             {/* <span className="self-center whitespace-nowrap text-xl font-semibold  dark:text-white">
              {translation.logo}
             </span> */}
-             
+
           </Navbar.Brand>
-          {user?<div className="flex md:order-2 ">
+          {user ? <div className="flex md:order-2 ">
             <Dropdown
               arrowIcon={false}
               inline
@@ -92,26 +95,26 @@ export function Navbaar() {
               </Dropdown.Header>
 
               {dropDownLink.map((dropItem, index) => (
-                 <NavLink to={dropItem.href}>
-                <Dropdown.Item key={index}>
-                 {dropItem.name}
-                </Dropdown.Item>
+                <NavLink to={dropItem.href}>
+                  <Dropdown.Item key={index}>
+                    {dropItem.name}
+                  </Dropdown.Item>
                 </NavLink>
               ))}
-               <NavLink to={'/'} onClick={logout}>
+              <NavLink to={'/'} onClick={logout}>
                 <Dropdown.Item>
-                 {translation.logout}
+                  {translation.logout}
                 </Dropdown.Item>
-                </NavLink>
+              </NavLink>
             </Dropdown>
-              <Navbar.Toggle />
-
-          </div>:  <div className="flex md:order-2 items-center gap-4">
-            <LoginModal className="flex md:order-2"/>
             <Navbar.Toggle />
-            </div>}
-         
-             
+
+          </div> : <div className="flex md:order-2 items-center gap-4">
+            <LoginModal className="flex md:order-2" />
+            <Navbar.Toggle />
+          </div>}
+
+
           <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]}`}>
             {navLink.map((navItem, index) => (
               <NavLink
@@ -130,7 +133,7 @@ export function Navbaar() {
             <div className="flex gap-3 items-center">
               {/* Language */}
               <select
-                className="select py-[1px] px-2 w-[70px]  max-w-xs ms-auto dark:text-black dark:bg-slate-300"
+                className="select py-[1px] px-2 w-[70px]  max-w-xs ms-auto dark:text-black dark:bg-slate-300 cursor-pointer"
                 onChange={handleChangeLang}
               >
                 <option selected={language == "en"}>EN</option>
@@ -144,7 +147,7 @@ export function Navbaar() {
                   type="checkbox"
                   checked={mode == "light"}
                   className="theme-controller hidden"
-                  onChange={() => {}}
+                  onChange={() => { }}
                   value="synthwave"
                   onClick={() =>
                     dispatch(changeMode(mode == "light" ? "dark" : "light"))
@@ -155,7 +158,7 @@ export function Navbaar() {
                   mode == "light" && (
                     /* moon icon */
                     <svg
-                      className="swap-on h-7 w-7 fill-current text-black "
+                      className="swap-on h-7 w-7 fill-current text-black  cursor-pointer "
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                     >
@@ -166,7 +169,7 @@ export function Navbaar() {
                 }
                 {mode == "dark" && (
                   <svg
-                    className="swap-off h-7 w-7 fill-current "
+                    className="swap-off h-7 w-7 fill-current cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -175,25 +178,27 @@ export function Navbaar() {
                 )}
               </label>
 
-             {/* Cart */}
-             {user&&<div className="relative">
-         <svg
-           xmlns="http://www.w3.org/2000/svg"
-           className="h-5 w-5"
-           fill="none"
-           viewBox="0 0 24 24"
-           stroke="currentColor">
-           <path
-             strokeLinecap="round"
-             strokeLinejoin="round"
-             strokeWidth="2"
-             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-         </svg>
-         <span className=" text-orange-500 font-semibold  absolute -top-4 left-1" >{num}</span>
-       </div>}
-      
-       </div>
-  
+              {/* Cart */}
+              {user && <Link to={'/cart'}>
+                <div className="relative cursor-pointer">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  {cart?.items?.length > 0 && <span className=" text-orange-500 font-semibold  absolute -top-4 left-1" >{cart?.items?.length}</span>}
+                </div>
+              </Link>}
+
+            </div>
+
 
           </Navbar.Collapse>
         </Navbar>

@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model ,Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Food } from '../../core/schemas/food.schema';
 import { CreateFoodDto } from '../../core/dto/food.dto';
 import { UpdateFoodDto } from '../../core/dto/food.dto';
@@ -27,21 +27,21 @@ export class FoodService {
     private readonly notificationService: NotifictionsService,
     private readonly notificationGateway: NotifictionsGateway,
     private _jwtservice: JwtService
-    ,private readonly cloudinaryService: CloudinaryService
+    , private readonly cloudinaryService: CloudinaryService
   ) { }
 
-  options= {
+  options = {
     width: 1870,
     height: 1250,
-    crop:'fill',
+    crop: 'fill',
     gravity: 'auto',
     folder: 'Africano/Test'
   }
 
-  async create(createFoodDto: CreateFoodDto,file:any): Promise<Food> {
+  async create(createFoodDto: CreateFoodDto, file: any): Promise<Food> {
     console.log(createFoodDto);
-    
-    createFoodDto.amount=Math.ceil(createFoodDto.amount)
+
+    createFoodDto.amount = Math.ceil(createFoodDto.amount)
 
     const categoryName = await this.categoryModel.findOne({
       name: createFoodDto.category,
@@ -52,11 +52,11 @@ export class FoodService {
     createFoodDto.category = categoryName._id;
 
     //Upload Img
-    const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
+    const foodImage = await this.cloudinaryService.uploadFile(file, this.options).catch(() => {
       throw new BadRequestException('Invalid file type.');
     });
-    
-    createFoodDto.image=foodImage.url;
+
+    createFoodDto.image = foodImage.url;
     return this.foodModel.create(createFoodDto);
   }
 
@@ -69,13 +69,13 @@ export class FoodService {
 
     const query: any = {};
     console.log(filters.category);
-    
-    let  categoryObjectId = new Types.ObjectId(filters.category);
+
+    let categoryObjectId = new Types.ObjectId(filters.category);
     console.log(categoryObjectId);
     if (filters.category) {
-      query.category =  categoryObjectId;
-     return  await this.foodModel
-      .find({category:categoryObjectId})
+      query.category = categoryObjectId;
+      return await this.foodModel
+        .find({ category: categoryObjectId })
     }
     if (filters.name) {
       query.name = { $regex: filters.name, $options: 'i' };
@@ -88,7 +88,7 @@ export class FoodService {
       .sort({ _id: 1 })
       .skip(skip)
       .limit(limit)
-      .populate({ path: 'category', select: 'name' })
+      .populate({ path: 'category', select: 'name' }).populate('review.user', 'name image')
       .exec();
     const total = await this.foodModel.countDocuments();
 
@@ -101,22 +101,22 @@ export class FoodService {
   }
 
   async findOne(id: string): Promise<Food> {
-    const food = await this.foodModel.findById(id).populate('category', 'name');
+    const food = await this.foodModel.findById(id).populate('category', 'name').populate('review.user', 'name image')
     if (!food) {
       throw new NotFoundException(`Food with ID ${id} not found`);
     }
     return food;
   }
 
-  async update(id: string, updateFoodDto: UpdateFoodDto,file:any) {
+  async update(id: string, updateFoodDto: UpdateFoodDto, file: any) {
     console.log(updateFoodDto);
-    if(updateFoodDto.amount){
-      updateFoodDto.amount=Math.ceil(Number(updateFoodDto.amount))
+    if (updateFoodDto.amount) {
+      updateFoodDto.amount = Math.ceil(Number(updateFoodDto.amount))
     }
-    const foodImage = await this.cloudinaryService.uploadFile(file,this.options).catch(() => {
+    const foodImage = await this.cloudinaryService.uploadFile(file, this.options).catch(() => {
       throw new BadRequestException('Invalid file type.');
     });
-    updateFoodDto.image=foodImage.url
+    updateFoodDto.image = foodImage.url
     const food = await this.foodModel
       .findByIdAndUpdate(id, updateFoodDto, {
         new: true,
@@ -136,25 +136,25 @@ export class FoodService {
   }
 
   async findAllByCategory(category: any, limit: number, page: number) {
-  // Extract category from query parameters
-  
+    // Extract category from query parameters
+
     if (!category) {
       throw new BadRequestException('Category ID is required');
     }
-  
+
     const skip = (page - 1) * limit;  // Pagination logic
     const categoryObjectId = new Types.ObjectId(category);
-  
+
     const items = await this.foodModel
       .find({ category: categoryObjectId })
       .skip(skip)
       .limit(limit)
       .populate({ path: 'category', select: 'name' })
       .exec();
-      const total = await this.foodModel
+    const total = await this.foodModel
       .find({ category: categoryObjectId }).countDocuments();
 
-      const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(total / limit);
 
     // return items;
     return {
@@ -162,10 +162,10 @@ export class FoodService {
       totalPages,
       page,
       limit,
-      data:items,
+      data: items,
     };
   }
-  
+
 
 
 
@@ -184,7 +184,7 @@ export class FoodService {
       }
       const newReview = { text: body.text, user: userId };
       const addedReview = await this.foodModel
-        .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true }).populate('review.user', 'name').exec();
+        .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true }).populate('review.user', 'name image').exec();
       const users = await this.userModel.find().exec();
       const notifications = users.map(user => ({
         user: user._id,

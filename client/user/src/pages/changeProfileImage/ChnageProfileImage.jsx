@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, Button, Modal, FileInput } from "flowbite-react";
-import axios from "axios"; 
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfileImg } from "../../redux/reducers/userAuthSlice";
 import toast from "react-hot-toast";
@@ -11,8 +11,9 @@ const ProfileImage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [currentProfileImage, setCurrentProfileImage] = useState();
-  const { user,userInfo } = useSelector((state) => state.auth);
-  const dispatch=useDispatch()
+  const { user, userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+
 
   // Handle opening and closing the modal
   const openModal = () => setIsModalOpen(true);
@@ -29,15 +30,15 @@ const ProfileImage = () => {
 
   // Handle form submission (upload the image)
   const onSubmit = async () => {
-console.log(user);
-setLoading(true)
+    console.log(user);
+    setLoading(true)
     const formData = new FormData();
     formData.append("file", selectedFile);
     axios
-      .put("http://localhost:3000/change-profile-img", formData,{
+      .put("http://localhost:3000/change-profile-img", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          token:`${user}`,
+          token: `${user}`,
         },
       })
       .then(({ data }) => {
@@ -50,7 +51,7 @@ setLoading(true)
       })
       .catch((err) => {
         setLoading(false)
-        if(err.response.data.message){
+        if (err.response.data.message) {
           toast.error("Fail to Update Profile Image ")
         }
       });
@@ -87,15 +88,15 @@ setLoading(true)
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={previewUrl&&onSubmit} gradientDuoTone="purpleToBlue">
-            {isLoading?<i className="fa-solid fa-spin fa-spinner"></i>:"Submit"}
+          <Button onClick={previewUrl && onSubmit} gradientDuoTone="purpleToBlue">
+            {isLoading ? <i className="fa-solid fa-spin fa-spinner"></i> : "Submit"}
           </Button>
           <Button color="gray" onClick={closeModal}>
             Cancel
           </Button>
         </Modal.Footer>
       </Modal>
-      
+
     </div>
   );
 };

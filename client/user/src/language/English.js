@@ -39,13 +39,14 @@ export const En = {
   logout: 'Logout',
   logo: 'Africano',
   categories: 'Categories',
-  changeimg:"Change Profile Pic",
-  updateinfo:"Update Info",
-  updatepass:"Update Password",
+  changeimg: "Change Profile Pic",
+  updateinfo: "Update Info",
+  updatepass: "Update Password",
   // Food Card
   confirm: 'Confirm',
   order: 'Order',
   selectSize: 'Select Size',
+  userOrders: "User Orders",
 
   // register data
   loginForm: 'Sign IN',
@@ -101,50 +102,50 @@ export const En = {
   // contact
 
   contactUs: 'Contact Us',
-  contactAd:" We're here to help! Reach out to us for any queries, feedback, or support. Our team at Africano Resturant is dedicated to ensuring your satisfaction.",
+  contactAd: " We're here to help! Reach out to us for any queries, feedback, or support. Our team at Africano Resturant is dedicated to ensuring your satisfaction.",
   ContactInformation: 'Contact Information',
   ContactInformationAd: "If you have any questions, feel free to reach out to us through any of the following methods:",
   Address: "Address:",
-  AddressInfo:"Ras Ghareb, next to El-Ashraf Association, in front of Dr. Ahmed Tarek Pharmacy .",
-  Phone:"Phone:",
-  PhoneInfo:"+201020142743",
-  socialMedia:"Social Media",
-  findUs:" Find Us Here ",
+  AddressInfo: "Ras Ghareb, next to El-Ashraf Association, in front of Dr. Ahmed Tarek Pharmacy .",
+  Phone: "Phone:",
+  PhoneInfo: "+201020142743",
+  socialMedia: "Social Media",
+  findUs: " Find Us Here ",
 
 
-  
-    //Food catogery
-    pizza:"Pizza",
-    pasta:"Pasta",
-    appetizers:"Appetizers",
-    salad:"Salad",
-    drinks:"Drinks",
-    // hero
-    heroAfricano:"AFRICANO Resturant,",
-    heroDesc:"WE SERVE AUTHENTIC PIZZA AND PASTA",
-    heroCaption:"Delighting you with authentic pizzas and pastas, crafted with passion and fresh ingredients!",
-    OrderNow:"Order Now",
-    vistUs:"Vist Us",
-    // footer
-    footerDesc:"Serving authentic pizza and pasta with passion and fresh ingredients.",
-    DeliveryContact:"Delivery & Contact",
-    Phone:"Phone:",
-    FollowUs:"Follow Us",
-    copyright:"© 2024 Africano Restaurant. All Rights Reserved.",
-    // otp
-    sendotpforchange:"Send OTP to your email",
-    sendotp:"Send OTP",
-    resendotp:"didn't get OTP : send otp again ?",
-    otpsucess:"OTP had been sent to your email",
-    enterotp:"Enter OTP",
-    confirmOtptoReset:"Confirm OTP to reset password",
-    reqOtp:"OTP is required",
-    resetpass:"Reset Password",
-    newPass:"New Password ",
-    resetsuccess:"Password has been reset successfully",
-    confirmsuccess:"Email has been confirmed successfully",
-    confirmAcount:"Enter OTP sent to your email to confrm account",
-    confirmacount:"Confrm Account",
+
+  //Food catogery
+  pizza: "Pizza",
+  pasta: "Pasta",
+  appetizers: "Appetizers",
+  salad: "Salad",
+  drinks: "Drinks",
+  // hero
+  heroAfricano: "AFRICANO Resturant,",
+  heroDesc: "WE SERVE AUTHENTIC PIZZA AND PASTA",
+  heroCaption: "Delighting you with authentic pizzas and pastas, crafted with passion and fresh ingredients!",
+  OrderNow: "Order Now",
+  vistUs: "Vist Us",
+  // footer
+  footerDesc: "Serving authentic pizza and pasta with passion and fresh ingredients.",
+  DeliveryContact: "Delivery & Contact",
+  Phone: "Phone:",
+  FollowUs: "Follow Us",
+  copyright: "© 2024 Africano Restaurant. All Rights Reserved.",
+  // otp
+  sendotpforchange: "Send OTP to your email",
+  sendotp: "Send OTP",
+  resendotp: "didn't get OTP : send otp again ?",
+  otpsucess: "OTP had been sent to your email",
+  enterotp: "Enter OTP",
+  confirmOtptoReset: "Confirm OTP to reset password",
+  reqOtp: "OTP is required",
+  resetpass: "Reset Password",
+  newPass: "New Password ",
+  resetsuccess: "Password has been reset successfully",
+  confirmsuccess: "Email has been confirmed successfully",
+  confirmAcount: "Enter OTP sent to your email to confrm account",
+  confirmacount: "Confrm Account",
 
 
 
