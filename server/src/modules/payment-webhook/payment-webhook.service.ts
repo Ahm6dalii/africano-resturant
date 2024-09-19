@@ -49,17 +49,18 @@ export class PaymentWebhookService {
         'Content-Type': 'application/json',
         'Authorization':mytoken
       };
-    
-  
+    // ht7toooo hena y mohamed hassan >----  
       try {
         const response = await firstValueFrom(
           this.httpService.get(`${apiUrl}/${id}`,{ headers })
         );   
-        const {billing_data,order}=response.data
-      const myOrder= await this.orderModel.insertMany({billing_data,items:order.items})
-        console.log(response.data,'sdsadsdsads');
-        console.log(order.items,'sdsadsdsads');
-        console.log(myOrder,'bbbbbb');
+        const {billing_data,order,amount_cents}=response.data
+          console.log(order,"Ahhhhhhhhhhhhhsa")
+      const myOrder= await this.orderModel.insertMany({userId:decoded.userId,billing_data,intention_detail:{items:order.items,total:amount_cents}})
+        
+        // console.log(response.data,'sdsadsdsads');
+        // console.log(order.items,'sdsadsdsads');
+        console.log(myOrder,'AAA&AAAA');
         return res.redirect(redirectURL);
       } catch (error) {
         console.error('Error creating Paymob intention:', error);
