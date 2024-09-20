@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   Query,
+  Req,
   Headers,
   HttpException,
   HttpStatus,
@@ -22,13 +23,13 @@ import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service'
 @Controller('api/foods')
 export class FoodController {
 
-  constructor(private readonly foodsService: FoodService ,private readonly cloudinaryService: CloudinaryService) {}
-  
+  constructor(private readonly foodsService: FoodService, private readonly cloudinaryService: CloudinaryService) { }
+
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  async create(@Body() foodDto: any,@UploadedFile() file: Express.Multer.File) {
-    return this.foodsService.create(foodDto,file);
+  async create(@Body() foodDto: any, @UploadedFile() file: Express.Multer.File) {
+    return this.foodsService.create(foodDto, file);
   }
 
   @Get()
@@ -47,10 +48,10 @@ export class FoodController {
   @Get('cat')
   async findAllByCategory(
     @Query('category') category: string,
-    @Query('limit') limit: number =10,
+    @Query('limit') limit: number = 10,
     @Query('page') page: number = 1,
   ) {
-    return this.foodsService.findAllByCategory(category , limit, page);
+    return this.foodsService.findAllByCategory(category, limit, page);
   }
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -59,9 +60,9 @@ export class FoodController {
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('file'))
-  async update(@Param('id') id: string, @Body() foodDto: any,@UploadedFile() file: Express.Multer.File) {
+  async update(@Param('id') id: string, @Body() foodDto: any, @UploadedFile() file: Express.Multer.File) {
 
-    return this.foodsService.update(id, foodDto,file);
+    return this.foodsService.update(id, foodDto, file);
   }
 
   @Delete(':id')
@@ -70,11 +71,11 @@ export class FoodController {
   }
 
   @Post('/review/:id')
-  addReview(@Param('id') id: any, @Body() body: any, @Headers() header) {
+  addReview(@Param('id') id: any, @Body() body: any, @Headers() header, @Req() req: any) {
     const { token } = header
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN)
     }
-    return this.foodsService.addReview(id, body, token)
+    return this.foodsService.addReview(id, body, token, req)
   }
 }

@@ -169,8 +169,10 @@ export class FoodService {
 
 
 
-  async addReview(id: any, body: any, token) {
+
+  async addReview(id: any, body: any, token, req) {
     const { text } = body
+
 
     try {
       const decoded = this._jwtservice.verify(token, { secret: "mo2" });
@@ -182,9 +184,11 @@ export class FoodService {
       if (!food) {
         throw new Error('Food not found');
       }
-      const newReview = { text: body.text, user: userId };
+      console.log(body, "body");
+
+      const newReview = { text, user: userId };
       const addedReview = await this.foodModel
-        .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true }).populate('review.user', 'name image').exec();
+        .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true }).populate('review.user', 'name').exec();
       const users = await this.userModel.find().exec();
       const notifications = users.map(user => ({
         user: user._id,
@@ -194,12 +198,12 @@ export class FoodService {
       }));
       await this.notificationService.createNotification(notifications);
       this.notificationGateway.sendNotificationToAll(notifications);
+      req.io.emit('newReview', addedReview.review[addedReview.review.length - 1]);
       return { message: 'Review added successfully', addedReview, notifications };
     } catch (error) {
       console.log(error);
       throw new HttpException('Error adding review', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
 
 }
