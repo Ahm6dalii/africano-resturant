@@ -23,6 +23,7 @@ import { PaymentWebhookModule } from './payment-webhook/payment-webhook.module';
 import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 import { ChangeImgProfileController } from './auth/change-img-profile/change-img-profile.controller';
 import { ChangeImgProfileService } from './auth/change-img-profile/change-img-profile.service';
+import { AdminModule } from './admin/admin.module';
 
 
 @Module({
@@ -42,7 +43,8 @@ import { ChangeImgProfileService } from './auth/change-img-profile/change-img-pr
         },
       }),
     CartModule,
-    PaymentWebhookModule,],
+    PaymentWebhookModule,
+    AdminModule,],
     controllers: [ChangeImgProfileController,SigninController,SignupController, ConfirmEmailController, ResendOtbController, ResetPasswordController, UpdatePaswordController, UpdateInfoController],
     providers: [ChangeImgProfileService,SigninService,SignupService,JwtService,MailService, ConfirmEmailService, ResendOtbService, ResetPasswordService, UpdatePaswordService, UpdateInfoService,CloudinaryService],
 })
