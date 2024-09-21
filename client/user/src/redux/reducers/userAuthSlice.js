@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import socket from './../../socket.io/socket';
 
 // Async thunk to handle decoding JWT and setting user info
 export const setUserAsync = createAsyncThunk(
@@ -9,6 +10,7 @@ export const setUserAsync = createAsyncThunk(
       const decoded = await jwtDecode(user);
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('userInfo', JSON.stringify(decoded));
+      socket.emit('register', decoded?.userId)
       return { user, decoded };
     } catch (error) {
       console.error(error);
@@ -25,20 +27,20 @@ let userAuthSlice = createSlice({
   },
   reducers: {
     logOutUser: (state) => {
-        
+
       localStorage.removeItem('user');
       localStorage.removeItem('userInfo');
       state.user = null;
       state.userInfo = null;
     },
-    changeProfileImg: (state,action) => {
+    changeProfileImg: (state, action) => {
       console.log(state.userInfo)
       state.userInfo.image = action.payload
       localStorage.setItem('userInfo', JSON.stringify(state.userInfo));
     },
-    changeProfileInfo: (state,action) => {
-      console.log({...state.userInfo,...action.payload})
-      state.userInfo = {...state.userInfo,...action.payload}
+    changeProfileInfo: (state, action) => {
+      console.log({ ...state.userInfo, ...action.payload })
+      state.userInfo = { ...state.userInfo, ...action.payload }
       localStorage.setItem('userInfo', JSON.stringify(state.userInfo));
     },
   },
@@ -55,5 +57,5 @@ let userAuthSlice = createSlice({
 });
 
 export const userAuthReducer = userAuthSlice.reducer;
-export const { logOutUser ,changeProfileImg,changeProfileInfo} = userAuthSlice.actions;
+export const { logOutUser, changeProfileImg, changeProfileInfo } = userAuthSlice.actions;
 export const setUser = setUserAsync;

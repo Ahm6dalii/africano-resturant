@@ -19,6 +19,7 @@ import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { TooltipsComponent } from './tooltips/tooltips.component'
+import { OrdersComponent } from '../pages/orders/orders.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { TooltipsComponent } from './tooltips/tooltips.component'
     AlertsComponent,
     GridListComponent,
     TooltipsComponent,
-    FormsModule
+    FormsModule,
+    OrdersComponent
   ],
   exports: [
     AlertsComponent,
@@ -58,6 +60,7 @@ import { TooltipsComponent } from './tooltips/tooltips.component'
     SliderComponent,
     SlideToggleComponent,
     ButtonsComponent,
+    OrdersComponent
   ]
 })
 export class ComponentsModule { }
