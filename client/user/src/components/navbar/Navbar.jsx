@@ -58,7 +58,7 @@ export function Navbaar() {
 
   return (
     <>
-      <div className="dark:bg-black bg-zinc-200 shadow">
+      <div dir="ltr" className="dark:bg-black bg-zinc-200 shadow">
         <Navbar
           theme={customTheme}
           fluid
