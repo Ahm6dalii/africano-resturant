@@ -198,7 +198,9 @@ export class FoodService {
       }));
       await this.notificationService.createNotification(notifications);
       this.notificationGateway.sendNotificationToAll(notifications);
-      req.io.emit('newReview', addedReview.review[addedReview.review.length - 1]);
+      this.notificationGateway.sendNewReviewToAll(addedReview.review[addedReview.review.length - 1]);
+
+
       return { message: 'Review added successfully', addedReview, notifications };
     } catch (error) {
       console.log(error);
