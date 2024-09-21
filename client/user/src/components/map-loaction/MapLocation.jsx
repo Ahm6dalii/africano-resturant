@@ -10,7 +10,7 @@ export default function MapLocation() {
 
     <div className="mt-12">
     <h2 className="text-3xl font-bold  text-red-500 mb-4 text-center" style={{"fontFamily":" Oswald"}}>
-    <i class="fa-solid fa-location-dot pe-4"></i>
+    <i className="fa-solid fa-location-dot pe-4"></i>
     {translation.findUs }
     </h2>
     <div className="w-full h-72 rounded-lg overflow-hidden shadow-inner">

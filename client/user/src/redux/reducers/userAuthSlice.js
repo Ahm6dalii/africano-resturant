@@ -13,7 +13,6 @@ export const setUserAsync = createAsyncThunk(
       socket.emit('register', decoded?.userId)
       return { user, decoded };
     } catch (error) {
-      console.error(error);
       return rejectWithValue(error.message);
     }
   }
@@ -55,7 +54,6 @@ let userAuthSlice = createSlice({
         state.userInfo = action.payload.decoded;
       })
       .addCase(setUserAsync.rejected, (state, action) => {
-        console.log("Error decoding token:", action.payload);
       });
   },
 });

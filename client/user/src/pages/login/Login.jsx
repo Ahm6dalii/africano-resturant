@@ -6,17 +6,18 @@ import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { List } from 'flowbite-react';
-import { HiCheckCircle, HiXCircle } from "react-icons/hi";
+import {  HiXCircle } from "react-icons/hi";
 import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
 import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
 import toast from 'react-hot-toast';
 import { setUser } from '../../redux/reducers/userAuthSlice';
 
 
-const Login = ({  onSwitchToRegister, closeModal}) => {
+const Login = ({  closeModal}) => {
+
+  const { translation,language } = useSelector(state => state.lang)
 
 
-  const { translation } = useSelector(state => state.lang)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const { link } = useSelector(state => state.apiLink)
@@ -49,13 +50,14 @@ const Login = ({  onSwitchToRegister, closeModal}) => {
       setLoading(true)
       setErrorMessage('')
       try {
-        const { data } = await axios.post(`${link}/signin`, values);
-        console.log(data);
+        const {data}= await axios.post(`${link}/signin`, values);
+
         dispatch(setUser(data?.token))
-        toast.success("User Login Successfuly !")
+        toast.success(translation.userLoign)
         currentPath?navigate(`/${currentPath}`):navigate(`/`);
         closeModal()
       } catch (error) {
+
         console.log(error);
         if (error.response?.data?.message) {
           toast.error(error.response?.data?.message)
@@ -108,23 +110,25 @@ const Login = ({  onSwitchToRegister, closeModal}) => {
             <LockIcon />
             {translation.Password}
           </label>
-          <div className='relative'>
-            <input
-              id="password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              className={`mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200  ${formik.touched.password && formik.errors.password
-                  ? 'border-red-500'
-                  : ''
-                }`}
-              {...formik.getFieldProps('password')}
-            />
-            <div className="absolute top-0 right-0 p-2">
-              <button type='button' className="m-0 p-0">
-                <i onClick={handleShowPassword} className="fas text-dark fa-eye"></i>
-              </button>
-            </div>
-          </div>
+              <div className='relative'>
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword?"text":"password"}
+                    className={`mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200  ${
+                      formik.touched.password && formik.errors.password
+                        ? 'border-red-500'
+                        : ''
+                    }`}
+                    {...formik.getFieldProps('password')}
+                  />
+                <div className={`absolute top-0 ${language=='en'?'right-0':'left-0'} p-2`}>
+                        <button type='button' className="m-0 p-0">
+                            <i onClick={handleShowPassword} className="fas text-dark fa-eye"></i>
+                        </button>
+               </div>
+              </div>   
+
           {formik.touched.password && formik.errors.password ? (
             <List>
               <List.Item className='text-red-600' icon={HiXCircle}>{formik.errors.password}</List.Item>

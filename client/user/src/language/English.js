@@ -165,6 +165,7 @@ export const En = {
   removeOrder:"Are you sure you want to remove the entire order?",
   processOrder:"Proceed to Checkout",
   remove:"Remove",
+  noOrderFound:"No Order Found",
 
   //Order
   affricanoName:"Africano Resturant",
@@ -211,10 +212,25 @@ export const En = {
   orderTotal:"Total Price",
   orderData:"Date",
    orderId:"Order ID",
-   noItems:"No items available"
+   noItems:"No items available",
 
+//toast
+   addedOrder:"Added To Order!",
+   failedOrder:"Failed To Added!",
+   uderAdded:"User Login Successfuly !",
+   userUpdated:"User Info Updated Successfuly",
+   passwordUpdated:"Password updated successfully!",
+   passwordUpdateFail: "Failed to update password. Please try again.",
+   userCreated:'User Successfully Created !',
+    updatedImg:"Profile Image Updated Successfuly",
+failedUpdated:"Fail to Update Profile Image ",
+userLoign:"User Login Successfully",
 
-  
+  //NotFoundPage
+  pageNotFound:"Oops! Page not found",
+  notFound:"The page you're looking for doesn't exist or has been moved.",
+  goBack:"Go Back Home",
+
 
 
 

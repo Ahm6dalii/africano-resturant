@@ -16,7 +16,6 @@ export function Navbaar() {
   const { user, userInfo } = useSelector((state) => state.auth);
   const { cart}= useCart()
   
-  console.log(user);
 
   const dispatch = useDispatch();
 
@@ -40,7 +39,6 @@ export function Navbaar() {
     dispatch(logOutUser())
   }
   const handleChangeLang = (e) => {
-    console.log(e.target.value);
     dispatch(changeLang(e.target.value.toLowerCase()));
   };
 

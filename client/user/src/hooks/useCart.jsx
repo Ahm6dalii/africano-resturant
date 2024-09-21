@@ -14,7 +14,6 @@ const useCart = () => {
                 token: `${user}`
             }
             const response = await axios(`${api}/cart/userCart`, { headers })
-            console.log(response, "response");
     
             return response?.data
         })

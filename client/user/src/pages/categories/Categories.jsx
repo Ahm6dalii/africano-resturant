@@ -13,10 +13,8 @@ export default function Categories() {
         setIsLoading(true)
         try {
             const {data} =await axios.get(`${link}/api/categories`)
-            console.log(data);
             setCategories(data)
         } catch (error) {
-            console.log(error);
             
         }
         setIsLoading(false)
@@ -29,7 +27,7 @@ export default function Categories() {
     <>
     {isLoading?<Loading/>:<div className="">
         <h1 style={{"fontFamily":" Caveat"}}  className="text-5xl font-extrabold    mb-8 text-center">
-        <i class="fa-solid fa-layer-group pe-3"></i>
+        <i className="fa-solid fa-layer-group pe-3"></i>
             {translation.categories}</h1>
         <div className="grid grid-cols-12">
         {categories.map((category, index) => {

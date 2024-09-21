@@ -1,15 +1,11 @@
 
-"use client";
 
 import { Button, Modal } from "flowbite-react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
-import { setLogin } from "../../../redux/reducers/userAuthSlice";
 
 export function LoginFirstModal() {
   const [openModal, setOpenModal] = useState(false);
-  const dispatch = useDispatch()
 
   
 
