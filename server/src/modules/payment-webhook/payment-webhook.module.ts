@@ -6,11 +6,12 @@ import { HttpModule } from '@nestjs/axios';
 import { Cart, CartSchema } from 'src/core/schemas/cart.schema';
 import { Order, OrderSchema } from 'src/core/schemas/order.schema';
 import { JwtService } from '@nestjs/jwt';
+import { NotifictionsModule } from '../notifictions/notifictions.module';
 
 @Module({
-  imports:[HttpModule,MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }
-    ,{ name:Cart.name, schema: CartSchema }])],
+  imports: [NotifictionsModule, HttpModule, MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }
+    , { name: Cart.name, schema: CartSchema }])],
   controllers: [PaymentWebhookController],
-  providers: [PaymentWebhookService,JwtService],
+  providers: [PaymentWebhookService, JwtService],
 })
-export class PaymentWebhookModule {}
+export class PaymentWebhookModule { }

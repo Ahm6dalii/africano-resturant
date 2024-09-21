@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.p-toast {
+  .p-toast-message {
+    background-color: white;
+    color: black;
+    padding: 20px;
+
+  }
+}

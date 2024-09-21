@@ -4,12 +4,13 @@ import { OrderController } from './order.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Order, OrderSchema } from 'src/core/schemas/order.schema';
 import { JwtService } from '@nestjs/jwt';
+import { NotifictionsModule } from 'src/modules/notifictions/notifictions.module';
 
 @Module({
-  imports:[MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema}])],
+  imports: [NotifictionsModule, MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }])],
 
 
   controllers: [OrderController],
-  providers: [OrderService,JwtService ],
+  providers: [OrderService, JwtService],
 })
-export class OrderModule {}
+export class OrderModule { }

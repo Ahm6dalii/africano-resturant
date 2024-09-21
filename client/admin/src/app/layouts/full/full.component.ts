@@ -79,6 +79,11 @@ export class FullComponent {
     //   icon: "list",
     //   menu: "Tabs",
     // },
+    {
+      link: "/orders",
+      icon: "list",
+      menu: "Orders",
+    },
     // {
     //   link: "/progress",
     //   icon: "bar-chart-2",
