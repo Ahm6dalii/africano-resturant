@@ -23,6 +23,7 @@ export default function Card({ imaUrl, desc, amount, name, lang, id }) {
         <div className="text-center py-2 ">
           <div className='px-2' >
             <CardModal popup={true} i={id} itemId={id} amount={amount} name={name[lang]}></CardModal>
+            
           </div>
         </div>
         <div className="px-2 pb-2">

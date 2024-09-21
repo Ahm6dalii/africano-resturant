@@ -10,6 +10,7 @@ import Food from '../../components/food/Food'
 import CatogeryTab from './../../components/catogery-tabs/CatogeryTab';
 import FoodCatogery from '../../components/food-catogery/FoodCatogery';
 import axios from 'axios';
+import MapLocation from "../../components/map-loaction/MapLocation"
 
 export default function Home() {
   const {translation}=useSelector(state=>state.lang)
@@ -73,6 +74,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <MapLocation/>
     </div>
 
     </>

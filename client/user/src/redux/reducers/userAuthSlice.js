@@ -22,6 +22,7 @@ let userAuthSlice = createSlice({
   initialState: {
     user: JSON.parse(localStorage.getItem('user')) || null,
     userInfo: JSON.parse(localStorage.getItem('userInfo')) || null,
+    isLogin:!!JSON.parse(localStorage.getItem('user')) || null
   },
   reducers: {
     logOutUser: (state) => {
@@ -41,6 +42,9 @@ let userAuthSlice = createSlice({
       state.userInfo = {...state.userInfo,...action.payload}
       localStorage.setItem('userInfo', JSON.stringify(state.userInfo));
     },
+    setLogin: (state,action) => {
+      state.isLogin = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,5 +59,5 @@ let userAuthSlice = createSlice({
 });
 
 export const userAuthReducer = userAuthSlice.reducer;
-export const { logOutUser ,changeProfileImg,changeProfileInfo} = userAuthSlice.actions;
+export const { logOutUser ,changeProfileImg,changeProfileInfo,setLogin} = userAuthSlice.actions;
 export const setUser = setUserAsync;

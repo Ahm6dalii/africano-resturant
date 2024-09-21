@@ -3,6 +3,7 @@ import img1 from "../../assets/media/download1.png"
 import img2 from "../../assets/media/download2.png"
 import img3 from "../../assets/media/download3.png"
 import img8 from "../../assets/media/download8.png"
+import cheif from "../../assets/affricanoImg/chief.png"
 
 
 
@@ -23,7 +24,7 @@ export default function About() {
             </div>
             <div className="grid  grid-cols-1 md:grid-cols-2 gap-8">
                    <div>
-                             <img src={img8} alt="Restaurant view" className="w-full h-4/5 object-cover  rounded-t-full shadow-lg shadow-black-900 dark:shadow-red-300 " />
+                             <img src={cheif} alt="Restaurant view" className="w-full h-4/5 object-cover  rounded-t-full shadow-md shadow-black-900 dark:shadow-red-300 " />
                              <p style={{"fontFamily":" Oswald"}} className="text-3xl py-6 text-center">
                              <span style={{"fontFamily":" Oswald"}} className="text-gray-500">master chef</span> Abdo Tarek                            </p>
                     </div>

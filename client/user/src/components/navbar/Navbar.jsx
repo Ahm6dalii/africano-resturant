@@ -9,13 +9,13 @@ import logo from "../../assets/logo/logo-dr.png";
 import { LoginModal } from "../modal/login/modal.login";
 import { logOutUser } from "../../redux/reducers/userAuthSlice";
 import useCart from "../../hooks/useCart";
+import LanuageButton from "../LanguageButton/LanguageButton";
 export function Navbaar() {
   const { mode } = useSelector((state) => state.mode);
-  const { translation } = useSelector((state) => state.lang);
+  const { translation,language } = useSelector((state) => state.lang);
   const { user, userInfo } = useSelector((state) => state.auth);
-  const { language } = useSelector((state) => state.lang);
-  const { num } = useSelector((state) => state.cart);
-  const { cart } = useCart()
+  const { cart}= useCart()
+  
   console.log(user);
 
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export function Navbaar() {
 
   const dropDownLink = [
     { name: translation.setting, href: "setting" },
-    { name: translation.userOrders, href: "userOrders/*" },
+    { name: translation.myOrders, href: "userOrders/*" },
     { name: translation.updateinfo, href: "updateinfo" },
     { name: translation.updatepass, href: "updatepass" },
     { name: translation.changeimg, href: "changeimg" },
@@ -65,16 +65,17 @@ export function Navbaar() {
           theme={customTheme}
           fluid
           rounded
-          className="py-1 container dark:bg-black bg-gray-200  m-auto"
+          className="py-1 container relative dark:bg-black bg-gray-200  m-auto"
         >
-          <Navbar.Brand className="" >
+          <Navbar.Brand className="-order-1 " >
             <img src={logo} className="w-[80px]  " alt="Flowbite React Logo" />
             {/* <span className="self-center whitespace-nowrap text-xl font-semibold  dark:text-white">
              {translation.logo}
             </span> */}
 
           </Navbar.Brand>
-          {user ? <div className="flex md:order-2 ">
+
+          {user ? <div className="flex order-2 ">
             <Dropdown
               arrowIcon={false}
               inline
@@ -95,12 +96,14 @@ export function Navbaar() {
               </Dropdown.Header>
 
               {dropDownLink.map((dropItem, index) => (
-                <NavLink to={dropItem.href}>
-                  <Dropdown.Item key={index}>
+
+                <NavLink  key={index} to={dropItem.href}>
+                  <Dropdown.Item  key={index}>
                     {dropItem.name}
                   </Dropdown.Item>
                 </NavLink>
-              ))}
+                   ))}
+                
               <NavLink to={'/'} onClick={logout}>
                 <Dropdown.Item>
                   {translation.logout}
@@ -109,13 +112,12 @@ export function Navbaar() {
             </Dropdown>
             <Navbar.Toggle />
 
-          </div> : <div className="flex md:order-2 items-center gap-4">
-            <LoginModal className="flex md:order-2" />
-            <Navbar.Toggle />
+          </div> : <div className="flex order-2 items-center gap-4">
+            <LoginModal className="flex order-2" />
+            <Navbar.Toggle  />
           </div>}
 
-
-          <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]}`}>
+          <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]} z-50 absolute md:static top-full dark:bg-black bg-gray-200 bg-opacity-100 shadow md:shadow-none md:border-none border-b-orange-300 p-5 left-0 right-0`}>
             {navLink.map((navItem, index) => (
               <NavLink
                 className={({ isActive }) =>
@@ -130,16 +132,29 @@ export function Navbaar() {
               </NavLink>
             ))}
 
-            <div className="flex gap-3 items-center">
-              {/* Language */}
-              <select
-                className="select py-[1px] px-2 w-[70px]  max-w-xs ms-auto dark:text-black dark:bg-slate-300 cursor-pointer"
-                onChange={handleChangeLang}
-              >
-                <option selected={language == "en"}>EN</option>
-                <option selected={language == "ar"}>AR</option>
-              </select>
 
+
+          </Navbar.Collapse>
+
+            <div className="flex gap-3  items-center me-4   ms-auto md:ms-0 order-1">
+          
+ {user && <Link to={'/cart'}>
+                <div className="relative cursor-pointer">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  {cart?.items?.length > 0 && <span className=" text-orange-500 font-semibold  absolute -top-4 left-1" >{cart?.items?.length}</span>}
+                </div>
+              </Link>}
               {/* Dark mood button */}
               <label className="swap swap-rotate mx-2  ">
                 {/* this hidden checkbox controls the state */}
@@ -178,29 +193,10 @@ export function Navbaar() {
                 )}
               </label>
 
-              {/* Cart */}
-              {user && <Link to={'/cart'}>
-                <div className="relative cursor-pointer">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                  {cart?.items?.length > 0 && <span className=" text-orange-500 font-semibold  absolute -top-4 left-1" >{cart?.items?.length}</span>}
-                </div>
-              </Link>}
+             
+              <LanuageButton/>
 
             </div>
-
-
-          </Navbar.Collapse>
         </Navbar>
       </div>
     </>

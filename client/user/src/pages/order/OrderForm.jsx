@@ -37,17 +37,17 @@ const OrderForm = () => {
     })
 
     const schema = yup.object().shape({
-        apartment: yup.string().required("Apartment is required"),
-        first_name: yup.string().required("First name is required"),
-        last_name: yup.string().required("Last name is required"),
-        street: yup.string().required("Street is required"),
-        building: yup.string().required("Building is required"),
+        apartment: yup.string().required(translation.errApartment),
+        first_name: yup.string().required(translation.errNameF),
+        last_name: yup.string().required(translation.errNameL),
+        street: yup.string().required(translation.errStreet),
+        building: yup.string().required(translation.errBuliding),
         phone_number: yup.string().matches(/^(010|011|012|015)\d{8}$/, `${translation.invalidPhone}`)
-            .required("Phone Number is required")
-            .min(10, 'Phone number must be at least 10 digits')
-            .max(15, 'Phone number must be at most 15 digits'),
-        email: yup.string().email('Invalid email address').required("Email is required"),
-        floor: yup.string().required("Floor is required"),
+            .required(translation.errPhone)
+            .min(10,translation.errPhoneMin )
+            .max(15, translation.errPhoneMax),
+        email: yup.string(translation.errEmail).email().required(translation.errEmailReq),
+        floor: yup.string().required(translation.errFloor),
     });
 
     const { register, handleSubmit, formState: { errors }, reset, setValue, getValue } = useForm({
@@ -74,23 +74,23 @@ const OrderForm = () => {
             <form onSubmit={handleSubmit(submitTheForm)} className="p-4 md:p-6 lg:p-8">
                 <div className="grid gap-6 my-6 pt-10">
                     <div className="grid items-start gap-6 grid-cols-2 w-full md:w-full ">
-                        <InputsOrder type="first_name" name="First Name" yub="first_name" register={register} errors={errors} />
-                        <InputsOrder type="last_name" name="Last Name" yub="last_name" register={register} errors={errors} />
+                        <InputsOrder type="first_name" name={translation.orderFirsetName} yub="first_name" register={register} errors={errors} />
+                        <InputsOrder type="last_name" name={translation.orderLastName} yub="last_name" register={register} errors={errors} />
                     </div>
 
-                    <InputsOrder type="email" name="Email" yub="email" register={register} errors={errors} />
+                    <InputsOrder type="email" name={translation.email} yub="email" register={register} errors={errors} />
 
 
                     <div className="grid items-start gap-6 grid-cols-2">
-                        <InputsOrder type="apartment" name="Apartment" yub="apartment" register={register} errors={errors} />
-                        <InputsOrder type="phone_number" name="Phone Number" yub="phone_number" register={register} errors={errors} />
+                        <InputsOrder type="apartment" name={translation.apartment}yub="apartment" register={register} errors={errors} />
+                        <InputsOrder type="phone_number" name={translation.orderPhone} yub="phone_number" register={register} errors={errors} />
                     </div>
 
 
                     <div className="grid items-start gap-6 md:grid-cols-3">
-                        <InputsOrder type="building" name="Building" yub="building" register={register} errors={errors} />
-                        <InputsOrder type="street" name="Street" yub="street" register={register} errors={errors} />
-                        <InputsOrder type="floor" name="Floor" yub="floor" register={register} errors={errors} />
+                        <InputsOrder type="building" name={translation.buliding} yub="building" register={register} errors={errors} />
+                        <InputsOrder type="street" name={translation.street} yub="street" register={register} errors={errors} />
+                        <InputsOrder type="floor" name={translation.floor} yub="floor" register={register} errors={errors} />
                     </div>
 
 
@@ -104,17 +104,17 @@ const OrderForm = () => {
                 <button disabled={isLoading || isSuccess} className="w-full bg-[#c83f46] p-4 text-center text-white rounded-lg font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br">
                     {isLoading ? (
                         <div className="flex items-center justify-center">
-                            <FaSpinner className="animate-spin mr-2" /> Processing...
+                            <FaSpinner className="animate-spin mr-2" /> {translation.orderProcess}
                         </div>
                     ) : isSuccess ? (
                         <div className="flex items-center justify-center">
-                            <FaCheckCircle className="mr-2" /> Order Successful!
+                            <FaCheckCircle className="mr-2" /> {translation.orderSuccess}
                         </div>
                     ) : (
-                        "Order Now"
+                       translation.orderNow
                     )}
                 </button>
-                {error && <p className="text-red-500 mt-2">An error occurred during checkout.</p>}
+                {error && <p className="text-red-500 mt-2">{translation.orderErrorCheck}</p>}
             </form>
 
         </>
