@@ -63,16 +63,14 @@ const UpdatePassword = () => {
       );
 
       // Display success message
-      console.log("Password Updated:", response.data);
-      toast.success("Password updated successfully!")
+      toast.success(translation.passwordUpdated)
       setLoading(false)
     } catch (error) {
       // Handle error
       setLoading(false)
       if(error?.response?.data?.message){
-        toast.error("Failed to update password. Please try again.")
+        toast.error(translation.passwordUpdateFail)
       }
-      console.error("Error updating password:", error);
       
     }
   };

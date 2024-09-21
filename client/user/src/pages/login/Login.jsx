@@ -6,16 +6,16 @@ import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { List } from 'flowbite-react';
-import { HiCheckCircle, HiXCircle } from "react-icons/hi";
+import {  HiXCircle } from "react-icons/hi";
 import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
 import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
 import toast from 'react-hot-toast';
 import { setUser } from '../../redux/reducers/userAuthSlice';
 
 
-const Login = ({  onSwitchToRegister, closeModal}) => {
+const Login = ({  closeModal}) => {
 
-  const { translation } = useSelector(state => state.lang)
+  const { translation,language } = useSelector(state => state.lang)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const {link } = useSelector(state => state.apiLink)
@@ -48,13 +48,11 @@ const formik = useFormik({
       setErrorMessage('')
       try {
         const {data}= await axios.post(`${link}/signin`, values);
-        console.log(data);
         dispatch(setUser(data?.token))
-        toast.success("User Login Successfuly !")
+        toast.success(translation.userLoign)
         currentPath?navigate(`/${currentPath}`):navigate(`/`);
         closeModal()
       } catch (error) {
-        console.log(error);  
         if(error.response?.data?.message)
         {
           toast.error(error.response?.data?.message)
@@ -120,7 +118,7 @@ const formik = useFormik({
                     }`}
                     {...formik.getFieldProps('password')}
                   />
-                <div className="absolute top-0 right-0 p-2">
+                <div className={`absolute top-0 ${language=='en'?'right-0':'left-0'} p-2`}>
                         <button type='button' className="m-0 p-0">
                             <i onClick={handleShowPassword} className="fas text-dark fa-eye"></i>
                         </button>

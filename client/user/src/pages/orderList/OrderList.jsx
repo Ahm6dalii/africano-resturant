@@ -20,10 +20,8 @@ const OrderList = () => {
             headers: { token: `${user}` },
           }
         );
-        //console.log(response.data);
         setOrders(response);
       } catch (err) {
-        console.error(err);
       }
     };
 

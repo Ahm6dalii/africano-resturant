@@ -11,7 +11,7 @@ export default function Contact() {
   
             <div className=" shadow-2xl  border rounded-3xl max-w-7xl mx-auto p-12">
                 <h3 style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold    mb-8 text-center">
-                <i class="fa-solid fa-headset pe-3"></i>
+                <i className="fa-solid fa-headset pe-3"></i>
                 {translation.contactUs }
                 </h3>
                 
@@ -30,11 +30,11 @@ export default function Contact() {
                         </p>
                         <ul className="text-lg  space-y-4">
                         <strong className='text-red-500 text-2xl' style={{"fontFamily":" Oswald"}}>{translation.Address }</strong>
-                            <li className='pb-3 '><i class="fa-solid fa-location-dot pe-4"></i> {translation.AddressInfo } </li>   
+                            <li className='pb-3 '><i className="fa-solid fa-location-dot pe-4"></i> {translation.AddressInfo } </li>   
                             <hr />
                         <strong className='text-red-500 text-2xl' style={{"fontFamily":" Oswald"}}>{translation.Phone }</strong>
                             <li>
-                            <i class="fa-solid fa-phone pe-4"></i>
+                            <i className="fa-solid fa-phone pe-4"></i>
                             {translation.PhoneInfo }</li>
                             <hr />
                         <strong className='text-red-500 text-2xl' style={{"fontFamily":" Oswald"}}>{translation.socialMedia }</strong>

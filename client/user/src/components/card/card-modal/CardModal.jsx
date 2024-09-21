@@ -26,18 +26,22 @@ export default function CardModal({ i, amount, name, itemId }) {
   const {id}=useParams()
   
   const { mutate: addOrder, error: cartError, isSuccess ,isLoading} = useMutation('addOrder', async ({ itemId, orderData }) => {
-    console.log(orderData, "daata");
 
     const headers = {
       'Content-Type': 'application/json',
       token: `${user}`,
     }
     const response = await axios.post(`${link}/cart/${itemId}`, orderData, { headers })
-    console.log(response, "response");
     return response
   }, {
     onSuccess: () => {
       queryClient.invalidateQueries('cart')
+      toast.success( translation.addedOrder)
+
+    },
+    onError:()=>{
+      toast.error(translation.failedOrder)
+
     }
   })
   // Create a ref to attach to the modal body
@@ -62,7 +66,6 @@ export default function CardModal({ i, amount, name, itemId }) {
   };
 
   const handleOrder = () => {
-    console.log(orderData);
   if(user){
     addOrder({ itemId, orderData })}
   else{

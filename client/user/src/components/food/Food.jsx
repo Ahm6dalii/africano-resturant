@@ -1,18 +1,11 @@
 import React from 'react';
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Card from "../../components/card/Card";
-import { Button } from "flowbite-react";
-import CatogeryTab from '../catogery-tabs/CatogeryTab';
-import { Outlet, useParams } from 'react-router-dom';
-import { LoginFirstModal } from '../modal/should-Login]/LoginFirstModal';
-export default function Food({data}) {
-    const { translation,language } = useSelector(state => state.lang)
-    const { isLogin } = useSelector((state) => state.auth);
-    const {link } = useSelector(state => state.apiLink)
 
-    console.log(data,'foooood');
+export default function Food({data}) {
+    const {language } = useSelector(state => state.lang)
+  
+
 
   return (
     <>

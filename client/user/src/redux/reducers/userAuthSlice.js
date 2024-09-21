@@ -11,7 +11,6 @@ export const setUserAsync = createAsyncThunk(
       localStorage.setItem('userInfo', JSON.stringify(decoded));
       return { user, decoded };
     } catch (error) {
-      console.error(error);
       return rejectWithValue(error.message);
     }
   }
@@ -53,7 +52,6 @@ let userAuthSlice = createSlice({
         state.userInfo = action.payload.decoded;
       })
       .addCase(setUserAsync.rejected, (state, action) => {
-        console.log("Error decoding token:", action.payload);
       });
   },
 });

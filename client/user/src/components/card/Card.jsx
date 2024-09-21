@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import CardPrice from './card-price/CardPrice';
 import CardModal from './card-modal/CardModal';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function Card({ imaUrl, desc, amount, name, lang, id }) {
-  const { translation } = useSelector((state) => state.lang);
 
 
 
