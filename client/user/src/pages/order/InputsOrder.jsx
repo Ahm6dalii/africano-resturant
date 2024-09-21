@@ -9,7 +9,7 @@ const InputsOrder = ({ type, name, register, yub, errors }) => {
                     id={type}
                     className={`dark:bg-[#1c1c1c] block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 rounded-lg dark:border-[3px] 
                 ${errors[yub] ? 'border-red-600' : 'border-[#696969]'} 
-                appearance-none dark:text-white dark:focus:border-green-500 focus:outline-none focus:ring-0 
+                appearance-none dark:text-white  dark:focus:border-green-500 focus:outline-none focus:ring-0 
                 focus:border-green-600 peer`}
                     placeholder=""
                     {...register(yub)}

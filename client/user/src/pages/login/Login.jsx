@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { List } from 'flowbite-react';
 import { HiCheckCircle, HiXCircle } from "react-icons/hi";
@@ -12,14 +12,20 @@ import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
 import toast from 'react-hot-toast';
 import { setUser } from '../../redux/reducers/userAuthSlice';
 
-const Login = ({ onSwitchToRegister, closeModal }) => {
+
+const Login = ({  onSwitchToRegister, closeModal}) => {
+
+
   const { translation } = useSelector(state => state.lang)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const { link } = useSelector(state => state.apiLink)
   const [errorMessage, setErrorMessage] = useState("");  // For error state 
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
+
+  const dispatch =useDispatch();
+  const navigate=useNavigate()
+  const {pathname}=useLocation()
+ const currentPath=pathname.split('/').slice(2).join('/');
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
@@ -47,7 +53,7 @@ const Login = ({ onSwitchToRegister, closeModal }) => {
         console.log(data);
         dispatch(setUser(data?.token))
         toast.success("User Login Successfuly !")
-        navigate('/')
+        currentPath?navigate(`/${currentPath}`):navigate(`/`);
         closeModal()
       } catch (error) {
         console.log(error);
