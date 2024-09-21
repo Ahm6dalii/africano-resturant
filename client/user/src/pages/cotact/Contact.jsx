@@ -1,6 +1,7 @@
 import React from 'react'
 import contactImg from "../../assets/media/restrunt.png"
 import { useSelector } from 'react-redux';
+import MapLocation from '../../components/map-loaction/MapLocation';
 
 
 export default function Contact() {
@@ -55,22 +56,9 @@ export default function Contact() {
                     </div>
                 </div>
 
-
-                <div className="mt-12">
-                    <h2 className="text-3xl font-bold  text-red-500 mb-4 text-center" style={{"fontFamily":" Oswald"}}>
-                    <i class="fa-solid fa-location-dot pe-4"></i>
-                    {translation.findUs }
-                    </h2>
-                    <div className="w-full h-64 rounded-lg overflow-hidden shadow-inner">
-                        <iframe
-                            className="w-full h-full border-0"
-                            src="https://www.google.com/maps/embed?pb=Africano+pizza%26pasta/@28.3616322,33.0762066,17z/data=!3m1!4b1!4m6!3m5!1s0x14515fe31fa9a355:0x43fbf4acc0b3a06b!8m2!3d28.3616275!4d33.0787815!16s%2Fg%2F11sw2zwzf4?hl=en-GB&entry=ttu&g_ep=EgoyMDI0MDkxNi4wIKXMDSoASAFQAw%3D%3D"
-                            allowFullScreen=""
-                            loading="lazy"
-                            title="Google Map"
-                        ></iframe>
-                    </div>
-                </div>
+             
+                      <MapLocation></MapLocation>
+                
             </div>
         
   )
