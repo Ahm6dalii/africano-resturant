@@ -48,7 +48,6 @@ export class OrderService {
     if (myOrder) {
       this.notificationGateway.sendUpdatedOrderToUser(myOrder.userId, myOrder);
       return myOrder
-
     } else {
       return 'no order exist';
     }

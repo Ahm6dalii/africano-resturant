@@ -51,10 +51,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.currentStatus = params['status'] || 'preparing';
       this.getOrders(this.currentStatus);
 
-      // Remove the query parameter from the URL after fetching the orders
       this.router.navigate([], {
         relativeTo: this.route,
-        queryParams: {}, // Clear the query parameters
+        queryParams: {},
 
       });
     });
@@ -83,15 +82,13 @@ export class OrdersComponent implements OnInit, OnDestroy {
       next: (updatedOrder) => {
         console.log('Order updated:', updatedOrder);
 
-        // Remove the order from the current view if its new status doesn't match the current tab
-        if (newStatus !== this.currentStatus) {
-          this.orders = this.orders.filter((order: any) => order._id !== orderId);
-        }
+        this.orders = this.orders.filter((order: any) => order._id !== orderId);
 
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Order status updated' });
       },
       error: (err) => {
-        console.error(err);
+        console.error(
+          err);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update order status' });
       }
     });

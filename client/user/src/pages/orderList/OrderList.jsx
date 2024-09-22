@@ -3,6 +3,7 @@ import { Table } from "flowbite-react";
 import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import { useSelector } from "react-redux";
+import socket from "../../socket.io/socket";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]); // State to store user orders
@@ -27,7 +28,15 @@ const OrderList = () => {
 
     fetchOrders();
   }, []);
+  useEffect(() => {
+    socket.on('updatedOrder', (updatedOrder) => {
+      console.log(updatedOrder, "updatedOrder");
 
+    })
+    return () => {
+      socket.off('newReview');
+    };
+  })
   if (!orders) {
     <Loading></Loading>
   }
@@ -49,6 +58,7 @@ const OrderList = () => {
       <h2 className="text-3xl font-semibold text-center mb-6">{translation.yourOrderList}</h2>
       <Table hoverable={false}>
         <Table.Head>
+
           <Table.HeadCell className="dark:text-white " >{translation.orderData}</Table.HeadCell>
           <Table.HeadCell  className="dark:text-white ">{translation.orderTime}</Table.HeadCell>
           <Table.HeadCell className="dark:text-white ">{translation.orderItems}</Table.HeadCell>
@@ -81,6 +91,10 @@ const OrderList = () => {
                   <div>{translation.noItems}</div>
                 )}
               </Table.Cell>
+              <Table.Cell>{order.intention_detail.amount / 100}</Table.Cell>
+              <Table.Cell>{order?.status}</Table.Cell>
+              <Table.Cell>{index + 1}</Table.Cell>
+
               <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">{order.intention_detail.total / 100}</Table.Cell>
               <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">{index + 1}</Table.Cell>
             </Table.Row>
