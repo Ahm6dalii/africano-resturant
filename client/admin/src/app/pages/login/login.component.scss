@@ -1,0 +1,10 @@
+
+::ng-deep .mdc-line-ripple {
+  &::before,
+  &::after {
+    border-bottom-color: rgba(0, 0, 0, 0.616) !important;  // Ensure both pseudo-elements are red
+  }
+}
+
+
+
