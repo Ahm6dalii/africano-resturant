@@ -84,6 +84,11 @@ export class FullComponent {
       icon: "list",
       menu: "Orders",
     },
+    {
+      link: "/login",
+      icon: "list",
+      menu: "Login",
+    },
     // {
     //   link: "/progress",
     //   icon: "bar-chart-2",
