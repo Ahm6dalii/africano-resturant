@@ -17,10 +17,10 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { ProductComponent } from './dashboard/dashboard-components/product/product.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FullComponent } from './layouts/full/full.component
 import { OrdersComponent } from './pages/orders/orders.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FoodCrudComponent } from '../app/pages/food-crud/food-crud.component'; 
+import { FoodCrudComponent } from '../app/pages/food-crud/food-crud.component';
+import { FullComponent } from './layouts/full/full.component';
 // import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
 
 export const routes: Routes = [
