@@ -17,7 +17,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { ProductComponent } from './dashboard/dashboard-components/product/product.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FullComponent } from './layouts/full/full.component';
+import { FullComponent } from './layouts/full/full.component
+import { OrdersComponent } from './pages/orders/orders.component';
+import { LoginComponent } from './pages/login/login.component';
 import { FoodCrudComponent } from '../app/pages/food-crud/food-crud.component'; 
 // import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
 
@@ -44,15 +46,17 @@ export const routes: Routes = [
       { path: 'slide-toggle', component: SlideToggleComponent },
       { path: 'tooltip', component: TooltipsComponent },
       { path: 'button', component: ButtonsComponent },
+      { path: "orders", component: OrdersComponent },
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },
       // { path: 'categories', component: CategoryCrudComponent },
       // { path: 'categories/:id', component: CategoryCrudComponent },
     ],
   },
-
+  {path:"login", component:LoginComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
+
 ];
 
 @NgModule({

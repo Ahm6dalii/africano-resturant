@@ -42,6 +42,8 @@ export const En = {
   changeimg: "Change Profile Pic",
   updateinfo: "Update Info",
   updatepass: "Update Password",
+  myOrders:"My Order",
+
   // Food Card
   confirm: 'Confirm',
   order: 'Order',
@@ -63,6 +65,7 @@ export const En = {
   containLetters: 'Password must contain letters.',
   containNumbers: 'Password must contain numbers.',
   reqPassword: 'Please create a password',
+  reqLogPassword: 'Please enter your password',
   matchPassword: 'Passwords must match',
   reqConfirmPassword: 'Please re-enter the password',
   forgetPassword: 'Forgot Password?',
@@ -103,7 +106,7 @@ export const En = {
 
   contactUs: 'Contact Us',
   contactAd: " We're here to help! Reach out to us for any queries, feedback, or support. Our team at Africano Resturant is dedicated to ensuring your satisfaction.",
-  ContactInformation: 'Contact Information',
+  ContactInformation: 'Call us or visit place',
   ContactInformationAd: "If you have any questions, feel free to reach out to us through any of the following methods:",
   Address: "Address:",
   AddressInfo: "Ras Ghareb, next to El-Ashraf Association, in front of Dr. Ahmed Tarek Pharmacy .",
@@ -146,6 +149,101 @@ export const En = {
   confirmsuccess: "Email has been confirmed successfully",
   confirmAcount: "Enter OTP sent to your email to confrm account",
   confirmacount: "Confrm Account",
+
+  //menu
+  menuRestaurant:"Menu Restaurant",
+
+  //about
+  aboutUs:"About Us",
+  ourStory:"Our Story",
+  luxuryRestaurant:"A luxury restaurant with A rare taste you can’t find anywhere in the red sea.",
+  masterChef:"master chef",
+  chefName:"Abdo Tarek ",
+  ourChef:"Our chef",
+  
+
+  //Cart
+  loading:"Loading...",
+  error:"Error",
+  yourCart:"Your Cart",
+  clearCart:"CLear Cart",
+  orderSummary:"Order Summary",
+  subTotal:"Subtotal",
+  delivery:"Delivery Charge",
+  total:"Total",
+  removeItem:"Are you sure you want to remove?",
+  confirmRemove:"Yes, I'm sure",
+  cancelRemove:"No, cancel",
+  removeOrder:"Are you sure you want to remove the entire order?",
+  processOrder:"Proceed to Checkout",
+  remove:"Remove",
+  noOrderFound:"No Order Found",
+
+  //Order
+  affricanoName:"Africano Resturant",
+  affricanoAdrress:"Africano Restaurant, Red Sea City, Egypt",
+  booking:"Booking request",
+  gerOrder:"Get your Order now",
+  orOrder:"or fill out the order form",
+  orderContact:"Contact us",
+  orderReq:"booking Request",
+  orderLocation:"Location",
+  orderAddress:"Ras Ghareb, next to El-Ashraf Association, in front of Dr. Ahmed Tarek Pharmacy .",
+  orderOpenning:"Opening Time",
+  orderDay:"Every day from 9 Am to 2 Am ",
+  orderNow: "Order Now",
+  orderErrorCheck:"An error occurred during checkout.",
+  orderSuccess:"Order Successful!",
+  orderProcess:"Processing...",
+  orderFirsetName:"First Name",
+  orderLastName:"Last Name",
+  apartment:"Apartment",
+  orderPhone:"Phone Number",
+  buliding:"Building" ,
+  street:"Street",
+  floor:"Floor",
+  errApartment:"Apartment is required",
+  errNameF:"First name is required",
+  errNameL:"Last name is required",
+  errStreet:"Street is required",
+  errBuliding:"Building is required",
+  errPhone:"Phone Number is required",
+  errPhoneMin:'Phone number must be at least 10 digits',
+  errPhoneMax:'Phone number must be at most 15 digits',
+  errEmail:'Invalid email address',
+  errEmailReq:"Email is required",
+  errFloor:"Floor is required",
+  
+  //orderList
+  noOrder:"No orders found",
+  browsMenu: "Browse Menu " ,
+  yourOrderLisr:"Your Orders",
+  orderData:"Date",
+  orderTime:"Time",
+  orderItems:"Items",
+  orderTotal:"Total Price",
+  orderData:"Date",
+   orderId:"Order ID",
+   noItems:"No items available",
+
+//toast
+   addedOrder:"Added To Order!",
+   failedOrder:"Failed To Added!",
+   uderAdded:"User Login Successfuly !",
+   userUpdated:"User Info Updated Successfuly",
+   passwordUpdated:"Password updated successfully!",
+   passwordUpdateFail: "Failed to update password. Please try again.",
+   userCreated:'User Successfully Created !',
+    updatedImg:"Profile Image Updated Successfuly",
+failedUpdated:"Fail to Update Profile Image ",
+userLoign:"User Login Successfully",
+
+  //NotFoundPage
+  pageNotFound:"Oops! Page not found",
+  notFound:"The page you're looking for doesn't exist or has been moved.",
+  goBack:"Go Back Home",
+
+
 
 
 

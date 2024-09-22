@@ -12,9 +12,13 @@ import toast, { LoaderIcon } from 'react-hot-toast';
 import LockIcon from './../../components/ReactI-cons/lockIcon/LockIcon';
 import { List } from 'flowbite-react';
 import { HiXCircle } from 'react-icons/hi';
+import { motion } from 'framer-motion';
 import { LoginModal } from '../../components/modal/login/modal.login';
+
 const Register = ({  onSwitchToRegister,setOpenModal}) => {
-  const { translation } = useSelector(state => state.lang)
+const { translation } = useSelector(state => state.lang)
+const Register = ({ setOpenModal}) => {
+  const { translation,language } = useSelector(state => state.lang)
   const {link } = useSelector(state => state.apiLink)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false);  // For loading state
@@ -70,8 +74,7 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
         address:values.address
     };
 
-      console.log(formObj);
-      console.log(values);
+  
       setLoading(true);  
       setErrorMessage('')
       const { confirmPassword, ...formData } = values;
@@ -79,14 +82,12 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
       try {
         
         const response = await axios.post(`${link}/signup`, formObj);
-        console.log('Success:', response.data);
 
-        toast.success('User Successfully Created !')
+        toast.success(translation.userCreated)
         disableTimeOut= setTimeout(() => {
           navigate('/confirm')     
         }, 1000);
       } catch (error) {  
-        console.error('Error:', error);
         toast.error(error.response?.data?.message)
         setErrorMessage(error.response?.data?.message); 
 
@@ -135,7 +136,8 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
           />
           {formik.touched.firstName && formik.errors.firstName ? (
              <List>
-             <List.Item className='text-red-600 dark:text-red-500 dark:text-red-500' icon={HiXCircle}>{formik.errors.firstName}</List.Item>
+
+             <List.Item className='text-red-600 dark:text-red-500 ' icon={HiXCircle}>{formik.errors.firstName}</List.Item>
            </List>
           ) : null}
         </div>
@@ -231,7 +233,7 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
                   }`}
                   {...formik.getFieldProps('password')}
                 />
-                  <div className="absolute top-0 right-0 p-2">
+                  <div  className={`absolute top-0 ${language=='en'?'right-0':'left-0'} p-2`}>
                       <button type='button' className="m-0 p-0">
                           <i onClick={handleShowPassword} className="fas text-dark fa-eye"></i>
                       </button>
@@ -272,14 +274,15 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
            <List   >
              <List.Item className='text-red-600 flex w-fit text-xl m-auto b dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errorMessage}</List.Item>
            </List>:null}  
-        <button
+        <motion.button
           type="submit"
+          whileHover={{ scale: 0.9 }}
           className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
         >
           {loading?<i className='fa-solid fa-spin fa-spinner'></i>
           :translation.signUp}
         
-        </button>
+        </motion.button>
         <p onClick={setOpenModal} className='dark:text-white'>{translation.haveAccount  }   <span className='text-blue-500 hover:text-blue-700 dark:text-yellow-200'><Link to={'/'}> {translation.home}</Link></span></p> 
       </form>
     </div>

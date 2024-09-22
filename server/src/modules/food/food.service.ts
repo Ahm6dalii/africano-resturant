@@ -207,15 +207,11 @@ async delete(id: string): Promise<object> {
       }));
       await this.notificationService.createNotification(notifications);
       this.notificationGateway.sendNotificationToAll(notifications);
-      req.io.emit(
-        'newReview',
-        addedReview.review[addedReview.review.length - 1],
-      );
-      return {
-        message: 'Review added successfully',
-        addedReview,
-        notifications,
-      };
+
+      this.notificationGateway.sendNewReviewToAll(addedReview.review[addedReview.review.length - 1]);
+
+
+      return { message: 'Review added successfully', addedReview, notifications };
     } catch (error) {
       console.log(error);
       throw new HttpException(

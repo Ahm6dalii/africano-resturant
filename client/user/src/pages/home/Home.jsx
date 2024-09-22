@@ -1,15 +1,26 @@
 
 import { useSelector } from "react-redux"
+import  "../../Styles/HomeStyle.css";
 import image1 from "../../assets/affricanoImg/1.jpg"
 import image2 from "../../assets/affricanoImg/2.jpg"
 import image3 from "../../assets/affricanoImg/5.jpg"
 import { Link } from "react-router-dom"
-
+import h1 from "../../assets/media/h1.png"
+import { motion } from 'framer-motion';
 import React, { useRef, useState } from 'react'
 import Food from '../../components/food/Food'
 import CatogeryTab from './../../components/catogery-tabs/CatogeryTab';
 import FoodCatogery from '../../components/food-catogery/FoodCatogery';
 import axios from 'axios';
+import About from './../about/About';
+import { Carousel } from "flowbite-react";
+import User1 from "../../assets/blog/review-author-1.jpg";
+import User2 from "../../assets/blog/review-author-2.jpg";
+import User3 from "../../assets/blog/review-author-3.jpg";
+import User4 from "../../assets/blog/review-author-5.jpg";
+import Contact from './../cotact/Contact';
+
+import MapLocation from "../../components/map-loaction/MapLocation"
 
 export default function Home() {
   const {translation}=useSelector(state=>state.lang)
@@ -21,13 +32,12 @@ export default function Home() {
     
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-5xl font-bold mb-4">{translation.heroAfricano}</h1>
-        <h2 className="text-5xl font-bold mb-4">{translation.heroDesc}</h2>
+     
+  
+
+      <main className="container mx-auto  text-center">
         
-        <p className="text-xl mb-8">{translation.heroCaption}</p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="ads grid grid-cols-1 md:grid-cols-3 gap-8 px-4 py-8">
           {/* Oval image with more pronounced curvature */}
           <div className="relative h-64 overflow-hidden">
             <svg width="0" height="0">
@@ -72,7 +82,24 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+
+
+
+       
+
+
+        {/* about */}
+        <About/>
+
+        {/* contact */}
+        <Contact/>
+
+        
+        
+       
       </main>
+      <MapLocation/>
     </div>
 
     </>

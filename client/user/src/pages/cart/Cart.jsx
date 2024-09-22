@@ -1,195 +1,154 @@
-import axios from 'axios'
-
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { useSelector } from 'react-redux'
-
-import { Button, Modal } from "flowbite-react";
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Button, Modal } from "flowbite-react";
 import useCart from '../../hooks/useCart';
 import EmptyCard from './EmptyCard';
+import CartIcon from '../../components/ReactI-cons/CartIcon/CartIcon';
+
 export default function Cart() {
+  const {translation}=useSelector(state=>state.lang)
   const [openModal, setOpenModal] = useState(false);
-  const [openModall, setOpenModall] = useState(false);
-  const { cart, isLoading, error } = useCart()
+  const [openEmptyCartModal, setOpenEmptyCartModal] = useState(false);
+  const { cart, isLoading, error } = useCart();
   const [currentItem, setCurrentItem] = useState(null);
-  const api = useSelector(state => state.apiLink.link)
-  const queryClient = useQueryClient()
+  const api = useSelector(state => state.apiLink.link);
+  const queryClient = useQueryClient();
   const { user } = useSelector((state) => state.auth);
 
-  const { mutate: updateCart, error: cartError, isSuccess } = useMutation('updateCart', async ({ id, size, quantity }) => {
+  const updateCart = useMutation(
+    async ({ id, size, quantity }) => {
+      const headers = { token: user };
+      return await axios.post(`${api}/cart/update-quantity/${id}`, { size, quantity }, { headers });
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries('cart')
+    }
+  );
 
-    const headers = {
-      token: `${user}`,
+  const deleteItem = useMutation(
+    async ({ id, size, }) => {
+      const headers = { token: user };
+      return await axios.post(`${api}/cart/delete/${id}`, { size }, { headers });
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries('cart')
     }
-    const response = await axios.post(`${api}/cart/update-quantity/${id}`, { size, quantity }, { headers })
+  );
 
-    console.log(response, "response");
-    return response
-  }, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('cart')
+  const deleteOrder = useMutation(
+    async () => {
+      const headers = { token: user };
+      return await axios.delete(`${api}/cart`, { headers });
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries('cart')
     }
-  })
-  const { mutate: deleteItem } = useMutation('deleteItem', async ({ id, size }) => {
-    const headers = {
-      token: `${user}`,
-    }
-    console.log(size);
-
-    const response = await axios.post(`${api}/cart/delete/${id}`, { size }, { headers })
-    console.log(response, "response");
-    return response
-  }, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('cart')
-    }
-  })
-  const { mutate: deleteOrder } = useMutation('deleteItem', async () => {
-
-    const headers = {
-      token: `${user}`,
-    }
-    const response = await axios.delete(`${api}/cart`, { headers })
-    console.log(response, "response");
-    return response
-  }, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('cart')
-    }
-  })
+  );
 
   const handleQuantityChange = (id, size, quantity) => {
     if (quantity > 0) {
-      updateCart({ id, size, quantity })
+      updateCart.mutate({ id, size, quantity });
     }
-  }
+  };
+
   const handleDeleteItem = (id, size) => {
-    deleteItem({ id, size })
-    setOpenModal(false)
-  }
+    deleteItem.mutate({ id, size });
+    setOpenModal(false);
+  };
+
   const handleDeleteCart = () => {
-    deleteOrder()
-    setOpenModall(false)
-  }
-  console.log(cart?.items, 'cart')
-  if (isLoading) return <h1>isloadning</h1>
-  if (error) return <h1>Error: {error.message}</h1>;
+    deleteOrder.mutate();
+    setOpenEmptyCartModal(false);
+  };
+
+  if (isLoading) return <div className="flex justify-center items-center h-screen">{translation.loading}</div>;
+  if (error) return <div className="flex justify-center items-center h-screen">{translation.error}: {error.message}</div>;
+  if (!cart?.items?.length) return <EmptyCard />;
+
   return (
-    <section className="py-24 relative">
-      {cart?.items?.length > 0
-        ? <div className="w-full max-w-7xl px-4 md:px-5 lg:px-6 mx-auto bg-white dark:bg-black p-4 dark:border-gray-700 dark:border-8 border-1 rounded-2xl">
-          <div className='flex justify-between mb-8'>
-            <h2 className="ml-12 title font-manrope font-bold text-4xl leading-10 text-center text-black dark:text-white flex-grow">
-              Order
-            </h2>
-            <button className='rounded-lg bg-gradient-to-r from-red-400 to-red-800 hover:bg-red-900 dark:hover:bg-gray-700 p-4' onClick={() => setOpenModall(true)}>Empty Order</button>
-          </div>
-          <div className="hidden lg:grid grid-cols-3 py-6">
-            <div className="font-normal text-xl leading-8 text-gray-500 dark:text-gray-300">Product</div>
-            <p className="ml-10 font-normal text-xl leading-8 text-gray-500 dark:text-gray-300 flex items-center justify-between col-span-2">
-              <span className="w-full max-w-[370px] text-center">Size</span>
-              <span className="mr-8 w-full max-w-[350px] text-center">Quantity</span>
-              <span className="pr-15 w-full max-w-[200px] text-center">Total</span>
-              <span className="w-full max-w-[200px] text-center">-</span>
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 border-t border-gray-200 dark:border-gray-700 py-6">
-            {cart && cart.items && cart?.items.map((item, i) => (
-              <div key={i} className="flex flex-col lg:flex-row gap-6 w-full max-xl:justify-center max-xl:max-w-xl max-xl:mx-auto">
-                <div className="img-box">
-                  <img src={item.image || "https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTNjG7QqZS3X6zYSWUFYyq-wLcZjaDL5sUz8bpfOZ39phir1_Sy0U-FDBq8BDM3u-Ls"} alt={item.name.en} className="w-full lg:w-[200px] xl:w-[340px] xl:h-[200px] rounded-xl" />
-                </div>
-                <div className="pro-data min-w-48 flex items-start flex-col justify-center">
-                  <h5 className="font-semibold text-xl leading-8 text-black dark:text-white text-center lg:text-left">{item.name.en}</h5>
-                  <h6 className="font-medium text-lg leading-8 text-indigo-600 text-center lg:text-left">${item.amount}</h6>
-                </div>
-                <div className="flex items-center flex-col lg:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-2">
-                  <h6 className="font-manrope font-bold text-2xl leading-9 text-black dark:text-white w-full max-w-[176px] text-center">
-                    {item.size}
-                  </h6>
-                  <div className="flex items-center w-full mx-auto justify-center">
-                    <button disabled={item.quantity <= 1} onClick={() => handleQuantityChange(item._id, item.size, item.quantity - 1)} className="group rounded-l-full px-6 py-[18px] border border-gray-200 dark:border-gray-700 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 dark:hover:bg-gray-600 hover:bg-gray-50">
-                      <svg className="stroke-gray-900 dark:stroke-white transition-all duration-500 group-hover:stroke-black dark:group-hover:stroke-gray-300" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                        <path d="M16.5 11H5.5" stroke="" strokeWidth="1.6" strokeLinecap="round" />
-                      </svg>
-                    </button>
-                    <input type="text" value={item.quantity} readOnly className="border-y border-gray-200 dark:border-gray-700 outline-none text-gray-900 dark:text-white font-semibold text-lg w-full max-w-[118px] min-w-[80px] placeholder:text-gray-900 py-[15px] text-center bg-transparent" />
-                    <button onClick={() => handleQuantityChange(item._id, item.size, item.quantity + 1)} className="group rounded-r-full px-6 py-[18px] border border-gray-200 dark:border-gray-700 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 dark:hover:bg-gray-600 hover:bg-gray-50">
-                      <svg className="stroke-gray-900 dark:stroke-white transition-all duration-500 group-hover:stroke-black dark:group-hover:stroke-gray-300" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" strokeWidth="1.6" strokeLinecap="round" />
-                      </svg>
-                    </button>
-                  </div>
-                  <h6 className="text-indigo-600 font-manrope font-bold text-2xl leading-9 w-full max-w-[176px] text-center">${item.amount * item.quantity}</h6>
-                  <button className='bg-red-700 dark:bg-gray-700 font-manrope font-bold text-lg rounded-lg leading-9 w-full max-w-[176px] text-center' onClick={() => {
-                    setOpenModal(true);
-                    setCurrentItem(item);
-                  }}>Remove</button>
-                </div>
-                {/* Modal for removing individual item */}
-                <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
-                  <Modal.Header />
-                  <Modal.Body>
-                    <div className="text-center">
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        Are you sure you want to remove <span className='text-red-700 font-bold'>{currentItem?.name.en}?</span>
-                      </h3>
-                      <div className="flex justify-center gap-4">
-                        <Button color="failure" onClick={() => handleDeleteItem(currentItem._id, currentItem.size)}>
-                          {"Yes, I'm sure"}
-                        </Button>
-                        <Button color="gray" onClick={() => setOpenModal(false)}>
-                          No, cancel
-                        </Button>
-                      </div>
-                    </div>
-                  </Modal.Body>
-                </Modal>
-                {/* Modal for emptying the entire order */}
-                <Modal show={openModall} size="md" onClose={() => setOpenModall(false)} popup>
-                  <Modal.Header />
-                  <Modal.Body>
-                    <div className="text-center">
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        Are you sure you want to remove the entire order?
-                      </h3>
-                      <div className="flex justify-center gap-4">
-                        <Button color="failure" onClick={handleDeleteCart}>
-                          {"Yes, I'm sure"}
-                        </Button>
-                        <Button color="gray" onClick={() => setOpenModall(false)}>
-                          No, cancel
-                        </Button>
-                      </div>
-                    </div>
-                  </Modal.Body>
-                </Modal>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-row sm:flex-row justify-between items-center mb-8">
+        <h1 className="text-3xl me-auto border p-2  shadow-2xl font-bold dark:border-none  sm:mb-0 flex items-center gap-1"><CartIcon></CartIcon>{translation.yourCart}</h1>
+        <Button color="failure" className='flex items-center gap-2' onClick={() => setOpenEmptyCartModal(true)}>{deleteOrder.isLoading?<i className='fa-solid fa-spinner fa-spin'></i>:<span className='flex items-center '><i className='fa-solid fa-trash  me-2'></i>{translation.clearCart}</span>}</Button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          {cart.items.map((item, index) => (
+            <div key={index} className="flex flex-row sm:flex-row items-center border-b border-b-black dark:border-b-white py-4">
+              <img src={item.image || "https://via.placeholder.com/150"} alt={item.name.en} className="w-20 h-20 object-cover rounded-md mb-4 sm:mb-0 sm:mr-4" />
+              <div className="flex-grow text-center sm:text-left">
+                <h2 className="text-sm sm:text-xl font-semibold">{item.name.en}</h2>
+                <p className="text-gray-600 text-md sm:text-xl">Size: {item.size}</p>
+                <p className="text-orange-500  sm:text-Xl text-bold">{item.amount}<span className='text-green-400 text-sm text-bold sm:text-xl ms-2'>EGP</span></p>
               </div>
-            ))}
-          </div>
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
-            <div className="flex items-center justify-between w-full mb-6">
-              <p className="font-normal text-xl leading-8 text-gray-400 dark:text-gray-300">Sub Total</p>
-              <h6 className="font-semibold text-xl leading-8 text-gray-900 dark:text-white">${cart.totalPrice}</h6>
+              <div className="flex items-center mt-4 sm:mt-0 mx-1">
+                <Button color="light" size="sm" className='p-0' onClick={() => handleQuantityChange(item._id, item.size, item.quantity - 1)} disabled={item.quantity <= 1}>-</Button>
+                <span className="mx-2">{item.quantity}</span>
+                <Button color="light" size="sm" className='p-0'  onClick={() => handleQuantityChange(item._id, item.size, item.quantity + 1)}>+</Button>
+              </div>
+              <Button color="failure" size="sm" className="mt-4 sm:mt-0 sm:ml-4 flex items-center" onClick={() => {
+                setCurrentItem(item);
+                setOpenModal(true);
+              }}>{deleteItem.isLoading?<i className='fa-solid fa-spinner fa-spin'></i>:<span className='flex items-center'><i className='fa-solid fa-trash  me-1'></i> {translation.remove}</span>}</Button>
             </div>
-            <div className="flex items-center justify-between w-full pb-6 border-b border-gray-200 dark:border-gray-700">
-              <p className="font-normal text-xl leading-8 text-gray-400 dark:text-gray-300">Delivery Charge</p>
-              <h6 className="font-semibold text-xl leading-8 text-gray-900 dark:text-white">$15.00</h6>
+          ))}
+        </div>
+
+        <div className="lg:col-span-1 mt-8 lg:mt-0">
+          <div className="bg-gray-100 dark:bg-slate-300 shadow border p-6 rounded-lg">
+            <h2 className="text-2xl font-bold mb-4">{translation.orderSummary}</h2>
+            <div className="flex justify-between mb-2">
+              <span>{translation.subTotal}</span>
+              <span>{cart.totalPrice}<span className='text-green-900 ms-2'>EGP</span></span>
             </div>
-            <div className="flex items-center justify-between w-full py-6">
-              <p className="font-manrope font-medium text-2xl leading-9 text-gray-900 dark:text-white">Total</p>
-              <h6 className="font-manrope font-medium text-2xl leading-9 text-gray-900 dark:text-white">${cart.totalPrice + 15}</h6>
+            <div className="flex justify-between mb-2">
+              <span>{translation.delivery}</span>
+              <span>15.00<span className='text-green-900 ms-2'>EGP</span></span>
             </div>
-            <Link to={'/order'}>
-              <button className="bg-red-700 dark:bg-gray-700 py-4 w-full rounded-lg text-lg font-semibold leading-9 text-white transition-all duration-300 hover:bg-gray-900">
-                Proceed to Checkout
-              </button>
+            <div className="flex justify-between font-bold text-lg mt-4">
+              <span>{translation.total}</span>
+              <span>{cart.totalPrice + 15}<span className='text-green-900 ms-2'>EGP</span></span>
+            </div>
+            <Link to="/order" className="block mt-6">
+              <Button color="dark" className="w-full "><span className='flex items-center gap-2'><i class="fa-regular fa-money-bill-1 "></i>{translation.processOrder}</span></Button>
             </Link>
           </div>
         </div>
-        : <EmptyCard />}
-    </section>
+      </div>
 
-  )
+      <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              {translation.removeItem} <span className="font-bold text-red-700">{currentItem?.name.en}</span>?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={() => handleDeleteItem(currentItem._id, currentItem.size)}>{translation.confirmRemove}</Button>
+              <Button color="gray" onClick={() => setOpenModal(false)}>{translation.cancelRemove}</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={openEmptyCartModal} size="md" onClose={() => setOpenEmptyCartModal(false)} popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              {translation.removeOrder}
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={handleDeleteCart}>{translation.confirmRemove}</Button>
+              <Button color="gray" onClick={() => setOpenEmptyCartModal(false)}>{translation.cancelRemove}l</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
 }

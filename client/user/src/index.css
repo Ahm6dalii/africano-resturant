@@ -12,3 +12,9 @@
     background-position-x: right;
     background-position-y: 160px;
 }
+body,
+html {
+  font-size: 1rem;
+  font-family: var(--roboto-font);
+  font-weight: 300;
+}

@@ -1,0 +1,63 @@
+<div class=" bg-gray-100 h-screen overflow-auto">
+  <h1 class="text-5xl mt-10  font-bold text-center drop-shadow-lg uppercase">
+    <p>Africano</p>
+    <p>Restaurant</p>
+  </h1>
+  <div class="flex  items-center justify-center">
+<div class="card w-[400px] m-auto">
+  <div class="card-body">
+    <h1 class="mb-32 text-center text-2xl"> <i class="fas fa-user text-orange-500 me-2"></i>Admin Login</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      @if(errorMessage){
+        <div class="alert alert-danger py-1 mb-2 text-center" role="alert">invalid email or password</div>
+      }
+      <mat-form-field  class="me-24 fs-16" appearance="fill">
+        <mat-label class="text-black">username</mat-label>
+        <input matInput type="text" class="" id="username" name="username"  formControlName="username">
+      </mat-form-field>
+      <div *ngIf="loginForm.get('username')?.errors && loginForm.get('username')?.touched">
+        <div class="form-text text-danger mt-[-20px] mb-[10px]">
+          <p *ngIf="loginForm.get('username')?.errors['required']" class="alert alert-danger py-1 mb-4">required</p>
+          <p *ngIf="loginForm.get('username')?.errors['minlength']" class="alert alert-danger py-1 mb-4">
+            Minimum length is {{ loginForm.get('username')?.errors['minlength'].required }} 3.
+          </p>
+          <p *ngIf="loginForm.get('username')?.errors['maxlength']" class="alert alert-danger py-1 mb-4">
+            Maximum length is {{ loginForm.get('username')?.errors['maxlength'].required }} 20.
+          </p>
+        </div>
+      </div>
+
+      <mat-form-field class="me-24 fs-16" >
+        <mat-label class="text-black">password</mat-label>
+        <input matInput type="password" id="password" name="password"  formControlName="password">
+      </mat-form-field>
+      @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
+        <div class="form-text text-danger mt-[-20px]">
+          @if (loginForm.get('password')?.errors['required']) {
+            <p class="alert alert-danger py-1 mb-4">Required</p>
+          }
+          @if (loginForm.get('password')?.errors['minlength']) {
+            <p class="alert alert-danger py-1 mb-4">
+              Minimum length is {{ loginForm.get('password')?.errors['minlength'].required }} characters.
+            </p>
+          }
+          @if (loginForm.get('password')?.errors['pattern']) {
+            <p class="alert alert-danger py-1 mb-4">
+              Password must contain at least one letter, one number, and be at least 6 characters long.
+            </p>
+          }
+        </div>
+      }
+      <button type="submit" [disabled]="isLoading" class="p-2 rounded bg-orange-400 block ms-auto">
+        @if (isLoading){
+          <i class="fas fa-spin fa-spinner"></i>
+        }
+        @else{
+          Submit
+        }
+      </button>
+    </form>
+  </div>
+</div>
+</div>
+</div>

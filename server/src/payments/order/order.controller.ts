@@ -10,14 +10,16 @@ export class OrderController {
     return this.orderService.allOrder()
   }
 
+
   @Get('userOrders')
-  getUserOrder(@Body() body: any, @Headers() header) {
+  getUserOrder(@Headers() header) {
     const { token } = header
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
     return this.orderService.userOrders(token)
   }
+
   @Get('ordersByStatus')
   getOrdersByStatus(@Query('status') status?: string) {
     return this.orderService.getOrdersByStatus(status)
@@ -26,6 +28,8 @@ export class OrderController {
   updateOrderStatus(@Param('id') id: string, @Body() body: any) {
     console.log(body, "body")
     return this.orderService.updateOrderStatus(id, body)
+    // req.io.emit('newReview', addedReview.review[addedReview.review.length - 1]);
   }
 
 }
+
