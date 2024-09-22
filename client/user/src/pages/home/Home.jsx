@@ -99,7 +99,7 @@ export default function Home() {
         
        
       </main>
-      <MapLocation/>
+      {/* <MapLocation/> */}
     </div>
 
     </>
