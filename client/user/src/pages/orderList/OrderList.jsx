@@ -3,6 +3,7 @@ import { Table } from "flowbite-react";
 import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import { useSelector } from "react-redux";
+import socket from "../../socket.io/socket";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]); // State to store user orders
@@ -28,7 +29,15 @@ const OrderList = () => {
 
     fetchOrders();
   }, []);
+  useEffect(() => {
+    socket.on('updatedOrder', (updatedOrder) => {
+      console.log(updatedOrder, "updatedOrder");
 
+    })
+    return () => {
+      socket.off('newReview');
+    };
+  })
   if (!orders) {
     <Loading></Loading>
   }
@@ -53,6 +62,7 @@ const OrderList = () => {
           <Table.HeadCell>Time</Table.HeadCell>
           <Table.HeadCell>Items</Table.HeadCell>
           <Table.HeadCell>Total Price</Table.HeadCell>
+          <Table.HeadCell>Status</Table.HeadCell>
           <Table.HeadCell>Order ID</Table.HeadCell>
         </Table.Head>
 
@@ -83,6 +93,7 @@ const OrderList = () => {
                 )}
               </Table.Cell>
               <Table.Cell>{order.intention_detail.amount / 100}</Table.Cell>
+              <Table.Cell>{order?.status}</Table.Cell>
               <Table.Cell>{index + 1}</Table.Cell>
             </Table.Row>
           ))}
