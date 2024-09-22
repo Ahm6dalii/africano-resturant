@@ -1,10 +1,19 @@
 import React from 'react'
 import contactImg from "../../assets/media/restrunt.png"
 import { useSelector } from 'react-redux';
-
+import { motion } from 'framer-motion';
 
 export default function Contact() {
     const { translation } = useSelector(state => state.lang)
+    const pVariants={
+        hidden :{
+          opacity:0,
+        },
+        visible :{
+          opacity:1,
+        },
+      }
+    
 
   return (
   
@@ -14,14 +23,17 @@ export default function Contact() {
                 {translation.contactUs }
                 </h3>
                 
+                
                 <p className="text-xl  mb-10 text-center leading-relaxed ">
                         {translation.contactAd }                
                 </p>
                 
                 <div className="grid  grid-cols-1 md:grid-cols-2 gap-8">
 
-                    <div>
-                        <h2 className="text-3xl font-bold  text-red-500 mb-4">
+                    <motion.div 
+                    variants={pVariants} initial="hidden" animate="visible"
+                    transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}>
+                        <h2 style={{"fontFamily":" Caveat"}} className="text-4xl font-bold  text-red-500 mb-4">
                         {translation.ContactInformation }
                         </h2>
                         <p className="text-lg  leading-loose mb-6">
@@ -48,7 +60,7 @@ export default function Contact() {
                         </ul>
 
                         
-                    </div>
+                    </motion.div>
                     <div>
                     <img src={contactImg} alt="Restaurant view" className="w-full h-4/5 object-cover  rounded-t-full shadow-lg shadow-black-900 dark:shadow-red-300 " />
                         

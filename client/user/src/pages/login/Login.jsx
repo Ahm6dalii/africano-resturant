@@ -11,6 +11,7 @@ import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
 import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
 import toast from 'react-hot-toast';
 import { setUser } from '../../redux/reducers/userAuthSlice';
+import { motion } from 'framer-motion';
 
 const Login = ({  onSwitchToRegister, closeModal}) => {
   const { translation } = useSelector(state => state.lang)
@@ -37,7 +38,7 @@ const formik = useFormik({
         .min(8, `${translation.minPassword } `)
         .matches(/[a-zA-Z]/, `${translation.containLetters } `)
         .matches(/\d/, `${translation.containNumbers } `)
-        .required(`${translation.reqPassword } `),
+        .required(`${translation.reqLogPassword } `),
     }),
     onSubmit: async (values) => {
       setLoading(true)
@@ -132,12 +133,13 @@ const formik = useFormik({
            <List   >
              <List.Item className='text-red-600 flex w-fit text-md m-auto b dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errorMessage}</List.Item>
            </List>:null}  
-        <button
+        <motion.button
           type="submit"
+          whileHover={{ scale: 0.9 }}
           className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
         >
           {loading?<i className='fa-solid fa-spin fa-spinner'></i>:translation.signIn }
-        </button>
+        </motion.button>
 
         <div className="mt-4 text-center">
           <a href="/forgot-password" className="text-blue-500 hover:text-blue-700 dark:text-yellow-200">

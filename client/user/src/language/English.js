@@ -63,6 +63,7 @@ export const En = {
   containLetters: 'Password must contain letters.',
   containNumbers: 'Password must contain numbers.',
   reqPassword: 'Please create a password',
+  reqLogPassword: 'Please enter your password',
   matchPassword: 'Passwords must match',
   reqConfirmPassword: 'Please re-enter the password',
   forgetPassword: 'Forgot Password?',
@@ -103,7 +104,7 @@ export const En = {
 
   contactUs: 'Contact Us',
   contactAd: " We're here to help! Reach out to us for any queries, feedback, or support. Our team at Africano Resturant is dedicated to ensuring your satisfaction.",
-  ContactInformation: 'Contact Information',
+  ContactInformation: 'Call us or visit place',
   ContactInformationAd: "If you have any questions, feel free to reach out to us through any of the following methods:",
   Address: "Address:",
   AddressInfo: "Ras Ghareb, next to El-Ashraf Association, in front of Dr. Ahmed Tarek Pharmacy .",
@@ -147,6 +148,17 @@ export const En = {
   confirmAcount: "Enter OTP sent to your email to confrm account",
   confirmacount: "Confrm Account",
 
+  //menu
+  menuRestaurant:"Menu Restaurant",
+
+  //about
+  aboutUs:"About Us",
+  ourStory:"Our Story",
+  luxuryRestaurant:"A luxury restaurant with A rare taste you can’t find anywhere in the red sea.",
+  masterChef:"master chef",
+  chefName:"Abdo Tarek ",
+  ourChef:"Our chef",
+  
 
 
 }   

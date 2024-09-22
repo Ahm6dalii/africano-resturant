@@ -12,6 +12,7 @@ import toast, { LoaderIcon } from 'react-hot-toast';
 import LockIcon from './../../components/ReactI-cons/lockIcon/LockIcon';
 import { List } from 'flowbite-react';
 import { HiXCircle } from 'react-icons/hi';
+import { motion } from 'framer-motion';
 import { LoginModal } from '../../components/modal/login/modal.login';
 const Register = ({  onSwitchToRegister,setOpenModal}) => {
   const { translation } = useSelector(state => state.lang)
@@ -135,7 +136,7 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
           />
           {formik.touched.firstName && formik.errors.firstName ? (
              <List>
-             <List.Item className='text-red-600 dark:text-red-500 dark:text-red-500' icon={HiXCircle}>{formik.errors.firstName}</List.Item>
+             <List.Item className='text-red-600  dark:text-red-500' icon={HiXCircle}>{formik.errors.firstName}</List.Item>
            </List>
           ) : null}
         </div>
@@ -272,14 +273,15 @@ const Register = ({  onSwitchToRegister,setOpenModal}) => {
            <List   >
              <List.Item className='text-red-600 flex w-fit text-xl m-auto b dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errorMessage}</List.Item>
            </List>:null}  
-        <button
+        <motion.button
           type="submit"
+          whileHover={{ scale: 0.9 }}
           className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
         >
           {loading?<i className='fa-solid fa-spin fa-spinner'></i>
           :translation.signUp}
         
-        </button>
+        </motion.button>
         <p onClick={setOpenModal} className='dark:text-white'>{translation.haveAccount  }   <span className='text-blue-500 hover:text-blue-700 dark:text-yellow-200'><Link to={'/'}> {translation.home}</Link></span></p> 
       </form>
     </div>
