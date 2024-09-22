@@ -6,10 +6,9 @@ import DecIncCount from '../Dec-Inc-count/DecIncCount';
 import axios from 'axios';
 import { addToCart } from '../../../redux/reducers/cartSlice';
 import { useMutation, useQueryClient } from 'react-query';
-import { motion } from 'framer-motion';
-
 import { setLogin } from '../../../redux/reducers/userAuthSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default function CardModal({ i, amount, name, itemId }) {
   const [openModal, setOpenModal] = useState(false);
@@ -106,12 +105,11 @@ export default function CardModal({ i, amount, name, itemId }) {
 
   return (
     <>
-      <motion.button className="w-full py-3 text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-lg text-sm dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-        whileHover={{ scale: 0.9 }}
+      <Button className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-lg text-sm dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
         onClick={() => setOpenModal(true)}
       >
         {translation.order}
-      </motion.button>
+      </Button>
 
       <Modal  className={`${mode=='light'?'':'dark'}`} show={openModal} size="xl" onClose={onCloseModal} popup={true}>
 
@@ -134,17 +132,17 @@ export default function CardModal({ i, amount, name, itemId }) {
             <DecIncCount increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} quantity={quantity} />
 
             <div className="w-full">
-              <motion.button
-                disabled={!selectedPrice || loading}
-                onClick={handleOrder}
-                whileHover={{ scale: 0.9 }}
-                className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-              >
-                {
-                  loading ? <i class="fa-solid fa-spinner fa-spin"></i> : translation.confirm
-                }
-              </motion.button>
 
+               <Button
+               disabled={!selectedPrice || loading}
+               onClick={handleOrder}
+               className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+             >
+               {
+                 isLoading? <i class="fa-solid fa-spinner fa-spin"></i> : translation.confirm
+               }
+             </Button>
+             
             </div>
           </Modal.Body>
         </div>
