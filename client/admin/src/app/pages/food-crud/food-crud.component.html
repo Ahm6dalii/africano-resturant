@@ -1,0 +1,162 @@
+<!-- Switch Language -->
+<div class="float-right">
+  <button
+    (click)="setLanguage('en')"
+    class="mr-2 p-2 bg-blue-500 text-white rounded-md"
+  >
+    En
+  </button>
+  <button
+    (click)="setLanguage('ar')"
+    class="p-2 bg-blue-500 text-white rounded-md"
+  >
+    Ar
+  </button>
+</div>
+
+<!-- Add New Food Button -->
+<button
+  (click)="toggleAddPopup()"
+  class="mb-4 p-2 bg-green-500 text-white rounded-md"
+>
+  Add New Food
+</button>
+
+<!-- Add New Food Popup -->
+<div *ngIf="isAddPopupOpen" class="animate-slideDown">
+  <form [formGroup]="foodForm" (ngSubmit)="addFood()">
+    <input
+      formControlName="name"
+      placeholder="Food Name"
+      class="mb-2 p-2 border rounded-md"
+    />
+    <input
+      formControlName="category"
+      placeholder="Category"
+      class="mb-2 p-2 border rounded-md"
+    />
+    <input
+      formControlName="description"
+      placeholder="Description"
+      class="mb-2 p-2 border rounded-md"
+    />
+    <input
+      formControlName="image"
+      placeholder="Image URL"
+      class="mb-2 p-2 border rounded-md"
+    />
+
+    <button type="submit" class="mr-2 p-2 bg-blue-500 text-white rounded-md">
+      Save
+    </button>
+  </form>
+</div>
+
+<!-- Food List -->
+<div
+  *ngFor="let food of foods"
+  class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-6"
+>
+  <div class="md:flex">
+    <div class="md:shrink-0">
+      <img
+        [src]="food.image"
+        alt="Food Image"
+        class="h-48 w-full object-cover md:h-full md:w-48"
+      />
+    </div>
+    <div class="p-8">
+      <div
+        class="uppercase tracking-wide text-sm text-indigo-500 font-bold mb-2"
+      >
+        {{ food.category.name[selectedLanguage] }}
+      </div>
+      <h2 class="text-3xl font-bold">{{ food.name[selectedLanguage] }}</h2>
+      <p class="mt-2 text-slate-500">
+        {{ food.description[selectedLanguage] }}
+      </p>
+      <!-- <select formControlName="size" class="mb-2 p-2 border rounded-md">
+      <option value="{{food.amount.S}}">S</option>
+      <option value="{{food.amount.M}}">M</option>
+      <option value="{{food.amount.L}}">L</option>
+    </select> -->
+
+    <!-- Form For Choose Size -->
+      <form [formGroup]="foodForm" (ngSubmit)="updateFood(food)">
+        <label
+          for="size"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Select a size</label
+        >
+        <select
+          formControlName="size"
+          id="size"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="{{ food.amount.S }}">S ({{ food.amount.S }})</option>
+          <option value="{{ food.amount.M }}">M ({{ food.amount.M }})</option>
+          <option value="{{ food.amount.L }}">L ({{ food.amount.L }})</option>
+        </select>
+      </form>
+      <!-- Edit and Delete  -->
+      <div class="mt-4">
+        <button
+          (click)="togglePopup(food)"
+          class="p-2 bg-blue-500 text-white rounded-md m-3"
+        >
+          Edit
+        </button>
+
+        <!-- Edit Popup -->
+        <div *ngIf="isPopupOpen && food._id === selectedFood._id" class="animate-slideDown">
+          <form [formGroup]="foodForm" (ngSubmit)="updateFood(food)">
+            <input
+              formControlName="name"
+              placeholder="Food Name"
+              class="mb-2 p-2 border rounded-md"
+            />
+            <input
+              formControlName="category"
+              placeholder="Category"
+              class="mb-2 p-2 border rounded-md"
+            />
+            <input
+              formControlName="description"
+              placeholder="Description"
+              class="mb-2 p-2 border rounded-md"
+            />
+            <input
+              formControlName="image"
+              placeholder="Image URL"
+              class="mb-2 p-2 border rounded-md"
+            />
+            <select formControlName="size" class="mb-2 p-2 border rounded-md">
+              <option value="S">Small (75)</option>
+              <option value="M">Medium (95)</option>
+              <option value="L">Large (125)</option>
+            </select>
+            <button
+              type="submit"
+              class="mr-2 p-2 bg-blue-500 text-white rounded-md"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+
+        <button
+          (click)="deleteFood(food._id)"
+          class="p-2 bg-red-500 text-white rounded-md"
+        >
+          Delete
+        </button>
+
+        <!-- Number of Reviews -->
+        <p class="mt-2 text-slate-500">
+          Reviews: {{ food.review.length }}
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
