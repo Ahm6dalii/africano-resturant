@@ -1,24 +1,28 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  provideAnimations,
+} from '@angular/platform-browser/animations';
 import { FullComponent } from './layouts/full/full.component';
-import { DemoFlexyModule } from './demo-flexy-module'
+import { DemoFlexyModule } from './demo-flexy-module';
 
 // Modules
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
-
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { AppRoutingModule, routes } from './app-routing.module';
 @NgModule({
-  declarations: [
-    AppComponent,
-    FullComponent
-  ],
+  declarations: [AppComponent, FullComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,9 +31,14 @@ import { ComponentsModule } from './components/components.module';
     DemoFlexyModule,
     DashboardModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideRouter(routes),
+    provideClientHydration(),
+    provideHttpClient(),
+    provideAnimations(),
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
