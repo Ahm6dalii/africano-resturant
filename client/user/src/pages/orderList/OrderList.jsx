@@ -21,19 +21,32 @@ const OrderList = () => {
           }
         );
         //console.log(response.data);
-        setOrders(response);
+        setOrders(response?.data);
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchOrders();
+
   }, []);
+  console.log(orders, "checking something");
   useEffect(() => {
     socket.on('updatedOrder', (updatedOrder) => {
       console.log(updatedOrder, "updatedOrder");
-
-    })
+      setOrders((prevOrders) => {
+        const existingOrderIndex = prevOrders.findIndex(
+          (order) => order._id === updatedOrder._id
+        );
+        if (existingOrderIndex !== -1) {
+          const updatedOrders = [...prevOrders];
+          updatedOrders[existingOrderIndex] = updatedOrder;
+          return updatedOrders;
+        } else {
+          return [...prevOrders, updatedOrder];
+        }
+      })
+    });
     return () => {
       socket.off('newReview');
     };
@@ -67,7 +80,7 @@ const OrderList = () => {
         </Table.Head>
 
         <Table.Body>
-          {orders?.data?.map((order, index) => (
+          {orders?.map((order, index) => (
             <Table.Row key={order._id || index} className="bg-white">
               {console.log(order.intention_detail)}
 

@@ -9,6 +9,10 @@ import logo from "../../assets/logo/logo-dr.png";
 import { LoginModal } from "../modal/login/modal.login";
 import { logOutUser } from "../../redux/reducers/userAuthSlice";
 import useCart from "../../hooks/useCart";
+import { useEffect } from "react";
+import socket from "../../socket.io/socket";
+import NotificationsModel from './../Notifications/NotificationsModel';
+import DropdownNotification from "../Notifications/NotDerp";
 export function Navbaar() {
   const { mode } = useSelector((state) => state.mode);
   const { translation } = useSelector((state) => state.lang);
@@ -18,6 +22,14 @@ export function Navbaar() {
   const { cart } = useCart()
   console.log(user);
 
+  useEffect(() => {
+    socket.emit('register', userInfo?.userId)
+    console.log("heloo from sockket io");
+
+    return () => {
+      socket.off('register')
+    }
+  }, [])
   const dispatch = useDispatch();
 
   const navLink = [
@@ -197,6 +209,8 @@ export function Navbaar() {
                 </div>
               </Link>}
 
+              <NotificationsModel />
+              <DropdownNotification />
             </div>
 
 
