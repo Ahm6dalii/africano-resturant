@@ -16,6 +16,7 @@ export const Ar = {
   containLetters: 'يجب أن تحتوي كلمة المرور على حروف.',
   containNumbers: 'يجب أن تحتوي كلمة المرور على أرقام.',
   reqPassword: 'الرجاء إنشاء كلمة مرور',
+  reqLogPassword:"أدخل كلمة المرور",
   matchPassword: 'يجب أن تتطابق كلمات المرور',
   reqConfirmPassword: 'الرجاء إعادة إدخال كلمة المرور',
   forgetPassword: 'نسيت كلمة المرور',
@@ -130,7 +131,7 @@ myOrders: "طلباتي",
   contactUs: 'تواصل معنا',
   contactAd:
     'نحن هنا للمساعدة! تواصل معنا للحصول على أي استفسارات أو تعليقات أو دعم. فريقنا في مطعم أفريكانو مكرس لضمان رضاكم',
-  ContactInformation: 'معلومات الاتصال',
+  ContactInformation: 'اتصل بنا أو قم بزيارة المكان',
   ContactInformationAd:
     'إذا كانت لديك أي أسئلة، فلا تتردد في التواصل معنا عبر أي من الطرق التالية:',
   Address: 'العنوان:',
@@ -175,7 +176,12 @@ confirmsuccess: "تم تأكيد البريد الإلكتروني بنجاح",
 confirmAcount: "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد الحساب",
 confirmacount: "تأكيد الحساب",
 
-//Cart
+//menu
+menuRestaurant:"قائمة الطلبات",
+
+//about
+aboutUs:"معلومات عنا",
+
 
   loading: "جارٍ التحميل...",
   error: "خطأ",
