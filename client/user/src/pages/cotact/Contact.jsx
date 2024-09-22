@@ -2,6 +2,8 @@ import React from 'react'
 import contactImg from "../../assets/media/restrunt.png"
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
+import MapLocation from '../../components/map-loaction/MapLocation';
+
 
 export default function Contact() {
     const { translation } = useSelector(state => state.lang)
@@ -19,7 +21,7 @@ export default function Contact() {
   
             <div className=" shadow-2xl  border rounded-3xl max-w-7xl mx-auto p-12">
                 <h3 style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold    mb-8 text-center">
-                <i class="fa-solid fa-headset pe-3"></i>
+                <i className="fa-solid fa-headset pe-3"></i>
                 {translation.contactUs }
                 </h3>
                 
@@ -41,11 +43,11 @@ export default function Contact() {
                         </p>
                         <ul className="text-lg  space-y-4">
                         <strong className='text-red-500 text-2xl' style={{"fontFamily":" Oswald"}}>{translation.Address }</strong>
-                            <li className='pb-3 '><i class="fa-solid fa-location-dot pe-4"></i> {translation.AddressInfo } </li>   
+                            <li className='pb-3 '><i className="fa-solid fa-location-dot pe-4"></i> {translation.AddressInfo } </li>   
                             <hr />
                         <strong className='text-red-500 text-2xl' style={{"fontFamily":" Oswald"}}>{translation.Phone }</strong>
                             <li>
-                            <i class="fa-solid fa-phone pe-4"></i>
+                            <i className="fa-solid fa-phone pe-4"></i>
                             {translation.PhoneInfo }</li>
                             <hr />
                         <strong className='text-red-500 text-2xl' style={{"fontFamily":" Oswald"}}>{translation.socialMedia }</strong>
@@ -67,22 +69,9 @@ export default function Contact() {
                     </div>
                 </div>
 
-
-                <div className="mt-12">
-                    <h2 className="text-3xl font-bold  text-red-500 mb-4 text-center" style={{"fontFamily":" Oswald"}}>
-                    <i class="fa-solid fa-location-dot pe-4"></i>
-                    {translation.findUs }
-                    </h2>
-                    <div className="w-full h-64 rounded-lg overflow-hidden shadow-inner">
-                        <iframe
-                            className="w-full h-full border-0"
-                            src="https://www.google.com/maps/embed?pb=Africano+pizza%26pasta/@28.3616322,33.0762066,17z/data=!3m1!4b1!4m6!3m5!1s0x14515fe31fa9a355:0x43fbf4acc0b3a06b!8m2!3d28.3616275!4d33.0787815!16s%2Fg%2F11sw2zwzf4?hl=en-GB&entry=ttu&g_ep=EgoyMDI0MDkxNi4wIKXMDSoASAFQAw%3D%3D"
-                            allowFullScreen=""
-                            loading="lazy"
-                            title="Google Map"
-                        ></iframe>
-                    </div>
-                </div>
+             
+                      <MapLocation></MapLocation>
+                
             </div>
         
   )

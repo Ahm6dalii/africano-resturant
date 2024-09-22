@@ -8,6 +8,7 @@ import { Button, Tooltip } from "flowbite-react";
 import { useEffect, useState } from "react"
 import DetailsLoading from "../../components/Skeletion Loading/DetailsLoading"
 import RelatedProduct from "./RelatedProduct"
+import socket from "../../socket.io/socket"
 const FoodDetails = () => {
     const { id } = useParams()
     const queryClient = useQueryClient()
@@ -67,6 +68,7 @@ const FoodDetails = () => {
         setSize(newSize);
         setPrice(food.amount[newSize]);
     };
+
 
 
     if (isLoading) return <DetailsLoading />

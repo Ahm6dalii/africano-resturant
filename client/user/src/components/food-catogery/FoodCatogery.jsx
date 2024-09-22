@@ -16,18 +16,15 @@ export default function FoodCatogery() {
 
 
     const { id } = useParams()
-    console.log(id);
     
     async function getAllFood(){
       setIsLoading(true) 
         axios.get(`${link}/api/foods/cat?category=${id}&limit=${limit}&page=${page}`)
         .then(({data}) =>{
-            console.log(data);
             setDataPagination(data)
             setIsLoading(false)
             setData(data?.data)
         }).catch((err)=>{
-          console.log(err); 
           setIsLoading(false)    
         })
       }

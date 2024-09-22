@@ -12,6 +12,8 @@ const ProfileImage = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [currentProfileImage, setCurrentProfileImage] = useState();
   const { user, userInfo } = useSelector((state) => state.auth);
+  const { translation } = useSelector(state => state.lang)
+
   const dispatch = useDispatch()
 
 
@@ -45,14 +47,14 @@ const ProfileImage = () => {
         console.log(data);
         setLoading(false)
         dispatch(changeProfileImg(data.updatedUser.image))
-        toast.success("Profile Image Updated Successfuly")
+        toast.success(translation.updatedImg)
         setIsModalOpen(false)
         setPreviewUrl('')
       })
       .catch((err) => {
         setLoading(false)
         if (err.response.data.message) {
-          toast.error("Fail to Update Profile Image ")
+          toast.error(translation.failedUpdated)
         }
       });
 

@@ -24,6 +24,7 @@ const CustomerReviews = ({ id, reviews }) => {
 
     useEffect(() => {
         socket.on('newReview', (addedReview) => {
+
             setReviewsList((prevReviews) => [...prevReviews, addedReview]);
         });
 
@@ -63,7 +64,7 @@ const CustomerReviews = ({ id, reviews }) => {
                                     Your Review
                                 </label>
                                 <textarea
-                                    className="shadow appearance-none dark:bg-gray-800 border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline h-32"
+                                    className="shadow appearance-none dark:bg-gray-800 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32"
                                     id="review"
                                     placeholder="Write your review here"
                                     name="review"

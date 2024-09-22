@@ -6,12 +6,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OrdersService {
-
+  private apiUrl = 'http://localhost:3000/order';
   constructor() { }
   _httpClient = inject(HttpClient)
 
   getOrders(): Observable<any> {
-
-    return this._httpClient.get<any>(`https://ecommerce.routemisr.com/api/v1/orders/user/${id}`)
+    return this._httpClient.get<any>(`${this.apiUrl}`)
   }
+
+  getOrdersByStatus(status: string): Observable<any> {
+    console.log(status, "status");
+
+    return this._httpClient.get(`${this.apiUrl}/ordersByStatus?status=${status}`);
+  }
+
+  updateOrderStatus(id: string, body: any): Observable<any> {
+    return this._httpClient.patch(`${this.apiUrl}/updateordersByStatus/${id}`, body);
+  }
+
+
 }

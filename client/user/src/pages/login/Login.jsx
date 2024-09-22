@@ -3,24 +3,27 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { List } from 'flowbite-react';
-import { HiCheckCircle, HiXCircle } from "react-icons/hi";
+import {  HiXCircle } from "react-icons/hi";
 import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
 import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
 import toast from 'react-hot-toast';
 import { setUser } from '../../redux/reducers/userAuthSlice';
-import { motion } from 'framer-motion';
 
-const Login = ({  onSwitchToRegister, closeModal}) => {
-  const { translation } = useSelector(state => state.lang)
+
+const Login = ({  closeModal}) => {
+
+  const { translation,language } = useSelector(state => state.lang)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const {link } = useSelector(state => state.apiLink)
   const [errorMessage, setErrorMessage] = useState("");  // For error state 
   const dispatch =useDispatch();
   const navigate=useNavigate()
+  const {pathname}=useLocation()
+ const currentPath=pathname.split('/').slice(2).join('/');
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
@@ -38,20 +41,18 @@ const formik = useFormik({
         .min(8, `${translation.minPassword } `)
         .matches(/[a-zA-Z]/, `${translation.containLetters } `)
         .matches(/\d/, `${translation.containNumbers } `)
-        .required(`${translation.reqLogPassword } `),
+        .required(`${translation.reqPassword } `),
     }),
     onSubmit: async (values) => {
       setLoading(true)
       setErrorMessage('')
       try {
         const {data}= await axios.post(`${link}/signin`, values);
-        console.log(data);
         dispatch(setUser(data?.token))
-        toast.success("User Login Successfuly !")
-        navigate('/')
+        toast.success(translation.userLoign)
+        currentPath?navigate(`/${currentPath}`):navigate(`/`);
         closeModal()
       } catch (error) {
-        console.log(error);  
         if(error.response?.data?.message)
         {
           toast.error(error.response?.data?.message)
@@ -117,7 +118,7 @@ const formik = useFormik({
                     }`}
                     {...formik.getFieldProps('password')}
                   />
-                <div className="absolute top-0 right-0 p-2">
+                <div className={`absolute top-0 ${language=='en'?'right-0':'left-0'} p-2`}>
                         <button type='button' className="m-0 p-0">
                             <i onClick={handleShowPassword} className="fas text-dark fa-eye"></i>
                         </button>
@@ -133,13 +134,12 @@ const formik = useFormik({
            <List   >
              <List.Item className='text-red-600 flex w-fit text-md m-auto b dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errorMessage}</List.Item>
            </List>:null}  
-        <motion.button
+        <button
           type="submit"
-          whileHover={{ scale: 0.9 }}
           className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
         >
           {loading?<i className='fa-solid fa-spin fa-spinner'></i>:translation.signIn }
-        </motion.button>
+        </button>
 
         <div className="mt-4 text-center">
           <a href="/forgot-password" className="text-blue-500 hover:text-blue-700 dark:text-yellow-200">

@@ -13,12 +13,17 @@ async function bootstrap() {
   io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
 
+    // Listen for messages from the client
+    socket.on('message', (message) => {
+      console.log(`Received message: ${message}`);
+      // Broadcast the message to all connected clients
+      io.emit('message', message);
+    });
 
     socket.on('disconnect', () => {
       console.log('user disconnected', socket.id);
     });
   });
-
   app.use((req, res, next) => {
     req.io = io;
     next();

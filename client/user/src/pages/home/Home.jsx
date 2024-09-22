@@ -20,6 +20,8 @@ import User3 from "../../assets/blog/review-author-3.jpg";
 import User4 from "../../assets/blog/review-author-5.jpg";
 import Contact from './../cotact/Contact';
 
+import MapLocation from "../../components/map-loaction/MapLocation"
+
 export default function Home() {
   const {translation}=useSelector(state=>state.lang)
 
@@ -97,6 +99,7 @@ export default function Home() {
         
        
       </main>
+      <MapLocation/>
     </div>
 
     </>

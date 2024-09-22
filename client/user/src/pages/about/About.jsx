@@ -6,6 +6,8 @@ import img8 from "../../assets/media/download8.png"
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux';
 
+import cheif from "../../assets/affricanoImg/chief.png"
+
 ///     A luxury restaurant with A rare taste you can’t find anywhere in the red sea.
 
 
@@ -42,7 +44,7 @@ export default function About() {
              variants={pVariants} initial="hidden" animate="visible"
              transition={{ delay: .7, duration: 1, ease: "easeOut" }}>
                    <div>
-                             <img src={img8} alt="Restaurant view" className="w-full h-4/5 object-cover  rounded-t-full shadow-lg shadow-black-900 dark:shadow-red-300 " />
+                             <img src={cheif} alt="Restaurant view" className="w-full h-4/5 object-cover  rounded-t-full shadow-md shadow-black-900 dark:shadow-red-300 " />
                              <p style={{"fontFamily":" Oswald"}} className="text-3xl py-6 text-center">
                              <span style={{"fontFamily":" Oswald"}} className="text-gray-500">{translation.masterChef}</span> {translation.chefName}</p>
                     </div>

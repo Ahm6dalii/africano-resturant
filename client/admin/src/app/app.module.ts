@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { FormsModule } from '@angular/forms'
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routes } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { FullComponent } from './layouts/full/full.component';
 import { DemoFlexyModule } from './demo-flexy-module'
 
 // Modules
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,7 @@ import { ComponentsModule } from './components/components.module';
     ComponentsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(), provideAnimations()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
