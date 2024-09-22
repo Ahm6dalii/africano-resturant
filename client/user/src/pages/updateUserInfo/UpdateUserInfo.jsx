@@ -70,7 +70,7 @@ const UpdateUserInfo = () => {
         const {name,address,phone,image}=data.updatedUser;
         dispatch(changeProfileInfo({name,address,phone,image}))
         setLoading(false)
-        toast.success("User Info Updated Successfuly")
+        toast.success(translation.userUpdated)
       })
       .catch((err) => {
         console.log("error",err);
