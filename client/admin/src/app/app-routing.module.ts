@@ -21,6 +21,8 @@ import { OrdersComponent } from './pages/orders/orders.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FoodCrudComponent } from '../app/pages/food-crud/food-crud.component';
 import { FullComponent } from './layouts/full/full.component';
+import { CreateAdminComponent } from './pages/create-admin/create-admin.component';
+import { AdminListComponent } from './pages/view-admins/view-admins.component';
 // import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
 
 export const routes: Routes = [
@@ -47,6 +49,8 @@ export const routes: Routes = [
       { path: 'tooltip', component: TooltipsComponent },
       { path: 'button', component: ButtonsComponent },
       { path: "orders", component: OrdersComponent },
+      { path: 'create', component: CreateAdminComponent},
+      { path: 'admins', component: AdminListComponent},
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },
       // { path: 'categories', component: CategoryCrudComponent },
