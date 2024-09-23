@@ -19,7 +19,7 @@ export class NotifictionsService {
   }
 
   async markAsRead(userId: string) {
-    return this.notifictionModel.updateMany({ user: userId,, read: false }, { read: true }, { new: true }).exec();
+    return this.notifictionModel.updateMany({ user: userId, read: false }, { read: true }, { new: true }).exec();
   }
 
 

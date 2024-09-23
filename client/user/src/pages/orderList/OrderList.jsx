@@ -4,6 +4,7 @@ import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import { useSelector } from "react-redux";
 import socket from "../../socket.io/socket";
+import moment from "moment";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]); // State to store user orders
@@ -86,7 +87,7 @@ const OrderList = () => {
 
               <Table.Cell>
                 {order.createdAt
-                  ? new Date(order.createdAt).toLocaleDateString()
+                  ? moment(order.createdAt).format("MM DD YYYY")
                   : "N/A"}
               </Table.Cell>
               <Table.Cell>
@@ -98,7 +99,7 @@ const OrderList = () => {
                 {order?.intention_detail?.items?.length ? (
                   order.intention_detail.items.map((item) => (
                     <div key={item._id || Math.random()}>
-                      {item.name} - {item.amount / 100} EGP
+                      {item.name.en} - {item.amount / 100} EGP
                     </div>
                   ))
                 ) : (

@@ -16,7 +16,9 @@ export class PaymentWebhookService {
     @InjectModel(Cart.name) private cartModel: Model<Cart>,
     private _jwtservice: JwtService
     , private readonly httpService: HttpService,
-    private readonly notificationGateway: NotifictionsGateway) { }
+    private readonly notificationGateway: NotifictionsGateway
+    , private readonly notificationService: NotifictionsService
+    ,) { }
   private apiKey = 'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2T1RrME1qRTJMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkuYjN4MXVld2hlTjBpdld0bUtUbndrV2VmVnU1akNEcHhnUVYzNzVXZUhuQnM4SlAwekZiYnRObFh0cVFaaTJndzNGWW8zOW9EWnlrd2lsY1VxWjdGWWc=';
   private baseUrl = 'https://accept.paymob.com/api';
 
@@ -60,7 +62,18 @@ export class PaymentWebhookService {
       const { billing_data, order, amount_cents } = response.data
 
       const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items: order.items, total: amount_cents } })
+
+
+      // const notifications = users.map(user => ({
+      //   user: user._id,
+      //   type: 'review_added',
+      //   relatedId: addedReview._id,
+      //   message: `A new review was added to the article: ${addedReview.name}`,
+      // }));
+      // await this.notificationService.createNotification(notifications);
+
       this.notificationGateway.sendNewOrderToAll(myOrder);
+
 
 
       return res.redirect(redirectURL);

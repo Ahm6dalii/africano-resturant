@@ -8,7 +8,7 @@ import axios from 'axios';
 const NotificationsModel = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [notifi, setNotifi] = useState([]);
-    const { user, userInfo } = useSelector((state) => state.auth);
+    const { userInfo } = useSelector((state) => state.auth);
     const api = useSelector(state => state.apiLink.link)
     const queryClient = useQueryClient()
     const { data } = useQuery('notifications', async () => {

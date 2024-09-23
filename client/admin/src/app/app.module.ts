@@ -15,6 +15,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { NotificationsComponent } from "./adminComponents/notifications/notifications.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { provideRouter } from '@angular/router';
     DemoFlexyModule,
     DashboardModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
+    NotificationsComponent
   ],
   providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(), provideAnimations()],
   bootstrap: [AppComponent]

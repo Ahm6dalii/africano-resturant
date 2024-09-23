@@ -7,25 +7,29 @@ import { useForm } from "react-hook-form";
 import InputsOrder from "./InputsOrder";
 import { FaSpinner, FaCheckCircle } from "react-icons/fa";
 import toast from 'react-hot-toast';
+import { useState } from "react";
 const OrderForm = () => {
     const api = useSelector(state => state.apiLink.link);
-
     const { user, userInfo } = useSelector((state) => state.auth);
     const { translation } = useSelector(state => state.lang)
-    const { mutate: orderCheckOut, error, isSuccess, isLoading } = useMutation('order', async (billing_data) => {
+    const { mutate: orderCheckOut, error, isSuccess, isLoading } = useMutation('order', async ({ billing_data, payment_method }) => {
+        console.log(payment_method, "payment_method");
+
         const headers = {
             token: `${user}`,
         }
         const dataToSend = {
-            redirection_url: "http://localhost:5173/userOrders",
-            billing_data: billing_data
+            redirection_url: payment_method === 'online' ? "http://localhost:5173/userOrders" : undefined,
+            billing_data: billing_data,
+            payment_method: payment_method
         }
         const response = await axios.post(`${api}/paymob`, dataToSend, { headers })
         console.log(response, "response");
         return response?.data
     }, {
         onSuccess: (data) => {
-            if (data?.apiLink) {
+            console.log(data, "from api link somthing what ever");
+            if (data.apiLink && data.payment_method === 'online') {
                 window.location.href = data.apiLink;
             } else {
                 console.error("apiLink not found in the response");
@@ -50,7 +54,7 @@ const OrderForm = () => {
         floor: yup.string().required("Floor is required"),
     });
 
-    const { register, handleSubmit, formState: { errors }, reset, setValue, getValue } = useForm({
+    const { register, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
             country: "Egypt",
@@ -58,7 +62,8 @@ const OrderForm = () => {
             city: "Red Sea",
             phone_number: userInfo?.phone,
             email: userInfo?.email,
-            first_name: userInfo?.name
+            first_name: userInfo?.name,
+            payment_method: "online",
         }
     });
     setValue("country", "Egypt");
@@ -66,7 +71,9 @@ const OrderForm = () => {
     setValue("city", "Red Sea");
     const submitTheForm = (data) => {
         console.log(data);
-        orderCheckOut(data)
+        const paymentMethod = data.payment_method;
+        orderCheckOut({ billing_data: data, payment_method: paymentMethod });
+        reset()
     };
 
     return (
@@ -98,6 +105,24 @@ const OrderForm = () => {
                     <input type="hidden" value="Egypt" {...register('country')} />
                     <input type="hidden" value="Red Sea" {...register('state')} />
                     <input type="hidden" value="Red Sea" {...register('city')} />
+                    <div>
+                        <label>
+                            <input
+                                type="radio"
+                                value="online"
+                                {...register("payment_method")}
+                            />
+                            Online Payment
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                value="delivery"
+                                {...register("payment_method")}
+                            />
+                            Delivery
+                        </label>
+                    </div>
 
                 </div>
 
@@ -115,6 +140,7 @@ const OrderForm = () => {
                     )}
                 </button>
                 {error && <p className="text-red-500 mt-2">An error occurred during checkout.</p>}
+
             </form>
 
         </>
