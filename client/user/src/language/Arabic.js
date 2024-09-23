@@ -1,3 +1,5 @@
+import { em } from "framer-motion/client";
+
 export const Ar = {
   // register data
   loginForm: 'تسجيل الدخول',
@@ -14,6 +16,7 @@ export const Ar = {
   containLetters: 'يجب أن تحتوي كلمة المرور على حروف.',
   containNumbers: 'يجب أن تحتوي كلمة المرور على أرقام.',
   reqPassword: 'الرجاء إنشاء كلمة مرور',
+  reqLogPassword:"أدخل كلمة المرور",
   matchPassword: 'يجب أن تتطابق كلمات المرور',
   reqConfirmPassword: 'الرجاء إعادة إدخال كلمة المرور',
   forgetPassword: 'نسيت كلمة المرور',
@@ -66,6 +69,11 @@ export const Ar = {
   logout: 'تسجيل الخروج',
   logo: 'أفريكانو',
   categories: 'التصنيفات',
+  changeimg: "تغيير الصورة الشخصية",
+updateinfo: "تحديث المعلومات",
+updatepass: "تحديث كلمة المرور",
+myOrders: "طلباتي",
+
 
   // Food Card
   confirm: 'تأكيد',
@@ -123,7 +131,7 @@ export const Ar = {
   contactUs: 'تواصل معنا',
   contactAd:
     'نحن هنا للمساعدة! تواصل معنا للحصول على أي استفسارات أو تعليقات أو دعم. فريقنا في مطعم أفريكانو مكرس لضمان رضاكم',
-  ContactInformation: 'معلومات الاتصال',
+  ContactInformation: 'اتصل بنا أو قم بزيارة المكان',
   ContactInformationAd:
     'إذا كانت لديك أي أسئلة، فلا تتردد في التواصل معنا عبر أي من الطرق التالية:',
   Address: 'العنوان:',
@@ -167,5 +175,99 @@ resetsuccess: "تمت إعادة تعيين كلمة المرور بنجاح",
 confirmsuccess: "تم تأكيد البريد الإلكتروني بنجاح",
 confirmAcount: "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد الحساب",
 confirmacount: "تأكيد الحساب",
+
+//menu
+menuRestaurant:"قائمة الطلبات",
+
+//about
+aboutUs:"معلومات عنا",
+
+
+  loading: "جارٍ التحميل...",
+  error: "خطأ",
+  yourCart: "سلة مشترياتك",
+  clearCart: "إفراغ السلة",
+  orderSummary: "تفاصيل الطلب",
+  subTotal: "المجموع الفرعي",
+  delivery: "رسوم التوصيل",
+  total: "الإجمالي",
+  removeItem: "هل أنت متأكد أنك تريد الإزالة؟",
+  confirmRemove: "نعم، أنا متأكد",
+  cancelRemove: "لا، إلغاء",
+  removeOrder: "هل أنت متأكد أنك تريد إزالة الطلب بالكامل؟",
+  processOrder: "المتابعة لإتمام الطلب",
+  remove:"حذف",
+  noOrderFound: "لم يتم العثور على طلب",
+
+
+
+  affricanoName: "مطعم أفريكانو",
+  affricanoAdrress: "مطعم أفريكانو، مدينة البحر الأحمر، مصر",
+  booking: "طلب حجز",
+  gerOrder: "احصل على طلبك الآن",
+  orOrder: "أو املأ نموذج الطلب",
+  orderContact: "تواصل معنا",
+  orderReq: "طلب الحجز",
+  orderLocation: "الموقع",
+  orderAddress: 'رأس غارب بجوار جمعية الأشراف أمام صيدلية د. أحمد طارق.',
+  orderOpenning: "مواعيد العمل",
+  orderDay: "كل يوم من 9 ص الي 2 ص"  ,
+  orderNow: "اطلب الآن",
+orderErrorCheck: "حدث خطأ أثناء عملية الدفع.",
+orderSuccess: "تم الطلب بنجاح!",
+orderProcess: "جاري المعالجة...",
+orderFirsetName: "الاسم الأول",
+orderLastName: "اسم العائلة",
+apartment: "شقة",
+orderPhone: "رقم الهاتف",
+buliding: "المبنى",
+street: "الشارع",
+floor: "الطابق",
+errApartment: "الشقة مطلوبة",
+errNameF: "الاسم الأول مطلوب",
+errNameL: "اسم العائلة مطلوب",
+errStreet: "الشارع مطلوب",
+errBuliding: "المبنى مطلوب",
+errPhone: "رقم الهاتف مطلوب",
+errPhoneMin: "يجب أن يكون رقم الهاتف مكونًا من 10 أرقام على الأقل",
+errPhoneMax: "يجب أن يكون رقم الهاتف مكونًا من 15 رقمًا على الأكثر",
+errEmail: "البريد الإلكتروني غير صالح",
+errEmailReq: "البريد الإلكتروني مطلوب",
+errFloor: "الطابق مطلوب",
+
+//order list 
+noOrder: "لم يتم العثور على طلبات",
+browsMenu: "تصفح القائمة",
+yourOrderLisr: "طلباتك",
+orderData: "التاريخ",
+orderTime: "الوقت",
+orderItems: "العناصر",
+orderTotal: "إجمالي السعر",
+orderId: "رقم الطلب",
+noItems: "لا توجد عناصر متاحة",
+
+//toast
+addedOrder: "تمت الإضافة إلى الطلب!",
+failedOrder: "فشلت الإضافة!",
+uderAdded: "تم تسجيل دخول المستخدم بنجاح!",
+userUpdated: "تم تحديث معلومات المستخدم بنجاح",
+passwordUpdated: "تم تحديث كلمة المرور بنجاح!",
+passwordUpdateFail: "فشل في تحديث كلمة المرور. يرجى المحاولة مرة أخرى.",
+userCreated: "تم إنشاء المستخدم بنجاح!",
+updatedImg: "تم تحديث صورة الملف الشخصي بنجاح",
+failedUpdated: "فشل في تحديث صورة الملف الشخصي",
+userLoign: "تم تسجيل دخول المستخدم بنجاح",
+
+
+
+
+
+
+//NotFoundPage
+pageNotFound: "عذرًا! الصفحة غير موجودة",
+notFound: "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+goBack: "العودة إلى الصفحة الرئيسية",
+
+
 
 }

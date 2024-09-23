@@ -10,6 +10,7 @@ const OrderList = () => {
   const [orders, setOrders] = useState([]); // State to store user orders
   const { link } = useSelector(state => state.apiLink)
   const { user, userInfo } = useSelector((state) => state.auth);
+  const { translation } = useSelector(state => state.lang)
 
   useEffect(() => {
     // Fetch orders when the component mounts
@@ -23,8 +24,8 @@ const OrderList = () => {
         );
         //console.log(response.data);
         setOrders(response?.data);
+
       } catch (err) {
-        console.error(err);
       }
     };
 
@@ -59,9 +60,10 @@ const OrderList = () => {
   if (orders.length === 0) {
     return (
       <div className="text-center mt-10">
-        <p>No orders found</p>
+        <p>
+          { translation.noOrder}</p>
         <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg">
-          Browse Menu
+         {translation.browsMenu}
         </button>
       </div>
     );
@@ -69,46 +71,50 @@ const OrderList = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-3xl font-semibold text-center mb-6">Your Orders</h2>
-      <Table hoverable={true}>
+      <h2 className="text-3xl font-semibold text-center mb-6">{translation.yourOrderList}</h2>
+      <Table hoverable={false}>
         <Table.Head>
-          <Table.HeadCell>Date</Table.HeadCell>
-          <Table.HeadCell>Time</Table.HeadCell>
-          <Table.HeadCell>Items</Table.HeadCell>
-          <Table.HeadCell>Total Price</Table.HeadCell>
-          <Table.HeadCell>Status</Table.HeadCell>
-          <Table.HeadCell>Order ID</Table.HeadCell>
-        </Table.Head>
 
-        <Table.Body>
+
+          <Table.HeadCell className="dark:text-white " >{translation.orderData}</Table.HeadCell>
+          <Table.HeadCell  className="dark:text-white ">{translation.orderTime}</Table.HeadCell>
+          <Table.HeadCell className="dark:text-white ">{translation.orderItems}</Table.HeadCell>
+          <Table.HeadCell className="dark:text-white ">{translation.orderTotal}</Table.HeadCell>
+          <Table.HeadCell className="dark:text-white ">{translation.orderId}</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className=" dark:bg-slate-200">
           {orders?.map((order, index) => (
             <Table.Row key={order._id || index} className="bg-white">
               {console.log(order.intention_detail)}
 
-              <Table.Cell>
+              <Table.Cell className=" dark:bg-slate-900  dark:bg-opacity-90 dark:text-white">
                 {order.createdAt
                   ? moment(order.createdAt).format("MM DD YYYY")
                   : "N/A"}
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">
                 {order.createdAt
                   ? new Date(order.createdAt).toLocaleTimeString()
                   : "N/A"}
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">
                 {order?.intention_detail?.items?.length ? (
                   order.intention_detail.items.map((item) => (
                     <div key={item._id || Math.random()}>
-                      {item.name.en} - {item.amount / 100} EGP
+
+                      {item.name} - {item.amount_cents / 100} EGP
                     </div>
                   ))
                 ) : (
-                  <div>No items available</div>
+                  <div>{translation.noItems}</div>
                 )}
               </Table.Cell>
               <Table.Cell>{order.intention_detail.amount / 100}</Table.Cell>
               <Table.Cell>{order?.status}</Table.Cell>
               <Table.Cell>{index + 1}</Table.Cell>
+
+              <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">{order.intention_detail.total / 100}</Table.Cell>
+              <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">{index + 1}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

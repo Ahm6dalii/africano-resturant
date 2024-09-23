@@ -6,7 +6,6 @@ const cartSlice = createSlice({
   initialState: {num:storage?storage:0},
   reducers: {
     addToCart: (state, action) => {
-      console.log(action);
       
       state.num=action.payload
       localStorage.setItem("card",JSON.stringify(state.num))

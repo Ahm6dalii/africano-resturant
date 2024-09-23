@@ -17,7 +17,6 @@ import { NotifictionsService } from '../notifictions/notifictions.service';
 import { JwtService } from '@nestjs/jwt';
 import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
 
-
 @Injectable()
 export class FoodService {
   constructor(
@@ -26,25 +25,25 @@ export class FoodService {
     @InjectModel(User.name) private userModel: Model<User>,
     private readonly notificationService: NotifictionsService,
     private readonly notificationGateway: NotifictionsGateway,
-    private _jwtservice: JwtService
-    , private readonly cloudinaryService: CloudinaryService
-  ) { }
+    private _jwtservice: JwtService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
   options = {
     width: 1870,
     height: 1250,
     crop: 'fill',
     gravity: 'auto',
-    folder: 'Africano/Test'
-  }
+    folder: 'Africano/Test',
+  };
 
   async create(createFoodDto: CreateFoodDto, file: any): Promise<Food> {
     console.log(createFoodDto);
 
-    createFoodDto.amount = Math.ceil(createFoodDto.amount)
+    createFoodDto.amount = Math.ceil(createFoodDto.amount);
 
     const categoryName = await this.categoryModel.findOne({
-      name: createFoodDto.category,
+      'name.en': createFoodDto.category,
     });
     if (!categoryName) {
       throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
@@ -52,9 +51,11 @@ export class FoodService {
     createFoodDto.category = categoryName._id;
 
     //Upload Img
-    const foodImage = await this.cloudinaryService.uploadFile(file, this.options).catch(() => {
-      throw new BadRequestException('Invalid file type.');
-    });
+    const foodImage = await this.cloudinaryService
+      .uploadFile(file, this.options)
+      .catch(() => {
+        throw new BadRequestException('Invalid file type.');
+      });
 
     createFoodDto.image = foodImage.url;
     return this.foodModel.create(createFoodDto);
@@ -74,8 +75,7 @@ export class FoodService {
     console.log(categoryObjectId);
     if (filters.category) {
       query.category = categoryObjectId;
-      return await this.foodModel
-        .find({ category: categoryObjectId })
+      return await this.foodModel.find({ category: categoryObjectId });
     }
     if (filters.name) {
       query.name = { $regex: filters.name, $options: 'i' };
@@ -88,7 +88,8 @@ export class FoodService {
       .sort({ _id: 1 })
       .skip(skip)
       .limit(limit)
-      .populate({ path: 'category', select: 'name' }).populate('review.user', 'name image')
+      .populate({ path: 'category', select: 'name' })
+      .populate('review.user', 'name image')
       .exec();
     const total = await this.foodModel.countDocuments();
 
@@ -101,7 +102,10 @@ export class FoodService {
   }
 
   async findOne(id: string): Promise<Food> {
-    const food = await this.foodModel.findById(id).populate('category', 'name').populate('review.user', 'name image')
+    const food = await this.foodModel
+      .findById(id)
+      .populate('category', 'name')
+      .populate('review.user', 'name image');
     if (!food) {
       throw new NotFoundException(`Food with ID ${id} not found`);
     }
@@ -111,12 +115,18 @@ export class FoodService {
   async update(id: string, updateFoodDto: UpdateFoodDto, file: any) {
     console.log(updateFoodDto);
     if (updateFoodDto.amount) {
-      updateFoodDto.amount = Math.ceil(Number(updateFoodDto.amount))
+      updateFoodDto.amount = Math.ceil(Number(updateFoodDto.amount));
     }
-    const foodImage = await this.cloudinaryService.uploadFile(file, this.options).catch(() => {
-      throw new BadRequestException('Invalid file type.');
-    });
-    updateFoodDto.image = foodImage.url
+
+    if (file) {
+      const foodImage = await this.cloudinaryService
+        .uploadFile(file, this.options)
+        .catch(() => {
+          throw new BadRequestException('Invalid file type.');
+        });
+      updateFoodDto.image = foodImage.url;
+    }
+
     const food = await this.foodModel
       .findByIdAndUpdate(id, updateFoodDto, {
         new: true,
@@ -126,14 +136,15 @@ export class FoodService {
     return food;
   }
 
-  async delete(id: string): Promise<void> {
+async delete(id: string): Promise<object> {
     const food = await this.foodModel
       .findByIdAndDelete(id)
       .populate('category', 'name');
     if (!food) {
       throw new NotFoundException(`Food with ID ${id} not found`);
     }
-  }
+    return {message:"deleted Successfully"}
+  }
 
   async findAllByCategory(category: any, limit: number, page: number) {
     // Extract category from query parameters
@@ -142,7 +153,7 @@ export class FoodService {
       throw new BadRequestException('Category ID is required');
     }
 
-    const skip = (page - 1) * limit;  // Pagination logic
+    const skip = (page - 1) * limit; // Pagination logic
     const categoryObjectId = new Types.ObjectId(category);
 
     const items = await this.foodModel
@@ -152,7 +163,8 @@ export class FoodService {
       .populate({ path: 'category', select: 'name' })
       .exec();
     const total = await this.foodModel
-      .find({ category: categoryObjectId }).countDocuments();
+      .find({ category: categoryObjectId })
+      .countDocuments();
 
     const totalPages = Math.ceil(total / limit);
 
@@ -166,31 +178,28 @@ export class FoodService {
     };
   }
 
-
-
-
-
   async addReview(id: any, body: any, token, req) {
-    const { text } = body
-
+    const { text } = body;
 
     try {
-      const decoded = this._jwtservice.verify(token, { secret: "mo2" });
+      const decoded = this._jwtservice.verify(token, { secret: 'mo2' });
       if (!decoded) {
         throw new HttpException('invalid token', HttpStatus.FORBIDDEN);
       }
-      const { userId } = decoded
+      const { userId } = decoded;
       const food = await this.foodModel.findById(id).exec();
       if (!food) {
         throw new Error('Food not found');
       }
-      console.log(body, "body");
+      console.log(body, 'body');
 
       const newReview = { text, user: userId };
       const addedReview = await this.foodModel
-        .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true }).populate('review.user', 'name').exec();
+        .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true })
+        .populate('review.user', 'name')
+        .exec();
       const users = await this.userModel.find().exec();
-      const notifications = users.map(user => ({
+      const notifications = users.map((user) => ({
         user: user._id,
         type: 'review_added',
         relatedId: addedReview._id,
@@ -198,14 +207,17 @@ export class FoodService {
       }));
       await this.notificationService.createNotification(notifications);
       this.notificationGateway.sendNotificationToAll(notifications);
+
       this.notificationGateway.sendNewReviewToAll(addedReview.review[addedReview.review.length - 1]);
 
 
       return { message: 'Review added successfully', addedReview, notifications };
     } catch (error) {
       console.log(error);
-      throw new HttpException('Error adding review', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Error adding review',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
-
 }

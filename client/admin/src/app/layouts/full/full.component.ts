@@ -12,38 +12,43 @@ interface sidebarMenu {
 @Component({
   selector: 'app-full',
   templateUrl: './full.component.html',
-  styleUrls: ['./full.component.scss']
+  styleUrls: ['./full.component.scss'],
 })
 export class FullComponent {
-
   search: boolean = false;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
-  routerActive: string = "activelink";
+  routerActive: string = 'activelink';
 
   sidebarMenu: sidebarMenu[] = [
     {
-      link: "/home",
-      icon: "home",
-      menu: "Dashboard",
+      link: '/home',
+      icon: 'home',
+      menu: 'Dashboard',
+    },
+    {
+      link: '/foods',
+      icon: 'foods',
+      menu: 'Foods',
     },
     // {
     //   link: "/button",
     //   icon: "disc",
     //   menu: "Buttons",
     // },
-    // {
-    //   link: "/forms",
-    //   icon: "layout",
-    //   menu: "Forms",
-    // },
+    {
+      link: "/forms",
+      icon: "layout",
+      menu: "Forms",
+    },
     // {
     //   link: "/alerts",
     //   icon: "info",
@@ -84,6 +89,21 @@ export class FullComponent {
       icon: "list",
       menu: "Orders",
     },
+    {
+      link: "/login",
+      icon: "list",
+      menu: "Login",
+    },
+    {
+      link: "/create",
+      icon: "list",
+      menu: "Create Admin",
+    },
+    {
+      link: "/admins",
+      icon: "list",
+      menu: "Admins List",
+    },
     // {
     //   link: "/progress",
     //   icon: "bar-chart-2",
@@ -119,6 +139,5 @@ export class FullComponent {
     //   icon: "layers",
     //   menu: "Slide Toggle",
     // },
-  ]
-
+  ];
 }

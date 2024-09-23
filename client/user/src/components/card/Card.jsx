@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import CardPrice from './card-price/CardPrice';
 import CardModal from './card-modal/CardModal';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function Card({ imaUrl, desc, amount, name, lang, id }) {
-  const { translation } = useSelector((state) => state.lang);
 
 
 
@@ -23,6 +20,7 @@ export default function Card({ imaUrl, desc, amount, name, lang, id }) {
         <div className="text-center py-2 ">
           <div className='px-2' >
             <CardModal popup={true} i={id} itemId={id} amount={amount} name={name[lang]}></CardModal>
+            
           </div>
         </div>
         <div className="px-2 pb-2">

@@ -12,25 +12,25 @@ export class AdminService {
   constructor(
     @InjectModel(Admin.name) private adminModel: Model<Admin>,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   async createAdmin(createAdminDto: CreateAdminDto): Promise<Admin> {
-    const {username, ...rest } = createAdminDto;
-  
+    const { username, ...rest } = createAdminDto;
+
     const existingAdmin = await this.adminModel.findOne({ username }).exec();
     if (existingAdmin) {
       throw new ConflictException('Username already exists');
     }
- 
+
     const newAdmin = new this.adminModel({
       ...rest,
-      username, 
+      username,
     });
-  
+
     return newAdmin.save();
   }
 
- 
+
   async signIn(username: string, password: string): Promise<{ token: string }> {
     const admin = await this.adminModel.findOne({ username });
 
@@ -38,7 +38,7 @@ export class AdminService {
       throw new NotFoundException('Invalid credentials');
     }
 
-    const token = this.jwtService.sign({ username: admin.username, permissions: admin.permissions ,isSuperAdmin :admin.isSuperAdmin },{secret:"adax"});
+    const token = this.jwtService.sign({ username: admin.username, permissions: admin.permissions, isSuperAdmin: admin.isSuperAdmin }, { secret: "adax" });
     return { token };
   }
 
@@ -47,24 +47,26 @@ export class AdminService {
   }
 
   async updateAdmin(id: string, updateAdminDto: UpdateAdminDto): Promise<Admin> {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new BadRequestException(`Invalid ID format: ${id}`);
+    }
     if (updateAdminDto.password) {
       updateAdminDto.password = await bcrypt.hash(updateAdminDto.password, 10);
     }
     if (updateAdminDto.username) {
-      const username = updateAdminDto.username
-      const existingAdmin = await this.adminModel.findOne({ username }).exec();
-      if (existingAdmin) {
+      const existingAdmin = await this.adminModel.findOne({ username: updateAdminDto.username }).exec();
+
+      if (existingAdmin && existingAdmin._id.toString() !== id) {
         throw new ConflictException('Username already exists');
       }
     }
-
-  
-    const updatedAdmin = await this.adminModel.findByIdAndUpdate(id, updateAdminDto, { new: true });
+    const updatedAdmin = await this.adminModel.findByIdAndUpdate(id, updateAdminDto, { new: true }).exec();
     if (!updatedAdmin) {
       throw new NotFoundException(`Admin with ID ${id} not found`);
     }
     return updatedAdmin;
   }
+
 
   async deleteAdmin(id: string): Promise<void> {
     if (!mongoose.Types.ObjectId.isValid(id)) {

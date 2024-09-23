@@ -22,13 +22,17 @@ import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service'
 
 @Controller('api/foods')
 export class FoodController {
-
-  constructor(private readonly foodsService: FoodService, private readonly cloudinaryService: CloudinaryService) { }
-
+  constructor(
+    private readonly foodsService: FoodService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  async create(@Body() foodDto: any, @UploadedFile() file: Express.Multer.File) {
+  async create(
+    @Body() foodDto: any,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     return this.foodsService.create(foodDto, file);
   }
 
@@ -60,9 +64,12 @@ export class FoodController {
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('file'))
-  async update(@Param('id') id: string, @Body() foodDto: any, @UploadedFile() file: Express.Multer.File) {
-
-    return this.foodsService.update(id, foodDto, file);
+  async update(
+    @Param('id') id: string,
+    @Body() foodDto: any,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
+    return this.foodsService.update(id, foodDto, file ? file : null);
   }
 
   @Delete(':id')
@@ -71,11 +78,16 @@ export class FoodController {
   }
 
   @Post('/review/:id')
-  addReview(@Param('id') id: any, @Body() body: any, @Headers() header, @Req() req: any) {
-    const { token } = header
+  addReview(
+    @Param('id') id: any,
+    @Body() body: any,
+    @Headers() header,
+    @Req() req: any,
+  ) {
+    const { token } = header;
     if (!token) {
-      throw new HttpException('Token not provided', HttpStatus.FORBIDDEN)
+      throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
-    return this.foodsService.addReview(id, body, token, req)
+    return this.foodsService.addReview(id, body, token, req);
   }
 }

@@ -6,6 +6,9 @@ import DecIncCount from '../Dec-Inc-count/DecIncCount';
 import axios from 'axios';
 import { addToCart } from '../../../redux/reducers/cartSlice';
 import { useMutation, useQueryClient } from 'react-query';
+import { setLogin } from '../../../redux/reducers/userAuthSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default function CardModal({ i, amount, name, itemId }) {
   const [openModal, setOpenModal] = useState(false);
@@ -20,19 +23,26 @@ export default function CardModal({ i, amount, name, itemId }) {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
-  const { mutate: addOrder, error: cartError, isSuccess } = useMutation('addOrder', async ({ itemId, orderData }) => {
-    console.log(orderData, "daata");
+  const nagivate=useNavigate()
+  const {id}=useParams()
+  
+  const { mutate: addOrder, error: cartError, isSuccess ,isLoading} = useMutation('addOrder', async ({ itemId, orderData }) => {
 
     const headers = {
       'Content-Type': 'application/json',
       token: `${user}`,
     }
     const response = await axios.post(`${link}/cart/${itemId}`, orderData, { headers })
-    console.log(response, "response");
     return response
   }, {
     onSuccess: () => {
       queryClient.invalidateQueries('cart')
+      toast.success( translation.addedOrder)
+
+    },
+    onError:()=>{
+      toast.error(translation.failedOrder)
+
     }
   })
   // Create a ref to attach to the modal body
@@ -57,34 +67,22 @@ export default function CardModal({ i, amount, name, itemId }) {
   };
 
   const handleOrder = () => {
-    console.log(orderData);
-    addOrder({ itemId, orderData })
+  if(user){
+    addOrder({ itemId, orderData })}
+  else{
+    dispatch(setLogin(true))
+    nagivate(`/login/menu/${id}`)
+    }
   };
 
-  const AddToCard = async (id, data) => {
-    setLoading(true)
-    axios.post(`${link}/cart/${id}`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-        token: `${user}`
-      }
-    })
-      .then(({ data }) => {
-        setLoading(false)
-        setOpenModal(false)
-        dispatch(addToCart(data?.items?.length))
-        console.log(data);
-
-      }).catch((err) => {
-        setLoading(false)
-        console.log(err, 'error');
-
-      })
-  }
+ 
 
   useEffect(() => {
     setOrderData({ size: selectedPrice, quantity });
   }, [selectedPrice, quantity]);
+  useEffect(() => {
+    setOpenModal(loading);
+  }, [isSuccess]);
 
   // Detect click outside of the modal content
   useEffect(() => {
@@ -134,15 +132,17 @@ export default function CardModal({ i, amount, name, itemId }) {
             <DecIncCount increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} quantity={quantity} />
 
             <div className="w-full">
-              <Button
-                disabled={!selectedPrice || loading}
-                onClick={handleOrder}
-                className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-              >
-                {
-                  loading ? <i class="fa-solid fa-spinner fa-spin"></i> : translation.confirm
-                }
-              </Button>
+
+               <Button
+               disabled={!selectedPrice || loading}
+               onClick={handleOrder}
+               className="w-full text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-20 py-2.5 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+             >
+               {
+                 isLoading? <i class="fa-solid fa-spinner fa-spin"></i> : translation.confirm
+               }
+             </Button>
+             
             </div>
           </Modal.Body>
         </div>
