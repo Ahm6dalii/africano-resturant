@@ -12,6 +12,7 @@ import { DemoFlexyModule } from './demo-flexy-module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
 import { provideRouter } from '@angular/router';
+import { NotificationsComponent } from "./adminComponents/notifications/notifications.component";
 import { provideHttpClient } from '@angular/common/http';
 import { AppRoutingModule, routes } from './app-routing.module';
 
@@ -27,12 +28,14 @@ import { AppRoutingModule, routes } from './app-routing.module';
     DashboardModule,
     ComponentsModule,
     FormsModule,
+    NotificationsComponent
   ],
   providers: [
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(),
     provideAnimations(),
+
   ],
   bootstrap: [AppComponent]
 })

@@ -4,6 +4,7 @@ import axios from "axios";
 import Loading from "../../components/loading/Loading";
 import { useSelector } from "react-redux";
 import socket from "../../socket.io/socket";
+import moment from "moment";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]); // State to store user orders
@@ -21,18 +22,33 @@ const OrderList = () => {
             headers: { token: `${user}` },
           }
         );
-        setOrders(response);
+        //console.log(response.data);
+        setOrders(response?.data);
+
       } catch (err) {
       }
     };
 
     fetchOrders();
+
   }, []);
+  console.log(orders, "checking something");
   useEffect(() => {
     socket.on('updatedOrder', (updatedOrder) => {
       console.log(updatedOrder, "updatedOrder");
-
-    })
+      setOrders((prevOrders) => {
+        const existingOrderIndex = prevOrders.findIndex(
+          (order) => order._id === updatedOrder._id
+        );
+        if (existingOrderIndex !== -1) {
+          const updatedOrders = [...prevOrders];
+          updatedOrders[existingOrderIndex] = updatedOrder;
+          return updatedOrders;
+        } else {
+          return [...prevOrders, updatedOrder];
+        }
+      })
+    });
     return () => {
       socket.off('newReview');
     };
@@ -59,6 +75,7 @@ const OrderList = () => {
       <Table hoverable={false}>
         <Table.Head>
 
+
           <Table.HeadCell className="dark:text-white " >{translation.orderData}</Table.HeadCell>
           <Table.HeadCell  className="dark:text-white ">{translation.orderTime}</Table.HeadCell>
           <Table.HeadCell className="dark:text-white ">{translation.orderItems}</Table.HeadCell>
@@ -66,13 +83,13 @@ const OrderList = () => {
           <Table.HeadCell className="dark:text-white ">{translation.orderId}</Table.HeadCell>
         </Table.Head>
         <Table.Body className=" dark:bg-slate-200">
-          {orders?.data?.map((order, index) => (
+          {orders?.map((order, index) => (
             <Table.Row key={order._id || index} className="bg-white">
               {console.log(order.intention_detail)}
 
               <Table.Cell className=" dark:bg-slate-900  dark:bg-opacity-90 dark:text-white">
                 {order.createdAt
-                  ? new Date(order.createdAt).toLocaleDateString()
+                  ? moment(order.createdAt).format("MM DD YYYY")
                   : "N/A"}
               </Table.Cell>
               <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">
@@ -84,6 +101,7 @@ const OrderList = () => {
                 {order?.intention_detail?.items?.length ? (
                   order.intention_detail.items.map((item) => (
                     <div key={item._id || Math.random()}>
+
                       {item.name} - {item.amount_cents / 100} EGP
                     </div>
                   ))

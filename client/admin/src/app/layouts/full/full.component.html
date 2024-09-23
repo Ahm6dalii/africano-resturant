@@ -9,9 +9,7 @@
         <a href="javascript:void(0)" class="d-flex align-items-center">
           <img src="assets/images/favicon.svg" alt=""> <span class="ms-16 fw-medium fs-26">Africano</span>
         </a>
-
       </div>
-
       <div class="pt-8">
         <ul>
           <li class="list-group mb-2" *ngFor="let sidenav of sidebarMenu">
@@ -32,7 +30,7 @@
   <mat-sidenav-content>
 
     <!-- Header -->
-    <mat-toolbar class="header ps-24 pe-24">
+    <mat-toolbar class="header ps-24 pe-24 flex items-center">
       <button type="button" class="ms-4" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <i-feather name="menu" class="text-light-muted feather-base mt-n3"></i-feather>
@@ -40,6 +38,7 @@
       <button mat-icon-button class="ms-4 me-4" (click)="search=!search">
         <i-feather name="search" class="mt-n3 text-light-muted feather-base text-dark"></i-feather>
       </button>
+      <app-notifications />
       <div class="ms-auto">
         <button mat-button class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted d-flex align-items-center"
           [matMenuTriggerFor]="menu">

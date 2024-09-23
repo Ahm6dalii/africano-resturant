@@ -18,8 +18,8 @@ export class NotifictionsService {
     return this.notifictionModel.find({ user: userId }).sort({ createdAt: -1 }).exec();
   }
 
-  async markAsRead(notificationId: string) {
-    return this.notifictionModel.findByIdAndUpdate(notificationId, { read: true }, { new: true }).exec();
+  async markAsRead(userId: string) {
+    return this.notifictionModel.updateMany({ user: userId, read: false }, { read: true }, { new: true }).exec();
   }
 
 
