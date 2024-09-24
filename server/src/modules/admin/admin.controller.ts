@@ -33,7 +33,6 @@ export class AdminController {
   deleteAdmin(@Param('id') id: string) {
     return this.adminService.deleteAdmin(id);
   }
-
   // تحديث مشرف
   @Patch('update/:id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)

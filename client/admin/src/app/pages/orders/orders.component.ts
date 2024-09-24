@@ -30,7 +30,7 @@ import { SocketIoService } from 'src/app/services/socket-io.service';
 export class OrdersComponent implements OnInit, OnDestroy {
   orders: any = []
   currentStatus: string = 'preparing';
-
+  searchTerm = '';
   statusOptions = [
     { label: 'Preparing', value: 'preparing' },
     { label: 'On the Way', value: 'on_the_way' },
@@ -44,19 +44,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private messageService: MessageService
-  ) { }
+  ) {
+    console.log(this.searchTerm, "search");
+
+  }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.currentStatus = params['status'] || 'preparing';
-      this.getOrders(this.currentStatus);
 
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {},
+    this.getOrders(this.currentStatus);
 
-      });
-    });
     this._socketIoService.on('newOrder', (newOrder) => {
       console.log(`Received newOrder: ${newOrder[0]}`);
       this.orders.push(newOrder[0])
@@ -77,6 +73,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
   }
 
+
   updateOrderStatus(orderId: string, newStatus: string) {
     this._orderService.updateOrderStatus(orderId, { status: newStatus }).subscribe({
       next: (updatedOrder) => {
@@ -93,6 +90,20 @@ export class OrdersComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  filterProductsByNumber() {
+    if (this.searchTerm) {
+      this.orders = this.orders.filter((order: any
+      ) =>
+        order?.billing_data?.phone_number.includes(this.searchTerm) || order?.billing_data?.first_name.includes(this.searchTerm)
+      );
+    } else {
+      this.getOrders(this.currentStatus);
+    }
+  }
+
+
+
 
   toggleRowExpansion(orderId: string, type: 'user' | 'order') {
     this.expandedRows[orderId] = this.expandedRows[orderId] === type ? null : type;
@@ -112,12 +123,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.currentStatus = 'delivered';
         break;
     }
-
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { status: this.currentStatus },
-      queryParamsHandling: 'merge',
-    });
 
     this.getOrders(this.currentStatus);
   }

@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Edit Admin</h2>
+    <mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="editableData.username">
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="editableData.isSuperAdmin" (change)="onSuperAdminChange()">Super Admin</mat-checkbox>
+      <div *ngIf="!editableData.isSuperAdmin">
+        <h3>Permissions</h3>
+        <mat-checkbox [(ngModel)]="editableData.createAdminPermission">Create Admin</mat-checkbox>
+        <mat-checkbox [(ngModel)]="editableData.updateAdminPermission">Update Admin</mat-checkbox>
+        <mat-checkbox [(ngModel)]="editableData.viewAdminPermission">View Admin</mat-checkbox>
+        <mat-checkbox [(ngModel)]="editableData.deleteAdminPermission">Delete Admin</mat-checkbox>
+      </div>
+      <mat-checkbox [(ngModel)]="editableData.isActive">Active</mat-checkbox>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-button (click)="onSave()" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>

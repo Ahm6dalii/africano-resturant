@@ -1,0 +1,70 @@
+<div class="card w-[400px] m-auto">
+  <div class="card-body">
+    <h1 class="mb-32 text-center text-2xl"> <i class="fas fa-user text-orange-500 me-2"></i>Create Admin</h1>
+    <form [formGroup]="CreateForm" (ngSubmit)="login()">
+      @if(errorMessage){
+        <div class="alert alert-danger py-1 mb-2 text-center" role="alert">{{errorMessage}}</div>
+      }
+      <mat-form-field  class="me-24 fs-16" appearance="fill">
+        <mat-label class="text-black">username</mat-label>
+        <input matInput type="text" class="" id="username" name="username"  formControlName="username">
+      </mat-form-field>
+      <div *ngIf="CreateForm.get('username')?.errors && CreateForm.get('username')?.touched">
+        <div class="form-text text-danger mt-[-20px] mb-[10px]">
+          <p *ngIf="CreateForm.get('username')?.errors['required']" class="alert alert-danger py-1 mb-4">required</p>
+          <p *ngIf="CreateForm.get('username')?.errors['minlength']" class="alert alert-danger py-1 mb-4">
+            Minimum length is {{ CreateForm.get('username')?.errors['minlength'].required }} 3.
+          </p>
+          <p *ngIf="CreateForm.get('username')?.errors['maxlength']" class="alert alert-danger py-1 mb-4">
+            Maximum length is {{ CreateForm.get('username')?.errors['maxlength'].required }} 20.
+          </p>
+        </div>
+      </div>
+
+      <mat-form-field class="me-24 fs-16" >
+        <mat-label class="text-black">password</mat-label>
+        <input matInput type="password" id="password" name="password"  formControlName="password">
+      </mat-form-field>
+      @if (CreateForm.get('password')?.errors && CreateForm.get('password')?.touched) {
+        <div class="form-text text-danger mt-[-20px]">
+          @if (CreateForm.get('password')?.errors['required']) {
+            <p class="alert alert-danger py-1 mb-4">Required</p>
+          }
+          @if (CreateForm.get('password')?.errors['minlength']) {
+            <p class="alert alert-danger py-1 mb-4">
+              Minimum length is {{ CreateForm.get('password')?.errors['minlength'].required }} characters.
+            </p>
+          }
+          @if (CreateForm.get('password')?.errors['pattern']) {
+            <p class="alert alert-danger py-1 mb-4">
+              Password must contain at least one letter, one number, and be at least 6 characters long.
+            </p>
+          }
+        </div>
+      }
+
+      <mat-radio-group formControlName="isSuperAdmin" color="primary" class="fs-16" aria-label="Select an option">
+        <mat-radio-button [value]="true" class="mt-8 mb-16 d-block">Super Admin</mat-radio-button>
+        <mat-radio-button [value]="false" class="mt-8 mb-16 d-block">Regular Admin</mat-radio-button>
+      </mat-radio-group>
+
+      <ng-container *ngIf="!isSuperAdmin">
+        <section formGroupName="permissions" class="fs-16 mb-32">
+          <p>permissions</p>
+          <mat-checkbox formControlName="createAdmin" color="primary" class="d-block mb-16">create admin</mat-checkbox>
+          <mat-checkbox formControlName="updateAdmin" color="primary" class="d-block mb-16">update admin</mat-checkbox>
+          <mat-checkbox formControlName="viewAdmin" color="primary" class="d-block mb-16">view admin</mat-checkbox>
+          <mat-checkbox formControlName="deleteAdmin" color="primary" class="d-block mb-16">delete admin</mat-checkbox>
+        </section>
+      </ng-container>
+      <button type="submit" [disabled]="isLoading" class="p-2 rounded bg-orange-400 block ms-auto">
+        @if (isLoading){
+          <i class="fas fa-spin fa-spinner"></i>
+        }
+        @else{
+          Submit
+        }
+      </button>
+    </form>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import { io, Socket } from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketIoService {
+
   private socket: Socket;
 
   constructor() {

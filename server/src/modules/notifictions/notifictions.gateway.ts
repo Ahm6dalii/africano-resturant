@@ -3,14 +3,11 @@ import { NotifictionsService } from './notifictions.service';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway()
-export class NotifictionsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class NotifictionsGateway {
   private server: Server
   private clients = new Map<string, Socket>();
   constructor(private readonly notifictionsService: NotifictionsService) { }
 
-  handleConnection(client: Socket) {
-    console.log('Client connected:', client.id);
-  }
 
   handleDisconnect(client: Socket) {
     console.log('Client disconnected:', client.id);
@@ -45,14 +42,20 @@ export class NotifictionsGateway implements OnGatewayConnection, OnGatewayDiscon
   async sendNewOrderToAll(myOrder: any) {
     this.server.emit('newOrder', myOrder);
   }
-  async sendUpdatedOrderToUser(userId: any, updatedOrder: any) {
+  async sendUpdatedOrderToUser(userId: string, updatedOrder: any, notification: any) {
     const client = this.clients.get(userId);
 
-    console.log(client + updatedOrder, "client test");
-
-    client.emit('updatedOrder', updatedOrder);
-
+    if (client) {
+      console.log(`Sending updated order to user: ${userId}, Client ID: ${client.id}`);
+      client.emit('updatedOrder', updatedOrder);
+      client.emit('userNotification', notification)
+    } else {
+      console.error(`Client not found for userId: ${userId}`);
+      console.error(`Client not found for userId: ${this.clients}`);
+    }
   }
+
+
   // @SubscribeMessage('getNewReview')
   // handleGetNewReview(@ConnectedSocket() client: Socket) {
   //   console.log('Client connected for new reviews');

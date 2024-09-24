@@ -17,11 +17,16 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { ProductComponent } from './dashboard/dashboard-components/product/product.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FullComponent } from './layouts/full/full.component';
+
+
 import { OrdersComponent } from './pages/orders/orders.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FoodCrudComponent } from '../app/pages/food-crud/food-crud.component';
-import { CategoryCrudComponent } from './pages/category-crud/category-crud.component';
+import { FullComponent } from './layouts/full/full.component';
+import { CreateAdminComponent } from './pages/create-admin/create-admin.component';
+import { AdminListComponent } from './pages/view-admins/view-admins.component';
+import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
+
 
 export const routes: Routes = [
   {
@@ -46,7 +51,10 @@ export const routes: Routes = [
       { path: 'slide-toggle', component: SlideToggleComponent },
       { path: 'tooltip', component: TooltipsComponent },
       { path: 'button', component: ButtonsComponent },
-      { path: 'orders', component: OrdersComponent },
+
+      { path: "orders", component: OrdersComponent },
+      { path: 'create', component: CreateAdminComponent},
+      { path: 'admins', component: AdminListComponent},
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },
       { path: 'categories', component: CategoryCrudComponent },
