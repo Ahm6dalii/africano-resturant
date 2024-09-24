@@ -16,28 +16,28 @@ export class AuthService {
     return this._http.post("http://localhost:3000/admin/signin",data)
   }
   createAdmin(data: any): Observable<any> {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyIiwicGVybWlzc2lvbnMiOlsic3VwZXIiXSwiaXNTdXBlckFkbWluIjp0cnVlLCJpYXQiOjE3MjcwNDc1MjZ9.AE-WaJ8RpPFKj_UQOufckP-hrh3Z6kqy5ztdcl5K0KM';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbWVuIiwicGVybWlzc2lvbnMiOltdLCJpc1N1cGVyQWRtaW4iOnRydWUsImlhdCI6MTcyNzEzNTc2N30.h77ipF2DvRE2R7yjxwH2QBlFpkhr8eJgoHC7skRGVG4';
     const headers = new HttpHeaders({
       'token':token,
     });
     return this._http.post("http://localhost:3000/admin/create", data, { headers });
   }
   getAllAmins(data: any): Observable<any> {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyIiwicGVybWlzc2lvbnMiOlsic3VwZXIiXSwiaXNTdXBlckFkbWluIjp0cnVlLCJpYXQiOjE3MjcwNDc1MjZ9.AE-WaJ8RpPFKj_UQOufckP-hrh3Z6kqy5ztdcl5K0KM';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbWVuIiwicGVybWlzc2lvbnMiOltdLCJpc1N1cGVyQWRtaW4iOnRydWUsImlhdCI6MTcyNzEzNTc2N30.h77ipF2DvRE2R7yjxwH2QBlFpkhr8eJgoHC7skRGVG4';
     const headers = new HttpHeaders({
       'token':token,
     });
     return this._http.get("http://localhost:3000/admin/all", { headers });
   }
   deleteAdmin(id: any): Observable<any> {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyIiwicGVybWlzc2lvbnMiOlsic3VwZXIiXSwiaXNTdXBlckFkbWluIjp0cnVlLCJpYXQiOjE3MjcwNDc1MjZ9.AE-WaJ8RpPFKj_UQOufckP-hrh3Z6kqy5ztdcl5K0KM';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbWVuIiwicGVybWlzc2lvbnMiOltdLCJpc1N1cGVyQWRtaW4iOnRydWUsImlhdCI6MTcyNzEzNTc2N30.h77ipF2DvRE2R7yjxwH2QBlFpkhr8eJgoHC7skRGVG4';
     const headers = new HttpHeaders({
       'token':token,
     });
     return this._http.delete(`http://localhost:3000/admin/delete/${id}`,{ headers });
   }
   updateAdmin(id: any,data): Observable<any> {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyIiwicGVybWlzc2lvbnMiOlsic3VwZXIiXSwiaXNTdXBlckFkbWluIjp0cnVlLCJpYXQiOjE3MjcwNDc1MjZ9.AE-WaJ8RpPFKj_UQOufckP-hrh3Z6kqy5ztdcl5K0KM';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbWVuIiwicGVybWlzc2lvbnMiOltdLCJpc1N1cGVyQWRtaW4iOnRydWUsImlhdCI6MTcyNzEzNTc2N30.h77ipF2DvRE2R7yjxwH2QBlFpkhr8eJgoHC7skRGVG4';
     const headers = new HttpHeaders({
       'token':token,
     });

@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { EditAdminDialogComponent } from 'src/app/adminComponents/update-admin/update-admin.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/adminComponents/delete-admin/delete-admin.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 interface Admin {
   _id: string;
@@ -21,16 +23,17 @@ interface Admin {
 @Component({
   selector: 'app-admin-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, MatDialogModule],
+  imports: [CommonModule, MatTableModule,ToastModule, MatButtonModule, MatIconModule, MatDialogModule],
   templateUrl: './view-admins.component.html',
-  styleUrls: ['./view-admins.component.scss']
+  styleUrls: ['./view-admins.component.scss'],
+  providers: [MessageService]
 })
 export class AdminListComponent implements OnInit {
   admins: Admin[] = [];
   displayedColumns: string[] = ['username', 'isSuperAdmin', 'permissions', 'createdAt', 'actions'];
 
-  constructor(private authService: AuthService, private dialog: MatDialog) {}
-
+  constructor(private authService: AuthService, private dialog: MatDialog,private messageService: MessageService) {}
+  errorMessage:string=""
   ngOnInit() {
     this.loadAdmins();
   }
@@ -42,6 +45,9 @@ export class AdminListComponent implements OnInit {
       },
       error => {
         console.error('Error loading admins:', error);
+        this.messageService.add({ severity: 'error', summary: '', detail: error.error.message });
+        this.errorMessage=error.error.message
+
       }
     );
   }
@@ -58,9 +64,13 @@ export class AdminListComponent implements OnInit {
         this.authService.updateAdmin(result._id, filteredResult).subscribe(
           () => {
             this.loadAdmins(); // Refresh the list after updating
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'updated successfully ' });
+
           },
           error => {
             console.error('Error updating admin:', error);
+            this.messageService.add({ severity: 'error', summary: '', detail: error.error.message });
+
           }
         );
       }
@@ -89,9 +99,12 @@ export class AdminListComponent implements OnInit {
           this.authService.deleteAdmin(admin._id).subscribe(
             () => {
               this.loadAdmins(); // Refresh the list after deletion
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'deleted successfully ' });
+
             },
             error => {
               console.error('Error deleting admin:', error);
+              this.messageService.add({ severity: 'error', summary: '', detail: error.error.message});
             }
       );
     }
