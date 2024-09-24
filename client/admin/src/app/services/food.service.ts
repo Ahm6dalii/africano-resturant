@@ -10,8 +10,8 @@ export class FoodService {
 
   constructor(private http: HttpClient) {}
 
-  getAllFoods(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?limit=100`);
+  getAllFoods(page: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?page=${page}&limit=${limit}`);
   }
 
   createFood(food: any): Observable<any> {

@@ -17,13 +17,16 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
 import { ProductComponent } from './dashboard/dashboard-components/product/product.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+
 import { OrdersComponent } from './pages/orders/orders.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FoodCrudComponent } from '../app/pages/food-crud/food-crud.component';
 import { FullComponent } from './layouts/full/full.component';
 import { CreateAdminComponent } from './pages/create-admin/create-admin.component';
 import { AdminListComponent } from './pages/view-admins/view-admins.component';
-// import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
+import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
+
 
 export const routes: Routes = [
   {
@@ -48,23 +51,23 @@ export const routes: Routes = [
       { path: 'slide-toggle', component: SlideToggleComponent },
       { path: 'tooltip', component: TooltipsComponent },
       { path: 'button', component: ButtonsComponent },
+
       { path: "orders", component: OrdersComponent },
       { path: 'create', component: CreateAdminComponent},
       { path: 'admins', component: AdminListComponent},
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },
-      // { path: 'categories', component: CategoryCrudComponent },
-      // { path: 'categories/:id', component: CategoryCrudComponent },
+      { path: 'categories', component: CategoryCrudComponent },
+      { path: 'categories/:id', component: CategoryCrudComponent },
     ],
   },
-  {path:"login", component:LoginComponent},
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
-
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -14,7 +14,6 @@ import { ComponentsModule } from './components/components.module';
 import { provideRouter } from '@angular/router';
 import { NotificationsComponent } from "./adminComponents/notifications/notifications.component";
 import { provideHttpClient } from '@angular/common/http';
-import { AppRoutingModule, routes } from './app-routing.module';
 
 
 @NgModule({
@@ -35,6 +34,7 @@ import { AppRoutingModule, routes } from './app-routing.module';
     provideClientHydration(),
     provideHttpClient(),
     provideAnimations(),
+
 
   ],
   bootstrap: [AppComponent]
