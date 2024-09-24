@@ -142,9 +142,9 @@ const formik = useFormik({
         </button>
 
         <div className="mt-4 text-center">
-          <a href="/forgot-password" className="text-blue-500 hover:text-blue-700 dark:text-yellow-200">
+          <Link onClick={()=>closeModal()}  to="/forgot-password/resetPass" className="text-blue-500 hover:text-blue-700 dark:text-yellow-200">
           {translation.forgetPassword }
-          </a>
+          </Link>
           {/* <p className='dark:text-white'  onClick={onSwitchToRegister}>{translation.newToAfricano }  <span className='text-blue-500 hover:text-blue-700 dark:text-yellow-200'>{translation.joinNow}</span></p>  */}
           <p className='dark:text-white'  >{translation.newToAfricano }  <span className='text-blue-500 hover:text-blue-700 dark:text-yellow-200'> <Link to='/register' onClick={closeModal}>{translation.joinNow}</Link></span></p> 
           

@@ -38,7 +38,7 @@ export class AdminService {
       throw new NotFoundException('Invalid credentials');
     }
 
-    const token = this.jwtService.sign({ username: admin.username, permissions: admin.permissions, isSuperAdmin: admin.isSuperAdmin }, { secret: "adax" });
+    const token = this.jwtService.sign({ username: admin.username, userId:admin._id,permissions: admin.permissions, isSuperAdmin: admin.isSuperAdmin }, { secret: "adax" });
     return { token };
   }
 

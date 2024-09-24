@@ -5,6 +5,7 @@ import Footer from '../../components/footer/Footer'
 import { Navbaar } from './../../components/navbar/Navbar';
 import style from './layout.module.css'
 import { Toaster } from 'react-hot-toast';
+import LoadingScreen from '../../components/loadingScreen/LoadingScreen';
 
 export default function () {
   const { language } = useSelector(state => state.lang)
@@ -19,6 +20,7 @@ export default function () {
       <div className={` font-['Open_Sans'] ${mode == 'light' ? '' : 'dark'}`}>
         <div dir={language == 'ar' ? 'rtl' : 'ltr'} className={`   dark:bg-slate-900 dark:text-white`} >
           <Navbaar></Navbaar>
+          <LoadingScreen></LoadingScreen>
           <div className={`md:px-15 ${mode == 'light' ? style.bgImgWhite : style.bgImgDark}`}>
             <div className={`min-h-[90vh] container px-15 py-5  m-auto order`}>
               <Outlet></Outlet>

@@ -36,7 +36,8 @@ export class LoginComponent {
       this._authService.login(this.loginForm.value).subscribe({
         next: (res: any) => {
           console.log(res);
-          localStorage.setItem('token', res.token)
+          // localStorage.setItem('token', res.token)
+          this._authService.saveUserToken(res.token)
           this.loginForm.reset();
           this.isLoading = false
           this.router.navigate(["/home"])

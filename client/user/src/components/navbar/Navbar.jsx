@@ -6,6 +6,7 @@ import { changeLang } from "../../redux/reducers/languageSlice";
 import { style } from "framer-motion/client";
 import navStyle from "./navbar.module.css";
 import logo from "../../assets/logo/logo-dr.png";
+import logoLight from "../../assets/logo/logo.li.png";
 import { LoginModal } from "../modal/login/modal.login";
 import { logOutUser } from "../../redux/reducers/userAuthSlice";
 import useCart from "../../hooks/useCart";
@@ -70,18 +71,19 @@ export function Navbaar() {
 
   return (
     <>
-      <div dir="ltr" className="dark:bg-black bg-zinc-200 shadow">
+      <div dir="ltr" className="dark:bg-black bg-zinc-100 shadow">
         <Navbar
           theme={customTheme}
           fluid
           rounded
-          className="py-1 container relative dark:bg-black bg-gray-200  m-auto"
+          className="py-1 container relative dark:bg-black bg-gray-100  m-auto"
         >
           <Navbar.Brand className="-order-1 " >
+            {mode=="dark"?
             <img src={logo} className="w-[80px]  " alt="Flowbite React Logo" />
-            {/* <span className="self-center whitespace-nowrap text-xl font-semibold  dark:text-white">
-             {translation.logo}
-            </span> */}
+            :<img src={logoLight} className="w-[80px]  " alt="Flowbite React Logo" />
+            }
+       
 
           </Navbar.Brand>
 
@@ -127,7 +129,7 @@ export function Navbaar() {
             <Navbar.Toggle  />
           </div>}
 
-          <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]} z-50 absolute md:static top-full dark:bg-black bg-gray-200 bg-opacity-100 shadow md:shadow-none md:border-none border-b-orange-300 p-5 left-0 right-0`}>
+          <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]} z-50 absolute md:static top-full dark:bg-black  bg-opacity-100 shadow md:shadow-none md:border-none border-b-orange-300 p-5 left-0 right-0`}>
             {navLink.map((navItem, index) => (
               <NavLink
                 className={({ isActive }) =>

@@ -102,7 +102,7 @@ const OrderList = () => {
                   order.intention_detail.items.map((item) => (
                     <div key={item._id || Math.random()}>
 
-                      {item.name} - {item.amount_cents / 100} EGP
+                      {item.name.en} - {item.amount_cents / 100} EGP
                     </div>
                   ))
                 ) : (

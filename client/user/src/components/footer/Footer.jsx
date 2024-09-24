@@ -1,6 +1,8 @@
 import logo from "../../assets/affricanoImg/logo_afr-removebg-preview.png"
+import logoLight from "../../assets/logo/logo.li.png";
 import { useSelector } from 'react-redux'
 export default function Footer() {
+  const { mode } = useSelector((state) => state.mode);
   const {translation}=useSelector(state=>state.lang)
 
   return (
@@ -10,8 +12,10 @@ export default function Footer() {
         {/* Restaurant Name */}
         <div className="text-center md:text-lef">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{translation.heroAfricano}</h2>
-          <img src={logo} alt="" className='w-20 block m-auto'/>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          {mode=="dark"?
+            <img src={logo} className="w-[80px]  " alt="Flowbite React Logo" />
+            :<img src={logoLight} className="w-[80px]  " alt="Flowbite React Logo" />
+            }          <p className="mt-2 text-gray-600 dark:text-gray-400">
             {translation.footerDesc}
           </p>
         </div>

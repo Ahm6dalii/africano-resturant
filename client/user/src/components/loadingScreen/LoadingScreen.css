@@ -1,0 +1,12 @@
+.animation {
+    animation: hideAndVisible 500ms infinite alternate; /* Adjusted duration for better visibility */
+}
+
+@keyframes hideAndVisible {
+    0%{
+        opacity: 0.5; /* Start and end at opacity 0.1 */
+    }
+    100% {
+        opacity: 1; /* Midpoint at full opacity */
+    }
+}
