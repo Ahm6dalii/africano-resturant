@@ -54,11 +54,11 @@ export class FullComponent {
     //   icon: "disc",
     //   menu: "Buttons",
     // },
-    {
-      link: "/forms",
-      icon: "layout",
-      menu: "Forms",
-    },
+    // {
+    //   link: "/forms",
+    //   icon: "layout",
+    //   menu: "Forms",
+    // },
     // {
     //   link: "/alerts",
     //   icon: "info",
@@ -99,11 +99,11 @@ export class FullComponent {
       icon: 'list',
       menu: 'Orders',
     },
-    {
-      link: '/login',
-      icon: 'list',
-      menu: 'Login',
-    },
+    // {
+    //   link: '/login',
+    //   icon: 'list',
+    //   menu: 'Login',
+    // },
     {
       link: "/create",
       icon: "list",
