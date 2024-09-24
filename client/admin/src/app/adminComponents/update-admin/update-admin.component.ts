@@ -12,7 +12,7 @@ interface AdminData {
   username: string;
   isSuperAdmin: boolean;
   permissions: string[];
-  isActive: boolean;
+  // isActive: boolean;
 }
 
 interface EditableAdminData extends AdminData {
