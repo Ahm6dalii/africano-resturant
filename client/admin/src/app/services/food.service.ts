@@ -13,8 +13,8 @@ export class FoodService {
     this.apiUrl= this._apiLink.apiLink.getValue() 
   }
 
-  getAllFoods(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/api/foods?limit=100`);
+  getAllFoods(page: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/api/foods?page=${page}&limit=${limit}`);
   }
 
   createFood(food: any): Observable<any> {

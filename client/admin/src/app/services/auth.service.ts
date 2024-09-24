@@ -54,6 +54,7 @@ export class AuthService  {
   }
   createAdmin(data: any): Observable<any> {
     const token = this.userToken.getValue();
+
     const headers = new HttpHeaders({
       'token':token,
     });
@@ -61,6 +62,7 @@ export class AuthService  {
   }
   getAllAmins(data: any): Observable<any> {
     const token = this.userToken.getValue();
+
     const headers = new HttpHeaders({
       'token':token,
     });
@@ -68,6 +70,7 @@ export class AuthService  {
   }
   deleteAdmin(id: any): Observable<any> {
     const token = this.userToken.getValue();
+
     const headers = new HttpHeaders({
       'token':token,
     });
@@ -76,6 +79,7 @@ export class AuthService  {
   
   updateAdmin(id: any,data): Observable<any> {
     const token = this.userToken.getValue();
+
     const headers = new HttpHeaders({
       'token':token,
     });

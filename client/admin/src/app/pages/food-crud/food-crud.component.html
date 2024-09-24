@@ -1,28 +1,33 @@
+<!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+
 <!-- Switch Language -->
-<div class="float-right">
+<div class="mb-5">
+  <div class="float-right">
+    <button
+      (click)="setLanguage('en')"
+      class="mr-2 p-2 bg-white-500 text-black rounded-md border border-blue-500 hover:bg-blue-500 hover:text-white hover:scale-110 transition-transform duration-300"
+    >
+      En
+    </button>
+    <button
+      (click)="setLanguage('ar')"
+      class="mr-2 p-2 bg-white-500 text-black rounded-md border border-blue-500 hover:bg-blue-500 hover:text-white hover:scale-110 transition-transform duration-300"
+    >
+      Ar
+    </button>
+  </div>
+
+  <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+  <!-- Add New Food Button -->
   <button
-    (click)="setLanguage('en')"
-    class="mr-2 p-2 bg-blue-500 text-white rounded-md"
+    (click)="toggleAddPopup()"
+    class="mb-4 p-2 bg-green-500 text-white rounded-md animate-slideDown"
   >
-    En
-  </button>
-  <button
-    (click)="setLanguage('ar')"
-    class="p-2 bg-blue-500 text-white rounded-md"
-  >
-    Ar
+    Add New Food
   </button>
 </div>
-
-<!-- Add New Food Button -->
-<button
-  (click)="toggleAddPopup()"
-  class="mb-4 p-2 bg-green-500 text-white rounded-md"
->
-  Add New Food
-</button>
-
-<!-- Add New Food Popup -->
+<!-- Add New Food  -->
 <div *ngIf="isAddPopupOpen" class="animate-slideDown">
   <form [formGroup]="foodForm" (ngSubmit)="addFood()">
     <input
@@ -52,63 +57,69 @@
   </form>
 </div>
 
+<!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+
 <!-- Food List -->
-<div
-  *ngFor="let food of foods"
-  class="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-6"
->
-  <div class="md:flex">
-    <div class="md:shrink-0">
-      <img
-        [src]="food.image"
-        alt="Food Image"
-        class="h-48 w-full object-cover md:h-full md:w-48"
-      />
-    </div>
-    <div class="p-8">
-      <div
-        class="uppercase tracking-wide text-sm text-indigo-500 font-bold mb-2"
-      >
+<table class="table-auto w-full">
+  <thead class="bg-gray-200 text-gray-600 text-sm">
+    <tr>
+      <th class="px-4 py-2">Image</th>
+      <th class="px-4 py-2">Category</th>
+      <th class="px-4 py-2">Name</th>
+      <th class="px-4 py-2">Description</th>
+      <th class="px-4 py-2">Size</th>
+      <th class="px-4 py-2">Actions</th>
+      <th class="px-4 py-2">Reviews</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let food of foods; let i = index"
+      class="text-gray-600 text-sm"
+      [ngClass]="{ 'bg-gray-100': i % 2 === 0 }"
+    >
+      <td class="border px-4 py-2">
+        <img
+          [src]="food.image"
+          alt="Food Image"
+          class="h-24 w-full object-cover"
+        />
+      </td>
+      <td class="border px-4 py-2">
         {{ food.category.name[selectedLanguage] }}
-      </div>
-      <h2 class="text-3xl font-bold">{{ food.name[selectedLanguage] }}</h2>
-      <p class="mt-2 text-slate-500">
-        {{ food.description[selectedLanguage] }}
-      </p>
-      <!-- <select formControlName="size" class="mb-2 p-2 border rounded-md">
-      <option value="{{food.amount.S}}">S</option>
-      <option value="{{food.amount.M}}">M</option>
-      <option value="{{food.amount.L}}">L</option>
-    </select> -->
-
-    <!-- Form For Choose Size -->
-      <form [formGroup]="foodForm" (ngSubmit)="updateFood(food)">
-        <label
-          for="size"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Select a size</label
-        >
-        <select
-          formControlName="size"
-          id="size"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="{{ food.amount.S }}">S ({{ food.amount.S }})</option>
-          <option value="{{ food.amount.M }}">M ({{ food.amount.M }})</option>
-          <option value="{{ food.amount.L }}">L ({{ food.amount.L }})</option>
-        </select>
-      </form>
-      <!-- Edit and Delete  -->
-      <div class="mt-4">
-        <button
+      </td>
+      <td class="border px-4 py-2">
+        {{ food.name[selectedLanguage] }}
+      </td>
+      <td class="border px-4 py-2">
+        <div class="truncate" title="{{ food.description[selectedLanguage] }}">
+          {{ food.description[selectedLanguage] | slice : 0 : 50 }}...
+        </div>
+      </td>
+      <td class="border px-1 py-2">
+        <form [formGroup]="foodForm" (ngSubmit)="updateFood(food)">
+          <select
+            id="size"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="" selected disabled visibility="hidden">Size</option>
+            <option value="{{ food.amount.S }}">S ({{ food.amount.S }})</option>
+            <option value="{{ food.amount.M }}">M ({{ food.amount.M }})</option>
+            <option value="{{ food.amount.L }}">L ({{ food.amount.L }})</option>
+          </select>
+        </form>
+      </td>
+      <td class="px-4 py-2 flex justify-center items-center space-x-2 h-[20vh]">
+        <mat-icon
           (click)="togglePopup(food)"
-          class="p-2 bg-blue-500 text-white rounded-md m-3"
+          class="animate-slideDown text-center text-green-500"
         >
-          Edit
-        </button>
-
-        <!-- Edit Popup -->
-        <div *ngIf="isPopupOpen && food._id === selectedFood._id" class="animate-slideDown">
+          edit
+        </mat-icon>
+        <div
+          *ngIf="isPopupOpen && food._id === selectedFood._id"
+          class="animate-slideDown"
+        >
           <form [formGroup]="foodForm" (ngSubmit)="updateFood(food)">
             <input
               formControlName="name"
@@ -130,7 +141,7 @@
               placeholder="Image URL"
               class="mb-2 p-2 border rounded-md"
             />
-            <select formControlName="size" class="mb-2 p-2 border rounded-md">
+            <select class="mb-2 p-2 border rounded-md">
               <option value="S">Small (75)</option>
               <option value="M">Medium (95)</option>
               <option value="L">Large (125)</option>
@@ -143,20 +154,84 @@
             </button>
           </form>
         </div>
+        <mat-icon (click)="deleteFood(food._id)" class="text-red-500">
+          delete
+        </mat-icon>
+      </td>
+      <td class="mt-2 text-slate-500 text-center">{{ food.review.length }}</td>
+    </tr>
+  </tbody>
+</table>
 
-        <button
-          (click)="deleteFood(food._id)"
-          class="p-2 bg-red-500 text-white rounded-md"
+<!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
+
+<!-- Pagination -->
+<!-- <div class="mt-4">
+  <button (click)="previousPage()" class="p-2 bg-blue-500 text-white rounded-md m-3">
+    Previous Page
+  </button>
+  <button (click)="nextPage()" class="p-2 bg-blue-500 text-white rounded-md m-3">
+    Next Page
+  </button>
+</div> -->
+
+<nav aria-label="Page navigation" class="mx-auto w-fit mt-5">
+  <ul class="flex items-center -space-x-px h-8 text-sm">
+    <li>
+      <button
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+      >
+        Previous
+        <svg
+          class="w-2.5 h-2.5 rtl:rotate-180"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 6 10"
         >
-          Delete
-        </button>
-
-        <!-- Number of Reviews -->
-        <p class="mt-2 text-slate-500">
-          Reviews: {{ food.review.length }}
-        </p>
-
-      </div>
-    </div>
-  </div>
-</div>
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 1 1 5l4 4"
+          />
+        </svg>
+      </button>
+    </li>
+    <li *ngFor="let page of pages; let i = index">
+      <button
+        (click)="changePage(page)"
+        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+      >
+        {{ page }}
+      </button>
+    </li>
+    <li>
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPageCount"
+        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+      >
+        Next
+        <svg
+          class="w-2.5 h-2.5 rtl:rotate-180"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 6 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 9 4-4-4-4"
+          />
+        </svg>
+      </button>
+    </li>
+  </ul>
+</nav>
