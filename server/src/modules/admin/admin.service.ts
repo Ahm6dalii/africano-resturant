@@ -67,6 +67,15 @@ export class AdminService {
     return updatedAdmin;
   }
 
+  async updateAdminPass(id: string, newPassword: string): Promise<any> {
+    const admin = await this.adminModel.findById(id);
+    if (!admin) {
+      throw new NotFoundException('Admin not found');
+    }
+    admin.password = newPassword;
+    admin.save();
+    return {message:"password updated successfully"}
+  }
 
   async deleteAdmin(id: string): Promise<void> {
     if (!mongoose.Types.ObjectId.isValid(id)) {
