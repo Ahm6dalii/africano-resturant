@@ -25,7 +25,10 @@ import { FoodCrudComponent } from '../app/pages/food-crud/food-crud.component';
 import { FullComponent } from './layouts/full/full.component';
 import { CreateAdminComponent } from './pages/create-admin/create-admin.component';
 import { AdminListComponent } from './pages/view-admins/view-admins.component';
+import { authGuard } from './gaurd/auth.guard';
+import { ChangePassComponent } from './pages/change-pass/change-pass.component';
 import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
+
 
 
 export const routes: Routes = [
@@ -34,7 +37,7 @@ export const routes: Routes = [
     component: FullComponent,
     children: [
       { path: '', redirectTo: '/home', pathMatch: 'full' },
-      { path: 'home', component: DashboardComponent },
+      { path: 'home', canActivate:[authGuard],component: DashboardComponent },
       { path: 'alerts', component: AlertsComponent },
       { path: 'forms', component: FormsComponent },
       { path: 'table', component: ProductComponent },
@@ -57,12 +60,14 @@ export const routes: Routes = [
       { path: 'admins', component: AdminListComponent},
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },
-      { path: 'categories', component: CategoryCrudComponent },
+      { path:'change-pass', component: ChangePassComponent },
+     { path: 'categories', component: CategoryCrudComponent },
       { path: 'categories/:id', component: CategoryCrudComponent },
     ],
   },
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {path:"login", component:LoginComponent},
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
 ];
 

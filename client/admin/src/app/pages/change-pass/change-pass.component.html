@@ -1,0 +1,53 @@
+<div class="  h-screen overflow-auto">
+
+    <div class="flex  items-center justify-center">
+  <div class="card w-[400px] m-auto mt-20">
+    <div class="card-body">
+      <h1 class="mb-32 text-center text-2xl"> <i class="fas fa-lock text-orange-500 me-2"></i>Change Password</h1>
+      <form   [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
+        <div *ngIf="errorMessage">
+          <div class="alert alert-danger py-1 mb-2 text-center" role="alert">{{ errorMessage }}</div>
+        </div>
+        
+        <mat-form-field class="me-24 fs-16" appearance="fill">
+          <mat-label class="text-black">Password</mat-label>
+          <input matInput type="password" id="password" name="password" formControlName="password">
+        </mat-form-field>
+        
+        <div *ngIf="changePasswordForm.get('password')?.errors && changePasswordForm.get('password')?.touched">
+          <div class="form-text text-danger mt-[-20px] mb-[10px]">
+            <p *ngIf="changePasswordForm.get('password')?.errors['required']" class="alert alert-danger py-1 mb-4">Required</p>
+            <p *ngIf="changePasswordForm.get('password')?.errors['minlength']" class="alert alert-danger py-1 mb-4">
+              Minimum length is {{ changePasswordForm.get('password')?.errors['minlength'].required }} characters.
+            </p>
+          </div>
+        </div>
+      
+        <mat-form-field class="me-24 fs-16">
+          <mat-label class="text-black">Re- Password</mat-label>
+          <input matInput type="password" id="rePassword" name="rePassword" formControlName="rePassword">
+        </mat-form-field>
+        
+        <div *ngIf="changePasswordForm.get('rePassword')?.errors && changePasswordForm.get('rePassword')?.touched">
+          <div class="form-text text-danger mt-[-20px]">
+            <p *ngIf="changePasswordForm.get('rePassword')?.errors['required']" class="alert alert-danger py-1 mb-4">Required</p>
+            <p *ngIf="changePasswordForm.get('rePassword')?.errors['passwordsMismatch']" class="alert alert-danger py-1 mb-4">
+              Passwords do not match.
+            </p>
+          </div>
+        </div>
+        
+        <button type="submit" [disabled]="isLoading" class="p-2 rounded bg-orange-400 block ms-auto">
+          <ng-container *ngIf="isLoading; else buttonText">
+            <i class="fas fa-spin fa-spinner"></i>
+          </ng-container>
+          <ng-template #buttonText>Confirm</ng-template>
+        </button>
+      </form>
+      
+      
+    </div>
+  </div>
+  </div>
+  </div>
+  

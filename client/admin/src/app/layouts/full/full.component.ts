@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface sidebarMenu {
   link: string;
@@ -16,7 +17,7 @@ interface sidebarMenu {
 })
 export class FullComponent {
   search: boolean = false;
-
+  userName:string='';
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -24,7 +25,11 @@ export class FullComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,private _authService:AuthService) {
+    this.userName=_authService.tokenUserInfo.getValue().username
+    console.log(_authService.tokenUserInfo.getValue(),'pppppppppppppp');
+    
+  }
 
   routerActive: string = 'activelink';
 
@@ -145,4 +150,10 @@ export class FullComponent {
     //   menu: "Slide Toggle",
     // },
   ];
+
+
+
+  logOut(){
+    this._authService.logOut()
+  }
 }
