@@ -1,1 +1,84 @@
-<p>category-crud works!</p>
+<!-- Switch Language -->
+<div class="float-right">
+  <button
+    (click)="setLanguage('en')"
+    class="mr-2 p-2 bg-blue-500 text-white rounded-md border border-blue-500"
+  >
+    En
+  </button>
+  <button
+    (click)="setLanguage('ar')"
+    class="p-2 bg-blue-500 text-white rounded-md"
+  >
+    Ar
+  </button>
+</div>
+
+<!-- Add New Category Button -->
+<button
+  (click)="toggleAddPopup()"
+  class="mb-4 p-2 bg-green-500 text-white rounded-md animate-slideDown"
+>
+  Add New Category
+</button>
+
+<!-- Add New Category Popup -->
+<div *ngIf="isAddPopupOpen" class="animate-slideDown">
+  <form [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+    <input
+      formControlName="name"
+      placeholder="Category Name"
+      class="mb-2 p-2 border rounded-md"
+    />
+    <input
+      formControlName="description"
+      placeholder="Description"
+      class="mb-2 p-2 border rounded-md"
+    />
+    <input
+      formControlName="image"
+      placeholder="Image URL"
+      class="mb-2 p-2 border rounded-md"
+    />
+
+    <button type="submit" class="mr-2 p-2 bg-blue-500 text-white rounded-md">
+      Save
+    </button>
+  </form>
+</div>
+
+<!-- Categories List -->
+<table class="table-auto w-full">
+  <thead class="bg-gray-200 text-gray-600 text-sm">
+    <tr>
+      <th class="px-4 py-2">Image</th>
+      <th class="px-4 py-2">Name</th>
+      <th class="px-4 py-2">Description</th>
+      <th class="px-4 py-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories" class="text-gray-600 text-sm">
+      <td class="border px-4 py-2">
+        <img [src]="category.image" alt="Category Image" class="h-24 w-full object-cover">
+      </td>
+      <td class="border px-4 py-2">
+        {{ category.name[selectedLanguage] }}
+      </td>
+      <td class="border px-4 py-2">
+        <div class="truncate" title="{{ category.description[selectedLanguage] }}">
+          {{ category.description[selectedLanguage] | slice : 0 : 50 }}...
+        </div>
+      </td>
+      <td class="border px-4 py-2 flex justify-center items-center space-x-2">
+        <button (click)="togglePopup(category)" class="animate-slideDown p-2 bg-teal-500 text-white rounded-md">
+          Edit
+        </button>
+        <button (click)="deleteCategory(category._id)" class="p-2 bg-red-500 text-white rounded-md">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

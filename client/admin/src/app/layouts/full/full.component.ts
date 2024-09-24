@@ -36,8 +36,13 @@ export class FullComponent {
     },
     {
       link: '/foods',
-      icon: 'foods',
+      icon: 'list',
       menu: 'Foods',
+    },
+    {
+      link: '/categories',
+      icon: 'list',
+      menu: 'Categories',
     },
     // {
     //   link: "/button",
@@ -85,14 +90,14 @@ export class FullComponent {
     //   menu: "Tabs",
     // },
     {
-      link: "/orders",
-      icon: "list",
-      menu: "Orders",
+      link: '/orders',
+      icon: 'list',
+      menu: 'Orders',
     },
     {
-      link: "/login",
-      icon: "list",
-      menu: "Login",
+      link: '/login',
+      icon: 'list',
+      menu: 'Login',
     },
     // {
     //   link: "/progress",

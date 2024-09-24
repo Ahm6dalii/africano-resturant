@@ -17,7 +17,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-import { AppRoutingModule, routes } from './app-routing.module';
 
 
 @NgModule({
@@ -39,7 +38,7 @@ import { AppRoutingModule, routes } from './app-routing.module';
     provideAnimations(),
   ],
 
-  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(), provideAnimations()],
-  bootstrap: [AppComponent]
+
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
