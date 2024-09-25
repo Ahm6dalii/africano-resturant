@@ -14,7 +14,36 @@ export class LogService {
     return newLog.save();
   }
 
-  async getAllLogs(): Promise<Log[]> {
-    return this.logModel.find().populate('admin', 'username').exec();
+  async getAllLogs(search, page, limit): Promise<any> {
+    const skip = (page - 1) * limit;
+    const searchCondition = search
+      ? {
+          $or: [
+            { action: { $regex: search, $options: 'i' } }, 
+            { 'admin.username': { $regex: search, $options: 'i' } } 
+          ]
+        }
+      : {};   
+    const allLogs = await this.logModel
+      .find(searchCondition)
+      .skip(skip)
+      .limit(limit)
+      .populate('admin', 'username') 
+      .exec();
+    const total = await this.logModel
+      .find(searchCondition)
+      .countDocuments()
+      .exec();
+  
+    const totalPages = Math.ceil(total / limit);
+  
+    return {
+      total,
+      totalPages,
+      page,
+      limit,
+      data: allLogs,
+    };
   }
-}
+  
+  }

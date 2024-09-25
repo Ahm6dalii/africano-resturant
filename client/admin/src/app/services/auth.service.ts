@@ -60,23 +60,23 @@ export class AuthService  {
     });
     return this._http.post(`${this.apiLink}/admin/create`, data, { headers });
   }
-  getAllAmins(data: any): Observable<any> {
+  getAllAmins(search,page,limit): Observable<any> {
     const token = this.userToken.getValue();
       console.log(this.apiLink,'this.apiLink');
 
     const headers = new HttpHeaders({
       'token':token,
     });
-    return this._http.get(`${this.apiLink}/admin/all`, { headers });
+    return this._http.get(`${this.apiLink}/admin/all?search=${search}&page=${page}&limit=${limit}`, { headers });
   }
-  getAllLogs(): Observable<any> {
+  getAllLogs(search,page,limit): Observable<any> {
     const token = this.userToken.getValue();
       console.log(this.apiLink,'this.apiLink');
 
     const headers = new HttpHeaders({
       'token':token,
     });
-    return this._http.get(`${this.apiLink}/logs`, { headers });
+    return this._http.get(`${this.apiLink}/logs?search=${search}&page=${page}&limit=${limit}`, { headers });
   }
   deleteAdmin(id: any): Observable<any> {
     const token = this.userToken.getValue();
