@@ -24,7 +24,7 @@ export class PaymobService {
 
   async createPaymentIntention(body, param, token): Promise<any> {
 
-    const decoded = this._jwtservice.verify(token, { secret: "mo2" });
+   const decoded = this._jwtservice.verify(token, { secret: "mo2" });
 
 
     const myCart = await this.cartModel.findOne({ userId: decoded.userId })
@@ -134,7 +134,7 @@ export class PaymobService {
         console.error('Error creating Paymob intention:', error);
         throw error;
       }
-    
+    }
   }
 
   async removeAllCartItems(token): Promise<void> {
