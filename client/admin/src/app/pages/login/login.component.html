@@ -39,7 +39,7 @@
           }
           @if (loginForm.get('password')?.errors['minlength']) {
             <p class="alert alert-danger py-1 mb-4">
-              Minimum length is {{ loginForm.get('password')?.errors['minlength'].required }} 6.
+              Minimum length is {{ loginForm.get('password')?.errors['minlength'].required }} characters.
             </p>
           }
           @if (loginForm.get('password')?.errors['pattern']) {

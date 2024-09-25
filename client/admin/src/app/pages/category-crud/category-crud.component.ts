@@ -1,86 +1,165 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
-import { NgFor, NgIf, SlicePipe } from '@angular/common';
+import { NgClass,NgFor, NgIf, SlicePipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon'; // Add this import
+import { MatDialog } from '@angular/material/dialog';
+import { AddCategoryDialogComponent } from 'src/app/adminComponents/add-category-dialog/add-category-dialog.component';
+import { EditCategoryDialogComponent } from 'src/app/adminComponents/edit-category-dialog/edit-category-dialog.component';
 
 @Component({
   selector: 'app-category-crud',
   standalone: true,
-  imports: [NgFor, NgIf, ReactiveFormsModule, SlicePipe],
+  imports: [
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+    SlicePipe,
+    MatIconModule,
+    NgClass,
+  ],
   templateUrl: './category-crud.component.html',
   styleUrl: './category-crud.component.scss',
 })
 export class CategoryCrudComponent implements OnInit {
-  categories: any[] = [];
-
-  isPopupOpen = false;
-  isAddPopupOpen = false;
   selectedCategory: any = null;
   categoryForm: FormGroup;
+  categories: any[] = [];
 
   selectedLanguage: string = 'ar';
 
+  showConfirmationPopup = false;
   constructor(
     private fb: FormBuilder,
-    private categoryService: CategoryService
-  ) {
+    private categoryService: CategoryService,
+    private dialog: MatDialog
+  ) {}
+  ngOnInit(): void {
     this.categoryForm = this.fb.group({
-      name: [''],
-      description: [''],
+      name: this.fb.group({
+        ar: [''],
+        en: [''],
+      }),
+      description: this.fb.group({
+        ar: [''],
+        en: [''],
+      }),
       image: [''],
     });
-  }
-  ngOnInit(): void {
+
     this.loadCategories();
-  }
-  loadCategories() {
-    this.categoryService.getCategories().subscribe((category) => {
-      console.log(category);
-      this.categories = category;
-    });
-  }
-  getCategory(id: string): void {
-    this.categoryService.getCategory(id).subscribe((category) => {
-      this.categories.pop();
-    });
-  }
-  addCategory(): void {
-    const category = this.categoryForm.value;
-    this.categoryService.createCategory(category).subscribe(() => {
-      this.categories.push(category);
-      this.categoryForm.reset();
-      this.isAddPopupOpen = false;
-    });
+
+    console.log(this.categoryForm);
+    console.log(this.categoryForm.get('amount'));
   }
 
-  deleteCategory(id: string): void {
-    this.categoryService.deleteCategory(id).subscribe(() => {
-      this.categories = this.categories.filter(
-        (category) => category.id !== id
-      );
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe((category) => {
+      this.categories = category;
+      console.log(this.categories);
     });
   }
+  confirmDelete(category: any): void {
+    this.showConfirmationPopup = true;
+    this.selectedCategory = category;
+  }
+
+  cancelDelete(): void {
+    this.showConfirmationPopup = false;
+    this.selectedCategory = null;
+  }
+
+  deleteConfirmed(id: string): void {
+    this.categoryService.deleteCategory(id).subscribe(() => {
+      this.categories = this.categories.filter(
+        (category) => category._id !== id
+      );
+      this.showConfirmationPopup = false;
+      this.selectedCategory = null;
+    });
+  }
+  // addCategory(): void {
+  //   const formData = new FormData();
+  //   Object.keys(this.categoryForm.controls).forEach((key) => {
+  //     const control = this.categoryForm.get(key);
+  //     if (control.value instanceof File) {
+  //       formData.append(key, control.value);
+  //     } else if (typeof control.value === 'object') {
+  //       Object.keys(control.value).forEach((subKey) => {
+  //         formData.append(`${key}.${subKey}`, control.value[subKey]);
+  //       });
+  //     } else {
+  //       formData.append(key, control.value);
+  //     }
+  //   });
+  //   this.categoryService.createCategory(formData).subscribe(
+  //     (createdCategory) => {
+  //       this.categories.push(createdCategory); // Add new category to list
+  //     },
+  //     (error) => {
+  //       console.error('Failed to add category:', error);
+  //     }
+  //   );
+  // }
+
   updateCategory(category: any): void {
+    const updatedCategory = this.categoryForm.value;
+
     this.categoryService
-      .updateCategory(category._id, category)
-      .subscribe((updatedCategory) => {
-        const index = this.categories.findIndex(
-          (f) => f._id === updatedCategory._id
-        );
-        this.categories[index] = updatedCategory;
-        this.isPopupOpen = false;
-      });
+      .updateCategory(category._id, updatedCategory)
+      .subscribe(
+        (response) => {
+          const index = this.categories.findIndex(
+            (f) => f._id === category._id
+          );
+          if (index !== -1) {
+            this.categories[index] = response;
+          }
+        },
+        (error) => {
+          console.error('Failed to update categories:', error);
+        }
+      );
   }
 
   setLanguage(lang: string) {
     this.selectedLanguage = lang;
   }
-  togglePopup(category: any): void {
-    this.selectedCategory = category;
-    this.isPopupOpen = !this.isPopupOpen;
+
+  openAddCategoryDialog(): void {
+    const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
+      width: '400px',
+      data: {}, // No data for adding a new category
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      console.log('Hello From AddCategoryDialog');
+      console.log(res);
+      if (res) {
+        this.categoryService.createCategory(res).subscribe((newCategory) => {
+          this.categories.push(newCategory);
+        });
+      }
+    });
   }
-  toggleAddPopup(): void {
-    this.isAddPopupOpen = !this.isAddPopupOpen;
-    this.categoryForm.reset();
+
+  openEditCategoryDialog(category: any): void {
+    const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
+      width: '400px',
+      data: category,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.categoryService
+          .updateCategory(category._id, result)
+          .subscribe((updatedCategory) => {
+            const index = this.categories.findIndex(
+              (f) => f._id === updatedCategory._id
+            );
+            this.categories[index] = updatedCategory;
+          });
+      }
+    });
   }
 }
