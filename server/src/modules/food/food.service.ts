@@ -37,14 +37,16 @@ export class FoodService {
     folder: 'Africano/Test',
   };
 
-  async create(createFoodDto: CreateFoodDto, file: any): Promise<Food> {
+  async create(createFoodDto:any, file: any): Promise<Food> {
     console.log(createFoodDto);
 
     createFoodDto.amount = Math.ceil(createFoodDto.amount);
 
     const categoryName = await this.categoryModel.findOne({
       'name.en': createFoodDto.category,
+      // 'name.ar': createFoodDto.category,
     });
+    
     if (!categoryName) {
       throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
     }

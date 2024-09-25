@@ -57,6 +57,7 @@ export class CategoriesService {
     if (!updatedCategory) {
       throw new NotFoundException(`Category with id ${id} not found`);
     }
+    
     return updatedCategory;
     }
     async delete(id: string): Promise<Category>{
