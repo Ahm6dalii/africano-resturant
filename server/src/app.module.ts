@@ -16,6 +16,7 @@ import { NotifictionsModule } from './modules/notifictions/notifictions.module';
 
 import { MulterModule } from '@nestjs/platform-express';
 import { CloudinaryModule } from './core/utils/cloudinary/cloudinary.module';
+import { DeliveryModule } from './modules/delivery/delivery.module';
 //  adding cart
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -23,7 +24,7 @@ import { CloudinaryModule } from './core/utils/cloudinary/cloudinary.module';
     envFilePath: '.env',  // Specify the .env file
   }) , MulterModule.register({
     dest: './src/uploads', // Specify the destination folder
-  }),NotifictionsModule,CloudinaryModule,CartModule,CategoriesModule,AuthModule,FoodModule,PaymobModule,OrderModule,MongooseModule.forRoot("mongodb+srv://ahmedalielian20:C0bvgRQxLNKLlIux@affricano-cluster.4smjx.mongodb.net/affricano?retryWrites=true&w=majority&appName=affricano-cluster")],
+  }),DeliveryModule ,NotifictionsModule,CloudinaryModule,CartModule,CategoriesModule,AuthModule,FoodModule,PaymobModule,OrderModule,MongooseModule.forRoot("mongodb+srv://ahmedalielian20:C0bvgRQxLNKLlIux@affricano-cluster.4smjx.mongodb.net/affricano?retryWrites=true&w=majority&appName=affricano-cluster")],
 
 
   controllers: [AppController],

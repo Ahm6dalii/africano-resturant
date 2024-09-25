@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Delete, Patch, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Patch, UseGuards, SetMetadata, Query } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
@@ -23,8 +23,10 @@ export class AdminController {
   @Get('all')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @SetMetadata('permissions', ['viewAdmins'])
-  getAllAdmins() {
-    return this.adminService.getAllAdmins();
+  getAllAdmins(@Query('search') search: string,
+  @Query('limit') limit: number = 10,
+  @Query('page') page: number = 1 ) {
+    return this.adminService.getAllAdmins(search,page,limit);
   }
 
   @Delete('delete/:id')

@@ -42,8 +42,30 @@ export class AdminService {
     return { token };
   }
 
-  async getAllAdmins(): Promise<Admin[]> {
-    return this.adminModel.find().exec();
+  async getAllAdmins(search,page,limit): Promise<any> {
+    const skip = (page - 1) * limit;
+    
+    const searchCondition = search
+      ? { name: { $regex: search, $options: 'i' } } 
+      : {}; 
+    const allAdmin= await this.adminModel.find(searchCondition)
+        .skip(skip)
+        .limit(limit)
+        .exec();
+
+    const total = await this.adminModel
+        .find(searchCondition)
+        .countDocuments();
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      total,
+      totalPages,
+      page,
+      limit,
+      data: allAdmin,
+    };
   }
 
   async updateAdmin(id: string, updateAdminDto: UpdateAdminDto): Promise<Admin> {

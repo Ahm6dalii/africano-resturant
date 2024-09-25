@@ -28,6 +28,7 @@ import { AdminListComponent } from './pages/view-admins/view-admins.component';
 import { authGuard } from './gaurd/auth.guard';
 import { ChangePassComponent } from './pages/change-pass/change-pass.component';
 import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
+import { DeliveryComponent } from './pages/delivery/delivery.component';
 
 
 
@@ -63,6 +64,7 @@ export const routes: Routes = [
       { path:'change-pass', component: ChangePassComponent },
      { path: 'categories', component: CategoryCrudComponent },
       { path: 'categories/:id', component: CategoryCrudComponent },
+      { path: 'delivery', component: DeliveryComponent },
     ],
   },
   {path:"login", component:LoginComponent},

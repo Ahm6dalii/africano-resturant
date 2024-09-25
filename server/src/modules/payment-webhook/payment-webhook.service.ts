@@ -60,8 +60,8 @@ export class PaymentWebhookService {
         this.httpService.get(`${apiUrl}/${id}`, { headers })
       );
       const { billing_data, order, amount_cents } = response.data
-
-      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items: order.items, total: amount_cents } })
+      const updatedOrder=this.splitSizeFromName(order.items)
+      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items:updatedOrder, total: amount_cents } })
 
 
       // const notifications = users.map(user => ({
@@ -90,5 +90,19 @@ export class PaymentWebhookService {
     });
     return response.data.token;
   }
-
+  
+ splitSizeFromName  (products) {
+    return products.map(product => {
+console.log(product,'sdsdsdaasdb7b7b7b');
+      const [name, size] = product.name.split(' - ');
+      return {
+        name,   
+        size ,
+        description: product.description,
+        amount_cents: product.amount_cents,  
+        quantity: product.quantity,
+        image: product.image   
+      };
+    });
+  };
 }

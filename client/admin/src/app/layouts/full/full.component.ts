@@ -99,6 +99,11 @@ export class FullComponent {
       icon: 'list',
       menu: 'Orders',
     },
+    {
+      link: '/delivery',
+      icon: 'list',
+      menu: 'Delivery',
+    },
     // {
     //   link: '/login',
     //   icon: 'list',

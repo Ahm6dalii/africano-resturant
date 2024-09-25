@@ -6,7 +6,7 @@ export class UpdatePaswordController {
     constructor(private _updatePaswordService:UpdatePaswordService){}
     @Put()
     async resetPassword(
-        @Headers() header ,@Body('newPassword') newPassword: string,) {
+        @Headers() header ,@Body('newPassword') newPassword: string) {
         const {token} =header
         console.log(token);
         if (!token) {
