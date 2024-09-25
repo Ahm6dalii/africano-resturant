@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
+import { Admin } from 'src/core/schemas/admin.schema';
 import { Cart } from 'src/core/schemas/cart.schema';
 import { Delivery } from 'src/core/schemas/delivery.schema';
 import { Order } from 'src/core/schemas/order.schema';
@@ -15,6 +16,7 @@ export class PaymobService {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>,
     @InjectModel(Cart.name) private cartModel: Model<Cart>,
     @InjectModel(Delivery.name) private deliveryModel: Model<Delivery>,
+    @InjectModel(Admin.name) private adminModel: Model<Admin>,
     private _jwtservice: JwtService
     , private readonly httpService: HttpService
     , private readonly notificationGateway: NotifictionsGateway
@@ -38,32 +40,33 @@ export class PaymobService {
     console.log("Received payment method:", body.payment_method);
 
 
-    if (body.payment_method === 'delivery') {
-      const order = await this.orderModel.insertMany({
+    if (body.payment_method === 'cash') {
+      const orders = await this.orderModel.insertMany({
         userId: decoded.userId,
         billing_data: body.billing_data,
         intention_detail: {
           items: myCart.items,
           total: myCart.totalPrice,
         },
-        payment_method: 'delivery',
-      });
-      console.log(order, "from delvery i guess");
-
+        payment_method: 'cash',
+      })
 
       await this.removeAllCartItems(token);
+      const order = orders[0];
+      const users = await this.adminModel.find().exec();
+      const notifications = users.map(user => ({
+        user: user._id,
+        type: 'Order',
+        relatedId: order._id,
+        message: `A new Order was Ordered: by ${order?.billing_data?.first_name}`,
+      }));
+      await this.notificationService.createNotification(notifications);
+      this.notificationGateway.sendOrderNotificationToAdmin(notifications);
+      this.notificationGateway.sendNewOrderToAll(orders);
 
-      // const notifications = users.map(user => ({
-      //   user: user._id,
-      //   type: 'review_added',
-      //   relatedId: addedReview._id,
-      //   message: `A new review was added to the article: ${addedReview.name} by ${addedReview.review[0].user.name}`,
-      // }));
-      // await this.notificationService.createNotification(notifications);
-      this.notificationGateway.sendNewOrderToAll(order);
 
 
-      return { success: true, order };
+      return { success: true, orders };
     } else {
 
       const apiUrl = 'https://accept.paymob.com/v1/intention/';

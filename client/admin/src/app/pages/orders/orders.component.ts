@@ -16,6 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DemoFlexyModule } from 'src/app/demo-flexy-module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SocketIoService } from 'src/app/services/socket-io.service';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-orders',
@@ -54,8 +55,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.getOrders(this.currentStatus);
 
     this._socketIoService.on('newOrder', (newOrder) => {
+      console.log(`Received newOrder: ${newOrder}`);
       console.log(`Received newOrder: ${newOrder[0]}`);
-      this.orders.push(newOrder[0])
+      this.orders.unshift(newOrder[0])
     })
   }
 
@@ -78,9 +80,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this._orderService.updateOrderStatus(orderId, { status: newStatus }).subscribe({
       next: (updatedOrder) => {
         console.log('Order updated:', updatedOrder);
-
         this.orders = this.orders.filter((order: any) => order._id !== orderId);
-
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Order status updated' });
       },
       error: (err) => {
@@ -95,7 +95,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if (this.searchTerm) {
       this.orders = this.orders.filter((order: any
       ) =>
-        order?.billing_data?.phone_number.includes(this.searchTerm) || order?.billing_data?.first_name.includes(this.searchTerm)
+        order?.billing_data?.phone_number.includes(this.searchTerm) || order?.billing_data?.first_name.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     } else {
       this.getOrders(this.currentStatus);
@@ -126,7 +126,21 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     this.getOrders(this.currentStatus);
   }
-
+  downloadOrderAsPNG(orderId: string) {
+    const element = document.getElementById(`order-${orderId}`);
+    if (element) {
+      html2canvas(element).then((canvas) => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = `order-${orderId}.png`;
+        link.click();
+      }).catch(error => {
+        console.error("Error capturing the element:", error);
+      });
+    } else {
+      console.error('Order element not found');
+    }
+  }
   ngOnDestroy() {
     this._socketIoService.disconnect();
   }
