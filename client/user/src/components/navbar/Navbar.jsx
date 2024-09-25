@@ -134,7 +134,7 @@ export function Navbaar() {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? ` ${navStyle.active} dark:text-white`
+                    ? ` ${navStyle.active} dark:font-semibold border-b-2 border-b-orange-200   text-orange-500`
                     : navStyle.link
                 }
                 key={index}

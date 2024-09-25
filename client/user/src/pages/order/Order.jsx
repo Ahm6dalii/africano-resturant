@@ -16,10 +16,10 @@ const Order = () => {
                     <div className="">
                         <svg width="400" height="180" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 80 Q 60 20, 120 80 T 240 80"
-                                stroke={mode === 'light' ? 'red' : 'white'} fill="transparent" stroke-width="3" />
+                                stroke={mode === 'light' ? 'red' : 'white'} fill="transparent" strokeWidth="3" />
                             <path d="M120 110 C 140 140, 180 140, 200 110 S 260 110, 280 140"
-                                stroke={mode === 'light' ? 'red' : 'white'} fill="transparent" stroke-width="2" />
-                            <text  x={language=='en'?"50":"250"}  y={language=='en'?"170":"175"} fill={mode === 'light' ? 'red' : 'red'} font-size="40" font-family="Brush Script MT, cursive">
+                                stroke={mode === 'light' ? 'red' : 'white'} fill="transparent" strokeWidth="2" />
+                            <text  x={language=='en'?"50":"250"}  y={language=='en'?"170":"175"} fill={mode === 'light' ? 'red' : 'red'} fontSize="40" fontFamily="Brush Script MT, cursive">
                                {translation.affricanoName} 
                             </text>
                         </svg>
@@ -28,7 +28,7 @@ const Order = () => {
                        {translation.affricanoAdrress}
                     </h1>
                 </div>
-                <div className="form dark:bg-black bg-white bg-opacity-40 min-w-full min-h-96 mt-10 rounded-2xl form-body  dark:border-[#696969] dark:border-8 border-1">
+                <div className="form dark:bg-[#1c1c1c] dark:bg-opacity-80 bg-white bg-opacity-40 min-w-full min-h-96 mt-10 rounded-2xl form-body  dark:border-[#696969] dark:border-2 border-1">
                     <div className="m-10 flex lg:flex-row flex-col  justify-between items-center">
                         <div className="flex flex-col justify-center items-center mb-20 lg:w-3/4 lg:mr-10 ">
                             <h1 className="text-3xl font-bold uppercase dark:text-white text-red-700">{translation.getOrder}</h1>

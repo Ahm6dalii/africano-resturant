@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
+import { Admin } from 'src/core/schemas/admin.schema';
 import { Cart } from 'src/core/schemas/cart.schema';
 import { Delivery } from 'src/core/schemas/delivery.schema';
 import { Order } from 'src/core/schemas/order.schema';
@@ -15,6 +16,7 @@ export class PaymobService {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>,
     @InjectModel(Cart.name) private cartModel: Model<Cart>,
     @InjectModel(Delivery.name) private deliveryModel: Model<Delivery>,
+    @InjectModel(Admin.name) private adminModel: Model<Admin>,
     private _jwtservice: JwtService
     , private readonly httpService: HttpService
     , private readonly notificationGateway: NotifictionsGateway
@@ -22,12 +24,15 @@ export class PaymobService {
 
   async createPaymentIntention(body, param, token): Promise<any> {
 
-    const decoded = this._jwtservice.verify(token, { secret: "mo2" });
+   const decoded = this._jwtservice.verify(token, { secret: "mo2" });
 
 
     const myCart = await this.cartModel.findOne({ userId: decoded.userId })
+    
+    
     // const {items:{items,size,...paymobobj}}=myCart
-
+    // console.log(myCart,'dfdffdfdfdsfdsffsdfdsaaaaaaaaaaaaaaaaaaaaaa');
+    
 
     const deliveyPrice = await this.deliveryModel.findOne()
 
@@ -38,32 +43,33 @@ export class PaymobService {
     console.log("Received payment method:", body.payment_method);
 
 
-    if (body.payment_method === 'delivery') {
-      const order = await this.orderModel.insertMany({
+    if (body.payment_method === 'cash') {
+      const orders = await this.orderModel.insertMany({
         userId: decoded.userId,
         billing_data: body.billing_data,
         intention_detail: {
           items: myCart.items,
           total: myCart.totalPrice,
         },
-        payment_method: 'delivery',
-      });
-      console.log(order, "from delvery i guess");
-
+        payment_method: 'cash',
+      })
 
       await this.removeAllCartItems(token);
+      const order = orders[0];
+      const users = await this.adminModel.find().exec();
+      const notifications = users.map(user => ({
+        user: user._id,
+        type: 'Order',
+        relatedId: order._id,
+        message: `A new Order was Ordered: by ${order?.billing_data?.first_name}`,
+      }));
+      await this.notificationService.createNotification(notifications);
+      this.notificationGateway.sendOrderNotificationToAdmin(notifications);
+      this.notificationGateway.sendNewOrderToAll(orders);
 
-      // const notifications = users.map(user => ({
-      //   user: user._id,
-      //   type: 'review_added',
-      //   relatedId: addedReview._id,
-      //   message: `A new review was added to the article: ${addedReview.name} by ${addedReview.review[0].user.name}`,
-      // }));
-      // await this.notificationService.createNotification(notifications);
-      this.notificationGateway.sendNewOrderToAll(order);
 
 
-      return { success: true, order };
+      return { success: true, orders };
     } else {
 
       const apiUrl = 'https://accept.paymob.com/v1/intention/';
@@ -74,18 +80,29 @@ export class PaymobService {
       body.redirection_url = `${body.redirection_url}/payment-webhook/?token=${token}&redirectURL=${body.redirection_url}/allOrder`
 
       let allItems = myCart.items.map(item => item)
-      allItems.forEach(item => { item.description = item.description['en'], item.name = item.name['en'] })
-      console.log(allItems);
+      // allItems.forEach(item => { item.description = item.description['en'], item.name = item.name['en'] })
+      const updatedProducts =(products)=>{
+        return products.map(product => ({
+          name: `${product?.name?.en} - ${product?.size}`,
+          description: `${product?.description?.en} `,
+          amount:Math.ceil(product.amount*100),
+          quantity: product.quantity,
+          image: product.image
+        }));
+      }
+      const paymobData=updatedProducts(allItems)
+      console.log(paymobData,'updatedProductsupdatedProducts');
 
-      allItems.forEach(item => item.amount = Math.ceil(item.amount))
-      allItems.forEach(item => item.amount *= 100)
-
+      // allItems.forEach(item => item.amount = Math.ceil(item.amount))
+      // allItems.forEach(item => item.amount *= 100)
+      // console.log(allItems,'allllllllllllllllllllllllllllllllllllllll');
+      
       const delivery = {
         "name": "delivery",
         "amount": Number(deliveyPrice.price) * 100,
         "description": "Delivery Price",
         "quantity": 1,
-        "image": "http://google.com"
+        "image": "https://res.cloudinary.com/dbifogzji/image/upload/v1727203854/Africano/u28vlatvsblmemghbdxl.png"
       }
 
       const data = {
@@ -93,10 +110,11 @@ export class PaymobService {
         "currency": "EGP",
         "expiration": 5800,
         "payment_methods": [4828775],
-        "items": [...allItems, delivery],
+        "items": [...paymobData, delivery],
         ...body,
       }
-
+      console.log(data);
+      
       try {
         const response = await firstValueFrom(
           this.httpService.post(`${apiUrl}`, data, { headers })
@@ -108,8 +126,8 @@ export class PaymobService {
         intention_detail.items.forEach(item => {
           item.amount /= 100;
         });
-        // const myorder=await this.orderModel.insertMany({userId:decoded.userId,intention_detail})
-        // this.removeAllCartItems(token)
+      //   // const myorder=await this.orderModel.insertMany({userId:decoded.userId,intention_detail})
+      //   // this.removeAllCartItems(token)
 
         return response.data;
       } catch (error) {

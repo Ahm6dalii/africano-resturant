@@ -8,11 +8,13 @@ import { JwtService } from '@nestjs/jwt';
 import { Cart, CartSchema } from 'src/core/schemas/cart.schema';
 import { Delivery, DeliverySchema } from 'src/core/schemas/delivery.schema';
 import { NotifictionsModule } from 'src/modules/notifictions/notifictions.module';
+import { AdminModule } from 'src/modules/admin/admin.module';
+import { Admin, AdminSchema } from 'src/core/schemas/admin.schema';
 
 PaymobService
 @Module({
-  imports: [NotifictionsModule, HttpModule, MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }
-    , { name: Cart.name, schema: CartSchema }, { name: Delivery.name, schema: DeliverySchema }])],
+  imports: [AdminModule, NotifictionsModule, HttpModule, MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }
+    , { name: Cart.name, schema: CartSchema }, { name: Delivery.name, schema: DeliverySchema }, { name: Admin.name, schema: AdminSchema }])],
   controllers: [PaymobController],
   providers: [PaymobService, JwtService],
 })

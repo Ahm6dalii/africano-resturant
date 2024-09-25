@@ -9,6 +9,7 @@ import { Cart } from 'src/core/schemas/cart.schema';
 import { Order } from 'src/core/schemas/order.schema';
 import { NotifictionsGateway } from '../notifictions/notifictions.gateway';
 import { NotifictionsService } from '../notifictions/notifictions.service';
+import { Admin } from 'src/core/schemas/admin.schema';
 
 @Injectable()
 export class PaymentWebhookService {
@@ -17,8 +18,9 @@ export class PaymentWebhookService {
     private _jwtservice: JwtService
     , private readonly httpService: HttpService,
     private readonly notificationGateway: NotifictionsGateway
-    , private readonly notificationService: NotifictionsService
-    ,) { }
+    , private readonly notificationService: NotifictionsService,
+    @InjectModel(Admin.name) private adminModel: Model<Admin>,
+  ) { }
   private apiKey = 'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2T1RrME1qRTJMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkuYjN4MXVld2hlTjBpdld0bUtUbndrV2VmVnU1akNEcHhnUVYzNzVXZUhuQnM4SlAwekZiYnRObFh0cVFaaTJndzNGWW8zOW9EWnlrd2lsY1VxWjdGWWc=';
   private baseUrl = 'https://accept.paymob.com/api';
 
@@ -60,8 +62,8 @@ export class PaymentWebhookService {
         this.httpService.get(`${apiUrl}/${id}`, { headers })
       );
       const { billing_data, order, amount_cents } = response.data
-
-      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items: order.items, total: amount_cents } })
+      const updatedOrder=this.splitSizeFromName(order.items)
+      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items:updatedOrder, total: amount_cents } })
 
 
       // const notifications = users.map(user => ({
@@ -72,6 +74,17 @@ export class PaymentWebhookService {
       // }));
       // await this.notificationService.createNotification(notifications);
 
+
+      const orderr = myOrder[0];
+      const users = await this.adminModel.find().exec();
+      const notifications = users.map(user => ({
+        user: user._id,
+        type: 'Order',
+        relatedId: orderr._id,
+        message: `A new Order was Ordered: by ${order?.billing_data?.first_name}`,
+      }));
+      await this.notificationService.createNotification(notifications);
+      this.notificationGateway.sendNotificationToAll(notifications);
       this.notificationGateway.sendNewOrderToAll(myOrder);
 
 
@@ -90,5 +103,19 @@ export class PaymentWebhookService {
     });
     return response.data.token;
   }
-
+  
+ splitSizeFromName  (products) {
+    return products.map(product => {
+console.log(product,'sdsdsdaasdb7b7b7b');
+      const [name, size] = product.name.split(' - ');
+      return {
+        name,   
+        size ,
+        description: product.description,
+        amount_cents: product.amount_cents,  
+        quantity: product.quantity,
+        image: product.image   
+      };
+    });
+  };
 }

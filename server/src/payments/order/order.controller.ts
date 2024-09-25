@@ -6,18 +6,22 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {
   }
   @Get()
-  getAllOrder() {
-    return this.orderService.allOrder()
+  getAllOrder(@Query('search') search: string,
+  @Query('limit') limit: number = 10,
+  @Query('page') page: number = 1) {
+    return this.orderService.allOrder(search,page,limit)
   }
 
 
   @Get('userOrders')
-  getUserOrder(@Headers() header) {
+  getUserOrder(@Headers() header,@Query('search') search: string,
+  @Query('limit') limit: number = 10,
+  @Query('page') page: number = 1) {
     const { token } = header
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
-    return this.orderService.userOrders(token)
+    return this.orderService.userOrders(token,search, limit, page)
   }
 
   @Get('ordersByStatus')

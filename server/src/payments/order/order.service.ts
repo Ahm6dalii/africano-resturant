@@ -14,26 +14,76 @@ export class OrderService {
 
 
 
-  async allOrder() {
-    const myOrder = await this.orderModel.find().sort({ _id: -1 })
+  async allOrder(search,limit,page) {
+   
+   
+    const skip = (page - 1) * limit;
+    
+    const searchCondition = search
+      ? { name: { $regex: search, $options: 'i' } } 
+      : {}; 
+    const myOrder= await this.orderModel.find(searchCondition)
+        .skip(skip)
+        .limit(limit)
+        .exec();
+
+    const total = await this.orderModel
+        .find(searchCondition)
+        .countDocuments();
+
+    const totalPages = Math.ceil(total / limit);
+
+  
     if (myOrder) {
-      return myOrder
+      return {
+        total,
+        totalPages,
+        page,
+        limit,
+        data: myOrder,
+      };
+      
     } else {
       return 'no order exist';
     }
+
+
   }
-  async userOrders(token) {
-    console.log(token, "token")
-    const decoded = this._jwtservice.verify(token, { secret: "mo2" })
-    const myOrder = await this.orderModel.find({
-      userId: decoded.userId
-    }).sort({ _id: -1 })
-    if (myOrder) {
-      return myOrder
-    } else {
-      return 'no order exist';
+  async userOrders(token, search, limit, page) {
+    try {
+      const decoded = this._jwtservice.verify(token, { secret: "mo2" });
+      const skip = (page - 1) * limit;
+      
+      // Always include the userId in the search condition
+      const searchCondition = {
+        userId: decoded.userId, 
+        ...(search ? { name: { $regex: search, $options: 'i' } } : {})
+      };
+  
+      const myOrder = await this.orderModel.find(searchCondition)
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec();
+  
+      const total = await this.orderModel
+        .find(searchCondition)
+        .countDocuments();
+  
+      const totalPages = Math.ceil(total / limit);
+  
+      return {
+        total,
+        totalPages,
+        page,
+        limit,
+        data: myOrder,
+      };
+    } catch (error) {
+      throw new Error('Error fetching orders: ' + error.message);
     }
   }
+  
 
   async getOrdersByStatus(status: string) {
     const myOrder = await this.orderModel.find({ status }).sort({ _id: -1 })

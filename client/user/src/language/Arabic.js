@@ -76,7 +76,7 @@ myOrders: "طلباتي",
 
 
   // Food Card
-  confirm: 'تأكيد',
+  confirm: 'أضف الى السلة',
   order: 'اطلب',
   selectSize: 'اختر الحجم',
 
@@ -181,7 +181,25 @@ menuRestaurant:"قائمة الطلبات",
 
 //about
 aboutUs:"معلومات عنا",
+ourStory: "قصتنا",
+  luxuryRestaurant: "مطعم فاخر بنكهات نادرة لا يمكنك العثور عليها في أي مكان آخر على البحر الأحمر.",
+  masterChef: "الشيف الرئيسي",
+  chefName: "عبده طارق",
+  ourChef: "شيفنا",
+  masterChefAd: "شيف رئيسي يتمتع بخبرة 5 سنوات",
+  ourFuture: "مستقبلنا",
+  ourFutureAd: "نتطلع إلى الأمام بحماس نحو تطوير قائمتنا بأطباق موسمية جديدة، وتوسيع نطاقنا داخل المجتمع، وخلق تجارب لا تُنسى لضيوفنا من خلال الفعاليات الخاصة والابتكارات في الطهي.",
+  weBest: "لماذا نحن الأفضل",
+  weBestAd: "بدأت رحلتنا منذ عام 2022 لتقديم افخر انواع البيتزا و المعكرونه",
+  premiumServices: "خدمات مميزة",
+  premiumServicesAd: "من التوصيات الشخصية إلى التذوق الحصري، تضمن خدماتنا المميزة تجربة طهي لا تُنسى مصممة خصيصًا لك.",
+  freeDelivery: "توصيل منزلي مجاني",
+  freeDeliveryAd: "استمتع بترف توصيل الوجبات الفاخرة إلى باب منزلك دون أي تكلفة إضافية , تذوق الراحة دون تنازل.",
+  PrimeLocation: "موقع متميز",
+  PrimeLocationAd: "يقع في قلب رأس غارب، يوفر مطعمنا سهولة الوصول لضمان أنك دائمًا بالقرب من أفضل الأذواق والتجارب.",
 
+
+///////////
 
   loading: "جارٍ التحميل...",
   error: "خطأ",
@@ -191,7 +209,7 @@ aboutUs:"معلومات عنا",
   subTotal: "المجموع الفرعي",
   delivery: "رسوم التوصيل",
   total: "الإجمالي",
-  removeItem: "هل أنت متأكد أنك تريد الإزالة؟",
+  removeItem: "هل أنت متأكد أنك تريد الإزالة",
   confirmRemove: "نعم، أنا متأكد",
   cancelRemove: "لا، إلغاء",
   removeOrder: "هل أنت متأكد أنك تريد إزالة الطلب بالكامل؟",
@@ -200,6 +218,10 @@ aboutUs:"معلومات عنا",
   noOrderFound: "لم يتم العثور على طلب",
 
 
+  orderMethod: "طريقة الطلب",
+  orderStatus: "حالة الطلب",
+  onlinePayment: "الدفع عبر الإنترنت",
+  paymentMethod: "طريقة الدفع",
 
   affricanoName: "مطعم أفريكانو",
   affricanoAdrress: "مطعم أفريكانو، مدينة البحر الأحمر، مصر",
@@ -218,13 +240,14 @@ orderSuccess: "تم الطلب بنجاح!",
 orderProcess: "جاري المعالجة...",
 orderFirsetName: "الاسم الأول",
 orderLastName: "اسم العائلة",
+orderFullName:"الاسم",
 apartment: "شقة",
 orderPhone: "رقم الهاتف",
 buliding: "المبنى",
 street: "الشارع",
 floor: "الطابق",
 errApartment: "الشقة مطلوبة",
-errNameF: "الاسم الأول مطلوب",
+errNameF: "الاسم مطلوب",
 errNameL: "اسم العائلة مطلوب",
 errStreet: "الشارع مطلوب",
 errBuliding: "المبنى مطلوب",
@@ -245,6 +268,7 @@ orderItems: "العناصر",
 orderTotal: "إجمالي السعر",
 orderId: "رقم الطلب",
 noItems: "لا توجد عناصر متاحة",
+orderStatus:"حالة الطلب",
 
 //toast
 addedOrder: "تمت الإضافة إلى الطلب!",
@@ -268,6 +292,18 @@ pageNotFound: "عذرًا! الصفحة غير موجودة",
 notFound: "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
 goBack: "العودة إلى الصفحة الرئيسية",
 
+
+  // product details
+  foodDetails:"وصف الطعام",
+  foodDescription: "وصف الطعام:",
+  price: "السعر:",
+  Category: "الفئة:",
+egp:"جنيه",
+  relatedProducts: "منتجات ذات صلة",
+  size: "الحجم:",
+
+  customerReviews: "آراء عملائنا",
+  yourReview: "مراجعتك",
 
 
 }

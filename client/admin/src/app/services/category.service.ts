@@ -19,7 +19,7 @@ export class CategoryService {
   }
 
   createCategory(categoryData: any): Observable<any> {
-    console.log(categoryData)
+
     const formData = new FormData();
 
     formData.append('name', categoryData.name);

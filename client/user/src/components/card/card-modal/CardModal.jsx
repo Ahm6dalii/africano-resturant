@@ -114,16 +114,17 @@ export default function CardModal({ i, amount, name, itemId }) {
       <Modal  className={`${mode=='light'?'':'dark'}`} show={openModal} size="xl" onClose={onCloseModal} popup={true}>
 
         <div ref={modalRef}>
-          <Modal.Header className='dark:bg-gray-300 dark:text-black ' />
-          <Modal.Body className='dark:bg-slate-300 dark:text-black' dir={language == 'ar' ? 'rtl' : 'ltr'} >
-            <h2 className="text-center font-bold text-xl text-orange-500">{name}</h2>
-            <h4 className="font-bold">{translation.selectSize}</h4>
-            <div className="flex flex-col mb-5">
+          <Modal.Header className='dark:bg-gray-900 dark:text-black ' />
+          <Modal.Body className='dark:bg-gray-900 dark:text-black' dir={language == 'ar' ? 'rtl' : 'ltr'} >
+            <h2 className="text-center font-bold text-3xl text-red-900 dark:text-orange-200">{name}</h2>
+            <h4 className="font-bold dark:text-orange-200">{translation.selectSize}</h4>
+            <div className="flex flex-col mb-5 dark:text-white">
               {amountArray.map((item) => (
                 <CardPrice
                   key={item[0]} // Ensure key prop is unique
                   size={item}
                   selectedPrice={selectedPrice}
+                  
                   handlePriceChange={handlePriceChange}
                 />
               ))}
