@@ -12,6 +12,7 @@ const CustomerReviews = ({ id, reviews }) => {
     const api = useSelector(state => state.apiLink.link);
     const queryClient = useQueryClient();
     const { user } = useSelector((state) => state.auth);
+    const {translation}=useSelector(state=>state.lang)
 
 
     useEffect(() => {
@@ -27,6 +28,7 @@ const CustomerReviews = ({ id, reviews }) => {
 
             setReviewsList((prevReviews) => [...prevReviews, addedReview]);
         });
+        
 
         return () => {
             socket.off('newReview');
@@ -52,19 +54,19 @@ const CustomerReviews = ({ id, reviews }) => {
     return (
         <section className="py-12 lg:py-24 relative">
             <div className="container mx-auto px-4">
-                <h2 className="font-manrope font-bold text-2xl lg:text-4xl dark:text-white text-black mb-8 lg:mb-12 text-center">
-                    Our customer reviews
+                <h2 style={{"fontFamily":" Caveat"}} className="text-center text-6xl text-red-900 dark:text-red-500 pb-2">
+                {translation.customerReviews}
                 </h2>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Review submission form */}
                     <div className="lg:col-span-1">
                         <div className="bg-white dark:bg-black shadow-md rounded-lg px-6 lg:px-8 py-6 mb-4">
                             <div className="mb-6">
-                                <label className="block text-gray-700 dark:text-white text-sm font-bold mb-2" htmlFor="review">
-                                    Your Review
+                                <label style={{"fontFamily":" Oswald"}} className="block   font-bold mb-2" htmlFor="review">
+                                        {translation.yourReview}
                                 </label>
                                 <textarea
-                                    className="shadow appearance-none dark:bg-gray-800 border rounded w-full py-2 px-3 dark:text-gray-200 text-gray-800 leading-tight focus:outline-none focus:shadow-outline h-32"
+                                    className="shadow appearance-none dark:bg-gray-800 border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline h-32"
                                     id="review"
                                     placeholder="Write your review here"
                                     name="review"
@@ -76,7 +78,7 @@ const CustomerReviews = ({ id, reviews }) => {
                                 <button
                                     disabled={newReview.length < 5 || isLoading}
                                     onClick={handleSubmit}
-                                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    className="bg-red-900 hover:bg-red-600  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     type="submit"
                                 >
                                     {isLoading ? 'Submitting...' : 'Submit Review'}
@@ -95,7 +97,7 @@ const CustomerReviews = ({ id, reviews }) => {
                                     <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-4">
                                         <div className="flex items-center gap-3">
                                             {review?.user?.image && <img src={review?.user?.image} alt="John image" className="w-8 h-8 rounded-full object-cover" />}
-                                            <h6 className="font-semibold text-lg dark:text-white text-indigo-600">
+                                            <h6 className="font-semibold text-lg dark:text-white text-red-500">
                                                 {review?.user?.name}
                                             </h6>
                                         </div>
@@ -103,7 +105,7 @@ const CustomerReviews = ({ id, reviews }) => {
                                             {moment(review.createdAt).format("DD MMMM YYYY")}
                                         </p>
                                     </div>
-                                    <p className="font-normal text-base dark:text-gray-400 text-gray-900 break-words">
+                                    <p className="font-normal text-base  break-words">
                                         {review.text}
                                     </p>
                                 </div>

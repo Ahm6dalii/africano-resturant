@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import socket from '../../socket.io/socket';
-import moment from 'moment';
+import moment from 'moment'; // Import moment.js to format the date
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
-import logo from '../../assets/logo/logo.li.png'
+
 const NotificationsModel = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [notifi, setNotifi] = useState([]);
@@ -102,8 +102,8 @@ const NotificationsModel = () => {
                                             className="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2"
                                         >
                                             <img
-                                                className="size-12 rounded-full object-cover mx-1"
-                                                src={logo}
+                                                className="h-8 w-8 rounded-full object-cover mx-1"
+                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
                                                 alt="avatar"
                                             />
                                             <div className="ml-2">
@@ -120,7 +120,7 @@ const NotificationsModel = () => {
                                     <p className="text-gray-600 text-sm px-4 py-3">No notifications available</p>
                                 )}
                             </div>
-                            {notifi.length > 0 && <span onClick={() => markAsRead()} className="block cursor-pointer bg-gray-800 text-white text-center font-bold py-2">Mark all as Read</span>}
+                            {notifi.length > 0 && <span onClick={() => markAsRead()} className="block bg-gray-800 text-white text-center font-bold py-2">Mark all as Read</span>}
                         </div>
                     )}
                 </div>

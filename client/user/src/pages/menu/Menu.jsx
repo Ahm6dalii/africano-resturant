@@ -7,7 +7,7 @@ export default function Menu() {
   const {translation}=useSelector(state=>state.lang)
   return <>
   <dev>
-    <p  style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold    mb-8 text-center">
+    <p  style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold   text-orange-500 dark:text-orange-200 mb-8 text-center">
     {translation.menuRestaurant}
     </p>
   </dev>
