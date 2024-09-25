@@ -1,0 +1,47 @@
+<h1 mat-dialog-title class="text-3xl font-bold text-gray-900">Add New Category</h1>
+<div mat-dialog-content class="space-y-6 p-4">
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="space-y-4">
+      <div formGroupName="name" class="flex gap-4">
+        <input
+          formControlName="ar"
+          placeholder="الاسم"
+          class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+        <input
+          formControlName="en"
+          placeholder="Name"
+          class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div formGroupName="description" class="flex gap-4">
+        <input
+          formControlName="ar"
+          placeholder="الوصف"
+          class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+        <input
+          formControlName="en"
+          placeholder="Description"
+          class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+    <button
+      type="submit"
+      class="mt-6 w-[50px] p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500"
+    >
+      Save
+    </button>
+  </form>
+</div>
+<div mat-dialog-actions class="space-x-4 p-4">
+  <button mat-button (click)="onNoClick()" class="w-[50] p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-500">
+    Cancel
+  </button>
+</div>
