@@ -64,7 +64,7 @@ const CustomerReviews = ({ id, reviews }) => {
                                     Your Review
                                 </label>
                                 <textarea
-                                    className="shadow appearance-none dark:bg-gray-800 border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32"
+                                    className="shadow appearance-none dark:bg-gray-800 border rounded w-full py-2 px-3 dark:text-gray-200 text-gray-800 leading-tight focus:outline-none focus:shadow-outline h-32"
                                     id="review"
                                     placeholder="Write your review here"
                                     name="review"
@@ -103,7 +103,7 @@ const CustomerReviews = ({ id, reviews }) => {
                                             {moment(review.createdAt).format("DD MMMM YYYY")}
                                         </p>
                                     </div>
-                                    <p className="font-normal text-base text-gray-400 break-words">
+                                    <p className="font-normal text-base dark:text-gray-400 text-gray-900 break-words">
                                         {review.text}
                                     </p>
                                 </div>

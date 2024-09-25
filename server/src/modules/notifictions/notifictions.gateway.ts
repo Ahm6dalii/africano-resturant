@@ -1,12 +1,17 @@
 import { WebSocketGateway, SubscribeMessage, MessageBody, ConnectedSocket, OnGatewayDisconnect, OnGatewayConnection } from '@nestjs/websockets';
 import { NotifictionsService } from './notifictions.service';
 import { Server, Socket } from 'socket.io';
+import { Admin } from 'src/core/schemas/admin.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @WebSocketGateway()
 export class NotifictionsGateway {
   private server: Server
   private clients = new Map<string, Socket>();
-  constructor(private readonly notifictionsService: NotifictionsService) { }
+  constructor(private readonly notifictionsService: NotifictionsService,
+    @InjectModel(Admin.name) private adminModel: Model<Admin>
+  ) { }
 
 
   handleDisconnect(client: Socket) {
@@ -42,6 +47,18 @@ export class NotifictionsGateway {
   async sendNewOrderToAll(myOrder: any) {
     this.server.emit('newOrder', myOrder);
   }
+  async sendOrderNotificationToAdmin(notification: any) {
+    const adminUsers = await this.adminModel.find().exec();
+
+    adminUsers.forEach(adminUser => {
+      const client = this.clients.get(adminUser._id.toString());
+      if (client) {
+        client.emit('adminNotification', notification);
+        console.log(`Notification sent to admin user: ${adminUser._id}`);
+      }
+    });
+  }
+
   async sendUpdatedOrderToUser(userId: string, updatedOrder: any, notification: any) {
     const client = this.clients.get(userId);
 

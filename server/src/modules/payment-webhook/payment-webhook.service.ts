@@ -9,6 +9,7 @@ import { Cart } from 'src/core/schemas/cart.schema';
 import { Order } from 'src/core/schemas/order.schema';
 import { NotifictionsGateway } from '../notifictions/notifictions.gateway';
 import { NotifictionsService } from '../notifictions/notifictions.service';
+import { Admin } from 'src/core/schemas/admin.schema';
 
 @Injectable()
 export class PaymentWebhookService {
@@ -17,8 +18,9 @@ export class PaymentWebhookService {
     private _jwtservice: JwtService
     , private readonly httpService: HttpService,
     private readonly notificationGateway: NotifictionsGateway
-    , private readonly notificationService: NotifictionsService
-    ,) { }
+    , private readonly notificationService: NotifictionsService,
+    @InjectModel(Admin.name) private adminModel: Model<Admin>,
+  ) { }
   private apiKey = 'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2T1RrME1qRTJMQ0p1WVcxbElqb2lhVzVwZEdsaGJDSjkuYjN4MXVld2hlTjBpdld0bUtUbndrV2VmVnU1akNEcHhnUVYzNzVXZUhuQnM4SlAwekZiYnRObFh0cVFaaTJndzNGWW8zOW9EWnlrd2lsY1VxWjdGWWc=';
   private baseUrl = 'https://accept.paymob.com/api';
 
@@ -61,17 +63,19 @@ export class PaymentWebhookService {
       );
       const { billing_data, order, amount_cents } = response.data
 
+      console.log(response.data, "what i want");
+
       const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items: order.items, total: amount_cents } })
-
-
-      // const notifications = users.map(user => ({
-      //   user: user._id,
-      //   type: 'review_added',
-      //   relatedId: addedReview._id,
-      //   message: `A new review was added to the article: ${addedReview.name}`,
-      // }));
-      // await this.notificationService.createNotification(notifications);
-
+      const orderr = myOrder[0];
+      const users = await this.adminModel.find().exec();
+      const notifications = users.map(user => ({
+        user: user._id,
+        type: 'Order',
+        relatedId: orderr._id,
+        message: `A new Order was Ordered: by ${order?.billing_data?.first_name}`,
+      }));
+      await this.notificationService.createNotification(notifications);
+      this.notificationGateway.sendNotificationToAll(notifications);
       this.notificationGateway.sendNewOrderToAll(myOrder);
 
 

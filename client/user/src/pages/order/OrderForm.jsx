@@ -31,8 +31,10 @@ const OrderForm = () => {
             console.log(data, "from api link somthing what ever");
             if (data.apiLink && data.payment_method === 'online') {
                 window.location.href = data.apiLink;
+                toast.success("your order was successfull")
             } else {
                 console.error("apiLink not found in the response");
+                toast.success("your order was successfull")
             }
         },
         onError: (error) => {
@@ -48,7 +50,7 @@ const OrderForm = () => {
         building: yup.string().required(translation.errBuliding),
         phone_number: yup.string().matches(/^(010|011|012|015)\d{8}$/, `${translation.invalidPhone}`)
             .required(translation.errPhone)
-            .min(10,translation.errPhoneMin )
+            .min(10, translation.errPhoneMin)
             .max(15, translation.errPhoneMax),
         email: yup.string(translation.errEmail).email().required(translation.errEmailReq),
         floor: yup.string().required(translation.errFloor),
@@ -89,7 +91,7 @@ const OrderForm = () => {
 
 
                     <div className="grid items-start gap-6 grid-cols-2">
-                        <InputsOrder type="apartment" name={translation.apartment}yub="apartment" register={register} errors={errors} />
+                        <InputsOrder type="apartment" name={translation.apartment} yub="apartment" register={register} errors={errors} />
                         <InputsOrder type="phone_number" name={translation.orderPhone} yub="phone_number" register={register} errors={errors} />
                     </div>
 
@@ -117,10 +119,10 @@ const OrderForm = () => {
                         <label>
                             <input
                                 type="radio"
-                                value="delivery"
+                                value="cash"
                                 {...register("payment_method")}
                             />
-                            Delivery
+                            Cash
                         </label>
                     </div>
 
@@ -136,7 +138,7 @@ const OrderForm = () => {
                             <FaCheckCircle className="mr-2" /> {translation.orderSuccess}
                         </div>
                     ) : (
-                       translation.orderNow
+                        translation.orderNow
                     )}
                 </button>
 

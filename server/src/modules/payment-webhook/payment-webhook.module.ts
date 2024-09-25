@@ -7,10 +7,12 @@ import { Cart, CartSchema } from 'src/core/schemas/cart.schema';
 import { Order, OrderSchema } from 'src/core/schemas/order.schema';
 import { JwtService } from '@nestjs/jwt';
 import { NotifictionsModule } from '../notifictions/notifictions.module';
+import { AdminModule } from '../admin/admin.module';
+import { Admin, AdminSchema } from 'src/core/schemas/admin.schema';
 
 @Module({
-  imports: [NotifictionsModule, HttpModule, MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }
-    , { name: Cart.name, schema: CartSchema }])],
+  imports: [AdminModule, NotifictionsModule, HttpModule, MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }
+    , { name: Cart.name, schema: CartSchema }, { name: Admin.name, schema: AdminSchema }])],
   controllers: [PaymentWebhookController],
   providers: [PaymentWebhookService, JwtService],
 })
