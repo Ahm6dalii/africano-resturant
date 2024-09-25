@@ -26,7 +26,8 @@ import { ChangeImgProfileService } from './auth/change-img-profile/change-img-pr
 import { AdminModule } from './admin/admin.module';
 import { LogModule } from './log/log.module';
 import { Log, LogSchema } from 'src/core/schemas/log.schema';
-
+import { UserDashboardController } from './auth/user-dashboard/user-dashboard.controller';
+import { UserDashboardService } from './auth/user-dashboard/user-dashboard.service';
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema },{ name: Log.name, schema: LogSchema }]),
@@ -48,7 +49,7 @@ import { Log, LogSchema } from 'src/core/schemas/log.schema';
     PaymentWebhookModule,
     AdminModule,
     LogModule,],
-    controllers: [ChangeImgProfileController,SigninController,SignupController, ConfirmEmailController, ResendOtbController, ResetPasswordController, UpdatePaswordController, UpdateInfoController],
-    providers: [ChangeImgProfileService,SigninService,SignupService,JwtService,MailService, ConfirmEmailService, ResendOtbService, ResetPasswordService, UpdatePaswordService, UpdateInfoService,CloudinaryService],
+    controllers: [UserDashboardController ,ChangeImgProfileController,SigninController,SignupController, ConfirmEmailController, ResendOtbController, ResetPasswordController, UpdatePaswordController, UpdateInfoController],
+    providers: [UserDashboardService,ChangeImgProfileService,SigninService,SignupService,JwtService,MailService, ConfirmEmailService, ResendOtbService, ResetPasswordService, UpdatePaswordService, UpdateInfoService,CloudinaryService],
 })
 export class AuthModule {}

@@ -62,8 +62,18 @@ export class PaymentWebhookService {
         this.httpService.get(`${apiUrl}/${id}`, { headers })
       );
       const { billing_data, order, amount_cents } = response.data
+      const updatedOrder=this.splitSizeFromName(order.items)
+      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items:updatedOrder, total: amount_cents } })
 
-      console.log(response.data, "what i want");
+
+      // const notifications = users.map(user => ({
+      //   user: user._id,
+      //   type: 'review_added',
+      //   relatedId: addedReview._id,
+      //   message: `A new review was added to the article: ${addedReview.name}`,
+      // }));
+      // await this.notificationService.createNotification(notifications);
+
 
       const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items: order.items, total: amount_cents } })
       const orderr = myOrder[0];
@@ -94,5 +104,19 @@ export class PaymentWebhookService {
     });
     return response.data.token;
   }
-
+  
+ splitSizeFromName  (products) {
+    return products.map(product => {
+console.log(product,'sdsdsdaasdb7b7b7b');
+      const [name, size] = product.name.split(' - ');
+      return {
+        name,   
+        size ,
+        description: product.description,
+        amount_cents: product.amount_cents,  
+        quantity: product.quantity,
+        image: product.image   
+      };
+    });
+  };
 }

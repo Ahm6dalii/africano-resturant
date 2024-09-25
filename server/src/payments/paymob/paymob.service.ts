@@ -28,8 +28,11 @@ export class PaymobService {
 
 
     const myCart = await this.cartModel.findOne({ userId: decoded.userId })
+    
+    
     // const {items:{items,size,...paymobobj}}=myCart
-
+    // console.log(myCart,'dfdffdfdfdsfdsffsdfdsaaaaaaaaaaaaaaaaaaaaaa');
+    
 
     const deliveyPrice = await this.deliveryModel.findOne()
 
@@ -77,18 +80,29 @@ export class PaymobService {
       body.redirection_url = `${body.redirection_url}/payment-webhook/?token=${token}&redirectURL=${body.redirection_url}/allOrder`
 
       let allItems = myCart.items.map(item => item)
-      allItems.forEach(item => { item.description = item.description['en'], item.name = item.name['en'] })
-      console.log(allItems);
+      // allItems.forEach(item => { item.description = item.description['en'], item.name = item.name['en'] })
+      const updatedProducts =(products)=>{
+        return products.map(product => ({
+          name: `${product?.name?.en} - ${product?.size}`,
+          description: `${product?.description?.en} `,
+          amount:Math.ceil(product.amount*100),
+          quantity: product.quantity,
+          image: product.image
+        }));
+      }
+      const paymobData=updatedProducts(allItems)
+      console.log(paymobData,'updatedProductsupdatedProducts');
 
-      allItems.forEach(item => item.amount = Math.ceil(item.amount))
-      allItems.forEach(item => item.amount *= 100)
-
+      // allItems.forEach(item => item.amount = Math.ceil(item.amount))
+      // allItems.forEach(item => item.amount *= 100)
+      // console.log(allItems,'allllllllllllllllllllllllllllllllllllllll');
+      
       const delivery = {
         "name": "delivery",
         "amount": Number(deliveyPrice.price) * 100,
         "description": "Delivery Price",
         "quantity": 1,
-        "image": "http://google.com"
+        "image": "https://res.cloudinary.com/dbifogzji/image/upload/v1727203854/Africano/u28vlatvsblmemghbdxl.png"
       }
 
       const data = {
@@ -96,7 +110,7 @@ export class PaymobService {
         "currency": "EGP",
         "expiration": 5800,
         "payment_methods": [4828775],
-        "items": [...allItems, delivery],
+        "items": [...paymobData, delivery],
         ...body,
       }
       console.log(data);
@@ -112,15 +126,15 @@ export class PaymobService {
         intention_detail.items.forEach(item => {
           item.amount /= 100;
         });
-        // const myorder=await this.orderModel.insertMany({userId:decoded.userId,intention_detail})
-        // this.removeAllCartItems(token)
+      //   // const myorder=await this.orderModel.insertMany({userId:decoded.userId,intention_detail})
+      //   // this.removeAllCartItems(token)
 
         return response.data;
       } catch (error) {
         console.error('Error creating Paymob intention:', error);
         throw error;
       }
-    }
+    
   }
 
   async removeAllCartItems(token): Promise<void> {

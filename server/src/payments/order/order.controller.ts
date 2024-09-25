@@ -6,8 +6,10 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {
   }
   @Get()
-  getAllOrder() {
-    return this.orderService.allOrder()
+  getAllOrder(@Query('search') search: string,
+  @Query('limit') limit: number = 10,
+  @Query('page') page: number = 1) {
+    return this.orderService.allOrder(search,page,limit)
   }
 
 
