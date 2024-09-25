@@ -13,19 +13,23 @@
   animation: slideDown 0.5s ease forwards ; 
 }
 
-// @keyframes slideUp{
-//   0%{
-//     opacity: 1 ; 
-//     transform: translateY(0) ; 
-// }
-//     100%{
-//     opacity: 0 ; 
-//     transform: translateY(-20px) ; 
-// }
-// }
+.food_hover {
+  position: relative;
+}
+
+.short-description {
+  display: inline;
+}
+
+.full-description {
+  display: none;
+  margin-top: 5px;
+}
+
+.food_hover:hover .full-description {
+  display: block;
+}
 
 
-// .animate-slideUp{
-//   animation: slideUp 0.5s ease forwards ; 
-// }
+
 

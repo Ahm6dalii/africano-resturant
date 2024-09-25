@@ -15,6 +15,7 @@ import { provideRouter } from '@angular/router';
 import { NotificationsComponent } from "./adminComponents/notifications/notifications.component";
 import { provideHttpClient } from '@angular/common/http';
 import { AppRoutingModule, routes } from './app-routing.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -28,16 +29,15 @@ import { AppRoutingModule, routes } from './app-routing.module';
     DashboardModule,
     ComponentsModule,
     FormsModule,
-    NotificationsComponent
+    NotificationsComponent,
+    MatDialogModule,
   ],
   providers: [
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(),
     provideAnimations(),
-
-
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
