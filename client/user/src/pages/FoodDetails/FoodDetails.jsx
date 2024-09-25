@@ -84,6 +84,11 @@ const FoodDetails = () => {
     if (isLoading) return <DetailsLoading />
     return (
         <>
+                     <h3 style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
+                     <i class="fa-solid fa-bowl-food pe-2"></i>
+             {translation.foodDetails}
+            </h3>
+
             <div className="flex items-end justify-end space-x-4 px-16" dir={language == 'en' ? 'ltl' : 'ltr'}>
                 {previousFood && (
                     <>
@@ -161,7 +166,7 @@ const FoodDetails = () => {
                         </div>
                         
                         <div className="md:flex-1 px-4">
-                            <h2 className="text-6xl font-bold text-red-900 dark:text-white mb-2">{language === 'en' ? food?.name?.en : food?.name?.ar}</h2>
+                            <h2 className="text-6xl font-bold text-orange-900 dark:text-orange-200 mb-2">{language === 'en' ? food?.name?.en : food?.name?.ar}</h2>
                             <div>
                                 <span className="font-bold text-gray-900 dark:text-white">
                                 {translation.foodDescription} </span>

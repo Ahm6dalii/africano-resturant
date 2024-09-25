@@ -75,17 +75,22 @@ const OrderList = () => {
       <Table hoverable={false}>
         <Table.Head>
 
+          <Table.HeadCell className="dark:text-white text-sm ">{translation.orderId}</Table.HeadCell>
+          <Table.HeadCell className="dark:text-white text-sm  " >{translation.orderData}</Table.HeadCell>
+          <Table.HeadCell  className="dark:text-white text-sm ">{translation.orderTime}</Table.HeadCell>
+          <Table.HeadCell className="dark:text-white text-sm ">{translation.orderItems}</Table.HeadCell>
+          <Table.HeadCell className="dark:text-white text-sm ">{translation.orderTotal}</Table.HeadCell>
+          <Table.HeadCell className="dark:text-white text-sm ">{translation.orderStatus}</Table.HeadCell>
 
-          <Table.HeadCell className="dark:text-white " >{translation.orderData}</Table.HeadCell>
-          <Table.HeadCell  className="dark:text-white ">{translation.orderTime}</Table.HeadCell>
-          <Table.HeadCell className="dark:text-white ">{translation.orderItems}</Table.HeadCell>
-          <Table.HeadCell className="dark:text-white ">{translation.orderTotal}</Table.HeadCell>
-          <Table.HeadCell className="dark:text-white ">{translation.orderId}</Table.HeadCell>
+          
+          
         </Table.Head>
         <Table.Body className=" dark:bg-slate-200">
           {orders?.map((order, index) => (
+            
             <Table.Row key={order._id || index} className="bg-white">
               {console.log(order.intention_detail)}
+              <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">{index + 1}</Table.Cell>
 
               <Table.Cell className=" dark:bg-slate-900  dark:bg-opacity-90 dark:text-white">
                 {order.createdAt
@@ -111,10 +116,9 @@ const OrderList = () => {
               </Table.Cell>
               <Table.Cell>{order.intention_detail.amount / 100}</Table.Cell>
               <Table.Cell>{order?.status}</Table.Cell>
-              <Table.Cell>{index + 1}</Table.Cell>
+              {/* <Table.Cell>{index + 1}</Table.Cell> */}
 
               <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">{order.intention_detail.total / 100}</Table.Cell>
-              <Table.Cell className=" dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">{index + 1}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

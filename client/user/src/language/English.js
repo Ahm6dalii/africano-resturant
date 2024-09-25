@@ -241,6 +241,7 @@ export const En = {
   orderData:"Date",
    orderId:"Order ID",
    noItems:"No items available",
+   orderStatus:"Status",
 
 //toast
    addedOrder:"Added To Order!",
@@ -260,10 +261,11 @@ userLoign:"User Login Successfully",
   goBack:"Go Back Home",
 
 //product details
+foodDetails:"Food Description",
 foodDescription:"Food Description:",
 price:"Price:",
 Category:"Category:",
-egp:"EGP.",
+egp:"EGP",
 
 
 

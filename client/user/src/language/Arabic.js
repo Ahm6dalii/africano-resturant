@@ -263,6 +263,7 @@ orderItems: "العناصر",
 orderTotal: "إجمالي السعر",
 orderId: "رقم الطلب",
 noItems: "لا توجد عناصر متاحة",
+orderStatus:"حالة الطلب",
 
 //toast
 addedOrder: "تمت الإضافة إلى الطلب!",
@@ -288,10 +289,11 @@ goBack: "العودة إلى الصفحة الرئيسية",
 
 
   // product details
+  foodDetails:"وصف الطعام",
   foodDescription: "وصف الطعام:",
   price: "السعر:",
   Category: "الفئة:",
-egp:"جنيه.",
+egp:"جنيه",
   relatedProducts: "منتجات ذات صلة",
   size: "الحجم:",
 

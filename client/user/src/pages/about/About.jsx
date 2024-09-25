@@ -25,7 +25,7 @@ export default function About() {
   return (
     <>
        <div className=" rounded-3xl max-w-7xl mx-auto p-12">
-             <h3 style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold  text-red-00  mb-8 text-center">
+             <h3 style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
              {translation.aboutUs}
             </h3>
             <div className='pb-6'>

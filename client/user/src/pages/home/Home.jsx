@@ -36,7 +36,7 @@ export default function Home() {
   
 
       <main className="container mx-auto  text-center">
-      <h1 style={{"fontFamily":"Marhey"}} className="text-5xl font-bold mb-4">{translation.heroAfricano}</h1>
+      <h1 style={{"fontFamily":"Marhey"}} className="text-5xl font-bold mb-4 text-orange-500 dark:text-orange-200">{translation.heroAfricano}</h1>
         <h2 style={{"fontFamily":"Oswald"}} className="text-4xl font-bold mb-4">{translation.heroDesc}</h2>
         
         <p style={{"fontFamily":" Oswald"}} className="text-xl mb-8">{translation.heroCaption}</p>
