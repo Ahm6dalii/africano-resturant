@@ -66,9 +66,8 @@ const OrderList = () => {
     setShowModal(true);
   };
 
-  if (!isLoading) {
+  if (!orders) {
     return <Loading />;
-    
   }
 
   if (orders.length === 0) {
