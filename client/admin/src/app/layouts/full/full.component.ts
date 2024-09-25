@@ -28,7 +28,7 @@ export class FullComponent {
   constructor(private breakpointObserver: BreakpointObserver,private _authService:AuthService) {
     this.userName=_authService.tokenUserInfo.getValue().username
     console.log(_authService.tokenUserInfo.getValue(),'pppppppppppppp');
-    
+
   }
 
   routerActive: string = 'activelink';
@@ -113,6 +113,11 @@ export class FullComponent {
       link: "/admins",
       icon: "list",
       menu: "Admins List",
+    },
+    {
+      link: "/logs",
+      icon: "list",
+      menu: "Admins Logs",
     },
     // {
     //   link: "/progress",

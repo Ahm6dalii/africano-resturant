@@ -8,26 +8,26 @@
         <div *ngIf="errorMessage">
           <div class="alert alert-danger py-1 mb-2 text-center" role="alert">{{ errorMessage }}</div>
         </div>
-        
+        <p-toast></p-toast>
         <mat-form-field class="me-24 fs-16" appearance="fill">
           <mat-label class="text-black">Password</mat-label>
           <input matInput type="password" id="password" name="password" formControlName="password">
         </mat-form-field>
-        
+
         <div *ngIf="changePasswordForm.get('password')?.errors && changePasswordForm.get('password')?.touched">
           <div class="form-text text-danger mt-[-20px] mb-[10px]">
             <p *ngIf="changePasswordForm.get('password')?.errors['required']" class="alert alert-danger py-1 mb-4">Required</p>
             <p *ngIf="changePasswordForm.get('password')?.errors['minlength']" class="alert alert-danger py-1 mb-4">
-              Minimum length is {{ changePasswordForm.get('password')?.errors['minlength'].required }} characters.
+              Minimum length is {{ changePasswordForm.get('password')?.errors['minlength'].required }} 6.
             </p>
           </div>
         </div>
-      
+
         <mat-form-field class="me-24 fs-16">
           <mat-label class="text-black">Re- Password</mat-label>
           <input matInput type="password" id="rePassword" name="rePassword" formControlName="rePassword">
         </mat-form-field>
-        
+
         <div *ngIf="changePasswordForm.get('rePassword')?.errors && changePasswordForm.get('rePassword')?.touched">
           <div class="form-text text-danger mt-[-20px]">
             <p *ngIf="changePasswordForm.get('rePassword')?.errors['required']" class="alert alert-danger py-1 mb-4">Required</p>
@@ -36,18 +36,17 @@
             </p>
           </div>
         </div>
-        
+
         <button type="submit" [disabled]="isLoading" class="p-2 rounded bg-orange-400 block ms-auto">
           <ng-container *ngIf="isLoading; else buttonText">
             <i class="fas fa-spin fa-spinner"></i>
           </ng-container>
-          <ng-template #buttonText>Confirm</ng-template>
+          <ng-template #buttonText>Update</ng-template>
         </button>
       </form>
-      
-      
+
+
     </div>
   </div>
   </div>
   </div>
-  

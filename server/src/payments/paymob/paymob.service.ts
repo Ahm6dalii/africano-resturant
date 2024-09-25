@@ -99,7 +99,8 @@ export class PaymobService {
         "items": [...allItems, delivery],
         ...body,
       }
-
+      console.log(data);
+      
       try {
         const response = await firstValueFrom(
           this.httpService.post(`${apiUrl}`, data, { headers })

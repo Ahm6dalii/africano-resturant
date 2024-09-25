@@ -24,10 +24,12 @@ import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service'
 import { ChangeImgProfileController } from './auth/change-img-profile/change-img-profile.controller';
 import { ChangeImgProfileService } from './auth/change-img-profile/change-img-profile.service';
 import { AdminModule } from './admin/admin.module';
+import { LogModule } from './log/log.module';
+import { Log, LogSchema } from 'src/core/schemas/log.schema';
 
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema },{ name: Log.name, schema: LogSchema }]),
     MailerModule.forRoot({
         transport: {
           host: 'smtp.gmail.com',
@@ -44,7 +46,8 @@ import { AdminModule } from './admin/admin.module';
       }),
     CartModule,
     PaymentWebhookModule,
-    AdminModule,],
+    AdminModule,
+    LogModule,],
     controllers: [ChangeImgProfileController,SigninController,SignupController, ConfirmEmailController, ResendOtbController, ResetPasswordController, UpdatePaswordController, UpdateInfoController],
     providers: [ChangeImgProfileService,SigninService,SignupService,JwtService,MailService, ConfirmEmailService, ResendOtbService, ResetPasswordService, UpdatePaswordService, UpdateInfoService,CloudinaryService],
 })
