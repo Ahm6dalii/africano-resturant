@@ -75,7 +75,6 @@ export class PaymentWebhookService {
       // await this.notificationService.createNotification(notifications);
 
 
-      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items: order.items, total: amount_cents } })
       const orderr = myOrder[0];
       const users = await this.adminModel.find().exec();
       const notifications = users.map(user => ({
