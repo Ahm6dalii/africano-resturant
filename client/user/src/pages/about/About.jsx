@@ -44,30 +44,30 @@ export default function About() {
              variants={pVariants} initial="hidden" animate="visible"
              transition={{ delay: .7, duration: 1, ease: "easeOut" }}>
                    <div>
-                             <img src={cheif} alt="Restaurant view" className="w-full h-4/5 object-cover  rounded-t-full shadow-md shadow-black-900 dark:shadow-red-300 " />
-                             <p style={{"fontFamily":" Oswald"}} className="text-3xl py-6 text-center">
-                             <span style={{"fontFamily":" Oswald"}} className="text-gray-500">{translation.masterChef}</span> {translation.chefName}</p>
+                             <img src={cheif} alt="Restaurant view" className="w-full  object-cover  rounded-t-full dark:shadow-md  dark:shadow-red-300 " />
                     </div>
                     <div>
                             <motion.div variants={pVariants} initial="hidden" animate="visible"
                                         transition={{ delay: 0.9, duration: 1, ease: "easeOut" }}>
                               <p style={{"fontFamily":" Caveat"}} className="text-red-500 text-3xl ">
-                              {translation.ourChef}                   
+                                  {translation.ourChef}                  
                               </p>
-                              <p style={{"fontFamily":" Oswald"}} className="text-3xl">
-                              a master chef with 5 years of experience
-                              </p>
-                              <p className='pt-6 pb-12'>
-                              Lorem Ipsum is simply dummy text of the printing and typeset ting industry lorem Ipsum has the industrys standard my text ever since the when an unknown printer.
+                              <p style={{"fontFamily":" Oswald"}} className="text-3xl py-6  ">
+                                  <span style={{"fontFamily":" Oswald"}} className="text-gray-400 px-2 ">
+                                    {translation.masterChef}</span> 
+                                  {translation.chefName}
+                             </p>
+                             <p style={{"fontFamily":" Oswald"}} className="text-3xl">
+                                    {translation.masterChefAd}
                               </p>
                             </motion.div>
                             <motion.div variants={pVariants} initial="hidden" animate="visible"
                                         transition={{ delay: 1.3, duration: 1, ease: "easeOut" }}>
                               <p style={{"fontFamily":" Caveat"}} className="text-red-500 text-3xl ">
-                              Our Future                  
+                                      {translation.ourFuture}                 
                               </p>
                               <p style={{"fontFamily":" Oswald"}} className="text-3xl">
-                              Looking ahead, we are excited to continue evolving our menu with new seasonal offerings, expanding our reach within the community, and creating more memorable experiences for our guests through special events and culinary innovations.
+                                     {translation.ourFutureAd} 
                               </p>
                             </motion.div>
 
@@ -77,11 +77,10 @@ export default function About() {
             </motion.div>
             <div className='pb-12'>
                         <p style={{"fontFamily":" Caveat"}} className="text-red-500 text-3xl">
-                          Why we best
+                        {translation.weBest} 
                         </p>
                         <p style={{"fontFamily":" Oswald"}} className="text-3xl">
-                        our Journey started from 2019
-                        to serve tasty steaks
+                        {translation.weBestAd} 
                         </p>
               </div>
             <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-4 place-content-stretch'
@@ -89,30 +88,30 @@ export default function About() {
                     <div className='pb-2'>
                         <img src={img1} alt="Restaurant view" className="pb-6 " />
                         <p className='text-2xl pb-3' style={{"fontFamily":" Oswald"}}>
-                        premium services
+                        {translation.premiumServices} 
                         </p>
                         <p>
-                        From personalized recommendations to exclusive tastings, our premium services ensure an unforgettable culinary journey tailored just for you.
+                        {translation.premiumServicesAd} 
                         </p>
 
                     </div>
                     <div className='pb-2'>
                        <img src={img2} alt="Restaurant view" className="pb-6 " />
                        <p className='text-2xl pb-3' style={{"fontFamily":" Oswald"}}>
-                       Free home delivery
+                       {translation.freeDelivery}
                        </p>
                        <p>
-                       Enjoy the luxury of having gourmet meals delivered straight to your doorstep, with no extra cost—savor convenience without compromise.
+                       {translation.freeDeliveryAd}
                        </p>
 
                     </div>
                     <div className='pb-2'>
                         <img src={img3} alt="Restaurant view" className="pb-6 " />
                         <p className='text-2xl pb-3' style={{"fontFamily":" Oswald"}}>
-                        Prime location
+                        {translation.PrimeLocation}
                         </p>
                         <p>
-                        Nestled in the heart of the city, our establishment offers easy access, ensuring you’re never far from the finest tastes and experiences.
+                        {translation. PrimeLocationAd}
                         </p>
 
                     </div>

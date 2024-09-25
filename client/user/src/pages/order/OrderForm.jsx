@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import InputsOrder from "./InputsOrder";
 import { FaSpinner, FaCheckCircle } from "react-icons/fa";
+import { FloatingLabel } from "flowbite-react";
 import toast from 'react-hot-toast';
 import { useState } from "react";
 const OrderForm = () => {
@@ -108,14 +109,16 @@ const OrderForm = () => {
                     <div>
                         <label>
                             <input
+                                 className="text-red-700  "
                                 type="radio"
                                 value="online"
                                 {...register("payment_method")}
                             />
                             Online Payment
                         </label>
-                        <label>
+                        <label className="px-6">
                             <input
+                                className="text-red-700  "
                                 type="radio"
                                 value="delivery"
                                 {...register("payment_method")}
@@ -126,7 +129,7 @@ const OrderForm = () => {
 
                 </div>
 
-                <button disabled={isLoading || isSuccess} className="w-full bg-[#c83f46] p-4 text-center text-white rounded-lg font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br">
+                <button disabled={isLoading || isSuccess} className="w-full  p-4 text-center bg-red-900 hover:bg-red-600  text-white rounded-lg font-bold ">
                     {isLoading ? (
                         <div className="flex items-center justify-center">
                             <FaSpinner className="animate-spin mr-2" /> {translation.orderProcess}

@@ -81,9 +81,9 @@ export default function Cart() {
             <div key={index} className="flex flex-row sm:flex-row items-center border-b border-b-black dark:border-b-white py-4">
               <img src={item.image || "https://via.placeholder.com/150"} alt={item.name.en} className="w-20 h-20 object-cover rounded-md mb-4 sm:mb-0 sm:mr-4" />
               <div className="flex-grow text-center sm:text-left">
-                <h2 className="text-sm sm:text-xl font-semibold">{item.name.en}</h2>
-                <p className="text-gray-600 text-md sm:text-xl">Size: {item.size}</p>
-                <p className="text-orange-500  sm:text-Xl text-bold">{item.amount}<span className='text-green-400 text-sm text-bold sm:text-xl ms-2'>EGP</span></p>
+                <h2 className="text-red-600 text-sm sm:text-xl font-semibold">{item.name.en}</h2>
+                <p className="text-md sm:text-xl">{translation.size} {item.size}</p>
+                <p className="sm:text-Xl text-bold">{item.amount}<span className=' text-sm text-bold sm:text-xl ms-2 pl-2'>{translation.egp}</span></p>
               </div>
               <div className="flex items-center mt-4 sm:mt-0 mx-1">
                 <Button color="light" size="sm" className='p-0' onClick={() => handleQuantityChange(item._id, item.size, item.quantity - 1)} disabled={item.quantity <= 1}>-</Button>
@@ -99,19 +99,19 @@ export default function Cart() {
         </div>
 
         <div className="lg:col-span-1 mt-8 lg:mt-0">
-          <div className="bg-gray-100 dark:bg-slate-300 shadow border p-6 rounded-lg">
+          <div className="bg-gray-100 dark:bg-black shadow border p-6 rounded-lg">
             <h2 className="text-2xl font-bold mb-4">{translation.orderSummary}</h2>
             <div className="flex justify-between mb-2">
               <span>{translation.subTotal}</span>
-              <span>{cart.totalPrice}<span className='text-green-900 ms-2'>EGP</span></span>
+              <span>{cart.totalPrice}<span className=' ms-2'>{translation.egp}</span></span>
             </div>
             <div className="flex justify-between mb-2">
               <span>{translation.delivery}</span>
-              <span>15.00<span className='text-green-900 ms-2'>EGP</span></span>
+              <span>15.00<span className=' ms-2'>{translation.egp}</span></span>
             </div>
             <div className="flex justify-between font-bold text-lg mt-4">
               <span>{translation.total}</span>
-              <span>{cart.totalPrice + 15}<span className='text-green-900 ms-2'>EGP</span></span>
+              <span>{cart.totalPrice + 15}<span className=' ms-2'>{translation.egp}</span></span>
             </div>
             <Link to="/order" className="block mt-6">
               <Button color="dark" className="w-full "><span className='flex items-center gap-2'><i class="fa-regular fa-money-bill-1 "></i>{translation.processOrder}</span></Button>
@@ -120,11 +120,11 @@ export default function Cart() {
         </div>
       </div>
 
-      <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+      <Modal  show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+        <Modal.Header  />
+        <Modal.Body >
+          <div className="text-center ">
+            <h3 className="mb-5 text-lg font-normal dark:text-white">
               {translation.removeItem} <span className="font-bold text-red-700">{currentItem?.name.en}</span>?
             </h3>
             <div className="flex justify-center gap-4">
