@@ -78,6 +78,7 @@ export class AuthService  {
     });
     return this._http.get(`${this.apiLink}/logs`, { headers });
   }
+  
   deleteAdmin(id: any): Observable<any> {
     const token = this.userToken.getValue();
 
