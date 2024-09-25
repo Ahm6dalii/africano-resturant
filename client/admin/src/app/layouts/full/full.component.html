@@ -7,7 +7,7 @@
     <div class="p-16">
       <div class="mb-16">
         <a routerLink="/home" class="d-flex align-items-center">
-          <img src="assets/logo/logo.li.png" alt=""/>
+          <img src="assets/logo/logo.li.png" alt="" />
         </a>
       </div>
       <div class="pt-8">
@@ -35,28 +35,29 @@
         *ngIf="isHandset$ | async">
         <i-feather name="menu" class="text-light-muted feather-base mt-n3"></i-feather>
       </button>
-     
-      <app-notifications />
-      <div class="ms-auto">
+
+      <div class="ms-auto d-flex align-items-center">
+
+        <app-notifications class="me-4" />
+
         <button mat-button class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted d-flex align-items-center"
           [matMenuTriggerFor]="menu">
           <div class="d-flex align-items-center">
             <span class="fw-light ms-8 text-secondary">Hi,</span>
-            <span class="fw-bold ms-8">{{userName}}</span>
+            <span class="fw-bold ms-8">{{ userName }}</span>
             <i-feather name="chevron-down" class="feather-base"></i-feather>
           </div>
         </button>
         <mat-menu #menu="matMenu" class="profile-dropdown">
-          <div class="p-16 mb-4">         
+          <div class="p-16 mb-4">
             <button mat-menu-item class="fs-16" routerLink="/change-pass">Change Password</button>
           </div>
 
-          <hr>
+          <hr />
 
           <div class="p-16">
-            <button mat-flat-button color="accent" (click)=" logOut()" class="w-100 text-white">Logout</button>
+            <button mat-flat-button color="accent" (click)="logOut()" class="w-100 text-white">Logout</button>
           </div>
-
         </mat-menu>
       </div>
     </mat-toolbar>

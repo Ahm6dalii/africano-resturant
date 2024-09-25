@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiLinkService } from './api-link.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +10,22 @@ import { ApiLinkService } from './api-link.service';
 export class NotificationsService {
   private notifications$ = new BehaviorSubject<any[]>([]);
 
-  userId: any = '66eb4c46d8ebd674d6f317f6';
-  private apiUrl = 'http://localhost:3000';
+  userId: any;
+  private apiUrl = '';
 
-  constructor(private _apiLink:ApiLinkService) {
-    this.apiUrl= this._apiLink.apiLink.getValue();
+  constructor(private _apiLink: ApiLinkService, private _authService: AuthService) {
+    this.apiUrl = this._apiLink.apiLink.getValue();
+    this._authService.tokenUserId.subscribe({
+      next: (res) => {
+        this.userId = res
+      }
+    })
 
-   }
+  }
 
   _httpClient = inject(HttpClient);
 
   fetchNotifications(): Observable<any> {
-
     return this._httpClient.get<any[]>(`${this.apiUrl}/notifications/${this.userId}`);
   }
 
