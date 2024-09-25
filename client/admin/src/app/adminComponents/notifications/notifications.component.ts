@@ -13,20 +13,22 @@ import { SocketIoService } from 'src/app/services/socket-io.service';
 export class NotificationsComponent implements OnInit, OnDestroy {
   dropdownOpen = false;
   notifications: any[] = [];
-  constructor(private _notificationService: NotificationsService, private _socketIoService: SocketIoService) { }
+  constructor(private _notificationService: NotificationsService, private _socketIoService: SocketIoService) {
+
+  }
 
   ngOnInit() {
-    this.getAllNotifications();
     this._socketIoService.on('notifications', (notification) => {
-      console.log(`Received notification: ${notification}`);
-      this.notifications.push(notification)
+      console.log('Received notification:', notification);
+      this.notifications.unshift(notification[0])
     })
-    this._socketIoService.on('userNotification', (notifications) => {
-      console.log(`Received userNotification: ${notifications}`);
+    this._socketIoService.on('adminNotification', (notifications) => {
+      console.log('Received userNotification:', notifications);
       if (!notifications.read) {
-        this.notifications.push(notifications)
+        this.notifications.unshift(notifications[0])
       }
     })
+    this.getAllNotifications();
   }
 
   toggleDropdown() {
@@ -36,9 +38,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     this._notificationService.fetchNotifications().subscribe({
       next: (res: any) => {
         console.log(res, "res");
-
         this.notifications = res.filter((noti: any) => noti.read === false)
-
       },
       error: (err) => {
         console.error(err);

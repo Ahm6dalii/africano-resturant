@@ -6,9 +6,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/core/gaurds/jwt.strategy';
+import { LogService } from '../log/log.service';
+import { Log, LogSchema } from 'src/core/schemas/log.schema';
 
 @Module({
-  imports:[MongooseModule.forFeature([{ name: Admin.name, schema: AdminSchema }]),
+  imports:[MongooseModule.forFeature([{ name: Admin.name, schema: AdminSchema },{ name: Log.name, schema: LogSchema },]),
   PassportModule.register({ defaultStrategy: 'jwt' }),
   JwtModule.register({
     secret: 'adax', 
@@ -16,6 +18,6 @@ import { JwtStrategy } from 'src/core/gaurds/jwt.strategy';
   }),
 ],
   controllers: [AdminController],
-  providers: [AdminService,JwtService,JwtStrategy],
+  providers: [AdminService,JwtService,JwtStrategy,LogService],
 })
 export class AdminModule {}

@@ -27,8 +27,9 @@ export class Order {
   })
   status: OrderStatus;
 
-  // @Prop({ type: String, enum: ['online', 'delivery'], required: true })
-  // payment_method: string;
+
+  @Prop({ type: String, enum: ['online', 'cash'], default: 'online' })
+  payment_method: string;
 
 }
 
