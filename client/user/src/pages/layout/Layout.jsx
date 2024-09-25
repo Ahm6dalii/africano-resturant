@@ -7,7 +7,7 @@ import style from './layout.module.css'
 import { Toaster } from 'react-hot-toast';
 import LoadingScreen from '../../components/loadingScreen/LoadingScreen';
 
-export default function LayOut() {
+export default function () {
   const { language } = useSelector(state => state.lang)
   const { mode } = useSelector(state => state.mode)
 

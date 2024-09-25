@@ -22,7 +22,7 @@ export default function CatogeryTab() {
       }
     
 
-
+ 
 
       useEffect(() => {
         getAllFood();

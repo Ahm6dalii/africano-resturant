@@ -16,8 +16,6 @@ const useCart = () => {
             const response = await axios(`${api}/cart/userCart`, { headers })
     
             return response?.data
-        },{
-            enabled: !user
         })
     
     const cart = data
