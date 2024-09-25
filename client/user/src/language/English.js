@@ -212,6 +212,8 @@ export const En = {
   orderSuccess:"Order Successful!",
   orderProcess:"Processing...",
   orderFirsetName:"First Name",
+  orderFullName:"Full Name",
+  
   orderLastName:"Last Name",
   apartment:"Apartment",
   orderPhone:"Phone Number",
@@ -219,7 +221,7 @@ export const En = {
   street:"Street",
   floor:"Floor",
   errApartment:"Apartment is required",
-  errNameF:"First name is required",
+  errNameF:"Name is required",
   errNameL:"Last name is required",
   errStreet:"Street is required",
   errBuliding:"Building is required",
@@ -233,8 +235,8 @@ export const En = {
   num:"No",
   orderMethod:"Order Method",
   orderStatus:"Order Status",
-
-
+  onlinePayment:"Online Payment",
+  paymentMethod:"Payment Method",
   
   //orderList
   noOrder:"No orders found",
