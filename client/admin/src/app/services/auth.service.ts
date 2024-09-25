@@ -69,6 +69,15 @@ export class AuthService  {
     });
     return this._http.get(`${this.apiLink}/admin/all`, { headers });
   }
+  getAllLogs(): Observable<any> {
+    const token = this.userToken.getValue();
+      console.log(this.apiLink,'this.apiLink');
+
+    const headers = new HttpHeaders({
+      'token':token,
+    });
+    return this._http.get(`${this.apiLink}/logs`, { headers });
+  }
   deleteAdmin(id: any): Observable<any> {
     const token = this.userToken.getValue();
 

@@ -28,6 +28,7 @@ import { AdminListComponent } from './pages/view-admins/view-admins.component';
 import { authGuard } from './gaurd/auth.guard';
 import { ChangePassComponent } from './pages/change-pass/change-pass.component';
 import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
+import { LogsComponent } from './pages/logs/logs.component';
 
 
 
@@ -58,6 +59,7 @@ export const routes: Routes = [
       { path: "orders", component: OrdersComponent },
       { path: 'create', component: CreateAdminComponent},
       { path: 'admins', component: AdminListComponent},
+      { path: 'logs', component: LogsComponent},
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },
       { path:'change-pass', component: ChangePassComponent },

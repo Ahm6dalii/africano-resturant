@@ -16,8 +16,9 @@ export class AdminController {
   @Post('create')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @SetMetadata('permissions', ['createAdmin'])
-  createAdmin(@Body() createAdminDto: CreateAdminDto) {
-    return this.adminService.createAdmin(createAdminDto);
+  createAdmin(@Req() req:any, @Body() createAdminDto: CreateAdminDto) {
+    const adminId = req.user.userId;  // Extract the adminId from the request
+    return this.adminService.createAdmin(createAdminDto, adminId);
   }
 
   @Get('all')
@@ -30,24 +31,26 @@ export class AdminController {
   @Delete('delete/:id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @SetMetadata('permissions', ['deleteAdmin'])  
-  deleteAdmin(@Param('id') id: string) {
-    return this.adminService.deleteAdmin(id);
+  deleteAdmin(@Req() req, @Param('id') id: string) {
+    const adminId = req.user.userId;  // Extract the adminId from the request
+    return this.adminService.deleteAdmin(id, adminId);
   }
  
   @Patch('update/:id')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @SetMetadata('permissions', ['updateAdmin'])  
-  updateAdmin(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-    return this.adminService.updateAdmin(id, updateAdminDto);
+  updateAdmin(@Req() req, @Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
+    const adminId = req.user.userId;  // Extract the adminId from the request
+    return this.adminService.updateAdmin(id, updateAdminDto, adminId);
   }
 @Patch('update-pass')
 @UseGuards(JwtAuthGuard)
 updateAdminPass(@Req() req, @Body() body: { password: string }) {
   const userId = req.user.userId;  
-  console.log(userId);
-  console.log(req.user);
+  // console.log(userId);
+  // console.log(req.user);
   const { password } = body;   
 
-  return this.adminService.updateAdminPass(userId, password);  // Pass the user ID and password to the service
+  return this.adminService.updateAdminPass(userId, password);  
 }
 }
