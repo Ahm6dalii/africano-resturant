@@ -213,6 +213,12 @@ export const En = {
   errEmail:'Invalid email address',
   errEmailReq:"Email is required",
   errFloor:"Floor is required",
+
+  num:"No",
+  orderMethod:"Order Method",
+  orderStatus:"Order Status",
+
+
   
   //orderList
   noOrder:"No orders found",
