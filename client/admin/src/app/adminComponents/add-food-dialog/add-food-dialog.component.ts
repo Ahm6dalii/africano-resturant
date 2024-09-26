@@ -2,17 +2,24 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl } from '@angular/forms';
 import { NgFor, CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-food-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, CommonModule],
+  imports: [ MatIconModule, MatButtonModule,MatSelectModule,MatInputModule, MatCardModule,MatFormFieldModule,ReactiveFormsModule, NgFor, CommonModule],
   templateUrl: './add-food-dialog.component.html',
   styleUrl: './add-food-dialog.component.scss',
 })
 export class AddFoodDialogComponent implements OnInit {
   foodForm: FormGroup;
   sizeOptions = ['S', 'M', 'L', 'R'];
+  selectedFile: File | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<AddFoodDialogComponent>,
@@ -59,6 +66,8 @@ export class AddFoodDialogComponent implements OnInit {
   onFileChange(event: any) {
     const file = event.target.files[0];
     this.foodForm.patchValue({ file: file });
+    this.selectedFile=file
+
   }
 
   onSubmit() {
