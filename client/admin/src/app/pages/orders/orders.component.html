@@ -41,6 +41,7 @@
 
 
 
+
   <div class="max-w-7xl mx-auto">
     <mat-card class="shadow-lg rounded-lg overflow-hidden">
       <mat-card-content class="p-0">
@@ -60,6 +61,7 @@
       </mat-card-content>
     </mat-card>
   </div>
+</div>
 
   <ng-template #orderTable>
     <div *ngIf="orders.length === 0; else orderList">
@@ -139,120 +141,68 @@
               </td>
             </tr>
 
-            <div class="receipt absolute top-[-9999px]" id="order-{{order._id}}">
-              <div class="receipt-header">
-                <div class="flex justify-center items-center">
-                  <img src="assets/logo/logo.li.png" alt="" class="size-40" />
-                </div>
-                <h1 class="text-lg font-bold">Africano Restaurant</h1>
-                <p>{{ order?.billing_data?.floor }}, {{ order?.billing_data?.apartment }}</p>
-                <p>{{ order?.billing_data?.street }}, {{ order?.billing_data?.building }}</p>
-                <p>{{ order?.billing_data?.phone_number }}</p>
-              </div>
-              <div class="receipt-order">
-                <h2>ORDER: {{ i +1 }}</h2>
-                <h3> {{ order?.payment_method }}</h3>
-                <p>Customer: {{ order?.billing_data?.first_name }} {{ order?.billing_data?.last_name }}</p>
-                <p>{{ order?.createdAt | date:'medium' }}</p>
-              </div>
-              <div class="receipt-items">
-                <table>
-                  <ng-container *ngIf="order?.intention_detail?.items?.length > 0">
-                    <tr *ngFor="let item of order.intention_detail.items">
-                      @if (order?.payment_method === 'online') {
-                      <td class="description">{{ item.quantity }} x {{ item.name }}</td>
-                      } @else {
-                      <td class="description">{{ item.quantity }} x {{ item.name.en }}</td>
-                      }
-                      @if (order?.payment_method === 'online') {
-                      <td class="price">{{ item.amount_cents.toFixed(2) / 100 }} LE</td>
-                      }@else {
-                      <td class="price">{{ item.amount.toFixed(0) }} LE</td>
-                      }
-                    </tr>
-                  </ng-container>
-                  <tr>
-                    <td class="">Delvriey</td>
-                    <td class="price">$15</td>
-                  </tr>
-                </table>
-              </div>
-              @if (order?.payment_method === 'online') {
-              <div class="receipt-total">
-                Total: {{ order?.intention_detail?.total.toFixed(2) / 100 }} LE
-              </div>
-              }
-              @else{
-              <div class="receipt-total">
-                Total: {{ order?.intention_detail?.total.toFixed(0)}} LE
-              </div>
-              }
 
-            </div>
-            <tr *ngIf="expandedRows[order._id] === 'user'">
-              <td colspan="9" class="p-0">
-                <div class="bg-gray-100 p-4 ">
-                  <h3 class="text-lg font-semibold mb-2 text-center text-teal-700">User Details</h3>
-                  <p-table [value]="[order?.billing_data]" styleClass="custom-table">
-                    <ng-template pTemplate="header">
-            <tr class="bg-teal-600 text-white">
-              <th class="py-2 px-3 text-left">Email</th>
-              <th class="py-2 px-3 text-left">Street</th>
-              <th class="py-2 px-3 text-left">Building</th>
-              <th class="py-2 px-3 text-left">Floor</th>
-              <th class="py-2 px-3 text-left">Apartment</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-user>
-            <tr>
-              <td class="py-2 px-3">{{ user?.email }}</td>
-              <td class="py-2 px-3">{{ user?.street }}</td>
-              <td class="py-2 px-3">{{ user?.building }}</td>
-              <td class="py-2 px-3">{{ user?.floor }}</td>
-              <td class="py-2 px-3">{{ user?.apartment }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-      </td>
-      </tr>
+            <td [ngClass]="{
+              'bg-green-500 text-green-800': order?.payment_method === 'online',
+              'bg-orange-500 text-orange-800': order?.payment_method === 'delivery'
+            }" class="p-2 rounded-2xl">
+              {{ order?.payment_method }}
+            </td>
+          </tr>
 
-      <tr *ngIf="expandedRows[order._id] === 'order'">
-        <td colspan="9" class="p-0">
-          <div class="bg-gray-100 p-4">
-            <h3 class="text-lg font-semibold mb-2 text-teal-700 text-center">Order Details</h3>
-            <p-table [value]="order?.intention_detail?.items" styleClass="custom-table">
-              <ng-template pTemplate="header">
-      <tr class="bg-teal-600 text-white">
-        <th class="py-2 px-3 text-left">Food Item</th>
-        <th class="py-2 px-3 text-center">Size</th>
-        <th class="py-2 px-3 text-center">Quantity</th>
-        <th class="py-2 px-3 text-right">Amount</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item>
-      <tr>
-        @if (order?.payment_method === 'online') {
-        <td class="py-2 px-3">{{ item?.name }}</td>
-        }@else {
-        <td class="py-2 px-3">{{ item?.name?.en }}</td>
-        }
-        <td class="py-2 px-3 text-center">{{ item?.size }}</td>
-        <td class="py-2 px-3 text-center">{{ item?.quantity }}</td>
-        @if (order?.payment_method === 'online') {
-        <td class="py-2 px-3 text-right">{{ item?.amount_cents / 100 }} LE</td>
-        }@else {
-        <td class="py-2 px-3 text-right">{{ item?.amount }} LE</td>
-        }
-      </tr>
-    </ng-template>
-    </p-table>
-</div>
-</td>
-</tr>
+          <tr *ngIf="expandedRows[order._id] === 'user'">
+            <td colspan="8" class="p-0">
+              <div class="bg-gray-100 p-4">
+                <h3 class="text-lg font-semibold mb-2 text-teal-700">User Details</h3>
+                <p-table [value]="[order?.billing_data]" styleClass="custom-table">
+                  <ng-template pTemplate="header">
+          <tr class="bg-teal-600 text-white">
+            <th class="py-2 px-3 text-left">Email</th>
+            <th class="py-2 px-3 text-left">Street</th>
+            <th class="py-2 px-3 text-left">Building</th>
+            <th class="py-2 px-3 text-left">Floor</th>
+            <th class="py-2 px-3 text-left">Apartment</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td class="py-2 px-3">{{ user?.email }}</td>
+            <td class="py-2 px-3">{{ user?.street }}</td>
+            <td class="py-2 px-3">{{ user?.building }}</td>
+            <td class="py-2 px-3">{{ user?.floor }}</td>
+            <td class="py-2 px-3">{{ user?.apartment }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    </td>
+    </tr>
+
+    <tr *ngIf="expandedRows[order._id] === 'order'">
+      <td colspan="8" class="p-0">
+        <div class="bg-gray-100 p-4">
+          <h3 class="text-lg font-semibold mb-2 text-teal-700">Order Details</h3>
+          <p-table [value]="order?.intention_detail?.items" styleClass="custom-table">
+            <ng-template pTemplate="header">
+    <tr class="bg-teal-600 text-white">
+      <th class="py-2 px-3 text-left">Food Item</th>
+      <th class="py-2 px-3 text-center">Quantity</th>
+      <th class="py-2 px-3 text-right">Amount</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td class="py-2 px-3">{{ item?.name }}</td>
+      <td class="py-2 px-3 text-center">{{ item?.quantity }}</td>
+      <td class="py-2 px-3 text-right">{{ item?.amount_cents / 100 | currency:'USD' }}</td>
+    </tr>
+  </ng-template>
+  </p-table>
+  </div>
+  </td>
+  </tr>
 </ng-template>
 </p-table>
 </div>
 </ng-template>
 </ng-template>
-</div>

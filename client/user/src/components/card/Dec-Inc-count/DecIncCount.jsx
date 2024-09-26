@@ -12,7 +12,7 @@ export default function DecIncCount({decreaseQuantity,increaseQuantity,quantity}
               </button>
 
               {/* Quantity Display */}
-              <span className="text-xl font-bold">{quantity}</span>
+              <span className="text-xl dark:text-white font-bold">{quantity}</span>
 
               {/* Increase Button */}
               <button

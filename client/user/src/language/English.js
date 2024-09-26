@@ -45,7 +45,7 @@ export const En = {
   myOrders:"My Order",
 
   // Food Card
-  confirm: 'Confirm',
+  confirm: 'Add to cart',
   order: 'Order',
   selectSize: 'Select Size',
   userOrders: "User Orders",
@@ -160,7 +160,23 @@ export const En = {
   masterChef:"master chef",
   chefName:"Abdo Tarek ",
   ourChef:"Our chef",
-  
+  masterChefAd:"a master chef with 5 years of experience",
+  ourFuture:"Our Future ",
+  ourFutureAd:"Looking ahead, we are excited to continue evolving our menu with new seasonal offerings, expanding our reach within the community, and creating more memorable experiences for our guests through special events and culinary innovations.",
+  weBest:"Why we best",
+  weBestAd:" Our journey began in 2022 to provide the finest types of pizza and pasta",
+  premiumServices:"Premium Services",
+  premiumServicesAd:"From personalized recommendations to exclusive tastings, our premium services ensure an unforgettable culinary journey tailored just for you.",
+  freeDelivery:"Free Home Delivery",
+  freeDeliveryAd:"Enjoy the luxury of having gourmet meals delivered straight to your doorstep, with no extra cost—savor convenience without compromise.",
+  PrimeLocation:"Prime Location",
+  PrimeLocationAd:"Nestled in the heart of Ras Ghareb, our establishment offers easy access, ensuring you’re never far from the finest tastes and experiences.",
+
+
+
+
+
+
 
   //Cart
   loading:"Loading...",
@@ -171,7 +187,7 @@ export const En = {
   subTotal:"Subtotal",
   delivery:"Delivery Charge",
   total:"Total",
-  removeItem:"Are you sure you want to remove?",
+  removeItem:"Are you sure you want to remove",
   confirmRemove:"Yes, I'm sure",
   cancelRemove:"No, cancel",
   removeOrder:"Are you sure you want to remove the entire order?",
@@ -196,6 +212,8 @@ export const En = {
   orderSuccess:"Order Successful!",
   orderProcess:"Processing...",
   orderFirsetName:"First Name",
+  orderFullName:"Full Name",
+  
   orderLastName:"Last Name",
   apartment:"Apartment",
   orderPhone:"Phone Number",
@@ -203,7 +221,7 @@ export const En = {
   street:"Street",
   floor:"Floor",
   errApartment:"Apartment is required",
-  errNameF:"First name is required",
+  errNameF:"Name is required",
   errNameL:"Last name is required",
   errStreet:"Street is required",
   errBuliding:"Building is required",
@@ -213,6 +231,12 @@ export const En = {
   errEmail:'Invalid email address',
   errEmailReq:"Email is required",
   errFloor:"Floor is required",
+
+  num:"No",
+  orderMethod:"Order Method",
+  orderStatus:"Order Status",
+  onlinePayment:"Online Payment",
+  paymentMethod:"Payment Method",
   
   //orderList
   noOrder:"No orders found",
@@ -225,6 +249,7 @@ export const En = {
   orderData:"Date",
    orderId:"Order ID",
    noItems:"No items available",
+   orderStatus:"Status",
 
 //toast
    addedOrder:"Added To Order!",
@@ -243,6 +268,21 @@ userLoign:"User Login Successfully",
   notFound:"The page you're looking for doesn't exist or has been moved.",
   goBack:"Go Back Home",
 
+//product details
+foodDetails:"Food Description",
+foodDescription:"Food Description:",
+price:"Price:",
+Category:"Category:",
+egp:"EGP",
+
+
+
+relatedProducts:"Related Products",
+size:"Size:",
+
+
+customerReviews:"Our customer reviews",
+yourReview:"Your Review",
 
 
 

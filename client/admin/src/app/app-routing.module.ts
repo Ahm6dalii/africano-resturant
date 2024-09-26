@@ -30,6 +30,7 @@ import { ChangePassComponent } from './pages/change-pass/change-pass.component';
 import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
 import { DeliveryComponent } from './pages/delivery/delivery.component';
 import { LogsComponent } from './pages/logs/logs.component';
+import { UserListComponent } from './pages/user-list/user-list.component';
 
 
 
@@ -60,6 +61,7 @@ export const routes: Routes = [
       { path: "orders", component: OrdersComponent },
       { path: 'create', component: CreateAdminComponent},
       { path: 'admins', component: AdminListComponent},
+      { path: 'users', component:UserListComponent},
       { path: 'logs', component: LogsComponent},
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },

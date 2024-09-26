@@ -18,8 +18,14 @@ export class CategoryService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  createCategory(category: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, category);
+  createCategory(categoryData: any): Observable<any> {
+
+    const formData = new FormData();
+
+    formData.append('name', categoryData.name);
+    formData.append('description', categoryData.description);
+    formData.append('file', categoryData.image); 
+    return this.http.post(this.apiUrl, formData);
   }
 
   updateCategory(id: string, category: any): Observable<any> {

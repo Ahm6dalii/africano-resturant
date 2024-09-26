@@ -54,7 +54,7 @@ export class AdminService {
     const skip = (page - 1) * limit;
     
     const searchCondition = search
-      ? { name: { $regex: search, $options: 'i' } } 
+      ? { username: { $regex: search, $options: 'i' } } 
       : {}; 
     const allAdmin= await this.adminModel.find(searchCondition)
         .skip(skip)

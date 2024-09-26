@@ -33,7 +33,9 @@ export class FoodController {
     @Body() foodDto: any,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    console.log(foodDto , "This is ay7gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     return this.foodsService.create(foodDto, file);
+
   }
 
   @Get()

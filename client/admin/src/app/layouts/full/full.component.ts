@@ -34,11 +34,11 @@ export class FullComponent {
   routerActive: string = 'activelink';
 
   sidebarMenu: sidebarMenu[] = [
-    {
-      link: '/home',
-      icon: 'home',
-      menu: 'Dashboard',
-    },
+    // {
+    //   link: '/home',
+    //   icon: 'home',
+    //   menu: 'Dashboard',
+    // },
     {
       link: '/foods',
       icon: 'list',
@@ -118,6 +118,11 @@ export class FullComponent {
       link: "/admins",
       icon: "list",
       menu: "Admins List",
+    },
+    {
+      link: "/users",
+      icon: "list",
+      menu: "Users List",
     },
     {
       link: "/logs",

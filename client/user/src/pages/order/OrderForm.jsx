@@ -1,32 +1,83 @@
-import axios from "axios";
-import { useMutation, useQuery } from "react-query";
+import React from "react";
+import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
-import InputsOrder from "./InputsOrder";
 import { FaSpinner, FaCheckCircle } from "react-icons/fa";
-import toast from 'react-hot-toast';
-import { useState } from "react";
-const OrderForm = () => {
-    const api = useSelector(state => state.apiLink.link);
-    const { user, userInfo } = useSelector((state) => state.auth);
-    const { translation } = useSelector(state => state.lang)
-    const { mutate: orderCheckOut, error, isSuccess, isLoading } = useMutation('order', async ({ billing_data, payment_method }) => {
-        console.log(payment_method, "payment_method");
+import axios from "axios";
 
-        const headers = {
-            token: `${user}`,
-        }
-        const dataToSend = {
-            redirection_url: payment_method === 'online' ? "http://localhost:5173/userOrders" : undefined,
-            billing_data: billing_data,
-            payment_method: payment_method
-        }
-        const response = await axios.post(`${api}/paymob`, dataToSend, { headers })
-        console.log(response, "response");
-        return response?.data
-    }, {
+const InputsOrder = ({ type, name, yub, register, errors }) => (
+  <div className="mb-4">
+    <label htmlFor={yub} className="block dark:text-white  text-sm font-medium text-gray-700 mb-1">
+      {name}
+    </label>
+    <input
+      type={type}
+      id={yub}
+      {...register(yub)}
+      className={`w-full px-3 py-2 border dark:text-black ${
+        errors[yub] ? 'border-red-500' : 'border-gray-300'
+      } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent`}
+    />
+    {errors[yub] && (
+      <p className="mt-1 text-xs text-red-500">{errors[yub].message}</p>
+    )}
+  </div>
+);
+
+const OrderForm = () => {
+  const api = useSelector(state => state.apiLink.link);
+  const { user, userInfo } = useSelector((state) => state.auth);
+  const { translation } = useSelector(state => state.lang);
+
+  const schema = yup.object().shape({
+    apartment: yup.string().required(translation.errApartment),
+    first_name: yup.string().required(translation.errNameF),
+    last_name: yup.string().required(translation.errNameL),
+    street: yup.string().required(translation.errStreet),
+    building: yup.string().required(translation.errBuliding),
+    phone_number: yup.string().matches(/^(010|011|012|015)\d{8}$/, translation.invalidPhone)
+      .required(translation.errPhone)
+      .min(10, translation.errPhoneMin)
+      .max(15, translation.errPhoneMax),
+    email: yup.string().email(translation.errEmail).required(translation.errEmailReq),
+    floor: yup.string().required(translation.errFloor),
+  });
+
+  const fullName = userInfo.name.trim().split(" ");
+
+  const firstName = fullName[0];
+  const lastName = fullName.slice(1).join(" ");
+
+  const { register, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({
+      resolver: yupResolver(schema),
+      defaultValues: {
+          country: "Egypt",
+          state: "Red Sea",
+          city: "Red Sea",
+          phone_number: userInfo?.phone,
+          email: userInfo?.email,
+          first_name: firstName,
+          last_name: lastName,
+          payment_method: "online",
+      }
+  });
+
+  const { mutate: orderCheckOut, error, isSuccess, isLoading } = useMutation(
+    'order',
+    async ({ billing_data, payment_method }) => {
+      const headers = { token: `${user}` };
+      const dataToSend = {
+        redirection_url: payment_method === 'online' ? "http://localhost:5173/userOrders" : undefined,
+        billing_data: billing_data,
+        payment_method: payment_method
+      };
+      console.log(dataToSend)
+      const response = await axios.post(`${api}/paymob`, dataToSend, { headers });
+      return response?.data;
+    },
+    {
         onSuccess: (data, payment_method) => {
             console.log(payment_method.payment_method
                 , "from api link somthing what ever");
@@ -34,125 +85,91 @@ const OrderForm = () => {
                 window.location.href = data.apiLink;
                 toast.success("your order was successfull")
             } else {
-                console.error("apiLink not found in the response");
                 toast.success("your order was successfull")
             }
         },
         onError: (error) => {
             console.error("Error during checkout:", error);
         }
-    })
+    }
+  );
 
-    const schema = yup.object().shape({
-        apartment: yup.string().required(translation.errApartment),
-        first_name: yup.string().required(translation.errNameF),
-        last_name: yup.string().required(translation.errNameL),
-        street: yup.string().required(translation.errStreet),
-        building: yup.string().required(translation.errBuliding),
-        phone_number: yup.string().matches(/^(010|011|012|015)\d{8}$/, `${translation.invalidPhone}`)
-            .required(translation.errPhone)
-            .min(10, translation.errPhoneMin)
-            .max(15, translation.errPhoneMax),
-        email: yup.string(translation.errEmail).email().required(translation.errEmailReq),
-        floor: yup.string().required(translation.errFloor),
-    });
-    const fullName = userInfo.name.trim().split(" ");
+  const submitTheForm = (data) => {
+    orderCheckOut({ billing_data: data, payment_method: data.payment_method });
+    reset();
+  };
 
-    const firstName = fullName[0];
-    const lastName = fullName.slice(1).join(" ");
+  return (
+    <form onSubmit={handleSubmit(submitTheForm)} className="bg-transparent   shadow-md rounded-lg p-6  max-w-2xl mx-auto">
+      <h2 className="text-2xl font-bold mb-6 text-center text-red-800 ">Order Details</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <InputsOrder type="text" name={translation.orderFirsetName} yub="first_name" register={register} errors={errors} />
+        <InputsOrder type="text" name={translation.orderLastName} yub="last_name" register={register} errors={errors} />
+      </div>
 
-    const { register, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({
-        resolver: yupResolver(schema),
-        defaultValues: {
-            country: "Egypt",
-            state: "Red Sea",
-            city: "Red Sea",
-            phone_number: userInfo?.phone,
-            email: userInfo?.email,
-            first_name: firstName,
-            last_name: lastName,
-            payment_method: "online",
-        }
-    });
-    setValue("country", "Egypt");
-    setValue("state", "Red Sea");
-    setValue("city", "Red Sea");
-    const submitTheForm = (data) => {
-        console.log(data);
-        const paymentMethod = data.payment_method;
-        orderCheckOut({ billing_data: data, payment_method: paymentMethod });
-        reset()
-    };
+      <InputsOrder type="email" name={translation.email} yub="email" register={register} errors={errors} />
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <InputsOrder type="text" name={translation.apartment} yub="apartment" register={register} errors={errors} />
+        <InputsOrder type="tel" name={translation.orderPhone} yub="phone_number" register={register} errors={errors} />
+      </div>
 
-    return (
-        <>
-            <form onSubmit={handleSubmit(submitTheForm)} className="p-4 md:p-6 lg:p-8">
-                <div className="grid gap-6 my-6 pt-10">
-                    <div className="grid items-start gap-6 grid-cols-2 w-full md:w-full ">
-                        <InputsOrder type="first_name" name={translation.orderFirsetName} yub="first_name" register={register} errors={errors} />
-                        <InputsOrder type="last_name" name={translation.orderLastName} yub="last_name" register={register} errors={errors} />
-                    </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <InputsOrder type="text" name={translation.buliding} yub="building" register={register} errors={errors} />
+        <InputsOrder type="text" name={translation.street} yub="street" register={register} errors={errors} />
+        <InputsOrder type="text" name={translation.floor} yub="floor" register={register} errors={errors} />
+      </div>
 
-                    <InputsOrder type="email" name={translation.email} yub="email" register={register} errors={errors} />
+      <input type="hidden" value="Egypt" {...register('country')} />
+      <input type="hidden" value="Red Sea" {...register('state')} />
+      <input type="hidden" value="Red Sea" {...register('city')} />
 
+      <div className="mt-6">
+        <p className="font-medium mb-2">{translation.paymentMethod}</p>
+        <div className="flex space-x-4">
+          <label className="inline-flex items-center">
+            <input
+              type="radio"
+              value="online"
+              {...register("payment_method")}
+              className="form-radio text-red-600"
+            />
+            <span className="ml-2 p-1 ms-1"> {translation.onlinePayment} </span>
+          </label>
+          <label className="inline-flex items-center">
+            <input
+              type="radio"
+              value="delivery"
+              {...register("payment_method")}
+              className="form-radio text-red-600"
+            />
+            <span className="ml-2 p-1 ms-1"> {translation.delivery} </span>
+          </label>
+        </div>
+      </div>
 
-                    <div className="grid items-start gap-6 grid-cols-2">
-                        <InputsOrder type="apartment" name={translation.apartment} yub="apartment" register={register} errors={errors} />
-                        <InputsOrder type="phone_number" name={translation.orderPhone} yub="phone_number" register={register} errors={errors} />
-                    </div>
+      <button
+        type="submit"
+        disabled={isLoading || isSuccess}
+        className="w-full mt-6 p-3 text-center bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+      >
+        {isLoading ? (
+          <div className="flex items-center justify-center">
+            <FaSpinner className="animate-spin mr-2" /> {translation.orderProcess}
+          </div>
+        ) : isSuccess ? (
+          <div className="flex items-center justify-center">
+            <FaCheckCircle className="mr-2" /> {translation.orderSuccess}
+          </div>
+        ) : (
+          translation.orderNow
+        )}
+      </button>
 
-
-                    <div className="grid items-start gap-6 md:grid-cols-3">
-                        <InputsOrder type="building" name={translation.buliding} yub="building" register={register} errors={errors} />
-                        <InputsOrder type="street" name={translation.street} yub="street" register={register} errors={errors} />
-                        <InputsOrder type="floor" name={translation.floor} yub="floor" register={register} errors={errors} />
-                    </div>
-
-
-
-                    <input type="hidden" value="Egypt" {...register('country')} />
-                    <input type="hidden" value="Red Sea" {...register('state')} />
-                    <input type="hidden" value="Red Sea" {...register('city')} />
-                    <div>
-                        <label>
-                            <input
-                                type="radio"
-                                value="online"
-                                {...register("payment_method")}
-                            />
-                            Online Payment
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value="cash"
-                                {...register("payment_method")}
-                            />
-                            Cash
-                        </label>
-                    </div>
-
-                </div>
-
-                <button disabled={isLoading || isSuccess} className="w-full bg-[#c83f46] p-4 text-center text-white rounded-lg font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br">
-                    {isLoading ? (
-                        <div className="flex items-center justify-center">
-                            <FaSpinner className="animate-spin mr-2" /> {translation.orderProcess}
-                        </div>
-                    ) : isSuccess ? (
-                        <div className="flex items-center justify-center">
-                            <FaCheckCircle className="mr-2" /> {translation.orderSuccess}
-                        </div>
-                    ) : (
-                        translation.orderNow
-                    )}
-                </button>
-
-                {error && <p className="text-red-500 mt-2">{translation.orderErrorCheck}</p>}
-            </form>
-
-        </>
-    );
+      {error && <p className="text-red-500 mt-2 text-center">{translation.orderErrorCheck}</p>}
+    </form>
+  );
 }
 
 export default OrderForm;

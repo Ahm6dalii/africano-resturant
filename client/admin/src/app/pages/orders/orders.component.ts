@@ -60,9 +60,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.getOrders(this.currentStatus);
 
     this._socketIoService.on('newOrder', (newOrder) => {
-      console.log(`Received newOrder: ${newOrder}`);
       console.log(`Received newOrder: ${newOrder[0]}`);
-      this.orders.unshift(newOrder[0])
+      this.orders.push(newOrder[0])
     })
   }
 
@@ -85,7 +84,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this._orderService.updateOrderStatus(orderId, { status: newStatus }).subscribe({
       next: (updatedOrder) => {
         console.log('Order updated:', updatedOrder);
+
         this.orders = this.orders.filter((order: any) => order._id !== orderId);
+
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Order status updated' });
       },
       error: (err) => {
@@ -181,7 +182,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if (this.searchTerm) {
       this.orders = this.orders.filter((order: any
       ) =>
-        order?.billing_data?.phone_number.includes(this.searchTerm) || order?.billing_data?.first_name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        order?.billing_data?.phone_number.includes(this.searchTerm) || order?.billing_data?.first_name.includes(this.searchTerm)
       );
     } else {
       this.getOrders(this.currentStatus);
@@ -232,6 +233,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       console.error('Order element not found');
     }
   }
+
   ngOnDestroy() {
     this._socketIoService.disconnect();
   }

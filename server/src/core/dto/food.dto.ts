@@ -27,6 +27,9 @@ export class CreateFoodDto {
 
   @IsOptional()
   image: string;
+  
+  @IsOptional()
+  quantity:number;
 }
 
 export class UpdateFoodDto {

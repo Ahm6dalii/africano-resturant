@@ -11,14 +11,14 @@ export class Food extends Document {
   @Prop({
     required: true,
     type: Object,
-    default: {}
+    default: {},
   })
   description: object;
 
   @Prop({
     required: true,
     type: Object,
-    default: {}
+    default: {},
   })
   amount: {
     S?: number;
@@ -27,10 +27,8 @@ export class Food extends Document {
     R?: number;
   };
 
-
-  @Prop({ required: true })
+  @Prop({ required: false, default: 1 })
   quantity: number;
-
 
   @Prop({
     required: true,
@@ -41,9 +39,18 @@ export class Food extends Document {
 
   @Prop()
   image: string;
-  @Prop({ type: [{ text: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, createdAt: { type: Date, default: Date.now } }] })
+  @Prop({
+    type: [
+      {
+        text: String,
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
+  })
   review: { text: string; user: User; createdAt: Date }[];
-
 }
 
 export const FoodSchema = SchemaFactory.createForClass(Food);
+
+

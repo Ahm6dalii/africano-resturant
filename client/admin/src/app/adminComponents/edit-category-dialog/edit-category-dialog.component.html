@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>Edit Category</h1>
+<div mat-dialog-content>
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="space-y-2">
+      <div formGroupName="name">
+        <input
+          formControlName="ar"
+          placeholder="الاسم"
+          class="mb-2 p-2 border rounded-md focus:border-blue-500"
+        />
+        <input
+          formControlName="en"
+          placeholder="Name"
+          class="mb-2 p-2 border rounded-md focus:border-blue-500"
+        />
+      </div>
+      <div formGroupName="description">
+        <input
+          formControlName="ar"
+          placeholder="الوصف"
+          class="mb-2 p-2 border rounded-md focus:border-blue-500"
+        />
+        <input
+          formControlName="en"
+          placeholder="Description"
+          class="mb-2 p-2 border rounded-md focus:border-blue-500"
+        />
+      </div>
+
+      <input
+        formControlName="price"
+        placeholder="Price"
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+      />
+
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        placeholder="Upload Image"
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+      />
+    </div>
+    <button type="submit" class="mr-2 p-2 bg-blue-500 text-white rounded-md">
+      Save
+    </button>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button
+    type="button"
+    class="p-2 bg-gray-500 text-white rounded-md"
+    (click)="onNoClick()"
+  >
+    Cancel
+  </button>
+</div>
