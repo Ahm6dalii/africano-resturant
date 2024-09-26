@@ -58,7 +58,7 @@ function App() {
               <Route path="/changeimg" element={<ProfileImage />}></Route>
               <Route path="/forgot-password" element={<ForgetPass />}></Route>
               <Route path="/OTP" element={<EnterOtp />}></Route>
-              <Route path="/userOrders/*" element={<OrderList />}></Route>
+              <Route path="/allOrders/*" element={<OrderList />}></Route>
               <Route path='*' element={<NotFound></NotFound>}></Route>
             </Route>
           </Routes>
