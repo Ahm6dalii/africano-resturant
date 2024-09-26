@@ -1,0 +1,52 @@
+ 
+
+
+  <form [formGroup]="foodForm" (ngSubmit)="onSubmit()" class=" h-[80vh] space-y-6 p-6 bg-white rounded-lg shadow-lg">
+    <!-- Name Fields -->
+    <div formGroupName="name" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input formControlName="en" placeholder="Name (English)" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <input formControlName="ar" placeholder="Name (Arabic)" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+  
+    <!-- Description Fields -->
+    <div formGroupName="description" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <textarea formControlName="en" placeholder="Description (English)" rows="3" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+      <textarea formControlName="ar" placeholder="Description (Arabic)" rows="3" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+    </div>
+  
+    <!-- Category Dropdown -->
+    <select formControlName="category" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <option value="" disabled selected>Select Category</option>
+      <option value="Pizza">Pizza</option>
+      <option value="Appetizers">Appetizers</option>
+      <option value="Pasta">Pasta</option>
+      <option value="Drinks">Drinks</option>
+      <option value="Desserts">Desserts</option>
+      <option value="Salads">Salads</option>
+    </select>
+  
+    <!-- File Upload -->
+    <div class="flex items-center space-x-4">
+      <input type="file" (change)="onFileChange($event)" accept="image/*" class="p-3 border border-gray-300 rounded cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <p class="text-sm text-gray-500">Upload an image</p>
+    </div>
+  
+    <!-- Size Dropdown -->
+    <select formControlName="size" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <option value="">Select Size</option>
+      <option *ngFor="let size of sizeOptions" [value]="size">{{size}}</option>
+    </select>
+  
+    <!-- Amount Inputs -->
+    <div formGroupName="amount" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ng-container *ngFor="let size of sizeOptions">
+        <input *ngIf="foodForm.get('amount')?.get(size)" [formControlName]="size" [placeholder]="'Price for ' + size" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </ng-container>
+    </div>
+  
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="foodForm.invalid" class="w-full bg-indigo-600 text-white p-3 rounded hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 disabled:bg-gray-400">
+      Add Food
+    </button>
+  </form>
+  

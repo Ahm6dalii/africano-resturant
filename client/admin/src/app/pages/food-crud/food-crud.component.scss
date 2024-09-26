@@ -1,0 +1,50 @@
+@keyframes slideDown{
+  0%{
+    opacity: 0 ; 
+    transform: translateY(-20px) ; 
+}
+    100%{
+    opacity: 1 ; 
+    transform: translateY(0) ;
+}
+}
+
+.animate-slideDown{
+  animation: slideDown 0.5s ease forwards ; 
+}
+
+.food_hover {
+  position: relative;
+}
+
+.short-description {
+  display: inline;
+}
+
+.full-description {
+  display: none;
+  margin-top: 5px;
+}
+
+.food_hover:hover .full-description {
+  display: block;
+}
+
+
+
+/* Center the toast */
+.p-toast {
+  position: fixed; /* Fixed position for responsiveness */
+  top: 20px; /* Distance from the top */
+  left: 50%; /* Center from the left */
+  transform: translateX(-50%); /* Centering transform */
+  max-width: 90%; /* Max width for responsiveness */
+  width: auto; /* Auto width */
+  z-index: 1000; /* Make sure it's on top */
+}
+
+.p-toast-message {
+  word-break: break-word; /* Break long words */
+  padding: 1rem; /* Adjust padding */
+  max-width: 100%; /* Prevent overflow */
+}
