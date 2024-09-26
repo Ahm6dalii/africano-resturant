@@ -41,7 +41,8 @@ export class UpdateFoodDto {
   @IsOptional()
   description: string;
 
-  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
   amount: number;
 
   @IsOptional()

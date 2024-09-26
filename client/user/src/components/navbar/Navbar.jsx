@@ -132,11 +132,10 @@ export function Navbaar() {
           <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]} z-50 absolute md:static top-full dark:bg-black  bg-opacity-100 shadow md:shadow-none md:border-none border-b-orange-300 p-5 left-0 right-0`}>
             {navLink.map((navItem, index) => (
               <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? ` ${navStyle.active} dark:font-semibold border-b-2 border-b-orange-200   text-orange-500`
-                    : navStyle.link
-                }
+              className={({ isActive }) =>
+                `${isActive ? `${navStyle.active} dark:font-semibold border-b-2 border-b-orange-200 border-b-orange-500 text-orange-500` : navStyle.link} text-l  `
+              }
+              
                 key={index}
                 to={navItem.href}
               >

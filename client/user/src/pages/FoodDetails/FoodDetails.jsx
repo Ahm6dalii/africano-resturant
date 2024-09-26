@@ -215,7 +215,7 @@ const FoodDetails = () => {
                     </div>}
                 </div>
                 <CustomerReviews id={id} reviews={food?.review} />
-                <RelatedProduct />
+                {/* <RelatedProduct /> */}
             </div>
 
         </>

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import socket from "../../socket.io/socket";
 import moment from "moment";
 import Paginations from "../../components/pagination/Pagination";
+import { Link } from 'react-router-dom';
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
@@ -15,7 +16,7 @@ const OrderList = () => {
 
   const [dataPagination, setDataPagination] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -74,9 +75,9 @@ const OrderList = () => {
     return (
       <div className="text-center mt-10">
         <p>{translation.noOrder}</p>
-        <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg">
+        <Link to='/menu' className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg">
           {translation.browsMenu}
-        </button>
+        </Link>
       </div>
     );
   }
@@ -137,7 +138,10 @@ const OrderList = () => {
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="dark:bg-slate-900 dark:bg-opacity-90 dark:text-white">
-                  {order.intention_detail.total / 100} EGP
+                {order?.payment_method === "cash" 
+                 ? <>{order.intention_detail.total} <span className="text-green-500">EGP</span></>
+                :<>{order.intention_detail.total / 100} <span className="text-green-500">EGP</span></> }
+
                 </Table.Cell>
                 <Table.Cell
                   className={`dark:bg-slate-900 dark:bg-opacity-90  ${
@@ -189,9 +193,12 @@ const OrderList = () => {
                   <span className="font-semibold">
                     {item.name?.en ? item.name.en : item.name}
                   </span>
-                  <span className="text-blue-600">
+                  {selectedOrder?.payment_method=="cash"?<span className="text-blue-600">
+                    {item.amount } EGP
+                  </span>:<span className="text-blue-600">
                     {item.amount_cents / 100} EGP
-                  </span>
+                  </span>}
+                 
                 </div>
               ))}
             </div>

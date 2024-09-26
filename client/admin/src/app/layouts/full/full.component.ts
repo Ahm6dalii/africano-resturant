@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { MatIconModule } from '@angular/material/icon';
 interface sidebarMenu {
   link: string;
   icon: string;
@@ -34,19 +34,19 @@ export class FullComponent {
   routerActive: string = 'activelink';
 
   sidebarMenu: sidebarMenu[] = [
-    // {
-    //   link: '/home',
-    //   icon: 'home',
-    //   menu: 'Dashboard',
-    // },
+    {
+      link: '/home',
+      icon: 'dashboard', // Updated icon
+      menu: 'Dashboard',
+    },
     {
       link: '/foods',
-      icon: 'list',
+      icon: 'restaurant', // Updated icon
       menu: 'Foods',
     },
     {
       link: '/categories',
-      icon: 'list',
+      icon: 'category', // Updated icon
       menu: 'Categories',
     },
     // {
@@ -96,12 +96,12 @@ export class FullComponent {
     // },
     {
       link: '/orders',
-      icon: 'list',
+      icon: 'shopping_cart', // Updated icon
       menu: 'Orders',
     },
     {
       link: '/delivery',
-      icon: 'list',
+      icon: 'local_shipping', // Updated icon
       menu: 'Delivery',
     },
     // {
@@ -111,22 +111,22 @@ export class FullComponent {
     // },
     {
       link: "/create",
-      icon: "list",
+      icon: 'person_add', // Updated icon
       menu: "Create Admin",
     },
     {
       link: "/admins",
-      icon: "list",
+      icon: 'history', // Updated icon
       menu: "Admins List",
     },
     {
       link: "/users",
-      icon: "list",
+      icon: 'group', // Updated icon
       menu: "Users List",
     },
     {
       link: "/logs",
-      icon: "list",
+      icon: 'receipt', // Updated icon
       menu: "Admins Logs",
     },
     // {

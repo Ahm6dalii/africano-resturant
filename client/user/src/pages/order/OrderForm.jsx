@@ -1,11 +1,13 @@
 import React from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { FaSpinner, FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const InputsOrder = ({ type, name, yub, register, errors }) => (
   <div className="mb-4">
@@ -30,6 +32,8 @@ const OrderForm = () => {
   const api = useSelector(state => state.apiLink.link);
   const { user, userInfo } = useSelector((state) => state.auth);
   const { translation } = useSelector(state => state.lang);
+const queryClient = useQueryClient()
+const navigate = useNavigate();
 
   const schema = yup.object().shape({
     apartment: yup.string().required(translation.errApartment),
@@ -83,10 +87,13 @@ const OrderForm = () => {
                 , "from api link somthing what ever");
             if (data.apiLink && payment_method?.payment_method === 'online') {
                 window.location.href = data.apiLink;
-                toast.success("your order was successfull")
+                toast.success("your order was successfull1")
+
             } else {
-                toast.success("your order was successfull")
-            }
+                toast.success("your order was successfull2")
+                queryClient.invalidateQueries('cart')
+                navigate('/allOrders');
+              }
         },
         onError: (error) => {
             console.error("Error during checkout:", error);
@@ -140,7 +147,7 @@ const OrderForm = () => {
           <label className="inline-flex items-center">
             <input
               type="radio"
-              value="delivery"
+              value="cash"
               {...register("payment_method")}
               className="form-radio text-red-600"
             />

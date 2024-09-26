@@ -40,7 +40,9 @@ export class FoodService {
   async create(createFoodDto:any, file: any): Promise<Food> {
     console.log(createFoodDto);
 
-    createFoodDto.amount = Math.ceil(createFoodDto.amount);
+    createFoodDto.amount = JSON.parse(createFoodDto.amount) ;
+    createFoodDto.name = JSON.parse(createFoodDto.name) ;
+    createFoodDto.description = JSON.parse(createFoodDto.description) ;
 
     const categoryName = await this.categoryModel.findOne({
       'name.en': createFoodDto.category,
@@ -114,12 +116,18 @@ export class FoodService {
     return food;
   }
 
-  async update(id: string, updateFoodDto: UpdateFoodDto, file: any) {
-    console.log(updateFoodDto);
-    if (updateFoodDto.amount) {
-      updateFoodDto.amount = Math.ceil(Number(updateFoodDto.amount));
+  async update(id: string, updateFoodDto: any, file: any) {
+     updateFoodDto.amount = JSON.parse( updateFoodDto.amount) ;
+     updateFoodDto.name = JSON.parse( updateFoodDto.name) ;
+     updateFoodDto.description = JSON.parse( updateFoodDto.description) ;
+     const categoryName = await this.categoryModel.findOne({
+      'name.en': updateFoodDto.category,
+      // 'name.ar': createFoodDto.category,
+    });
+    
+    if (!categoryName) {
+      throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
     }
-
     if (file) {
       const foodImage = await this.cloudinaryService
         .uploadFile(file, this.options)
@@ -127,6 +135,10 @@ export class FoodService {
           throw new BadRequestException('Invalid file type.');
         });
       updateFoodDto.image = foodImage.url;
+    }
+    if(updateFoodDto.category){
+
+      updateFoodDto.category = categoryName._id;
     }
 
     const food = await this.foodModel
