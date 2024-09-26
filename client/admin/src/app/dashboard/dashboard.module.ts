@@ -8,6 +8,9 @@ import { ProductComponent } from './dashboard-components/product/product.compone
 
 import { FormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { TotalOrderEarningsComponent } from "../adminComponents/total-order-earnings/total-order-earnings.component";
+import { PieChartComponent } from "../adminComponents/pie-chart/pie-chart.component";
+import { TotalCountsComponent } from "../adminComponents/total-counts/total-counts.component";
 
 
 
@@ -24,7 +27,10 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     CommonModule,
     DemoFlexyModule,
     FormsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    TotalOrderEarningsComponent,
+    PieChartComponent,
+    TotalCountsComponent
   ],
   exports: [
     DashboardComponent,

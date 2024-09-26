@@ -27,9 +27,10 @@ const OrderForm = () => {
         console.log(response, "response");
         return response?.data
     }, {
-        onSuccess: (data) => {
-            console.log(data, "from api link somthing what ever");
-            if (data.apiLink && data.payment_method === 'online') {
+        onSuccess: (data, payment_method) => {
+            console.log(payment_method.payment_method
+                , "from api link somthing what ever");
+            if (data.apiLink && payment_method?.payment_method === 'online') {
                 window.location.href = data.apiLink;
                 toast.success("your order was successfull")
             } else {
@@ -55,6 +56,10 @@ const OrderForm = () => {
         email: yup.string(translation.errEmail).email().required(translation.errEmailReq),
         floor: yup.string().required(translation.errFloor),
     });
+    const fullName = userInfo.name.trim().split(" ");
+
+    const firstName = fullName[0];
+    const lastName = fullName.slice(1).join(" ");
 
     const { register, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({
         resolver: yupResolver(schema),
@@ -64,7 +69,8 @@ const OrderForm = () => {
             city: "Red Sea",
             phone_number: userInfo?.phone,
             email: userInfo?.email,
-            first_name: userInfo?.name,
+            first_name: firstName,
+            last_name: lastName,
             payment_method: "online",
         }
     });

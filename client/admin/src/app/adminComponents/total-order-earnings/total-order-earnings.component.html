@@ -1,0 +1,74 @@
+<div class="container mx-auto px-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-8">
+    <!-- Weekly Earnings Card -->
+    <div
+      class="bg-[#fca68c] text-white p-8 rounded-xl relative overflow-hidden shadow-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+      <span class="absolute w-16 h-16 bg-gray-200 rounded-full opacity-30 top-4 left-4"></span>
+      <span class="absolute w-32 h-32 bg-gray-200 rounded-full opacity-20 bottom-0 right-0"></span>
+      <div class="flex justify-between items-center mb-6">
+        <div class="text-white text-4xl">
+          <i class="ti ti-credit-card"></i>
+        </div>
+        <div class="relative">
+          <button
+            class="text-white bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center focus:outline-none hover:bg-gray-200">
+            <i class="ti ti-dots"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mt-6">
+        <h3 class="text-3xl font-bold">{{totalEarningWeekly}} LE<i class="ti ti-circle-arrow-up-right opacity-80"></i>
+        </h3>
+        <p class="text-white text-lg">Weekly Earnings</p>
+      </div>
+    </div>
+
+    <!-- Monthly Earnings Card -->
+    <div
+      class="bg-[#29d1dd] text-white p-8 rounded-xl relative overflow-hidden shadow-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+      <span class="absolute w-16 h-16 bg-gray-600 rounded-full opacity-30 top-4 left-4"></span>
+      <span class="absolute w-32 h-32 bg-gray-600 rounded-full opacity-20 bottom-0 right-0"></span>
+      <div class="flex justify-between items-center mb-6">
+        <div class="text-white font-semibold text-4xl">
+          <i class="ti ti-calendar"></i>
+        </div>
+        <div class="relative">
+          <button
+            class="text-white bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center focus:outline-none hover:bg-gray-100">
+            <i class="ti ti-dots"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mt-6">
+        <h3 class="text-3xl font-bold">{{totalEarningMonthly}} LE<i class="ti ti-circle-arrow-up-right opacity-80"></i>
+        </h3>
+        <p class="text-white font-semibold text-lg">Monthly Earnings</p>
+      </div>
+    </div>
+
+    <!-- Yearly Earnings Card -->
+
+
+    <div
+      class="bg-[#fec90f] text-white p-8 rounded-xl relative overflow-hidden shadow-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+      <span class="absolute w-16 h-16 bg-gray-400 rounded-full opacity-30 top-4 left-4"></span>
+      <span class="absolute w-32 h-32 bg-gray-400 rounded-full opacity-20 bottom-0 right-0"></span>
+      <div class="flex justify-between items-center mb-6">
+        <div class="text-white text-4xl">
+          <i class="ti ti-calendar-event"></i>
+        </div>
+        <div class="relative">
+          <button
+            class="text-white bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center focus:outline-none hover:bg-gray-100">
+            <i class="ti ti-dots"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mt-6">
+        <h3 class="text-3xl font-bold">{{totalEarningYearly}} LE <i class="ti ti-circle-arrow-up-right opacity-80"></i>
+        </h3>
+        <p class="text-white font-semibold text-lg">Yearly Earnings</p>
+      </div>
+    </div>
+  </div>
+</div>

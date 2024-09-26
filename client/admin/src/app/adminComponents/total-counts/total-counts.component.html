@@ -1,0 +1,49 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+
+  <div
+    class="bg-gradient-to-b from-pink-100 to-[#fca68c] text-white shadow-lg h-36 rounded-xl flex items-center justify-between px-6 py-4  transition-transform transform hover:scale-105 hover:shadow-2xl">
+    <i class="fas fa-utensils text-6xl opacity-90"></i>
+    <div class="text-right">
+      <h2 class="text-4xl font-extrabold">{{ totalMenu || 0 }}</h2>
+      <p class="text-lg font-medium opacity-90">Menu Items</p>
+    </div>
+  </div>
+
+  <div
+    class="bg-gradient-to-b from-teal-100 to-[#29d1dd] text-white shadow-lg h-36 rounded-xl flex items-center justify-between px-6 py-4  transition-transform transform hover:scale-105 hover:shadow-2xl">
+    <i class="fas fa-th-large text-6xl opacity-90"></i>
+    <div class="text-right">
+      <h2 class="text-4xl font-extrabold">{{ totalCategories || 0 }}</h2>
+      <p class="text-lg font-medium opacity-90">Categories</p>
+    </div>
+  </div>
+
+  <div
+    class="bg-gradient-to-b from-yellow-100 to-[#fec90f] text-white shadow-lg h-36 rounded-xl flex items-center justify-between px-6 py-4  transition-transform transform hover:scale-105 hover:shadow-2xl">
+    <i class="fas fa-shopping-cart text-6xl opacity-90"></i>
+    <div class="text-right">
+      <h2 class="text-4xl font-extrabold">{{ totalOrders || 0 }}</h2>
+      <p class="text-lg font-medium opacity-90">Total Orders</p>
+    </div>
+  </div>
+
+
+  <div
+    class="bg-gradient-to-b from-red-100 to-[#e46a76] text-white shadow-lg h-36 rounded-xl flex items-center justify-between px-6 py-4  transition-transform transform hover:scale-105 hover:shadow-2xl">
+    <i class="fas fa-users text-6xl opacity-90"></i>
+    <div class="text-right">
+      <h2 class="text-4xl font-extrabold">{{ totalUsers || 0 }}</h2>
+      <p class="text-lg font-medium opacity-90">Total Users</p>
+    </div>
+  </div>
+
+
+  <div
+    class="col-span-2 bg-gradient-to-b from-green-100 to-green-400 text-white shadow-lg h-36 rounded-xl flex items-center justify-between px-6 py-4  transition-transform transform hover:scale-105 hover:shadow-2xl">
+    <i class="fas fa-user-shield text-6xl opacity-90"></i>
+    <div class="text-right">
+      <h2 class="text-4xl font-extrabold">{{ totalAdmins || 0 }}</h2>
+      <p class="text-lg font-medium opacity-90">Total Admins</p>
+    </div>
+  </div>
+</div>
