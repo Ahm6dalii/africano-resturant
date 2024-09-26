@@ -28,17 +28,17 @@ export class FullComponent {
   constructor(private breakpointObserver: BreakpointObserver,private _authService:AuthService) {
     this.userName=_authService.tokenUserInfo.getValue().username
     console.log(_authService.tokenUserInfo.getValue(),'pppppppppppppp');
-    
+
   }
 
   routerActive: string = 'activelink';
 
   sidebarMenu: sidebarMenu[] = [
-    {
-      link: '/home',
-      icon: 'home',
-      menu: 'Dashboard',
-    },
+    // {
+    //   link: '/home',
+    //   icon: 'home',
+    //   menu: 'Dashboard',
+    // },
     {
       link: '/foods',
       icon: 'list',
@@ -99,6 +99,11 @@ export class FullComponent {
       icon: 'list',
       menu: 'Orders',
     },
+    {
+      link: '/delivery',
+      icon: 'list',
+      menu: 'Delivery',
+    },
     // {
     //   link: '/login',
     //   icon: 'list',
@@ -113,6 +118,16 @@ export class FullComponent {
       link: "/admins",
       icon: "list",
       menu: "Admins List",
+    },
+    {
+      link: "/users",
+      icon: "list",
+      menu: "Users List",
+    },
+    {
+      link: "/logs",
+      icon: "list",
+      menu: "Admins Logs",
     },
     // {
     //   link: "/progress",

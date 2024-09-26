@@ -1,0 +1,27 @@
+.table-responsive-wrapper {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .responsive-table {
+    width: 100%;
+    min-width: 600px; /* Adjust based on your table content */
+  }
+  
+  @media (max-width: 768px) {
+    .responsive-table th,
+    .responsive-table td {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .responsive-table th,
+    .responsive-table td {
+      padding: 6px;
+      font-size: 12px;
+    }
+  }
+  
