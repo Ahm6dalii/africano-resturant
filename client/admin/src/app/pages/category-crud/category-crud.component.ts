@@ -44,7 +44,7 @@ export class CategoryCrudComponent implements OnInit {
         ar: [''],
         en: [''],
       }),
-      image: [''],
+      file: [''],
     });
 
     this.loadCategories();
@@ -59,9 +59,28 @@ export class CategoryCrudComponent implements OnInit {
       console.log(this.categories);
     });
   }
-  confirmDelete(category: any): void {
-    this.showConfirmationPopup = true;
+
+    confirmDelete(category: any): void {
     this.selectedCategory = category;
+    this.showConfirmationPopup = true; // Show the confirmation popup
+    console.log(category , "Selected Category");
+    }
+
+
+  deleteConfirmed(categoryId: any): void {
+    console.log(categoryId);
+    this.categoryService.deleteCategory(categoryId).subscribe(
+      () => {
+        this.categories = this.categories.filter(category => category._id !== categoryId);
+        this.showConfirmationPopup = false; 
+        this.selectedCategory = null; //Reset
+      },
+      (error) => {
+        console.error('Error deleting category:', error);
+        this.showConfirmationPopup = false; // Hide 
+        this.selectedCategory = null; // Reset 
+      }
+    );
   }
 
   cancelDelete(): void {
@@ -69,58 +88,30 @@ export class CategoryCrudComponent implements OnInit {
     this.selectedCategory = null;
   }
 
-  deleteConfirmed(id: string): void {
-    this.categoryService.deleteCategory(id).subscribe(() => {
-      this.categories = this.categories.filter(
-        (category) => category._id !== id
-      );
-      this.showConfirmationPopup = false;
-      this.selectedCategory = null;
+  addCategory(): void {
+    const formData = new FormData();
+    Object.keys(this.categoryForm.controls).forEach((key) => {
+      const control = this.categoryForm.get(key);
+      if (control.value instanceof File) {
+        formData.append(key, control.value);
+      } else if (typeof control.value === 'object') {
+        Object.keys(control.value).forEach((subKey) => {
+          formData.append(`${key}.${subKey}`, control.value[subKey]);
+        });
+      } else {
+        formData.append(key, control.value);
+      }
     });
+    this.categoryService.createCategory(formData).subscribe(
+      (createdCategory) => {
+        this.categories.push(createdCategory); // Add new category to list
+      },
+      (error) => {
+        console.error('Failed to add category:', error);
+      }
+    );
   }
-  // addCategory(): void {
-  //   const formData = new FormData();
-  //   Object.keys(this.categoryForm.controls).forEach((key) => {
-  //     const control = this.categoryForm.get(key);
-  //     if (control.value instanceof File) {
-  //       formData.append(key, control.value);
-  //     } else if (typeof control.value === 'object') {
-  //       Object.keys(control.value).forEach((subKey) => {
-  //         formData.append(`${key}.${subKey}`, control.value[subKey]);
-  //       });
-  //     } else {
-  //       formData.append(key, control.value);
-  //     }
-  //   });
-  //   this.categoryService.createCategory(formData).subscribe(
-  //     (createdCategory) => {
-  //       this.categories.push(createdCategory); // Add new category to list
-  //     },
-  //     (error) => {
-  //       console.error('Failed to add category:', error);
-  //     }
-  //   );
-  // }
 
-  updateCategory(category: any): void {
-    const updatedCategory = this.categoryForm.value;
-
-    this.categoryService
-      .updateCategory(category._id, updatedCategory)
-      .subscribe(
-        (response) => {
-          const index = this.categories.findIndex(
-            (f) => f._id === category._id
-          );
-          if (index !== -1) {
-            this.categories[index] = response;
-          }
-        },
-        (error) => {
-          console.error('Failed to update categories:', error);
-        }
-      );
-  }
 
   setLanguage(lang: string) {
     this.selectedLanguage = lang;
@@ -129,14 +120,13 @@ export class CategoryCrudComponent implements OnInit {
   openAddCategoryDialog(): void {
     const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
       width: '400px',
-      data: {}, // No data for adding a new category
+      data: {},
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      console.log('Hello From AddCategoryDialog');
-      console.log(res);
-      if (res) {
+      if (res && res.file) {
         this.categoryService.createCategory(res).subscribe((newCategory) => {
+          console.log(newCategory, 'New Category Created');
           this.categories.push(newCategory);
         });
       }
@@ -144,22 +134,31 @@ export class CategoryCrudComponent implements OnInit {
   }
 
   openEditCategoryDialog(category: any): void {
+    console.log(category, 'Category for open edit');
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       width: '400px',
-      data: category,
+      data: { ...category, id: category._id },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.categoryService
-          .updateCategory(category._id, result)
-          .subscribe((updatedCategory) => {
+    dialogRef.afterClosed().subscribe((res) => {
+      console.log(res, 'ressssssssssssssss');
+      if (res) {
+        this.categoryService.updateCategory(res, res.id).subscribe(
+          (updatedCategory) => {
+            this.loadCategories();
             const index = this.categories.findIndex(
-              (f) => f._id === updatedCategory._id
+              (c) => c.id === updatedCategory.id
             );
-            this.categories[index] = updatedCategory;
-          });
+            if (index !== -1) {
+              this.categories[index] = updatedCategory;
+            }
+          },
+          (error) => {
+            console.error('Error updating category', error);
+          }
+        );
       }
     });
   }
 }
+

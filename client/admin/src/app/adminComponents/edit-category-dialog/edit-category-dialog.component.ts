@@ -1,11 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-edit-category-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './edit-category-dialog.component.html',
   styleUrl: './edit-category-dialog.component.scss',
 })
@@ -15,33 +17,47 @@ export class EditCategoryDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<EditCategoryDialogComponent>,
     private fb: FormBuilder,
+    private categoryService: CategoryService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    // Initialize form with data or empty values
     this.categoryForm = this.fb.group({
       name: this.fb.group({
-        ar: [data?.name?.ar],
-        en: [data?.name?.en],
+        en: [data?.name?.en || '', Validators.required],
+        ar: [data?.name?.ar || '', Validators.required],
       }),
-
       description: this.fb.group({
-        ar: [data?.description?.ar],
-        en: [data?.description?.en],
+        en: [data?.description?.en || '', Validators.required],
+        ar: [data?.description?.ar || '', Validators.required],
       }),
-      image: [data?.image],
-    })
+    });
+    console.log(data);
   }
-  onFileChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.categoryForm.get('image').setValue(file);
-  }
-  onNoClick(): void {
 
+  onFileChange(event: any) {
+    const file = event.target?.files[0];
+    if (file) {
+      this.categoryForm.patchValue({ file });
+    }
+  }
+
+  // Handle dialog cancellation
+  onNoClick(): void {
     this.dialogRef.close();
   }
 
+  // Handle form submission
   onSubmit(): void {
     if (this.categoryForm.valid) {
-      this.dialogRef.close(this.categoryForm.value);
+      const formValue = this.categoryForm.value;
+      const categoryData = {
+        id: this.data._id,
+        name: formValue.name,
+        description: formValue.description,
+        file: formValue.file,
+      };
+      console.log(categoryData.id, 'category id');
+      this.dialogRef.close(categoryData);
     }
   }
 }

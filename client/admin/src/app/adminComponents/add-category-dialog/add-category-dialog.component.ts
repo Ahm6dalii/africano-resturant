@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -11,6 +11,7 @@ import { NgIf } from '@angular/common';
   styleUrl: './add-category-dialog.component.scss',
 })
 export class AddCategoryDialogComponent {
+  previewUrl: string;
   categoryForm: FormGroup;
 
   constructor(
@@ -20,23 +21,20 @@ export class AddCategoryDialogComponent {
   ) {
     this.categoryForm = this.fb.group({
       name: this.fb.group({
-        ar: this.data?.name?.ar || '',
-        en: this.data?.name?.en || '',
+        en: ['', Validators.required],
+        ar: ['', Validators.required],
       }),
-      // category: this.data?.category || '',
-
       description: this.fb.group({
-        ar: this.data?.description?.ar || '',
-        en: this.data?.description?.en || '',
+        en: ['', Validators.required],
+        ar: ['', Validators.required],
       }),
-      image: this.data?.image || '',
-    })
+      file: [null, Validators.required],
+    });
   }
+
   onFileChange(event: any) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.categoryForm.patchValue({ image: file });
-    }
+    const file = event.target.files[0];
+    this.categoryForm.patchValue({ file: file });
   }
 
   onNoClick(): void {
@@ -45,10 +43,8 @@ export class AddCategoryDialogComponent {
 
   onSubmit(): void {
     if (this.categoryForm.valid) {
-      const formValue = this.categoryForm.value;
-
-      this.dialogRef.close(formValue);
+      const categoryData = { ...this.categoryForm.value, quantity: 1 };
+      this.dialogRef.close(categoryData);
     }
-    console.log(this.categoryForm.value);
   }
 }
