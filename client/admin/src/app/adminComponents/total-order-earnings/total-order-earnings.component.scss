@@ -1,0 +1,88 @@
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+body.berry-dark .nav-tabs .nav-link,
+body.berry-dark .tab-content {
+  box-shadow: none !important;
+  background: red !important;
+}
+
+/* Adjusting the text color */
+.card-body {
+  color: #333;
+  /* Set to a darker color */
+}
+
+/* Chart Income active button adjustments */
+.chart-income .active {
+  background-color: #1565c0;
+  /* Use a visible background color */
+  color: #fff;
+}
+
+/* Ensure your card's background is not white */
+.earning-card,
+.total-income-card {
+  background: #1e1e1e;
+  /* Dark background for contrast */
+  color: #fff;
+  /* Make text white */
+}
+
+.text-dark {
+  color: #000 !important;
+}
+
+.earning-card {
+  .round {
+    &.secondary-round {
+      background-color: #4527a0;
+    }
+
+    &.primary-round {
+      background-color: #1565c0;
+    }
+  }
+}
+
+.total-income-card {
+  .avatar {
+    background-color: #1565c0;
+  }
+}
+
+.chart-income {
+  .active {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-family: Roboto, sans-serif;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    min-width: 64px;
+    padding: 4px 10px;
+    transition:
+      background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+      box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+      border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+      color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: rgb(33, 150, 243);
+    box-shadow: none;
+    font-weight: 500;
+    border-radius: 4px;
+    color: inherit;
+  }
+}

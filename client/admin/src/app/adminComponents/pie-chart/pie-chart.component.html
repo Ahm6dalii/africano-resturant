@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-content>
+    <div class="chart-container">
+      <div class="button-group">
+        <button (click)="setActivePeriod('weekly')" [ngClass]="{'active': activePeriod === 'weekly'}">Weekly</button>
+        <button (click)="setActivePeriod('monthly')" [ngClass]="{'active': activePeriod === 'monthly'}">Monthly</button>
+        <button (click)="setActivePeriod('yearly')" [ngClass]="{'active': activePeriod === 'yearly'}">Yearly</button>
+      </div>
+      <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+    </div>
+  </mat-card-content>
+</mat-card>

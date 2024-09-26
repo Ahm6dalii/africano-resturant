@@ -7,6 +7,51 @@
 
 }
 
+.p-datatable-wrapper {
+  background-color: red !important;
+  min-height: 900px !important;
+}
+
+/* Add this CSS to your global styles or component styles */
+
+
+
+
+.order-tabs {
+  min-height: 400px;
+  /* Adjust as needed */
+  max-height: 700px;
+  /* Adjust as needed */
+  overflow-y: auto;
+}
+
+.custom-table {
+  max-height: 400px;
+
+  overflow-y: auto;
+  display: block;
+}
+
+.p-dropdown-panel {
+  z-index: 1050 !important;
+
+}
+
+.custom-table {
+  max-height: 400px;
+  font-size: 200px;
+  overflow-y: auto;
+  display: block;
+  position: relative;
+
+}
+
+.p-dropdown {
+  position: relative;
+  overflow: visible !important;
+}
+
+
 .user-details h4 {
   margin-bottom: 10px;
 
@@ -77,3 +122,96 @@
 .p-button-sm {
   @apply text-xs py-1 px-2;
 }
+
+
+
+/* General receipt styling */
+.receipt {
+  font-family: 'Courier New', Courier, monospace;
+  /* Use a monospace font */
+  background-color: #f5f5f5;
+  /* Light grey background */
+  padding: 20px;
+  width: 300px;
+  /* Set a fixed width similar to receipts */
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  /* Add subtle shadow */
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.receipt-header h1,
+.receipt-header h2,
+.receipt-header p {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+.receipt-order {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.receipt-items {
+  margin: 10px 0;
+}
+
+.receipt-items table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.receipt-items table td {
+  padding: 2px 0;
+  font-size: 14px;
+}
+
+.receipt-items .description {
+  text-align: left;
+}
+
+.receipt-items .price {
+  text-align: right;
+}
+
+.receipt-total {
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: right;
+  padding-top: 10px;
+  border-top: 1px dashed #000;
+}
+
+.receipt-barcode {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.receipt-barcode img {
+  width: 80%;
+}
+
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: #f08c00;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
+}
+

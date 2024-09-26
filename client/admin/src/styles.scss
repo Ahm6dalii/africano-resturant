@@ -25,3 +25,54 @@
 }
 
 
+.p-dropdown-panel {
+  z-index: 1050 !important;
+  /* Ensure it's higher than other elements */
+}
+
+.p-checkbox:checked .p-checkbox-box {
+  background-color: orange !important;
+  /* Background color when checked */
+  border-color: orange !important;
+  /* Border color when checked */
+}
+
+.p-checkbox:checked .p-checkbox-box::after {
+  background-color: orange !important;
+  /* Change checkmark color */
+}
+
+
+.p-checkbox-box {
+  border: 1px solid #ccc;
+  /* Default border color */
+  border-radius: 4px;
+  /* Rounded corners */
+  width: 1.5em;
+  /* Width of the checkbox */
+  height: 1.5em;
+  /* Height of the checkbox */
+  position: relative;
+  /* Position for the checkmark */
+}
+
+.p-checkbox-box:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: orange;
+  /* Background color for checked state */
+  opacity: 0;
+  /* Hide by default */
+  transition: opacity 0.2s ease;
+  /* Smooth transition */
+}
+
+.p-checkbox:checked+.p-checkbox-box:after {
+  opacity: 1;
+  /* Show checkmark background when checked */
+}
+

@@ -16,7 +16,7 @@ export class NotifictionsGateway {
 
   handleDisconnect(client: Socket) {
     console.log('Client disconnected:', client.id);
-    // Remove the client from the map when they disconnect
+
     for (const [userId, socket] of this.clients.entries()) {
       if (socket.id === client.id) {
         this.clients.delete(userId);
@@ -50,8 +50,10 @@ export class NotifictionsGateway {
   async sendOrderNotificationToAdmin(notification: any) {
     const adminUsers = await this.adminModel.find().exec();
 
+    console.log(notification, "notification notification notification");
     adminUsers.forEach(adminUser => {
       const client = this.clients.get(adminUser._id.toString());
+
       if (client) {
         client.emit('adminNotification', notification);
         console.log(`Notification sent to admin user: ${adminUser._id}`);
