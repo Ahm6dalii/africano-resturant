@@ -19,28 +19,67 @@ export class FoodService {
     );
   }
 
+
+
   createFood(foodData: any): Observable<any> {
-    console.log(foodData, 'Ahmed');
+    console.log(foodData, 'Ahmed createFood');
+  
+    // Create a new FormData object
     const formData = new FormData();
-
-    // formData.append('name', foodData.name);
-    // formData.append('description', foodData.description);
-    // formData.append('file', foodData.image);
-    // formData.append('quantity', foodData.quantity);
-    // formData.append('amount', foodData.amount);
-
-    // formData.append('name', this.form.get('name').value);
-    // formData.append('email', this.form.get('email').value);
-
-    formData.append('category', foodData.category);
-
-    console.log(formData, 'aaaaaaaaaaaadddddddddddddaaaaaaaaaaaaa');
-    return this.http.post(`${this.apiUrl}/api/foods`,formData );
+  
+    for (const key in foodData) {
+      if (foodData.hasOwnProperty(key)) {
+        if (key === 'file') {
+          // Append the file directly
+          formData.append(key, foodData[key]);
+        } else if (key === 'amount') {
+          // Append amount as it is (ensure it's not an object)
+          formData.append(key, JSON.stringify(foodData[key]));
+        } else if (typeof foodData[key] === 'object' && !Array.isArray(foodData[key])) {
+          // Append the object as a JSON string
+          formData.append(key, JSON.stringify(foodData[key]));
+        } else {
+          // For other types, just append the value
+          formData.append(key, foodData[key]);
+        }
+      }
+    }
+  
+    return this.http.post(`${this.apiUrl}/api/foods`, formData);
   }
+  
 
-  updateFood(id: string, food: any): Observable<any> {
-    return this.http.patch<any>(`${this.apiUrl}/api/foods/${id}`, food);
+
+  // updateFood(id: string, food: any): Observable<any> {
+  //   return this.http.patch<any>(`${this.apiUrl}/api/foods/${id}`, food);
+  // }
+  updateFood(foodId: string, foodData: any): Observable<any> {
+    console.log(foodData, 'Ahmed updateFood');
+  
+    // Create a new FormData object
+    const formData = new FormData();
+  
+    for (const key in foodData) {
+      if (foodData.hasOwnProperty(key)) {
+        if (key === 'file') {
+          // Append the file directly
+          formData.append(key, foodData[key]);
+        } else if (key === 'amount') {
+          // Append amount as it is (ensure it's not an object)
+          formData.append(key, JSON.stringify(foodData[key]));
+        } else if (typeof foodData[key] === 'object' && !Array.isArray(foodData[key])) {
+          // Append the object as a JSON string
+          formData.append(key, JSON.stringify(foodData[key]));
+        } else {
+          // For other types, just append the value
+          formData.append(key, foodData[key]);
+        }
+      }
+    }
+  
+    return this.http.patch(`${this.apiUrl}/api/foods/${foodId}`, formData);
   }
+  
 
   deleteFood(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/api/foods/${id}`);

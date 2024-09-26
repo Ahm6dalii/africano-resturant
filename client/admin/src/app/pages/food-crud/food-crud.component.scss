@@ -32,4 +32,19 @@
 
 
 
+/* Center the toast */
+.p-toast {
+  position: fixed; /* Fixed position for responsiveness */
+  top: 20px; /* Distance from the top */
+  left: 50%; /* Center from the left */
+  transform: translateX(-50%); /* Centering transform */
+  max-width: 90%; /* Max width for responsiveness */
+  width: auto; /* Auto width */
+  z-index: 1000; /* Make sure it's on top */
+}
 
+.p-toast-message {
+  word-break: break-word; /* Break long words */
+  padding: 1rem; /* Adjust padding */
+  max-width: 100%; /* Prevent overflow */
+}

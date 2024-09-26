@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon'; // Add this import
 
 import { AddFoodDialogComponent } from '../../adminComponents/add-food-dialog/add-food-dialog.component';
 import { EditFoodDialogComponent } from '../../adminComponents/edit-food-dialog/edit-food-dialog.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-food-crud',
@@ -17,18 +19,20 @@ import { EditFoodDialogComponent } from '../../adminComponents/edit-food-dialog/
     NgIf,
     ReactiveFormsModule,
     NgClass,
-    SlicePipe,
+    SlicePipe , 
+    ToastModule,
     MatDialogModule,
     MatIconModule,
   ],
   templateUrl: './food-crud.component.html',
   styleUrl: './food-crud.component.scss',
+   providers: [MessageService]
 })
 export class FoodCrudComponent implements OnInit {
   selectedFood: any = null;
   foodForm: FormGroup;
   foods: any[] = [];
-
+  editError:string='';
   selectedLanguage: string = 'ar';
 
   currentPage = 1;
@@ -40,7 +44,8 @@ export class FoodCrudComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private foodService: FoodService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private messageService: MessageService
   ) {
   }
   ngOnInit(): void {
@@ -117,12 +122,20 @@ export class FoodCrudComponent implements OnInit {
         formData.append(key, control.value);
       }
     });
+    console.log(formData,'ahmed above');
+    
     this.foodService.createFood(formData).subscribe(
+      
       (createdFood) => {
+        console.log(createdFood,'ahmed ahmed');
         this.foods.push(createdFood); // Add new food to list
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Food Added successfully"});
+
       },
       (error) => {
         console.error('Failed to add food:', error);
+        this.messageService.add({ severity: 'error', summary: 'error', detail: "Fail to Add Food"});
+
       }
     );
   }
@@ -165,7 +178,7 @@ export class FoodCrudComponent implements OnInit {
 
   openAddFoodDialog(): void {
     const dialogRef = this.dialog.open(AddFoodDialogComponent, {
-      width: '400px',
+      width: '600px',
       data: {}, 
     });
 
@@ -175,10 +188,15 @@ export class FoodCrudComponent implements OnInit {
         this.foodService.createFood(result).subscribe(
           
           () => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: "food update successfully"});
             this.loadFoods(); 
+
           },
           (error) => {
             console.error('Error :', error);
+            this.messageService.add({ severity: 'error', summary: 'error', detail: error.error.message});
+
+          this.editError=error?.error?.message
 
           }
         );
@@ -193,14 +211,23 @@ export class FoodCrudComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        console.log(result,'result result ');
         this.foodService
           .updateFood(food._id, result)
-          .subscribe((updatedFood) => {
+          .subscribe(
+            (updatedFood) => {
             const index = this.foods.findIndex(
               (f) => f._id === updatedFood._id
             );
             this.foods[index] = updatedFood;
-          });
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: "food update successfully"});
+
+          },
+          (error)=>{
+            this.messageService.add({ severity: 'error', summary: 'error', detail: error.error.message});
+
+          }
+        );
       }
     });
   }
