@@ -1,13 +1,24 @@
 <p-toast></p-toast>
-@if(errorMessage){
-  <div class="alert alert-danger py-1 mb-2 mt-8 text-center" role="alert">{{errorMessage}}</div>
-}
-@else{
-<table mat-table [dataSource]="admins" class="mat-elevation-z8">
+
+<div *ngIf="!errorMessage" class="search-container mb-5">
+  <mat-form-field>
+    <input matInput [(ngModel)]="searchTerm" placeholder="Search admins" (input)="onSearch()">
+  </mat-form-field>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger py-1 mb-4 mt-8 text-center" role="alert">{{errorMessage}}</div>
+<div class="table-wrapper mb-10 ">
+  <table *ngIf="!errorMessage" mat-table [dataSource]="admins" class="mat-elevation-z8 ">
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let admin; let i = index"> {{i + 1}} </td>
+    </ng-container>
+
   <ng-container matColumnDef="username">
     <th mat-header-cell *matHeaderCellDef> Username </th>
     <td mat-cell *matCellDef="let admin"> {{admin.username}} </td>
   </ng-container>
+
   <ng-container matColumnDef="isSuperAdmin">
     <th mat-header-cell *matHeaderCellDef> Super Admin </th>
     <td mat-cell *matCellDef="let admin"> {{admin.isSuperAdmin ? 'Yes' : 'No'}} </td>
@@ -15,7 +26,7 @@
 
   <ng-container matColumnDef="permissions">
     <th mat-header-cell *matHeaderCellDef> Permissions </th>
-    <td mat-cell *matCellDef="let admin"> {{admin.isSuperAdmin ?"have all permissions":admin.permissions.join(', ')}} </td>
+    <td mat-cell *matCellDef="let admin"> {{admin.isSuperAdmin ? "All permissions" : admin.permissions.join(', ')}} </td>
   </ng-container>
 
   <ng-container matColumnDef="isActive">
@@ -43,4 +54,13 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-}
+</div>
+
+<mat-paginator
+class="border"
+  [length]="totalAdmins"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="onPageChange($event)"
+  *ngIf="!errorMessage && totalAdmins > 0">
+</mat-paginator>

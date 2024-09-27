@@ -19,17 +19,20 @@ export class LogService {
     const searchCondition = search
       ? {
           $or: [
-            { action: { $regex: search, $options: 'i' } }, 
-            { 'admin.username': { $regex: search, $options: 'i' } } 
+            { action: { $regex: search, $options: 'i' } },
+            { 'admin.username': { $regex: search, $options: 'i' } }
           ]
         }
-      : {};   
+      : {};
+  
     const allLogs = await this.logModel
       .find(searchCondition)
       .skip(skip)
       .limit(limit)
-      .populate('admin', 'username') 
+      .sort({ createdAt: -1 }) 
+      .populate('admin', 'username')
       .exec();
+  
     const total = await this.logModel
       .find(searchCondition)
       .countDocuments()
@@ -45,5 +48,6 @@ export class LogService {
       data: allLogs,
     };
   }
+  
   
   }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FoodService } from 'src/app/services/food.service';
 import { NgClass, NgFor, NgIf, SlicePipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog'; 
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon'; // Add this import
 
@@ -19,7 +19,7 @@ import { ToastModule } from 'primeng/toast';
     NgIf,
     ReactiveFormsModule,
     NgClass,
-    SlicePipe , 
+    SlicePipe ,
     ToastModule,
     MatDialogModule,
     MatIconModule,
@@ -101,11 +101,19 @@ export class FoodCrudComponent implements OnInit {
   }
 
   deleteConfirmed(id: string): void {
-    this.foodService.deleteFood(id).subscribe(() => {
-      this.foods = this.foods.filter((food) => food._id !== id);
-      this.showConfirmationPopup = false;
+    this.showConfirmationPopup = false;
+    this.foodService.deleteFood(id).subscribe(
+      ()=>{
+      this.loadFoods();
       this.selectedFood = null;
-    });
+      this.messageService.add({ severity: 'success', summary: 'success', detail:"deleted successfully"});
+    },
+    (error) => {
+      console.error('Failed to add food:', error);
+      this.showConfirmationPopup = false;
+      this.messageService.add({ severity: 'error', summary: 'error', detail:error.error.message});
+    }
+    );
   }
   addFood(): void {
     const formData = new FormData();
@@ -123,9 +131,9 @@ export class FoodCrudComponent implements OnInit {
       }
     });
     console.log(formData,'ahmed above');
-    
+
     this.foodService.createFood(formData).subscribe(
-      
+
       (createdFood) => {
         console.log(createdFood,'ahmed ahmed');
         this.foods.push(createdFood); // Add new food to list
@@ -179,17 +187,17 @@ export class FoodCrudComponent implements OnInit {
   openAddFoodDialog(): void {
     const dialogRef = this.dialog.open(AddFoodDialogComponent, {
       width: '600px',
-      data: {}, 
+      data: {},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
       if (result) {
         this.foodService.createFood(result).subscribe(
-          
+
           () => {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: "food update successfully"});
-            this.loadFoods(); 
+            this.loadFoods();
 
           },
           (error) => {

@@ -24,7 +24,7 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
     const endIndex = startIndex < length ?
       Math.min(startIndex + pageSize, length) :
       startIndex + pageSize;
-    return `${startIndex + 1} - ${endIndex} of ${length} admin(s)`;
+    return `${startIndex + 1} - ${endIndex} of ${length} logs(s)`;
   };
 }
 interface Log {
@@ -56,7 +56,7 @@ export class LogsComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 10;
   totalLogs: number = 0;
-  displayedColumns: string[] = ['username', 'action', 'createdAt'];
+  displayedColumns: string[] = ['index', 'username', 'action', 'createdAt'];
 
   constructor(private authService: AuthService,private messageService: MessageService) {}
 

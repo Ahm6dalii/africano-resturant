@@ -1,0 +1,23 @@
+::ng-deep .mdc-line-ripple {
+  &::before,
+  &::after {
+    border-bottom-color: rgba(0, 0, 0, 0.616) !important;
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto; /* Enables horizontal scrolling */
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 10px; /* Height of the horizontal scrollbar */
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: #f08c00; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background-color: #e0e0e0; /* Color of the scrollbar track */
+}
