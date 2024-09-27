@@ -35,17 +35,17 @@ const NotificationsModel = () => {
         },
     });
 
-    console.log(data, "user notification from database");
+    // console.log(data, "user notification from database");
 
     useEffect(() => {
         const handleUserNotification = (notification) => {
-            console.log(notification, "notification from socket io");
+            // console.log(notification, "notification from socket io");
             if (!notification.read) {
                 setNotifi((prevNotifications) => [notification, ...prevNotifications]);
             }
         };
         const handleNotification = (notifications) => {
-            console.log(notifications, "notifications2 from socket io");
+            // console.log(notifications, "notifications2 from socket io");
 
             setNotifi((prevNotifications) => [notifications, ...prevNotifications]);
 
@@ -64,12 +64,12 @@ const NotificationsModel = () => {
 
     return (
         <>
-            <div className="flex justify-center">
+            <div className="flex justify-center pe-1">
                 <div>
                     {/* Toggle Button */}
                     <button
                         onClick={() => setDropdownOpen((prev) => !prev)}
-                        className="relative z-10 block rounded-md  p-2 focus:outline-none"
+                        className="relative  z-10 block rounded-md  focus:outline-none"
                     >
                         <svg
                             className="h-5 w-5 text-grey-800"
@@ -85,14 +85,14 @@ const NotificationsModel = () => {
                     {dropdownOpen && (
                         <div
                             onClick={() => setDropdownOpen(false)}
-                            className="fixed inset-0 h-full w-full z-10"
+                            className="fixed inset-0 h-full  z-10"
                         ></div>
                     )}
 
                     {dropdownOpen && (
                         <div
-                            className="absolute right-20 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20 max-h-44 overflow-y-auto"
-                            style={{ width: '20rem' }}
+                            className="absolute right-2 w-[90%] sm:w-[50%] md:w-[50%] xl:w-[50%] mt-2 bg-gray-100 shadow rounded-md shadow-lg overflow-hidden z-20 max-h-44 overflow-y-auto"
+                            
                         >
                             <div className="py-2">
                                 {notifi.length > 0 ? (

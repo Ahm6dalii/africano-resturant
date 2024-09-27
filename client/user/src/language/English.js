@@ -159,7 +159,7 @@ export const En = {
   ourStory:"Our Story",
   luxuryRestaurant:"A luxury restaurant with A rare taste you can’t find anywhere in the red sea.",
   masterChef:"master chef",
-  chefName:"Abdo Tarek ",
+  chefName:"Ramy ",
   ourChef:"Our chef",
   masterChefAd:"a master chef with 5 years of experience",
   ourFuture:"Our Future ",
@@ -242,7 +242,7 @@ export const En = {
   
   //orderList
 
-  noOrder:"No orders found",
+  noOrder:"No Orders found",
   browsMenu: "Browse Menu " ,
   yourOrderList:"Your Orders",
   orderData:"Date",
@@ -287,7 +287,9 @@ size:"Size:",
 customerReviews:"Our customer reviews",
 yourReview:"Your Review",
 
-
-
-
+//Setting
+updateInfo:"Update Info",
+updatePassword:"Update Password",
+changeImage:"Change Image",
+changeProfileImg:"Update Profile Picture"
 }   

@@ -1,0 +1,12 @@
+
+.activee {
+   @apply border !important;
+   @apply rounded-full !important;
+   @apply text-indigo-900 !important;
+}
+ /* .active {
+   border: 1px solid !important; 
+   border-radius: 9999px !important;
+   color: #1c3d5a !important;
+   
+}  */

@@ -41,8 +41,7 @@ export default function Home() {
         {/* Main Content */}
         <main className="container mx-auto text-center">
           <h1
-            style={{ fontFamily: "Marhey" }}
-            className="text-5xl font-bold mb-4 text-orange-500 dark:text-orange-200"
+            className="text-3xl md:text-5xl font-bold mb-4 text-orange-500 dark:text-orange-200"
           >
             {text.split("").map((letter, index) => (
                             <motion.span
@@ -64,7 +63,7 @@ export default function Home() {
           <motion.h2
                 id="motion"
                 style={{ fontFamily: "Oswald" }}
-                className="text-4xl font-bold mb-4"
+                className="text-xl md:text-4xl font-bold mb-4"
                 initial="hidden"
                 animate="visible"
                 variants={paragraphVariants}

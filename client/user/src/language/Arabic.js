@@ -185,7 +185,7 @@ aboutUs:"معلومات عنا",
 ourStory: "قصتنا",
   luxuryRestaurant: "مطعم فاخر بنكهات نادرة لا يمكنك العثور عليها في أي مكان آخر على البحر الأحمر.",
   masterChef: "الشيف الرئيسي",
-  chefName: "عبده طارق",
+  chefName: "رامي",
   ourChef: "شيفنا",
   masterChefAd: "شيف رئيسي يتمتع بخبرة 5 سنوات",
   ourFuture: "مستقبلنا",
@@ -218,7 +218,7 @@ ourStory: "قصتنا",
   remove:"حذف",
   noOrderFound: "لم يتم العثور على طلب",
 
-
+  num: "الرقم",
   orderMethod: "طريقة الطلب",
   orderStatus: "حالة الطلب",
   onlinePayment: "الدفع عبر الإنترنت",
@@ -306,6 +306,9 @@ egp:"جنيه",
 
   customerReviews: "آراء عملائنا",
   yourReview: "مراجعتك",
-
-
+//Setting
+  updateInfo: "تحديث المعلومات",
+  updatePassword: "تحديث كلمة المرور",
+  changeImage: "تغيير الصورة",
+  changeProfileImg: "تحديث صورة الملف الشخصي"
 }

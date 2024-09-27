@@ -77,14 +77,14 @@ const navigate = useNavigate();
         billing_data: billing_data,
         payment_method: payment_method
       };
-      console.log(dataToSend)
+      // console.log(dataToSend)
       const response = await axios.post(`${api}/paymob`, dataToSend, { headers });
       return response?.data;
     },
     {
         onSuccess: (data, payment_method) => {
-            console.log(payment_method.payment_method
-                , "from api link somthing what ever");
+            // console.log(payment_method.payment_method
+            //     , "from api link somthing what ever");
             if (data.apiLink && payment_method?.payment_method === 'online') {
                 window.location.href = data.apiLink;
                 toast.success("your order was successfull1")

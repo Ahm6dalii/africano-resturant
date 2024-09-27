@@ -17,7 +17,7 @@ const ForgetPass = () => {
  const {link } = useSelector(state => state.apiLink)
 
  const {path}=useParams()
- console.log(path);
+//  console.log(path);
  
   const navigate=useNavigate()
   const formik = useFormik({
@@ -33,14 +33,14 @@ const ForgetPass = () => {
         setIsLoading(true)
         try {
             const response = await axios.post(`${link}/reset-password/request`, values);
-            console.log(response.data.message);
+            // console.log(response.data.message);
             toast.success(translation.otpsucess, {
             duration: 4000,
             position: 'top-right',})
             setIsLoading(false)
             navigate(`/${path}`)            
         } catch (error) {
-            console.error( error);
+            // console.error( error);
             setErrorMessage(translation.invalidEmail)
             setIsLoading(false)
       }
@@ -53,8 +53,8 @@ const ForgetPass = () => {
         onSubmit={formik.handleSubmit}
         className=" p-8 rounded-lg  max-w-md w-full dark:text-black"
       >
-        <h2 className="flex items-center gap-1 justify-center text-2xl font-bold mb-6 text-center dark:text-orange-200">
-         <MessageIcon/>
+        <h2 className="flex text-red-900 items-center gap-1 justify-center text-2xl font-bold mb-6 text-center dark:text-orange-200">
+         <MessageIcon />
           {translation.sendotpforchange }
           </h2>
 
@@ -84,11 +84,11 @@ const ForgetPass = () => {
         <button
           type="submit"
           disabled={isloading}
-          className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
+          className="w-full bg-red-900 hover:bg-red-700-600 dark:bg-yellow-400 dark:hover:bg-yellow-500 text-white py-2 px-4 rounded-full "
         >
           {isloading? <i className='fas fa-spin fa-spinner'></i>:translation.sendotp}
         </button>
-        
+    
       </form>
     </div>
   );
