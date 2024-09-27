@@ -22,7 +22,7 @@
   <!-- Add New Category Button -->
   <mat-icon
     (click)="openAddCategoryDialog()"
-          class="animate-slideDown text-center text-green-500"
+    class="animate-slideDown text-center text-green-500"
   >
     add
   </mat-icon>
@@ -34,7 +34,7 @@
     <tr>
       <th class="px-4 py-2">Image</th>
       <th class="px-4 py-2">Name</th>
-      
+
       <th class="px-4 py-2">Description</th>
       <th class="px-4 py-2">Actions</th>
     </tr>
@@ -65,7 +65,7 @@
           class="animate-slideDown text-center text-green-500"
         >
           edit
-      </mat-icon>
+        </mat-icon>
 
         <mat-icon (click)="confirmDelete(category)" class="text-red-500">
           delete
@@ -73,7 +73,9 @@
 
         <!-- Confirmation popup -->
         <div
-          *ngIf="showConfirmationPopup && selectedCategory._id === category._id"
+          *ngIf="
+            showConfirmationPopup && selectedCategory?._id === category._id
+          "
           class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
         >
           <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -97,12 +99,9 @@
             </div>
           </div>
         </div>
-
       </td>
     </tr>
   </tbody>
 </table>
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------------- -->
-
-

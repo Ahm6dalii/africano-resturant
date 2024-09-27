@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,22 +17,32 @@ export class CategoryService {
   getCategory(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
-
   createCategory(categoryData: any): Observable<any> {
-
     const formData = new FormData();
+    formData.append('name[en]', categoryData.name.en);
+    formData.append('name[ar]', categoryData.name.ar);
+    formData.append('description[en]', categoryData.description.en);
+    formData.append('description[ar]', categoryData.description.ar);
+    formData.append('file', categoryData.file);
+    formData.append('quantity', categoryData.quantity.toString());
 
-    formData.append('name', categoryData.name);
-    formData.append('description', categoryData.description);
-    formData.append('file', categoryData.image); 
     return this.http.post(this.apiUrl, formData);
   }
 
-  updateCategory(id: string, category: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, category);
-  }
+  updateCategory(categoryData: any, id: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('name[en]', categoryData.name.en);
+    formData.append('name[ar]', categoryData.name.ar);
+    formData.append('description[en]', categoryData.description.en);
+    formData.append('description[ar]', categoryData.description.ar);
 
-  deleteCategory(id: string): Observable<any> {
+    if (categoryData.file instanceof File) {
+      formData.append('file', categoryData.file, categoryData.file.name);
+    }
+
+    return this.http.put(`${this.apiUrl}/${id}`, formData);
+  }
+  deleteCategory(id: any): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }
