@@ -42,7 +42,7 @@ export function Navbaar() {
 
   const dropDownLink = [
     { name: translation.setting, href: "setting" },
-    { name: translation.myOrders, href: "userOrders/*" },
+    { name: translation.myOrders, href: "allOrders/*" },
     { name: translation.updateinfo, href: "updateinfo" },
     { name: translation.updatepass, href: "updatepass" },
     { name: translation.changeimg, href: "changeimg" },
@@ -129,11 +129,11 @@ export function Navbaar() {
             <Navbar.Toggle  />
           </div>}
 
-          <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]} z-50 absolute md:static top-full dark:bg-black  bg-opacity-100 shadow md:shadow-none md:border-none border-b-orange-300 p-5 left-0 right-0`}>
+          <Navbar.Collapse className={`${navStyle[`custom-navbar-collapse`]} z-50 absolute md:static top-full dark:bg-black  bg-gray-100 shadow md:shadow-none md:border-none border-b-orange-300 p-5 left-0 right-0`}>
             {navLink.map((navItem, index) => (
               <NavLink
               className={({ isActive }) =>
-                `${isActive ? `${navStyle.active} dark:font-semibold border-b-2 border-b-orange-200 border-b-orange-500 text-orange-500` : navStyle.link} text-l  `
+                `${isActive ? `${navStyle.active} dark:font-semibold border-b-2 border-b-orange-200 text-xl text-orange-500` : navStyle.link} text-l  `
               }
               
                 key={index}
@@ -207,7 +207,7 @@ export function Navbaar() {
              
               <LanuageButton/>
 
-              <NotificationsModel />
+       {user &&   <NotificationsModel /> }
             </div>
         </Navbar>
       </div>

@@ -26,10 +26,10 @@ export default function Categories() {
   return (
     <>
     {isLoading?<Loading/>:<div className="">
-        <h1 style={{"fontFamily":" Caveat"}}  className="text-5xl font-extrabold    mb-8 text-center">
+        <h1 style={{"fontFamily":" Caveat"}}  className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200  mb-8 text-center">
         <i className="fa-solid fa-layer-group pe-3"></i>
             {translation.categories}</h1>
-        <div className="grid grid-cols-12">
+        <div className=" grid grid-cols-12">
         {categories.map((category, index) => {
             return <Category key={index} category={category} />; 
         })}

@@ -85,7 +85,7 @@ const UpdateUserInfo = () => {
 
   return (
     <div className="container mx-auto p-4 dark:text-black">
-      <h1 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-3 dark:text-white ">
+      <h1 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-3  dark:text-orange-200 ">
        <SettingIcon/>
         {translation.update_info}
       </h1>

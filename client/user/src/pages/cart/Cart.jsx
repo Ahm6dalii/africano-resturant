@@ -7,9 +7,10 @@ import { Button, Modal } from "flowbite-react";
 import useCart from '../../hooks/useCart';
 import EmptyCard from './EmptyCard';
 import CartIcon from '../../components/ReactI-cons/CartIcon/CartIcon';
+import { useQuery } from 'react-query';
 
 export default function Cart() {
-  const {translation}=useSelector(state=>state.lang)
+  const { translation, language } = useSelector((state) => state.lang);
   const [openModal, setOpenModal] = useState(false);
   const [openEmptyCartModal, setOpenEmptyCartModal] = useState(false);
   const { cart, isLoading, error } = useCart();
@@ -53,6 +54,14 @@ export default function Cart() {
       updateCart.mutate({ id, size, quantity });
     }
   };
+ 
+const { data } = useQuery('delivery', async () => {
+            const responsie = await axios(`${api}/delivery`)
+            console.log(responsie,"looool");
+            return responsie.data
+            
+    
+    })
 
   const handleDeleteItem = (id, size) => {
     deleteItem.mutate({ id, size });
@@ -68,10 +77,10 @@ export default function Cart() {
   if (error) return <div className="flex justify-center items-center h-screen">{translation.error}: {error.message}</div>;
   if (!cart?.items?.length) return <EmptyCard />;
 
-  return (
+  return ( 
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-row sm:flex-row justify-between items-center mb-8">
-        <h1 className="text-3xl me-auto border p-2  shadow-2xl font-bold dark:border-none  sm:mb-0 flex items-center gap-1"><CartIcon></CartIcon>{translation.yourCart}</h1>
+        <h1 style={{"fontFamily":"Marhey"}} className="text-orange-500 dark:text-orange-200 text-3xl me-auto  p-2   font-bold   sm:mb-0 flex items-center gap-1"><CartIcon></CartIcon>{translation.yourCart}</h1>
         <Button color="failure" className='flex items-center gap-2' onClick={() => setOpenEmptyCartModal(true)}>{deleteOrder.isLoading?<i className='fa-solid fa-spinner fa-spin'></i>:<span className='flex items-center '><i className='fa-solid fa-trash  me-2'></i>{translation.clearCart}</span>}</Button>
       </div>
 
@@ -81,14 +90,21 @@ export default function Cart() {
             <div key={index} className="flex flex-row sm:flex-row items-center border-b border-b-black dark:border-b-white py-4">
               <img src={item.image || "https://via.placeholder.com/150"} alt={item.name.en} className="w-20 h-20 object-cover rounded-md mb-4 sm:mb-0 sm:mr-4" />
               <div className="flex-grow text-center sm:text-left">
-                <h2 className="text-red-600 text-sm sm:text-xl font-semibold">{item.name.en}</h2>
-                <p className="text-md sm:text-xl">{translation.size} {item.size}</p>
+                <h2 className="text-red-600 text-sm sm:text-xl font-semibold">{language === "en"?item.name.en : item.name.ar}</h2>
+                <p className="text-md sm:text-xl">{translation.size} {language === 'ar' ? (
+                    item.size === 'S' ? "صغير" :
+                    item.size === 'M' ? "متوسط" :
+                    item.size === 'L' ? "كبير" :
+                    item.size === 'R' ? "عادي" :
+                    ""
+                       ) : (item.size )}
+                 </p>
                 <p className="sm:text-Xl text-bold">{item.amount}<span className=' text-sm text-bold sm:text-xl ms-2 pl-2'>{translation.egp}</span></p>
               </div>
               <div className="flex items-center mt-4 sm:mt-0 mx-1">
-                <Button color="light" size="sm" className='p-0' onClick={() => handleQuantityChange(item._id, item.size, item.quantity - 1)} disabled={item.quantity <= 1}>-</Button>
+                <button className="bg-gray-300 px-2 rounded text-black hover:bg-gray-400" size="sm"  onClick={() => handleQuantityChange(item._id, item.size, item.quantity - 1)} disabled={item.quantity <= 1}>-</button>
                 <span className="mx-2">{item.quantity}</span>
-                <Button color="light" size="sm" className='p-0'  onClick={() => handleQuantityChange(item._id, item.size, item.quantity + 1)}>+</Button>
+                <button className="bg-gray-300 px-2 rounded text-black hover:bg-gray-400" size="sm" disabled={item.quantity >= 20}  onClick={() =>  handleQuantityChange(item._id, item.size, item.quantity + 1)}>+</button>
               </div>
               <Button color="failure" size="sm" className="mt-4 sm:mt-0 sm:ml-4 flex items-center" onClick={() => {
                 setCurrentItem(item);
@@ -107,11 +123,11 @@ export default function Cart() {
             </div>
             <div className="flex justify-between mb-2">
               <span>{translation.delivery}</span>
-              <span>15.00<span className=' ms-2'>{translation.egp}</span></span>
+              <span>{data?.price}<span className=' ms-2'>{translation.egp}</span></span>
             </div>
             <div className="flex justify-between font-bold text-lg mt-4">
               <span>{translation.total}</span>
-              <span>{cart.totalPrice + 15}<span className=' ms-2'>{translation.egp}</span></span>
+              <span>{cart.totalPrice +parseInt( data?.price)}<span className=' ms-2'>{translation.egp}</span></span>
             </div>
             <Link to="/order" className="block mt-6">
               <Button color="dark" className="w-full "><span className='flex items-center gap-2'><i class="fa-regular fa-money-bill-1 "></i>{translation.processOrder}</span></Button>

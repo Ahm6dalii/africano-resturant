@@ -84,7 +84,8 @@ const OrderList = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-3xl font-semibold text-center mb-6">
+      <h2 style={{ fontFamily: "Marhey" }}
+            className="text-5xl font-bold mb-4  text-center">
         {translation.yourOrderList}
       </h2>
       <div className="overflow-x-auto">
