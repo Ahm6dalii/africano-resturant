@@ -31,7 +31,7 @@ const FoodDetails = () => {
 
 
     const food = data;
-    console.log(food, "what i want");
+    // console.log(food, "what i want");
 
     const currentIndex = foods?.findIndex(f => f._id === id);
 

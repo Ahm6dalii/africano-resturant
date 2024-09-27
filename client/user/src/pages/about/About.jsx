@@ -24,8 +24,9 @@ export default function About() {
   
   return (
     <>
-       <div className=" rounded-3xl max-w-7xl mx-auto p-12">
-             <h3 style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
+             <div className=" rounded-3xl max-w-7xl mx-auto p-12">
+             <h3 className="flex items-center gap-2 justify-center text-2xl sm:text-3xl  md:text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
+             <i class="fa-brands fa-font-awesome"></i>
              {translation.aboutUs}
             </h3>
             <div className='pb-6'>
@@ -49,7 +50,7 @@ export default function About() {
                     <div>
                             <motion.div variants={pVariants} initial="hidden" animate="visible"
                                         transition={{ delay: 0.9, duration: 1, ease: "easeOut" }}>
-                              <p style={{"fontFamily":" Caveat"}} className="text-red-500 text-3xl ">
+                              <p style={{"fontFamily":" Caveat"}} className="mt-2 text-red-500 text-3xl ">
                                   {translation.ourChef}                  
                               </p>
                               <p style={{"fontFamily":" Oswald"}} className="text-3xl py-6  ">
@@ -63,7 +64,7 @@ export default function About() {
                             </motion.div>
                             <motion.div variants={pVariants} initial="hidden" animate="visible"
                                         transition={{ delay: 1.3, duration: 1, ease: "easeOut" }}>
-                              <p style={{"fontFamily":" Caveat"}} className="text-red-500 text-3xl ">
+                              <p style={{"fontFamily":" Caveat"}} className=" mt-3 text-red-500 text-3xl ">
                                       {translation.ourFuture}                 
                               </p>
                               <p style={{"fontFamily":" Oswald"}} className="text-3xl">
@@ -76,7 +77,7 @@ export default function About() {
                     
             </motion.div>
             <div className='pb-12'>
-                        <p style={{"fontFamily":" Caveat"}} className="text-red-500 text-3xl">
+                        <p style={{"fontFamily":" Caveat"}} className="mt-3 text-red-500 text-3xl">
                         {translation.weBest} 
                         </p>
                         <p style={{"fontFamily":" Oswald"}} className="text-3xl">

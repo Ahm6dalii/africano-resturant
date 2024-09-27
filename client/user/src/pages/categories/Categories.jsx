@@ -26,7 +26,7 @@ export default function Categories() {
   return (
     <>
     {isLoading?<Loading/>:<div className="">
-        <h1 style={{"fontFamily":" Caveat"}}  className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200  mb-8 text-center">
+        <h1  className="text-2xl sm:text-3xl  md:text-5xl font-extrabold  text-orange-500 dark:text-orange-200  mb-8 text-center">
         <i className="fa-solid fa-layer-group pe-3"></i>
             {translation.categories}</h1>
         <div className=" grid grid-cols-12">

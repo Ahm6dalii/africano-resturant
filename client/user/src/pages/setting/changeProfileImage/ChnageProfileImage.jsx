@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Avatar, Button, Modal, FileInput } from "flowbite-react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { changeProfileImg } from "../../redux/reducers/userAuthSlice";
 import toast from "react-hot-toast";
+import { changeProfileImg } from "../../../redux/reducers/userAuthSlice";
+import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
 
 const ProfileImage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,6 +62,12 @@ const ProfileImage = () => {
   };
 
   return (
+
+    <>
+     <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-10  dark:text-orange-200">
+      <SettingIcon/>
+        {translation.changeProfileImg}
+      </h2>
     <div className="flex flex-col items-center space-y-4">
       {/* Profile Image */}
       <Avatar img={userInfo.image} size="lg" rounded={true} />
@@ -100,6 +107,7 @@ const ProfileImage = () => {
       </Modal>
 
     </div>
+    </>
   );
 };
 

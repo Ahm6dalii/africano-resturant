@@ -5,11 +5,10 @@ import * as yup from "yup";
 import { TextInput, Button, Label, List } from "flowbite-react";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
-import AddressIcon from "../../components/ReactI-cons/AdressIcon/AddressIcon";
-import LockIcon from "../../components/ReactI-cons/lockIcon/LockIcon";
+import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
+import LockIcon from "../../../components/ReactI-cons/lockIcon/LockIcon";
 import { HiXCircle } from "react-icons/hi";
 import { toast } from 'react-hot-toast';
-import SettingIcon from "../../components/ReactI-cons/setting/settingIcon";
 
 // Schema using Yup
 

@@ -270,13 +270,13 @@ const Register = ({ setOpenModal}) => {
            </List>:null}  
         <button
           type="submit"
-          className="w-full bg-red-900 hover:bg-red-700 dark:bg-yellow-400 dark:hover:bg-yellow-500  text-white py-2 px-4 rounded-full "
+          className="w-full mb-4 bg-red-900 hover:bg-red-700 dark:bg-yellow-400 dark:hover:bg-yellow-500  text-white py-2 px-4 rounded-full "
         >
           {loading?<i className='fa-solid fa-spin fa-spinner'></i>
           :translation.signUp}
         
         </button>
-        <p onClick={setOpenModal} className='dark:text-white'>{translation.haveAccount  }   <span className='text-blue-500 hover:text-blue-700 dark:text-yellow-200'><Link to={'/'}> {translation.home}</Link></span></p> 
+        <p onClick={setOpenModal} className='dark:text-white'>{translation.haveAccount  }   <span className='text-orange-500 hover:text-orange-700 dark:text-yellow-200'><Link to={'/'}> {translation.home}</Link></span></p> 
       </form>
     </div>
   );
