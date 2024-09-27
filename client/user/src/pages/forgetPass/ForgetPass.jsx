@@ -53,7 +53,7 @@ const ForgetPass = () => {
         onSubmit={formik.handleSubmit}
         className=" p-8 rounded-lg  max-w-md w-full dark:text-black"
       >
-        <h2 className="flex items-center gap-1 justify-center text-2xl font-bold mb-6 text-center dark:text-white">
+        <h2 className="flex items-center gap-1 justify-center text-2xl font-bold mb-6 text-center dark:text-orange-200">
          <MessageIcon/>
           {translation.sendotpforchange }
           </h2>

@@ -77,7 +77,7 @@ const UpdatePassword = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-6">
+      <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-6  dark:text-orange-200">
       <SettingIcon/>
         {translation.change_pass}
       </h2>
