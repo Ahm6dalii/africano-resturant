@@ -55,25 +55,25 @@ export class OrderService {
     try {
       const decoded = this._jwtservice.verify(token, { secret: "mo2" });
       const skip = (page - 1) * limit;
-      
+
       // Always include the userId in the search condition
       const searchCondition = {
-        userId: decoded.userId, 
+        userId: decoded.userId,
         ...(search ? { name: { $regex: search, $options: 'i' } } : {})
       };
-  
+
       const myOrder = await this.orderModel.find(searchCondition)
         .sort({ _id: -1 })
         .skip(skip)
         .limit(limit)
         .exec();
-  
+
       const total = await this.orderModel
         .find(searchCondition)
         .countDocuments();
-  
+
       const totalPages = Math.ceil(total / limit);
-  
+
       return {
         total,
         totalPages,
@@ -85,7 +85,7 @@ export class OrderService {
       throw new Error('Error fetching orders: ' + error.message);
     }
   }
-  
+
 
   async getOrdersByStatus(status: string) {
     const myOrder = await this.orderModel.find({ status }).sort({ _id: -1 })
@@ -101,12 +101,12 @@ export class OrderService {
     if (myOrder) {
       const userId = myOrder.userId.toString();
       const notifications = {
-        user: userId,
+        users: [userId],
         type: 'order_status_updated',
         relatedId: myOrder._id,
         message: `Your Order is: ${myOrder.status}`,
       }
-      await this.notificationService.createNotification([notifications]);
+      await this.notificationService.createNotification(notifications);
       // this.notificationGateway.sendNotificationToAll(notifications);
       this.notificationGateway.sendUpdatedOrderToUser(userId, myOrder, [notifications]);
       return myOrder
@@ -139,16 +139,16 @@ export class OrderService {
           totalOnline: {
             $sum: {
               $cond: [
-                { $eq: ["$payment_method", "online"] }, // Check if payment method is online
-                { $divide: ["$intention_detail.total", 100] }, // Divide total by 100 for online payments
-                0 // No contribution to total for cash payments
+                { $eq: ["$payment_method", "online"] },
+                { $divide: ["$intention_detail.total", 100] },
+                0
               ],
             },
           },
           totalCash: {
             $sum: {
               $cond: [
-                { $eq: ["$payment_method", "cash"] }, // Check if payment method is cash
+                { $eq: ["$payment_method", "cash"] },
                 "$intention_detail.total",
                 0
               ],
@@ -165,7 +165,7 @@ export class OrderService {
       return totalEarnings;
     }
 
-    return 0; // Return 0 if no results found
+    return 0;
   }
 
 

@@ -6,11 +6,12 @@ import { Navbaar } from './../../components/navbar/Navbar';
 import style from './layout.module.css'
 import { Toaster } from 'react-hot-toast';
 import LoadingScreen from '../../components/loadingScreen/LoadingScreen';
+import Chat from '../../components/Chat/Chat';
 
-export default function () {
+export default function LayOut() {
   const { language } = useSelector(state => state.lang)
   const { mode } = useSelector(state => state.mode)
-
+  const { user } = useSelector((state) => state.auth);
   return (
     <>
       <Toaster
@@ -25,6 +26,8 @@ export default function () {
               <Outlet></Outlet>
             </div>
           </div>
+          {user && <Chat />}
+
           <Footer></Footer>
         </div>
       </div>

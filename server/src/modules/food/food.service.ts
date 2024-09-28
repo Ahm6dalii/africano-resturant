@@ -22,12 +22,9 @@ export class FoodService {
   constructor(
     @InjectModel(Food.name) private foodModel: Model<Food>,
     @InjectModel(Category.name) private categoryModel: Model<Category>,
-    @InjectModel(User.name) private userModel: Model<User>,
-    private readonly notificationService: NotifictionsService,
-    private readonly notificationGateway: NotifictionsGateway,
     private _jwtservice: JwtService,
     private readonly cloudinaryService: CloudinaryService,
-  ) {}
+  ) { }
 
   options = {
     width: 1870,
@@ -37,18 +34,18 @@ export class FoodService {
     folder: 'Africano/Test',
   };
 
-  async create(createFoodDto:any, file: any): Promise<Food> {
+  async create(createFoodDto: any, file: any): Promise<Food> {
     console.log(createFoodDto);
 
-    createFoodDto.amount = JSON.parse(createFoodDto.amount) ;
-    createFoodDto.name = JSON.parse(createFoodDto.name) ;
-    createFoodDto.description = JSON.parse(createFoodDto.description) ;
+    createFoodDto.amount = JSON.parse(createFoodDto.amount);
+    createFoodDto.name = JSON.parse(createFoodDto.name);
+    createFoodDto.description = JSON.parse(createFoodDto.description);
 
     const categoryName = await this.categoryModel.findOne({
       'name.en': createFoodDto.category,
       // 'name.ar': createFoodDto.category,
     });
-    
+
     if (!categoryName) {
       throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
     }
@@ -117,14 +114,14 @@ export class FoodService {
   }
 
   async update(id: string, updateFoodDto: any, file: any) {
-     updateFoodDto.amount = JSON.parse( updateFoodDto.amount) ;
-     updateFoodDto.name = JSON.parse( updateFoodDto.name) ;
-     updateFoodDto.description = JSON.parse( updateFoodDto.description) ;
-     const categoryName = await this.categoryModel.findOne({
+    updateFoodDto.amount = JSON.parse(updateFoodDto.amount);
+    updateFoodDto.name = JSON.parse(updateFoodDto.name);
+    updateFoodDto.description = JSON.parse(updateFoodDto.description);
+    const categoryName = await this.categoryModel.findOne({
       'name.en': updateFoodDto.category,
       // 'name.ar': createFoodDto.category,
     });
-    
+
     if (!categoryName) {
       throw new HttpException('Category Not Found', HttpStatus.NOT_FOUND);
     }
@@ -136,7 +133,7 @@ export class FoodService {
         });
       updateFoodDto.image = foodImage.url;
     }
-    if(updateFoodDto.category){
+    if (updateFoodDto.category) {
 
       updateFoodDto.category = categoryName._id;
     }
@@ -150,15 +147,15 @@ export class FoodService {
     return food;
   }
 
-async delete(id: string): Promise<object> {
+  async delete(id: string): Promise<object> {
     const food = await this.foodModel
       .findByIdAndDelete(id)
       .populate('category', 'name');
     if (!food) {
       throw new NotFoundException(`Food with ID ${id} not found`);
     }
-    return {message:"deleted Successfully"}
-  }
+    return { message: "deleted Successfully" }
+  }
 
   async findAllByCategory(category: any, limit: number, page: number) {
     // Extract category from query parameters
@@ -212,20 +209,9 @@ async delete(id: string): Promise<object> {
         .findByIdAndUpdate(id, { $push: { review: newReview } }, { new: true })
         .populate('review.user', 'name')
         .exec();
-      const users = await this.userModel.find().exec();
-      const notifications = users.map((user) => ({
-        user: user._id,
-        type: 'review_added',
-        relatedId: addedReview._id,
-        message: `A new review was added to the article: ${addedReview.name} by ${addedReview.review[0].user.name}`,
-      }));
-      await this.notificationService.createNotification(notifications);
-      this.notificationGateway.sendNotificationToAll(notifications);
-
-      this.notificationGateway.sendNewReviewToAll(addedReview.review[addedReview.review.length - 1]);
 
 
-      return { message: 'Review added successfully', addedReview, notifications };
+      return { message: 'Review added successfully', addedReview };
     } catch (error) {
       console.log(error);
       throw new HttpException(

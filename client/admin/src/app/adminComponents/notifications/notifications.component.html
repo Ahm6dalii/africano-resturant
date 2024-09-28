@@ -1,4 +1,4 @@
-<div class="relative flex justify-center">
+<div class="flex justify-center">
   <div>
 
     <button (click)="toggleDropdown()" aria-label="Toggle Notifications"
@@ -13,7 +13,7 @@
     <div *ngIf="dropdownOpen" (click)="toggleDropdown()" class="fixed inset-0 h-full w-full z-10"></div>
 
     <div *ngIf="dropdownOpen && notifications.length > 0"
-      class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20 max-h-44 overflow-y-auto"
+      class="absolute right-[123px] mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20 max-h-44 overflow-y-auto"
       style="width: 20rem;">
       <div class="py-2">
 
@@ -40,7 +40,7 @@
 
 
     <div *ngIf="dropdownOpen && notifications.length === 0"
-      class="absolute right-0 mt-2 bg-white rounded-md shadow-lg z-20 p-4 text-center">
+      class="absolute right-12 mt-2 bg-white rounded-md shadow-lg z-20 p-4 text-center">
       <p class="text-gray-600 text-sm">No notifications available</p>
     </div>
   </div>

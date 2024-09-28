@@ -187,11 +187,10 @@ export class CartService {
 
     async getUserCart(token) {
         const decoded = this._jwtservice.verify(token, { secret: "mo2" });
-        console.log(decoded, "decoded");
 
         const cart = await this.cartModel.findOne({ userId: decoded.userId });
         return cart
     }
 
-  
+
 }

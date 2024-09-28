@@ -62,29 +62,24 @@ export class PaymentWebhookService {
         this.httpService.get(`${apiUrl}/${id}`, { headers })
       );
       const { billing_data, order, amount_cents } = response.data
-      const updatedOrder=this.splitSizeFromName(order.items)
-      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items:updatedOrder, total: amount_cents } })
+      const updatedOrder = this.splitSizeFromName(order.items)
+      const myOrder = await this.orderModel.insertMany({ userId: decoded.userId, billing_data, intention_detail: { items: updatedOrder, total: amount_cents } })
 
 
-      // const notifications = users.map(user => ({
-      //   user: user._id,
-      //   type: 'review_added',
-      //   relatedId: addedReview._id,
-      //   message: `A new review was added to the article: ${addedReview.name}`,
-      // }));
-      // await this.notificationService.createNotification(notifications);
 
 
       const orderr = myOrder[0];
       const users = await this.adminModel.find().exec();
-      const notifications = users.map(user => ({
-        user: user._id,
+      const userIds = users.map(user => user._id);
+      const notifications = {
+        users: userIds,
         type: 'Order',
         relatedId: orderr._id,
-        message: `A new Order was Ordered: by ${order?.billing_data?.first_name}`,
-      }));
+        message: `A new Order was Ordered: by ${orderr?.billing_data?.first_name}`,
+      }
+
       await this.notificationService.createNotification(notifications);
-      this.notificationGateway.sendNotificationToAll(notifications);
+      this.notificationGateway.sendOrderNotificationToAdmin(notifications);
       this.notificationGateway.sendNewOrderToAll(myOrder);
 
 
@@ -103,18 +98,18 @@ export class PaymentWebhookService {
     });
     return response.data.token;
   }
-  
- splitSizeFromName  (products) {
+
+  splitSizeFromName(products) {
     return products.map(product => {
-console.log(product,'sdsdsdaasdb7b7b7b');
+      console.log(product, 'sdsdsdaasdb7b7b7b');
       const [name, size] = product.name.split(' - ');
       return {
-        name,   
-        size ,
+        name,
+        size,
         description: product.description,
-        amount_cents: product.amount_cents,  
+        amount_cents: product.amount_cents,
         quantity: product.quantity,
-        image: product.image   
+        image: product.image
       };
     });
   };

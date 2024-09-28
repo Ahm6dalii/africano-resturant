@@ -54,20 +54,22 @@ export class PaymobService {
         payment_method: 'cash',
       })
 
-      await this.removeAllCartItems(token);
+
       const order = orders[0];
       const users = await this.adminModel.find().exec();
-      const notifications = users.map(user => ({
-        user: user._id,
+      const userIds = users.map(user => user._id);
+      const notifications = {
+        users: userIds,
         type: 'Order',
         relatedId: order._id,
         message: `A new Order was Ordered: by ${order?.billing_data?.first_name}`,
-      }));
+      }
       await this.notificationService.createNotification(notifications);
       this.notificationGateway.sendOrderNotificationToAdmin(notifications);
       this.notificationGateway.sendNewOrderToAll(orders);
 
 
+      await this.removeAllCartItems(token);
 
       return { success: true, orders };
     } else {
