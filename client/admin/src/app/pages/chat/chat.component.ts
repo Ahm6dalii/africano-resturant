@@ -69,6 +69,9 @@ import { ChatService } from 'src/app/services/chat.service';
       </div>
 
       <!-- Chat area -->
+       @if(currentUserId){
+
+
       <div class="flex-1 flex flex-col bg-white md:rounded-r-xl shadow-lg">
         <div *ngIf="currentUserId" class="p-4 border-b bg-white shadow">
           <div class="flex items-center">
@@ -129,7 +132,9 @@ import { ChatService } from 'src/app/services/chat.service';
             </button>
           </form>
         </div>
+
       </div>
+    }
     </div>
   `,
   styles: [`
@@ -172,17 +177,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.socketIoService.emit('register', { adminId: this.adminId, userId: null });
 
+    this.socketIoService.startListening();
     this.socketIoService.on('connect', () => {
       console.log('Connected to socket server');
     });
 
-    this.socketIoService.on('newMessage', (message) => {
-      console.log(message, "lets have a look");
-      this.chat.push(message);
-      this.markUserWithNewMessage(message.sender._id);
-      this.scrollToBottom();
-      this.getUnReadChat();
-      this._chatService.changeRead(false)
+    this.socketIoService.newMessage$.subscribe((message) => {
+      if (message) {
+        console.log(message, "New message received");
+        this.chat.push(message);
+        this.markUserWithNewMessage(message.sender._id);
+        this.scrollToBottom();
+        this.getUnReadChat();
+        // this._chatService.changeRead(false);
+      }
     });
 
     this.socketIoService.on('disconnect', () => {
@@ -377,7 +385,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  ngOnDestroy() {
-    this.socketIoService.disconnect();
-  }
+
+
+
 }

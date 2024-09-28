@@ -7,6 +7,7 @@ import { Button, Modal } from "flowbite-react";
 import useCart from '../../hooks/useCart';
 import EmptyCard from './EmptyCard';
 import CartIcon from '../../components/ReactI-cons/CartIcon/CartIcon';
+import { Helmet } from 'react-helmet-async';
 
 export default function Cart() {
   const { translation, language } = useSelector((state) => state.lang);
@@ -53,7 +54,7 @@ export default function Cart() {
       updateCart.mutate({ id, size, quantity });
     }
   };
- 
+
   const { data: deliveryData } = useQuery('delivery', async () => {
     const response = await axios(`${api}/delivery`);
     return response.data;
@@ -73,8 +74,12 @@ export default function Cart() {
   if (error) return <div className="flex justify-center items-center h-screen">{translation.error}: {error.message}</div>;
   if (!cart?.items?.length) return <EmptyCard />;
 
-  return ( 
+  return (
     <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <Helmet>
+        <title>Cart</title>
+        <meta name="description" content="About Page" />
+      </Helmet>
       <div className="flex flex-col items-center  sm:flex-row justify-between  sm:items-center mb-4 sm:mb-8">
         <h1 className="text-orange-500 dark:text-orange-200 text-lg sm:text-xl lg:text-2xl font-bold mb-2 sm:mb-0 flex items-center gap-1">
           <CartIcon />{translation.yourCart}
@@ -94,9 +99,9 @@ export default function Cart() {
                 <p className="text-sm sm:text-md">
                   {translation.size} {language === 'ar' ? (
                     item.size === 'S' ? "صغير" :
-                    item.size === 'M' ? "متوسط" :
-                    item.size === 'L' ? "كبير" :
-                    item.size === 'R' ? "عادي" : ""
+                      item.size === 'M' ? "متوسط" :
+                        item.size === 'L' ? "كبير" :
+                          item.size === 'R' ? "عادي" : ""
                   ) : (item.size)}
                 </p>
                 <p className="text-sm sm:text-md font-bold">{item.amount}<span className='text-xs sm:text-sm ms-1'>{translation.egp}</span></p>

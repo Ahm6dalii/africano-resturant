@@ -41,44 +41,7 @@ export class SalesComponent implements OnInit {
   totalSoldItemsYearly: any;
   activePeriod: string = 'weekly';
   @ViewChild("activeusercardchart") chart1: ChartComponent = Object.create(null);
-
-  // Initialize activeusercardChartOptions with default values
-  public activeusercardChartOptions: Partial<activeusercardChartOptions> | any = {
-    series: [],
-    chart: {
-      type: 'bar',
-      height: 500,
-      toolbar: {
-        show: false,
-      },
-    },
-    xaxis: {
-      categories: [],
-    },
-    legend: {
-      show: false,
-    },
-    tooltip: {
-      theme: "dark"
-    },
-    grid: {
-      show: false,
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      show: true,
-      width: 5,
-      colors: ['none']
-    },
-    plotOptions: {
-      bar: {
-        columnWidth: '45%',
-        borderRadius: 8,
-      },
-    },
-  };
+  public activeusercardChartOptions: Partial<activeusercardChartOptions> | any = {};
 
   constructor(private _orderService: OrdersService) { }
 
@@ -176,7 +139,6 @@ export class SalesComponent implements OnInit {
       },
     };
   }
-
   changePeriod(period: string) {
     this.activePeriod = period;
     if (period === 'weekly') {

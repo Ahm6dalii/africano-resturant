@@ -19,14 +19,13 @@
 
         <div *ngFor="let notification of notifications; let i = index"
           class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
-          <img class="h-8 w-8 rounded-full object-cover mx-1"
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
+          <img class="h-8 w-8 rounded-full object-cover mx-1" src="../../../assets/logo/logo.li.png"
             alt="User Avatar" />
           <div class="ml-2">
             <p class="text-gray-600 text-sm">
               <span class="font-bold">Notification</span>: {{ notification?.message }}
             </p>
-            <!-- <p class="text-gray-500 text-xs">{{ formatDate(notification?.createdAt) }}</p> -->
+            <p class="text-gray-500 text-xs">{{ notification?.createdAt | date:'medium' }}</p>
           </div>
         </div>
       </div>

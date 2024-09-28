@@ -9,18 +9,19 @@ import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
 import LockIcon from "../../../components/ReactI-cons/lockIcon/LockIcon";
 import { HiXCircle } from "react-icons/hi";
 import { toast } from 'react-hot-toast';
+import { Helmet } from "react-helmet-async";
 
 // Schema using Yup
 
 
 const UpdatePassword = () => {
   // localization
-  const { translation } = useSelector((state) => state.lang); 
-  const { user,userInfo } = useSelector((state) => state.auth);
-  const {link } = useSelector(state => state.apiLink)
+  const { translation } = useSelector((state) => state.lang);
+  const { user, userInfo } = useSelector((state) => state.auth);
+  const { link } = useSelector(state => state.apiLink)
   const [isLoading, setLoading] = useState(false);
-  const dispatch=useDispatch()
-  
+  const dispatch = useDispatch()
+
   const schema = yup.object({
     newPassword: yup
       .string()
@@ -67,17 +68,21 @@ const UpdatePassword = () => {
     } catch (error) {
       // Handle error
       setLoading(false)
-      if(error?.response?.data?.message){
+      if (error?.response?.data?.message) {
         toast.error(translation.passwordUpdateFail)
       }
-      
+
     }
   };
 
   return (
     <div className="container mx-auto p-4">
+      <Helmet>
+        <title>Settings/updatePassword</title>
+        <meta name="description" content="About Page" />
+      </Helmet>
       <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-6  dark:text-orange-200">
-      <SettingIcon/>
+        <SettingIcon />
         {translation.change_pass}
       </h2>
 
@@ -88,10 +93,10 @@ const UpdatePassword = () => {
 
         {/* New Password */}
         <div className="mb-4">
-        <div className="flex items-center gap-1">
-          <LockIcon/>
-          <Label htmlFor="newPassword" value={translation.new_pass} />
-        </div>
+          <div className="flex items-center gap-1">
+            <LockIcon />
+            <Label htmlFor="newPassword" value={translation.new_pass} />
+          </div>
           <TextInput
             id="newPassword"
             name="newPassword"
@@ -101,19 +106,19 @@ const UpdatePassword = () => {
             placeholder={translation.new_pass}
             {...register("newPassword")}
           />
-          {errors.newPassword&&
-              <List   >
+          {errors.newPassword &&
+            <List   >
               <List.Item className='text-red-600 flex  text-sm  dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errors.newPassword?.message}</List.Item>
-            </List> 
+            </List>
           }
         </div>
 
         {/* Confirm New Password */}
         <div className="mb-4">
-        <div className="flex items-center gap-1">
-        <LockIcon/>
-        <Label htmlFor="confirmPassword" value={translation.confirm_pass} />
-        </div>
+          <div className="flex items-center gap-1">
+            <LockIcon />
+            <Label htmlFor="confirmPassword" value={translation.confirm_pass} />
+          </div>
           <TextInput
             id="confirmPassword"
             name="confirmPassword"
@@ -123,18 +128,18 @@ const UpdatePassword = () => {
             placeholder={translation.confirm_pass}
             {...register("confirmPassword")}
           />
-           {errors.confirmPassword&&
-              <List   >
+          {errors.confirmPassword &&
+            <List   >
               <List.Item className='text-red-600 flex  text-sm  dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{errors.confirmPassword?.message}</List.Item>
-            </List> 
+            </List>
           }
         </div>
 
         {/* Submit Button */}
         <div className="text-center">
           <Button disabled={isLoading} type="submit" gradientDuoTone="purpleToBlue">
-            {isLoading? <i className="fa-solid fa-spin fa-spinner"></i>:translation.change_pass_btn}
-           
+            {isLoading ? <i className="fa-solid fa-spin fa-spinner"></i> : translation.change_pass_btn}
+
           </Button>
         </div>
       </form>

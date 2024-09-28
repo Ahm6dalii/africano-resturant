@@ -11,13 +11,14 @@ import { List } from 'flowbite-react';
 import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
 import CheckIcon from '../../components/ReactI-cons/CheckIcon/CheckIcon';
 import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
+import { Helmet } from 'react-helmet-async';
 
 const EnterOtp = () => {
     const { translation } = useSelector(state => state.lang)
     const [showPassword, setShowPassword] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [isloading, setIsLoading] = useState(false)
-    const {link } = useSelector(state => state.apiLink)
+    const { link } = useSelector(state => state.apiLink)
 
     const handleShowPassword = () => {
         setShowPassword(!showPassword)
@@ -52,9 +53,9 @@ const EnterOtp = () => {
                     duration: 4000,
                     position: 'top-right',
                 })
-                    setIsLoading(false)
-                    navigate("/login")
-             
+                setIsLoading(false)
+                navigate("/login")
+
             } catch (error) {
                 setErrorMessage(error.response?.data?.message)
                 setIsLoading(false)
@@ -64,17 +65,21 @@ const EnterOtp = () => {
 
     return (
         <div className="flex justify-center items-center pt-6">
+            <Helmet>
+                <title>OTP</title>
+                <meta name="description" content="About Page" />
+            </Helmet>
             <form
                 onSubmit={formik.handleSubmit}
                 className="  p-8 rounded-lg  max-w-md w-full dark:text-white"
             >
                 <h2 className="flex items-center justify-center gap-2 text-2xl font-bold mb-6 text-center">
-                    <CheckIcon/>
+                    <CheckIcon />
                     {translation.confirmOtptoReset}
-                    </h2>
+                </h2>
                 <div className="mb-4">
                     <label htmlFor="otp" className="flex items-center gap-1 text-gray-700 dark:text-white ">
-                        <LabelIcon/>
+                        <LabelIcon />
                         {translation.enterotp}
                     </label>
                     <input
@@ -82,14 +87,14 @@ const EnterOtp = () => {
                         name="otp"
                         type="text"
                         className={`mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200  ${formik.touched.otp && formik.errors.otp
-                                ? 'border-red-500'
-                                : ''
+                            ? 'border-red-500'
+                            : ''
                             }`}
                         {...formik.getFieldProps('otp')}
                     />
                     {formik.touched.otp && formik.errors.otp ? (
-                          <List   >
-                          <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.otp}</List.Item>
+                        <List   >
+                            <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.otp}</List.Item>
                         </List>
                     ) : null}
                     <Link to={"/forgot-password/resetpass"} className="text-blue-500 hover:text-blue-700">
@@ -98,7 +103,7 @@ const EnterOtp = () => {
                 </div>
                 <div className="mb-4">
                     <label htmlFor="email" className="flex items-center gap-1 text-gray-700 dark:text-white ">
-                       <EmailIcon/>
+                        <EmailIcon />
                         {translation.email}
                     </label>
                     <input
@@ -106,20 +111,20 @@ const EnterOtp = () => {
                         name="email"
                         type="email"
                         className={`mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200  ${formik.touched.email && formik.errors.email
-                                ? 'border-red-500'
-                                : ''
+                            ? 'border-red-500'
+                            : ''
                             }`}
                         {...formik.getFieldProps('email')}
                     />
                     {formik.touched.email && formik.errors.email ? (
                         <List   >
                             <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.email}</List.Item>
-                          </List>
+                        </List>
                     ) : null}
                 </div>
                 <div className="mb-4">
                     <label htmlFor="newPassword" className="flex items-center gap-1 text-gray-700 dark:text-white">
-                      <LockIcon/>
+                        <LockIcon />
                         {translation.newPass}
                     </label>
                     <div className='relative'>
@@ -128,8 +133,8 @@ const EnterOtp = () => {
                             name="newPassword"
                             type={showPassword ? "text" : "password"}
                             className={`mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200  ${formik.touched.newPassword && formik.errors.newPassword
-                                    ? 'border-red-500'
-                                    : ''
+                                ? 'border-red-500'
+                                : ''
                                 }`}
                             {...formik.getFieldProps('newPassword')}
                         />
@@ -141,11 +146,11 @@ const EnterOtp = () => {
                     </div>
                     {formik.touched.newPassword && formik.errors.newPassword ? (
                         <List   >
-                        <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.newPassword}</List.Item>
-                      </List>
+                            <List.Item className='text-red-600 flex  text-sm   dark:text-red-500 capitalize mb-2' icon={HiXCircle}>{formik.errors.newPassword}</List.Item>
+                        </List>
                     ) : null}
                 </div>
-                {errorMessage&&<p className="text-red-500 text-sm mt-1">{errorMessage}</p>}
+                {errorMessage && <p className="text-red-500 text-sm mt-1">{errorMessage}</p>}
                 <button
                     type="submit"
                     disabled={isloading}

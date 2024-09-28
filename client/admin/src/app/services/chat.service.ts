@@ -13,9 +13,9 @@ export class ChatService {
 
   read: BehaviorSubject<boolean> = new BehaviorSubject(false)
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = '';
   constructor(private _apiLink: ApiLinkService, private _authService: AuthService, private socketIoService: SocketIoService) {
-
+    this.apiUrl = this._apiLink.apiLink.getValue();
   }
 
 

@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class OrdersService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = '';
   constructor(private _apiLink: ApiLinkService, private _authService: AuthService) {
     this.apiUrl = this._apiLink.apiLink.getValue();
   }

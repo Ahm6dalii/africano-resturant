@@ -18,9 +18,8 @@ const InputsOrder = ({ type, name, yub, register, errors }) => (
       type={type}
       id={yub}
       {...register(yub)}
-      className={`w-full px-3 py-2 border dark:text-black ${
-        errors[yub] ? 'border-red-500' : 'border-gray-300'
-      } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent`}
+      className={`w-full px-3 py-2 border dark:text-black ${errors[yub] ? 'border-red-500' : 'border-gray-300'
+        } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent`}
     />
     {errors[yub] && (
       <p className="mt-1 text-xs text-red-500">{errors[yub].message}</p>
@@ -32,8 +31,8 @@ const OrderForm = () => {
   const api = useSelector(state => state.apiLink.link);
   const { user, userInfo } = useSelector((state) => state.auth);
   const { translation } = useSelector(state => state.lang);
-const queryClient = useQueryClient()
-const navigate = useNavigate();
+  const queryClient = useQueryClient()
+  const navigate = useNavigate();
 
   const schema = yup.object().shape({
     apartment: yup.string().required(translation.errApartment),
@@ -55,17 +54,17 @@ const navigate = useNavigate();
   const lastName = fullName.slice(1).join(" ");
 
   const { register, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm({
-      resolver: yupResolver(schema),
-      defaultValues: {
-          country: "Egypt",
-          state: "Red Sea",
-          city: "Red Sea",
-          phone_number: userInfo?.phone,
-          email: userInfo?.email,
-          first_name: firstName,
-          last_name: lastName,
-          payment_method: "online",
-      }
+    resolver: yupResolver(schema),
+    defaultValues: {
+      country: "Egypt",
+      state: "Red Sea",
+      city: "Red Sea",
+      phone_number: userInfo?.phone,
+      email: userInfo?.email,
+      first_name: firstName,
+      last_name: lastName,
+      payment_method: "online",
+    }
   });
 
   const { mutate: orderCheckOut, error, isSuccess, isLoading } = useMutation(
@@ -73,8 +72,8 @@ const navigate = useNavigate();
     async ({ billing_data, payment_method }) => {
       const headers = { token: `${user}` };
       const dataToSend = {
-        redirection_url: payment_method === 'online' ? "http://localhost:5173" : undefined,
-        after_redirect_url:"http://localhost:5173",
+        redirection_url: payment_method === 'online' ? "https://3ceb-197-59-172-173.ngrok-free.app" : undefined,
+        after_redirect_url: "http://localhost:5173",
         billing_data: billing_data,
         payment_method: payment_method
       };
@@ -83,22 +82,22 @@ const navigate = useNavigate();
       return response?.data;
     },
     {
-        onSuccess: (data, payment_method) => {
-            // console.log(payment_method.payment_method
-            //     , "from api link somthing what ever");
-            if (data.apiLink && payment_method?.payment_method === 'online') {
-                window.location.href = data.apiLink;
-                toast.success("your order was successfull1")
+      onSuccess: (data, payment_method) => {
+        // console.log(payment_method.payment_method
+        //     , "from api link somthing what ever");
+        if (data.apiLink && payment_method?.payment_method === 'online') {
+          window.location.href = data.apiLink;
+          toast.success("your order was successfull1")
 
-            } else {
-                toast.success("your order was successfull2")
-                queryClient.invalidateQueries('cart')
-                navigate('/allOrders');
-              }
-        },
-        onError: (error) => {
-            console.error("Error during checkout:", error);
+        } else {
+          toast.success("your order was successfull2")
+          queryClient.invalidateQueries('cart')
+          navigate('/allOrder');
         }
+      },
+      onError: (error) => {
+        console.error("Error during checkout:", error);
+      }
     }
   );
 
@@ -110,14 +109,14 @@ const navigate = useNavigate();
   return (
     <form onSubmit={handleSubmit(submitTheForm)} className="bg-transparent   shadow-md rounded-lg p-6  max-w-2xl mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-center text-red-800 ">{translation.orderForm}</h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <InputsOrder type="text" name={translation.orderFirsetName} yub="first_name" register={register} errors={errors} />
         <InputsOrder type="text" name={translation.orderLastName} yub="last_name" register={register} errors={errors} />
       </div>
 
       <InputsOrder type="email" name={translation.email} yub="email" register={register} errors={errors} />
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <InputsOrder type="text" name={translation.apartment} yub="apartment" register={register} errors={errors} />
         <InputsOrder type="tel" name={translation.orderPhone} yub="phone_number" register={register} errors={errors} />

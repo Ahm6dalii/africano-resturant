@@ -8,6 +8,7 @@ import moment from "moment";
 import Paginations from "../../components/pagination/Pagination";
 import { Link } from 'react-router-dom';
 import Recipt from "../../components/ReactI-cons/reciept/Recipt";
+import { Helmet } from "react-helmet-async";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
@@ -83,8 +84,12 @@ const OrderList = () => {
 
   return (
     <div className="container mx-auto p-2 sm:p-4 md:p-6">
+      <Helmet>
+        <title>user Order List</title>
+        <meta name="description" content="About Page" />
+      </Helmet>
       <h2 style={{ fontFamily: "" }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 capitalize text-center flex items-center gap-2 justify-center">
+        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 capitalize text-center flex items-center gap-2 justify-center">
         <Recipt />
         {translation.yourOrderList}
       </h2>
@@ -139,27 +144,25 @@ const OrderList = () => {
                   </Button>
                 </Table.Cell>
                 <Table.Cell className="dark:bg-slate-900 dark:bg-opacity-90 dark:text-white px-2 py-2 sm:px-4 sm:py-3">
-                  {order?.payment_method === "cash" 
+                  {order?.payment_method === "cash"
                     ? <>{order.intention_detail.total} <span className="text-green-500">EGP</span></>
-                    : <>{order.intention_detail.total / 100} <span className="text-green-500">EGP</span></> }
+                    : <>{order.intention_detail.total / 100} <span className="text-green-500">EGP</span></>}
                 </Table.Cell>
                 <Table.Cell
-                  className={`dark:bg-slate-900 dark:bg-opacity-90 px-2 py-2 sm:px-4 sm:py-3 ${
-                    order?.status == "preparing"
+                  className={`dark:bg-slate-900 dark:bg-opacity-90 px-2 py-2 sm:px-4 sm:py-3 ${order?.status == "preparing"
                       ? "dark:text-green-500 "
                       : "text-yellow-600"
-                  }`}
+                    }`}
                 >
                   <span className="px-2 py-1 sm:px-3 sm:py-2 rounded dark:bg-slate-100 text-xs sm:text-sm">
                     {order?.status}
                   </span>
                 </Table.Cell>
                 <Table.Cell
-                  className={`dark:bg-slate-900 dark:bg-opacity-90 text-green-700 px-2 py-2 sm:px-4 sm:py-3 hidden sm:table-cell ${
-                    order.payment_method == "online"
+                  className={`dark:bg-slate-900 dark:bg-opacity-90 text-green-700 px-2 py-2 sm:px-4 sm:py-3 hidden sm:table-cell ${order.payment_method == "online"
                       ? "dark:text-green-500 "
                       : "text-yellow-600"
-                  }`}
+                    }`}
                 >
                   <span className="px-2 py-1 sm:px-3 sm:py-2 rounded dark:bg-slate-100 text-xs sm:text-sm">
                     {order.payment_method}

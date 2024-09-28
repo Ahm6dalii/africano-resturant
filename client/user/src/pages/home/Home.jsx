@@ -19,10 +19,11 @@ import User3 from "../../assets/blog/review-author-3.jpg";
 import User4 from "../../assets/blog/review-author-5.jpg";
 import Contact from "./../cotact/Contact";
 import MapLocation from "../../components/map-loaction/MapLocation";
+import { Helmet } from "react-helmet-async";
 
-export default function Home() { 
+export default function Home() {
   const { translation } = useSelector((state) => state.lang);
-  const text =  `${translation.heroAfricano}`;
+  const text = `${translation.heroAfricano}`;
 
   // Animation settings
   const paragraphVariants = {
@@ -36,7 +37,10 @@ export default function Home() {
 
   return (
     <>
-                  
+      <Helmet>
+        <title>Africano</title>
+        <meta name="description" content="About Page" />
+      </Helmet>
       <div className="min-h-screen">
         {/* Main Content */}
         <main className="container mx-auto text-center">
@@ -44,41 +48,41 @@ export default function Home() {
             className="text-3xl md:text-5xl font-bold mb-4 text-orange-500 dark:text-orange-200"
           >
             {text.split("").map((letter, index) => (
-                            <motion.span
-                                key={index}
-                                initial={{ opacity: 1 }}
-                                animate={{ opacity: 0 }}
-                                transition={{
-                                    duration: 3,
-                                    repeat: Infinity,
-                                    delay: index * 0.1,
-                                }}
-                            >
-                                {letter}
-                            </motion.span>
-                        ))}
+              <motion.span
+                key={index}
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 0 }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: index * 0.1,
+                }}
+              >
+                {letter}
+              </motion.span>
+            ))}
           </h1>
 
           {/* Animated paragraph */}
           <motion.h2
-                id="motion"
-                style={{ fontFamily: "Oswald" }}
-                className="text-xl md:text-4xl font-bold mb-4"
-                initial="hidden"
-                animate="visible"
-                variants={paragraphVariants}
-              >
-                {translation.heroDesc}
+            id="motion"
+            style={{ fontFamily: "Oswald" }}
+            className="text-xl md:text-4xl font-bold mb-4"
+            initial="hidden"
+            animate="visible"
+            variants={paragraphVariants}
+          >
+            {translation.heroDesc}
           </motion.h2>
 
-          <motion.p 
-                style={{ fontFamily: "Oswald" }} 
-                className="text-xl mb-8"
-                initial="hidden"
-                animate="visible"
-                variants={paragraphVariants}
-                >
-                  {translation.heroCaption}
+          <motion.p
+            style={{ fontFamily: "Oswald" }}
+            className="text-xl mb-8"
+            initial="hidden"
+            animate="visible"
+            variants={paragraphVariants}
+          >
+            {translation.heroCaption}
           </motion.p>
 
           <div className="ads grid grid-cols-1 md:grid-cols-3 gap-8 px-4 py-8">
@@ -158,7 +162,7 @@ export default function Home() {
           <About />
 
           {/* contact */}
-          
+
           <Contact />
         </main>
       </div>

@@ -13,6 +13,7 @@ import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
 import LabelIcon from "../../../components/ReactI-cons/label/LabelIcon";
 import AddressIcon from './../../../components/ReactI-cons/AdressIcon/AddressIcon';
 import PhoneIcon from "../../../components/ReactI-cons/phoneIcon/PhoneIcon";
+import { Helmet } from "react-helmet-async";
 
 const UpdateUserInfo = () => {
   const { translation } = useSelector((state) => state.lang);
@@ -77,6 +78,10 @@ const UpdateUserInfo = () => {
 
   return (
     <div className="container mx-auto p-4 dark:text-black">
+      <Helmet>
+        <title>Settings/updateUser</title>
+        <meta name="description" content="About Page" />
+      </Helmet>
       <h1 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-3  dark:text-orange-200 ">
         <SettingIcon />
         {translation.update_info}
