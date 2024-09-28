@@ -40,7 +40,7 @@ export function Navbaar() {
 
   const dropDownLink = [
     { name: translation.setting, href: "setting" },
-    { name: translation.myOrders, href: "allOrders/*" },
+    { name: translation.myOrders, href: "allOrder/*" },
   ];
 
   const logout = () => {
@@ -98,7 +98,7 @@ export function Navbaar() {
                 ))}
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={logout}>
-                  <span className='flex items-center gap-2'> 
+                  <span className='flex items-center gap-2'>
                     {translation.logout}
                     <i className="fa-solid fa-arrow-right-from-bracket"></i>
                   </span>
@@ -106,7 +106,7 @@ export function Navbaar() {
               </Dropdown>
             </>
           ) : (
-            <LoginModal/>
+            <LoginModal />
           )}
           <button
             onClick={toggleMenu}
@@ -135,17 +135,16 @@ export function Navbaar() {
                     <NavLink
                       to={item.href}
                       className={({ isActive }) =>
-                        `block py-2 pl-3 pr-4 flex-1 ${
-                          isActive
-                            ? " dark:text-orange-500 border-b-2 font-bold border-b-orange-200  bg-orange-700 md:bg-transparent md:text-orange-700 "
-                            : "text-gray-900 hover:bg-orange-100 md:hover:bg-transparent md:hover:text-orange-700 dark:text-white dark:hover:bg-orange-700 dark:hover:bg-opacity-30 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                        `block py-2 pl-3 pr-4 flex-1 ${isActive
+                          ? " dark:text-orange-500 border-b-2 font-bold border-b-orange-200  bg-orange-700 md:bg-transparent md:text-orange-700 "
+                          : "text-gray-900 hover:bg-orange-100 md:hover:bg-transparent md:hover:text-orange-700 dark:text-white dark:hover:bg-orange-700 dark:hover:bg-opacity-30 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         } md:p-0 transition-colors duration-200`
                       }
                       onClick={() => setIsOpen(false)}
                     >
-                        <span className='text-nowrap'>
-                    {item.name}
-                    </span>
+                      <span className='text-nowrap'>
+                        {item.name}
+                      </span>
                     </NavLink>
                   </li>
                 ))}

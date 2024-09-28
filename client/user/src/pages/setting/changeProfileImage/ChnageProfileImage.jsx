@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { changeProfileImg } from "../../../redux/reducers/userAuthSlice";
 import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
+import { Helmet } from "react-helmet-async";
 
 const ProfileImage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,51 +63,54 @@ const ProfileImage = () => {
   };
 
   return (
-
     <>
-     <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-10  dark:text-orange-200">
-      <SettingIcon/>
+      <Helmet>
+        <title>Settings/ChangeProfileImage</title>
+        <meta name="description" content="About Page" />
+      </Helmet>
+      <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-10  dark:text-orange-200">
+        <SettingIcon />
         {translation.changeProfileImg}
       </h2>
-    <div className="flex flex-col items-center space-y-4">
-      {/* Profile Image */}
-      <Avatar img={userInfo.image} size="lg" rounded={true} />
-      <Button onClick={openModal} gradientDuoTone="purpleToBlue">
-        Change Image
-      </Button>
+      <div className="flex flex-col items-center space-y-4">
+        {/* Profile Image */}
+        <Avatar img={userInfo.image} size="lg" rounded={true} />
+        <Button onClick={openModal} gradientDuoTone="purpleToBlue">
+          Change Image
+        </Button>
 
-      {/* Modal for uploading new image */}
-      <Modal show={isModalOpen} size="md" onClose={closeModal}>
-        <Modal.Header>Change Profile Image</Modal.Header>
-        <Modal.Body>
-          <div className="space-y-4">
-            {/* File Input for Image Upload */}
-            <FileInput
-              id="profileImage"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-            {/* Image Preview */}
-            {previewUrl && (
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="w-40 h-40 rounded-full shadow-lg mx-auto"
+        {/* Modal for uploading new image */}
+        <Modal show={isModalOpen} size="md" onClose={closeModal}>
+          <Modal.Header>Change Profile Image</Modal.Header>
+          <Modal.Body>
+            <div className="space-y-4">
+              {/* File Input for Image Upload */}
+              <FileInput
+                id="profileImage"
+                accept="image/*"
+                onChange={handleFileChange}
               />
-            )}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={previewUrl && onSubmit} gradientDuoTone="purpleToBlue">
-            {isLoading ? <i className="fa-solid fa-spin fa-spinner"></i> : "Submit"}
-          </Button>
-          <Button color="gray" onClick={closeModal}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
+              {/* Image Preview */}
+              {previewUrl && (
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  className="w-40 h-40 rounded-full shadow-lg mx-auto"
+                />
+              )}
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={previewUrl && onSubmit} gradientDuoTone="purpleToBlue">
+              {isLoading ? <i className="fa-solid fa-spin fa-spinner"></i> : "Submit"}
+            </Button>
+            <Button color="gray" onClick={closeModal}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
-    </div>
+      </div>
     </>
   );
 };

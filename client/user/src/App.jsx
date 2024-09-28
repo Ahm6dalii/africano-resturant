@@ -105,11 +105,11 @@ function App() {
                 path="/food/:id"
                 element={<FoodDetails></FoodDetails>}
               ></Route>
-              <Route path="/order" element={<ProtectedRoot><Order></Order></ProtectedRoot> }></Route>
+              <Route path="/order" element={<ProtectedRoot><Order></Order></ProtectedRoot>}></Route>
               <Route path="/cart" element={<ProtectedRoot><Cart /></ProtectedRoot>}></Route>
-               <Route path="/forgot-password" element={<ForgetPass />}></Route>
+              <Route path="/forgot-password" element={<ForgetPass />}></Route>
               <Route path="/OTP" element={<EnterOtp />}></Route>
-              <Route path="/allOrders/*" element={<OrderList />}></Route>
+              <Route path="/allOrder/*" element={<OrderList />}></Route>
               <Route path="*" element={<NotFound></NotFound>}></Route>
             </Route>
           </Routes>

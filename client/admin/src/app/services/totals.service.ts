@@ -8,8 +8,10 @@ import { ApiLinkService } from './api-link.service';
   providedIn: 'root'
 })
 export class TotalsService {
-  private apiUrl = 'http://localhost:3000';
-  constructor(private _apiLink: ApiLinkService, private _authService: AuthService) { }
+  private apiUrl = '';
+  constructor(private _apiLink: ApiLinkService, private _authService: AuthService) {
+    this.apiUrl = this._apiLink.apiLink.getValue();
+  }
   _httpClient = inject(HttpClient)
 
   getOrders(): Observable<any> {

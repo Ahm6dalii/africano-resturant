@@ -16,7 +16,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   dropdownOpen = false;
   notifications: any[] = [];
   adminId: any
-  constructor(private _notificationService: NotificationsService, private _socketIoService: SocketIoService, private _authService: AuthService) { }
+  constructor(private _notificationService: NotificationsService, private _socketIoService: SocketIoService, private _authService: AuthService) {
+    this.getAllNotifications();
+  }
 
   ngOnInit() {
     this.getAllNotifications();
@@ -49,7 +51,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   getAllNotifications() {
     this._notificationService.fetchNotifications().subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+        console.log(res, "notifications");
         this.notifications = res.filter((noti: any) => noti.read === false && noti.type !== 'Delivery_Changed' && noti.type !== 'order_status_updated')
       },
       error: (err) => {

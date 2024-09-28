@@ -10,6 +10,7 @@ import DetailsLoading from "../../components/Skeletion Loading/DetailsLoading"
 import RelatedProduct from "./RelatedProduct"
 import socket from "../../socket.io/socket"
 import toast from 'react-hot-toast';
+import { Helmet } from "react-helmet-async"
 
 const FoodDetails = () => {
     const { id } = useParams()
@@ -84,19 +85,23 @@ const FoodDetails = () => {
     if (isLoading) return <DetailsLoading />
     return (
         <>
-                     <h3 style={{"fontFamily":"Marhey"}} className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
-                     <i class="fa-solid fa-bowl-food pe-2"></i>
-             {translation.foodDetails}
+            <Helmet>
+                <title>{language === 'en' ? food?.name?.en : food?.name?.ar}</title>
+                <meta name="description" content="About Page" />
+            </Helmet>
+            <h3 style={{ "fontFamily": "Marhey" }} className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
+                <i class="fa-solid fa-bowl-food pe-2"></i>
+                {translation.foodDetails}
             </h3>
 
-            <div className="flex items-end justify-end space-x-4 px-16" dir={language == 'en' ? 'ltl' : 'ltr'}>
+            <div className="flex items-end justify-end gap-5 px-16 overflow-hidden" dir={language == 'en' ? 'ltl' : 'ltr'}>
                 {previousFood && (
                     <>
                         <Tooltip
                             content={
                                 <div
                                     onClick={() => handleNavigate(previousFood._id)}
-                                    className="min-w-32 w-40 h-40 flex items-center justify-center space-x-2 rounded-lg cursor-pointer"
+                                    className="min-w-32 overflow-hidden w-40 h-40 flex items-center justify-center space-x-2 rounded-lg cursor-pointer"
                                     style={{ width: '180px', height: '80px' }}
                                 >
                                     <div className="w-16 h-16 mr-1">
@@ -128,7 +133,7 @@ const FoodDetails = () => {
                             content={
                                 <div
                                     onClick={() => handleNavigate(nextFood._id)}
-                                    className="min-w-32 w-40 h-40 flex items-center justify-center space-x-2  rounded-lg cursor-pointer"
+                                    className="min-w-32 w-40 h-40 flex items-center justify-center space-x-2 overflow-hidden  rounded-lg cursor-pointer"
                                     style={{ width: '180px', height: '80px' }}
                                 >
                                     <div className="w-16 h-16 mr-1">
@@ -156,7 +161,7 @@ const FoodDetails = () => {
                 )}
             </div>
 
-            <div className="py-16">
+            <div className="py-16 overflow-x-hidden">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     {food && <div className="flex flex-col md:flex-row -mx-4">
                         <div className="md:flex-1 px-4">
@@ -164,12 +169,12 @@ const FoodDetails = () => {
                                 <img className="w-full h-full object-cover" src={food?.image || "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"} alt="Product Image" />
                             </div>
                         </div>
-                        
+
                         <div className="md:flex-1 px-4">
                             <h2 className="text-6xl font-bold text-orange-900 dark:text-orange-200 mb-2">{language === 'en' ? food?.name?.en : food?.name?.ar}</h2>
                             <div>
                                 <span className="font-bold text-gray-900 dark:text-white">
-                                {translation.foodDescription} </span>
+                                    {translation.foodDescription} </span>
                                 <p className="text-gray-900 dark:text-gray-300 text-md mt-2">
                                     {language === 'en' ? food?.description?.en : food?.description?.ar}
                                 </p>
@@ -196,19 +201,19 @@ const FoodDetails = () => {
                                                     }`}
                                             >
                                                 {sizeKey}
-                                            </button> 
+                                            </button>
                                         ))
                                     ) : (
                                         <span className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600 ">{Object.keys(food.amount)[0]}</span>
                                     )}
                                 </div>
                             </div>
-                            
+
                             <div className="flex flex-col md:flex-row items-start justify-start md:mt-20 w-full mr-7">
                                 <div className="w-full md:w-auto px-2 flex justify-start">
                                     <button onClick={handleAddToCart} className="w-full md:w-56 bg-red-900 hover:bg-red-600  text-white py-2 px-4 rounded-full font-bold  ">
-                                              {translation.confirm}                                   
-                                     </button>
+                                        {translation.confirm}
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -44,14 +44,21 @@ export class FullComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.socketIoService.on('newMessage', (message) => {
-      console.log(message, "lets have a look");
-      if (message.senderModel !== "Admin") {
-        this._chatService.changeRead(true)
-      }
-      // this.read = true
 
+    this.socketIoService.startListening();
+    this.socketIoService.on('connect', () => {
+      console.log('Connected to socket server');
     });
+
+    this.socketIoService.newMessage$.subscribe((message) => {
+      if (message) {
+        console.log(message, "New message received");
+        if (message.senderModel !== "Admin") {
+          this._chatService.changeRead(true)
+        }
+      }
+    });
+
   }
   getUnReadChat() {
     this._chatService.getUnReadChat().subscribe({
@@ -75,7 +82,7 @@ export class FullComponent implements OnInit {
   sidebarMenu: sidebarMenu[] = [
     {
       link: '/home',
-      icon: 'fa-house', 
+      icon: 'fa-house',
       menu: 'Dashboard',
     },
     {
@@ -85,47 +92,47 @@ export class FullComponent implements OnInit {
     },
     {
       link: '/foods',
-      icon: 'fa-pizza-slice', 
+      icon: 'fa-pizza-slice',
       menu: 'Foods',
     },
     {
       link: '/categories',
-      icon: 'fa-table', 
+      icon: 'fa-table',
       menu: 'Categories',
     },
-  
+
     {
       link: '/orders',
-      icon: 'fa-receipt', 
+      icon: 'fa-receipt',
       menu: 'Orders',
     },
     {
       link: '/delivery',
-      icon: 'fa-motorcycle', 
+      icon: 'fa-motorcycle',
       menu: 'Delivery',
     },
- 
+
     {
       link: "/create",
-      icon: 'fa-user-plus', 
+      icon: 'fa-user-plus',
       menu: "Create Admin",
     },
     {
       link: "/admins",
-      icon: 'fa-user-tie', 
+      icon: 'fa-user-tie',
       menu: "Admins List",
     },
     {
       link: "/users",
-      icon: 'fa-users', 
+      icon: 'fa-users',
       menu: "Users List",
     },
     {
       link: "/logs",
-      icon: 'fa-person-circle-check', 
+      icon: 'fa-person-circle-check',
       menu: "Admins Logs",
     },
-    
+
   ];
 
 
