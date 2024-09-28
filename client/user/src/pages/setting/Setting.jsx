@@ -34,7 +34,7 @@ export default function Setting() {
         <div className="top-12 p-4">
           <div className="flex justify-between items-center md:block">
 
-            <h2 className="text-2xl text-orange-200 font-semibold  flex items-center">
+            <h2 className="text-2xl  text-black dark:text-orange-200 font-semibold  flex items-center">
               <i className="fas fa-gear mr-3"></i>{translation?.setting}
             </h2>
             <button onClick={toggleMenu} className="md:hidden text-white">

@@ -14,7 +14,7 @@
 
     <div *ngIf="dropdownOpen && notifications.length > 0"
       class="absolute right-[123px] mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20 max-h-44 overflow-y-auto"
-      style="width: 20rem;">
+      style="max-width: 30rem;">
       <div class="py-2">
 
         <div *ngFor="let notification of notifications; let i = index"

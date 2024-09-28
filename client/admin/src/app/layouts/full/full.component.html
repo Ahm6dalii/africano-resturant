@@ -15,7 +15,10 @@
           <li class="list-group mb-2" *ngFor="let sidenav of sidebarMenu">
             <a matRipple [matRippleColor]="'#f7f8f443'" routerLink="{{ sidenav.link }}"
               class="sidebar-menu w-100 d-flex align-items-center" [routerLinkActive]="routerActive">
-              <i-feather name="{{ sidenav.icon }}" class="feather-base me-12"></i-feather> <span class="ps-4">{{
+              <!-- <i-feather name="{{ sidenav.icon }}" class="feather-base me-12"></i-feather> -->
+              <i [class]="'fa-solid me-12 ' + sidenav.icon"></i>
+
+               <span class="ps-4">{{
                 sidenav.menu }}</span>
               @if(sidenav.menu === 'Chat' && read === true ){
               <span class="ms-auto bg-red-400 p-1 font-semibold rounded-lg animate-pulse">

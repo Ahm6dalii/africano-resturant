@@ -75,140 +75,57 @@ export class FullComponent implements OnInit {
   sidebarMenu: sidebarMenu[] = [
     {
       link: '/home',
-      icon: 'dashboard', // Updated icon
+      icon: 'fa-house', 
       menu: 'Dashboard',
     },
     {
       link: '/chat',
-      icon: 'new',
+      icon: 'fa-chart-simple',
       menu: 'Chat',
     },
     {
       link: '/foods',
-      icon: 'restaurant', // Updated icon
+      icon: 'fa-pizza-slice', 
       menu: 'Foods',
     },
     {
       link: '/categories',
-      icon: 'category', // Updated icon
+      icon: 'fa-table', 
       menu: 'Categories',
     },
-
-    // {
-    //   link: "/button",
-    //   icon: "disc",
-    //   menu: "Buttons",
-    // },
-    // {
-    //   link: "/forms",
-    //   icon: "layout",
-    //   menu: "Forms",
-    // },
-    // {
-    //   link: "/alerts",
-    //   icon: "info",
-    //   menu: "Alerts",
-    // },
-    // {
-    //   link: "/grid-list",
-    //   icon: "file-text",
-    //   menu: "Grid List",
-    // },
-    // {
-    //   link: "/menu",
-    //   icon: "menu",
-    //   menu: "Menus",
-    // },
-    // {
-    //   link: "/table",
-    //   icon: "grid",
-    //   menu: "Tables",
-    // },
-    // {
-    //   link: "/expansion",
-    //   icon: "divide-circle",
-    //   menu: "Expansion Panel",
-    // },
-    // {
-    //   link: "/chips",
-    //   icon: "award",
-    //   menu: "Chips",
-    // },
-    // {
-    //   link: "/tabs",
-    //   icon: "list",
-    //   menu: "Tabs",
-    // },
+  
     {
       link: '/orders',
-      icon: 'shopping_cart', // Updated icon
+      icon: 'fa-receipt', 
       menu: 'Orders',
     },
     {
       link: '/delivery',
-      icon: 'local_shipping', // Updated icon
+      icon: 'fa-motorcycle', 
       menu: 'Delivery',
     },
-    // {
-    //   link: '/login',
-    //   icon: 'list',
-    //   menu: 'Login',
-    // },
+ 
     {
       link: "/create",
-      icon: 'person_add', // Updated icon
+      icon: 'fa-user-plus', 
       menu: "Create Admin",
     },
     {
       link: "/admins",
-      icon: 'history', // Updated icon
+      icon: 'fa-user-tie', 
       menu: "Admins List",
     },
     {
       link: "/users",
-      icon: 'group', // Updated icon
+      icon: 'fa-users', 
       menu: "Users List",
     },
     {
       link: "/logs",
-      icon: 'receipt', // Updated icon
+      icon: 'fa-person-circle-check', 
       menu: "Admins Logs",
     },
-    // {
-    //   link: "/progress",
-    //   icon: "bar-chart-2",
-    //   menu: "Progress Bar",
-    // },
-    // {
-    //   link: "/toolbar",
-    //   icon: "voicemail",
-    //   menu: "Toolbar",
-    // },
-    // {
-    //   link: "/progress-snipper",
-    //   icon: "loader",
-    //   menu: "Progress Snipper",
-    // },
-    // {
-    //   link: "/tooltip",
-    //   icon: "bell",
-    //   menu: "Tooltip",
-    // },
-    // {
-    //   link: "/snackbar",
-    //   icon: "slack",
-    //   menu: "Snackbar",
-    // },
-    // {
-    //   link: "/slider",
-    //   icon: "sliders",
-    //   menu: "Slider",
-    // },
-    // {
-    //   link: "/slide-toggle",
-    //   icon: "layers",
-    //   menu: "Slide Toggle",
-    // },
+    
   ];
 
 

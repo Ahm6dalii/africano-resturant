@@ -72,7 +72,7 @@ const OrderList = () => {
 
   if (orders.length === 0) {
     return (
-      <div className="text-center mt-10 px-4">
+      <div className="text-center mt-10 px-4" >
         <p>{translation.noOrder}</p>
         <Link to='/menu' className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg inline-block">
           {translation.browsMenu}
@@ -88,7 +88,7 @@ const OrderList = () => {
         <Recipt />
         {translation.yourOrderList}
       </h2>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" dir="ltr">
         <Table hoverable={false} className="w-full">
           <Table.Head>
             <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3">

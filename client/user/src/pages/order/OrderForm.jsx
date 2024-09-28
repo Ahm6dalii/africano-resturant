@@ -73,7 +73,8 @@ const navigate = useNavigate();
     async ({ billing_data, payment_method }) => {
       const headers = { token: `${user}` };
       const dataToSend = {
-        redirection_url: payment_method === 'online' ? "http://localhost:5173/userOrders" : undefined,
+        redirection_url: payment_method === 'online' ? "http://localhost:5173" : undefined,
+        after_redirect_url:"http://localhost:5173",
         billing_data: billing_data,
         payment_method: payment_method
       };

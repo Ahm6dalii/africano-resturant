@@ -18,8 +18,8 @@ export default function LanuageButton() {
 
 
   return (
-    <Menu as="div" className="relative block me-auto dark:text-black ">
-      <div className='w-[50px] me-3 ms-1 '>
+    <Menu as="div" className="relative block me-auto dark:text-black  ">
+      <div className='w-[50px] sm:w-[80px] me-3 ms-1 sm:me-5 sm:ms-2 '>
         <MenuButton className=" inline-flex me-auto  justify-center gap-x-1.5 rounded-md bg-[transparent] px-1 py-2 text-sm font-semibold  shadow-sm ">
           <span className=" dark:text-white flex gap-2 items-center">
                        {language=="en"?<ReactCountryFlag countryCode='US' svg />:<ReactCountryFlag countryCode='EG' svg />} 

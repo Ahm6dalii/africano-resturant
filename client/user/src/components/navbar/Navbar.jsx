@@ -57,11 +57,11 @@ export function Navbaar() {
         <Navbar.Brand as={Link} to="/" className="flex items-center">
           <img src={mode === "dark" ? logoDark : logoLight} className="h-10 mr-3" alt="Logo" />
         </Navbar.Brand>
-        <div className="flex items-center md:order-2">
+        <div className="flex items-center md:order-2 sm:p-1 sm:mx-1">
           <LanuageButton />
           <button
             onClick={() => dispatch(changeMode(mode === "light" ? "dark" : "light"))}
-            className="text-gray-500 ms-1 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm inline-flex items-center mr-2"
+            className="text-gray-500 ms-3 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm inline-flex items-center mr-2"
           >
             {mode === "dark" ? (
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd"></path></svg>
@@ -72,7 +72,7 @@ export function Navbaar() {
           {user ? (
             <>
               <NotificationsModel />
-              <Link to="/cart" className="relative p-1 mr-2">
+              <Link to="/cart" className="relative p-1 mr-2 sm:mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
@@ -111,7 +111,7 @@ export function Navbaar() {
           <button
             onClick={toggleMenu}
             type="button"
-            className="inline-flex items-center p-1 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-1 ml-2 sm:p-2 xs:ml-4 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="mobile-menu"
             aria-expanded={isOpen}
           >
@@ -137,9 +137,9 @@ export function Navbaar() {
                       className={({ isActive }) =>
                         `block py-2 pl-3 pr-4 flex-1 ${
                           isActive
-                            ? "text-white  bg-orange-700 md:bg-transparent md:text-orange-700 dark:text-white"
+                            ? " dark:text-orange-500 border-b-2 font-bold border-b-orange-200  bg-orange-700 md:bg-transparent md:text-orange-700 "
                             : "text-gray-900 hover:bg-orange-100 md:hover:bg-transparent md:hover:text-orange-700 dark:text-white dark:hover:bg-orange-700 dark:hover:bg-opacity-30 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        } rounded md:p-0 transition-colors duration-200`
+                        } md:p-0 transition-colors duration-200`
                       }
                       onClick={() => setIsOpen(false)}
                     >

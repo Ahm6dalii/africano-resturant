@@ -65,7 +65,7 @@ const NotificationsModel = () => {
 
     return (
         <>
-            <div className="flex justify-center pe-1">
+            <div className="flex justify-center pe-1 sm:pe-3">
                 <div>
                     {/* Toggle Button */}
                     <button
