@@ -68,7 +68,7 @@ interface Admin {
 })
 export class AdminListComponent implements OnInit {
   admins: Admin[] = [];
-  displayedColumns: string[] = ['username', 'isSuperAdmin', 'permissions', 'isActive', 'createdAt', 'actions'];
+  displayedColumns: string[] = ['index', 'username', 'isSuperAdmin', 'permissions', 'isActive', 'createdAt', 'actions'];
   errorMessage: string = "";
   searchTerm: string = "";
   currentPage: number = 0;

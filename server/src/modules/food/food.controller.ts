@@ -14,11 +14,15 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
-  Patch
+  Patch,
+  UseGuards,
+  SetMetadata
 } from '@nestjs/common';
 import { FoodService } from './food.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service';
+import { JwtAuthGuard } from 'src/core/gaurds/jwt-auth.guard';
+import { PermissionsGuard } from 'src/core/gaurds/permissions.guard';
 
 @Controller('api/foods')
 export class FoodController {
@@ -27,7 +31,9 @@ export class FoodController {
     private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  @Post()
+  @Post() //here
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @SetMetadata('permissions', ['createFood'])
   @UseInterceptors(FileInterceptor('file'))
   async create(
     @Body() foodDto: any,
@@ -64,7 +70,9 @@ export class FoodController {
     return this.foodsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch(':id')//here
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @SetMetadata('permissions', ['updateFood'])
   @UseInterceptors(FileInterceptor('file'))
   async update(
     @Param('id') id: string,
@@ -74,7 +82,9 @@ export class FoodController {
     return this.foodsService.update(id, foodDto, file ? file : null);
   }
 
-  @Delete(':id')
+  @Delete(':id')//here
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @SetMetadata('permissions', ['deleteFood'])
   delete(@Param('id') id: string) {
     return this.foodsService.delete(id);
   }

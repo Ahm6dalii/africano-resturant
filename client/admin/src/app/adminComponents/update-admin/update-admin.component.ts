@@ -12,7 +12,6 @@ interface AdminData {
   username: string;
   isSuperAdmin: boolean;
   permissions: string[];
-  // isActive: boolean;
 }
 
 interface EditableAdminData extends AdminData {
@@ -20,6 +19,9 @@ interface EditableAdminData extends AdminData {
   updateAdminPermission: boolean;
   viewAdminPermission: boolean;
   deleteAdminPermission: boolean;
+  createFoodPermission: boolean;
+  updateFoodPermission: boolean;
+  deleteFoodPermission: boolean;
 }
 
 @Component({
@@ -40,7 +42,10 @@ export class EditAdminDialogComponent implements OnInit {
       createAdminPermission: false,
       updateAdminPermission: false,
       viewAdminPermission: false,
-      deleteAdminPermission: false
+      deleteAdminPermission: false,
+      createFoodPermission: false,
+      updateFoodPermission: false,
+      deleteFoodPermission: false,
     };
   }
 
@@ -53,6 +58,9 @@ export class EditAdminDialogComponent implements OnInit {
     this.editableData.updateAdminPermission = this.editableData.permissions.includes('updateAdmin');
     this.editableData.viewAdminPermission = this.editableData.permissions.includes('viewAdmin');
     this.editableData.deleteAdminPermission = this.editableData.permissions.includes('deleteAdmin');
+    this.editableData.createFoodPermission = this.editableData.permissions.includes('createFood');
+    this.editableData.updateFoodPermission = this.editableData.permissions.includes('updateFood');
+    this.editableData.deleteFoodPermission = this.editableData.permissions.includes('deleteFood');
   }
 
   onSuperAdminChange() {
@@ -70,6 +78,9 @@ export class EditAdminDialogComponent implements OnInit {
     if (this.editableData.updateAdminPermission) this.editableData.permissions.push('updateAdmin');
     if (this.editableData.viewAdminPermission) this.editableData.permissions.push('viewAdmin');
     if (this.editableData.deleteAdminPermission) this.editableData.permissions.push('deleteAdmin');
+    if (this.editableData.createFoodPermission) this.editableData.permissions.push('createFood');
+    if (this.editableData.updateFoodPermission) this.editableData.permissions.push('updateFood');
+    if (this.editableData.deleteFoodPermission) this.editableData.permissions.push('deleteFood');
   }
 
   onNoClick(): void {

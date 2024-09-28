@@ -6,8 +6,9 @@ import { Menu } from 'lucide-react';
 const SettingLink = ({ to, children, isActive }) => (
   <Link
     to={to}
-    className={`flex items-center px-4 py-2.5 font-semibold transition-all duration-200 ease-in-out rounded-full hover:text-orange-500 hover:bg-orange-100 dark:hover:bg-orange-900/20 ${
-      isActive ? 'text-orange-500 bg-orange-100 dark:bg-orange-900/20' : ''
+
+    className={`flex items-center px-4 py-2.5 font-semibold transition-all duration-200 ease-in-out rounded-full   hover:text-orange-700 ${
+      isActive ? 'bg-orange-100   dark:text-orange-900' : ''
     }`}
   >
     {children}
@@ -32,7 +33,8 @@ export default function Setting() {
       <aside className="md:w-1/3 lg:w-1/4 md:border-e md:border-e-black dark:border-e-white ">
         <div className="top-12 p-4">
           <div className="flex justify-between items-center md:block">
-            <h2 className="text-2xl font-semibold  flex items-center">
+
+            <h2 className="text-2xl text-orange-200 font-semibold  flex items-center">
               <i className="fas fa-gear mr-3"></i>{translation?.setting}
             </h2>
             <button onClick={toggleMenu} className="md:hidden text-white">

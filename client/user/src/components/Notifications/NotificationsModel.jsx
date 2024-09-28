@@ -4,6 +4,7 @@ import moment from 'moment'; // Import moment.js to format the date
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import axios from 'axios';
+import logo from "../../assets/logo/logo.li.png"
 
 const NotificationsModel = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -91,7 +92,8 @@ const NotificationsModel = () => {
 
                     {dropdownOpen && (
                         <div
-                            className="absolute right-2 w-[90%] sm:w-[50%] md:w-[50%] xl:w-[50%] mt-2 bg-gray-100 shadow rounded-md shadow-lg overflow-hidden z-20 max-h-44 overflow-y-auto"
+
+                            className="absolute right-16 w-[90%] sm:w-[50%] md:w-[50%] xl:w-[30%] mt-2 bg-zinc-200 dark:bg-slate-800   rounded-md shadow-lg overflow-hidden z-20 max-h-80 overflow-y-auto"
                             
                         >
                             <div className="py-2">
@@ -99,15 +101,15 @@ const NotificationsModel = () => {
                                     notifi.map((notification, index) => (
                                         <div
                                             key={index}
-                                            className="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2"
+                                            className="flex items-center px-4 py-3 border-b  dark:hover:bg-gray-900 hover:bg-zinc-500 hover:text-orange-200 -mx-2"
                                         >
                                             <img
-                                                className="h-8 w-8 rounded-full object-cover mx-1"
-                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
+                                                className="size-12 rounded-full object-cover mx-1"
+                                                src={logo}
                                                 alt="avatar"
                                             />
                                             <div className="ml-2">
-                                                <p className="text-gray-600 text-sm">
+                                                <p className=" text-sm">
                                                     <span className="font-bold">Notification</span>: {notification?.message}
                                                 </p>
                                                 <p className="text-gray-500 text-xs">
@@ -120,7 +122,7 @@ const NotificationsModel = () => {
                                     <p className="text-gray-600 text-sm px-4 py-3">No notifications available</p>
                                 )}
                             </div>
-                            {notifi.length > 0 && <span onClick={() => markAsRead()} className="block bg-gray-800 text-white text-center font-bold py-2">Mark all as Read</span>}
+                            {notifi.length > 0 && <span onClick={() => markAsRead()} className="block cursor-pointer bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-900 hover:bg-zinc-500 text-white text-center font-bold py-2">Mark all as Read</span>}
                         </div>
                     )}
                 </div>

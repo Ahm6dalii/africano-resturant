@@ -30,9 +30,13 @@ export class CreateAdminComponent {
     password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)]],
     permissions: this.fb.group({
       createAdmin: [false],
-      // updateAdmin: [false],
+      updateAdmin: [false],
       viewAdmin: [false],
-      deleteAdmin: [false]
+      deleteAdmin: [false],
+      createFood: [false],
+      updateFood: [false],
+      deleteFood: [false],
+
     }),
     isSuperAdmin: [false]
   });

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiLinkService } from './api-link.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,19 @@ import { ApiLinkService } from './api-link.service';
 export class FoodService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient, private _apiLink: ApiLinkService) {
+  constructor(
+    private http: HttpClient,
+    private _apiLink: ApiLinkService,
+    private _authService: AuthService
+  ) {
     this.apiUrl = this._apiLink.apiLink.getValue();
+  }
+
+  private getHeaders(): HttpHeaders {
+    const token = this._authService.userToken.getValue();
+    return new HttpHeaders({
+      'token': token,
+    });
   }
 
   getAllFoods(page: number, limit: number): Observable<any> {
@@ -19,14 +31,13 @@ export class FoodService {
     );
   }
 
-
-
   createFood(foodData: any): Observable<any> {
+    const headers = this.getHeaders();
     console.log(foodData, 'Ahmed createFood');
-  
+
     // Create a new FormData object
     const formData = new FormData();
-  
+
     for (const key in foodData) {
       if (foodData.hasOwnProperty(key)) {
         if (key === 'file') {
@@ -44,21 +55,17 @@ export class FoodService {
         }
       }
     }
-  
-    return this.http.post(`${this.apiUrl}/api/foods`, formData);
+
+    return this.http.post(`${this.apiUrl}/api/foods`, formData, { headers });
   }
-  
 
-
-  // updateFood(id: string, food: any): Observable<any> {
-  //   return this.http.patch<any>(`${this.apiUrl}/api/foods/${id}`, food);
-  // }
   updateFood(foodId: string, foodData: any): Observable<any> {
+    const headers = this.getHeaders();
     console.log(foodData, 'Ahmed updateFood');
-  
+
     // Create a new FormData object
     const formData = new FormData();
-  
+
     for (const key in foodData) {
       if (foodData.hasOwnProperty(key)) {
         if (key === 'file') {
@@ -76,12 +83,12 @@ export class FoodService {
         }
       }
     }
-  
-    return this.http.patch(`${this.apiUrl}/api/foods/${foodId}`, formData);
+
+    return this.http.patch(`${this.apiUrl}/api/foods/${foodId}`, formData, { headers });
   }
-  
 
   deleteFood(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/api/foods/${id}`);
+    const headers = this.getHeaders();
+    return this.http.delete<any>(`${this.apiUrl}/api/foods/${id}`, { headers });
   }
 }
