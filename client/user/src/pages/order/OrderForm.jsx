@@ -77,14 +77,14 @@ const navigate = useNavigate();
         billing_data: billing_data,
         payment_method: payment_method
       };
-      console.log(dataToSend)
+      // console.log(dataToSend)
       const response = await axios.post(`${api}/paymob`, dataToSend, { headers });
       return response?.data;
     },
     {
         onSuccess: (data, payment_method) => {
-            console.log(payment_method.payment_method
-                , "from api link somthing what ever");
+            // console.log(payment_method.payment_method
+            //     , "from api link somthing what ever");
             if (data.apiLink && payment_method?.payment_method === 'online') {
                 window.location.href = data.apiLink;
                 toast.success("your order was successfull1")
@@ -108,7 +108,7 @@ const navigate = useNavigate();
 
   return (
     <form onSubmit={handleSubmit(submitTheForm)} className="bg-transparent   shadow-md rounded-lg p-6  max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-center text-red-800 ">Order Details</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center text-red-800 ">{translation.orderForm}</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <InputsOrder type="text" name={translation.orderFirsetName} yub="first_name" register={register} errors={errors} />
@@ -159,7 +159,7 @@ const navigate = useNavigate();
       <button
         type="submit"
         disabled={isLoading || isSuccess}
-        className="w-full mt-6 p-3 text-center bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+        className="w-full mt-6 p-3 text-center bg-red-900 hover:bg-red-600 text-white rounded-lg font-bold transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
       >
         {isLoading ? (
           <div className="flex items-center justify-center">

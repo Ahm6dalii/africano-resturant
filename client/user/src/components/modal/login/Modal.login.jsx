@@ -1,12 +1,11 @@
-"use client";
 
-import { Button, Modal } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import { useRef, useState, useEffect } from "react";
 import Login from "../../../pages/login/Login";
-import Register from "../../../pages/register/Register";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserIcon from "../../ReactI-cons/UserIcon/UserIcon";
+import './Modal.login.css'
 
 export function LoginModal() {
   const [openModal, setOpenModal] = useState(false); // Initially false to close the modal
@@ -43,18 +42,18 @@ export function LoginModal() {
 
   return (
     <>
-      <span className="inline-block text-bold text-xl text-orange-500" onClick={handleOpenModal}>
+      <span className="inline-block text-bold text-sm sm:text-xl  md:text-xl text-orange-500" onClick={handleOpenModal}>
         <Link className="flex items-center gap-1">
         <UserIcon/>
         {translation.signIn}
         </Link> 
         </span>
       <Modal
-        show={openModal}
+      show={openModal}
         size="md"
         popup
         onClose={() => setOpenModal(false)}
-        className={`${mode === "light" ? "" : "dark"}`}
+        className={`h-auto ${mode === "light" ? "" : "dark"}`}
       >
         <Modal.Header />
         <div ref={modalContentRef}>

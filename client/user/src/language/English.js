@@ -3,7 +3,7 @@ export const En = {
   update_info: 'Update Your Information',
   name: 'Name',
   address: 'Address',
-  phone: 'Phone Number',
+  phone: 'Phone Number', 
   image: 'Profile Image',
   updateButton: 'Update',
   menu: 'Menu',
@@ -88,7 +88,7 @@ export const En = {
   salad: 'Salad',
   drinks: 'Drinks',
   // hero
-  heroAfricano: 'AFRICANO Resturant,',
+  heroAfricano: 'AFRICANO Resturant',
   heroDesc: 'WE SERVE AUTHENTIC PIZZA AND PASTA',
   heroCaption:
     'Delighting you with authentic pizzas and pastas, crafted with passion and fresh ingredients!',
@@ -98,6 +98,7 @@ export const En = {
   footerDesc:
     'Serving authentic pizza and pasta with passion and fresh ingredients.',
   DeliveryContact: 'Delivery & Contact',
+  footerPhone:"Phone",
   Phone: 'Phone:',
   FollowUs: 'Follow Us',
   copyright: '© 2024 Africano Restaurant. All Rights Reserved.',
@@ -124,7 +125,7 @@ export const En = {
   salad: "Salad",
   drinks: "Drinks",
   // hero
-  heroAfricano: "AFRICANO Resturant,",
+  heroAfricano: "AFRICANO Resturant",
   heroDesc: "WE SERVE AUTHENTIC PIZZA AND PASTA",
   heroCaption: "Delighting you with authentic pizzas and pastas, crafted with passion and fresh ingredients!",
   OrderNow: "Order Now",
@@ -158,7 +159,7 @@ export const En = {
   ourStory:"Our Story",
   luxuryRestaurant:"A luxury restaurant with A rare taste you can’t find anywhere in the red sea.",
   masterChef:"master chef",
-  chefName:"Abdo Tarek ",
+  chefName:"Ramy ",
   ourChef:"Our chef",
   masterChefAd:"a master chef with 5 years of experience",
   ourFuture:"Our Future ",
@@ -167,8 +168,8 @@ export const En = {
   weBestAd:" Our journey began in 2022 to provide the finest types of pizza and pasta",
   premiumServices:"Premium Services",
   premiumServicesAd:"From personalized recommendations to exclusive tastings, our premium services ensure an unforgettable culinary journey tailored just for you.",
-  freeDelivery:"Free Home Delivery",
-  freeDeliveryAd:"Enjoy the luxury of having gourmet meals delivered straight to your doorstep, with no extra cost—savor convenience without compromise.",
+  freeDelivery:"Fast Home Delivery",
+  freeDeliveryAd:"Enjoy the luxury of getting delicious meals delivered directly to your door, and taste the convenience without any compromises and in the fastest time.",
   PrimeLocation:"Prime Location",
   PrimeLocationAd:"Nestled in the heart of Ras Ghareb, our establishment offers easy access, ensuring you’re never far from the finest tastes and experiences.",
 
@@ -213,6 +214,7 @@ export const En = {
   orderProcess:"Processing...",
   orderFirsetName:"First Name",
   orderFullName:"Full Name",
+  orderForm:"Order Form ",
   
   orderLastName:"Last Name",
   apartment:"Apartment",
@@ -239,9 +241,10 @@ export const En = {
   paymentMethod:"Payment Method",
   
   //orderList
-  noOrder:"No orders found",
+
+  noOrder:"No Orders found",
   browsMenu: "Browse Menu " ,
-  yourOrderLisr:"Your Orders",
+  yourOrderList:"Your Orders",
   orderData:"Date",
   orderTime:"Time",
   orderItems:"Items",
@@ -284,7 +287,9 @@ size:"Size:",
 customerReviews:"Our customer reviews",
 yourReview:"Your Review",
 
-
-
-
+//Setting
+updateInfo:"Update Info",
+updatePassword:"Update Password",
+changeImage:"Change Image",
+changeProfileImg:"Update Profile Picture"
 }   

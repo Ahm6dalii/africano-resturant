@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { ChatService } from 'src/app/services/chat.service';
+import { SocketIoService } from 'src/app/services/socket-io.service';
 interface sidebarMenu {
   link: string;
   icon: string;
@@ -15,9 +17,12 @@ interface sidebarMenu {
   templateUrl: './full.component.html',
   styleUrls: ['./full.component.scss'],
 })
-export class FullComponent {
+export class FullComponent implements OnInit {
   search: boolean = false;
-  userName:string='';
+  read: any
+  unReadMessages: any[] = []
+  userName: string = '';
+  local: any
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -25,12 +30,46 @@ export class FullComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,private _authService:AuthService) {
-    this.userName=_authService.tokenUserInfo.getValue().username
-    console.log(_authService.tokenUserInfo.getValue(),'pppppppppppppp');
+  constructor(private breakpointObserver: BreakpointObserver, private _authService: AuthService, private _chatService: ChatService, private socketIoService: SocketIoService) {
+    this.userName = _authService.tokenUserInfo.getValue().username
+    console.log(_authService.tokenUserInfo.getValue(), 'pppppppppppppp');
+    this.getUnReadChat();
+    this._chatService.read.subscribe({
+      next: (res) => {
+        this.read = res
+        console.log(this.read);
 
+      }
+    })
   }
 
+  ngOnInit() {
+    this.socketIoService.on('newMessage', (message) => {
+      console.log(message, "lets have a look");
+      if (message.senderModel !== "Admin") {
+        this._chatService.changeRead(true)
+      }
+      // this.read = true
+
+    });
+  }
+  getUnReadChat() {
+    this._chatService.getUnReadChat().subscribe({
+      next: (res: any[]) => {
+        this.unReadMessages = res
+        if (this.unReadMessages.length > 0) {
+          this._chatService.changeRead(true)
+          // this.read = true
+        }
+        console.log(this.unReadMessages, "this.unReadMessages");
+
+      },
+      error: (err) => {
+        console.error(err);
+        this.unReadMessages = [];
+      }
+    });
+  }
   routerActive: string = 'activelink';
 
   sidebarMenu: sidebarMenu[] = [
@@ -38,6 +77,11 @@ export class FullComponent {
       link: '/home',
       icon: 'dashboard', // Updated icon
       menu: 'Dashboard',
+    },
+    {
+      link: '/chat',
+      icon: 'new',
+      menu: 'Chat',
     },
     {
       link: '/foods',
@@ -49,6 +93,7 @@ export class FullComponent {
       icon: 'category', // Updated icon
       menu: 'Categories',
     },
+
     // {
     //   link: "/button",
     //   icon: "disc",
@@ -168,7 +213,7 @@ export class FullComponent {
 
 
 
-  logOut(){
+  logOut() {
     this._authService.logOut()
   }
 }

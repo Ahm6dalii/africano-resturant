@@ -56,7 +56,7 @@ const ConfirmEmail = () => {
                 onSubmit={formik.handleSubmit}
                 className=" p-8 rounded-lg  max-w-md w-full dark:text-black"
             >
-                <h2 className=" flex items-start   text-xl font-bold mb-6 text-center dark:text-white">
+                <h2 className="text-4xl font-bold mb-6 text-center flex items-center gap-3 justify-center text-red-900 dark:text-orange-200">
                   <CheckIcon></CheckIcon>
                     {translation.confirmAcount}
                     </h2>
@@ -109,8 +109,8 @@ const ConfirmEmail = () => {
                 <button
                     type="submit"
                     disabled={isloading}
-                    className="w-full bg-indigo-600 text-white py-2 px-4 rounded-full hover:bg-indigo-700"
-                >
+                    className=" w-full bg-red-900 hover:bg-red-700 dark:bg-yellow-400 dark:hover:bg-yellow-500 text-white py-2 px-4 rounded-full "
+                    >
                     {isloading ? <i className='fas fa-spin fa-spinner'></i> : translation.confirmacount}
                 </button>
             </form>

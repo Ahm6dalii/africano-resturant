@@ -27,10 +27,11 @@ import { CreateAdminComponent } from './pages/create-admin/create-admin.componen
 import { AdminListComponent } from './pages/view-admins/view-admins.component';
 import { authGuard } from './gaurd/auth.guard';
 import { ChangePassComponent } from './pages/change-pass/change-pass.component';
-import {CategoryCrudComponent} from '../app/pages/category-crud/category-crud.component'
+import { CategoryCrudComponent } from '../app/pages/category-crud/category-crud.component'
 import { DeliveryComponent } from './pages/delivery/delivery.component';
 import { LogsComponent } from './pages/logs/logs.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 
 
@@ -40,7 +41,7 @@ export const routes: Routes = [
     component: FullComponent,
     children: [
       { path: '', redirectTo: '/home', pathMatch: 'full' },
-      { path: 'home', canActivate:[authGuard],component: DashboardComponent },
+      { path: 'home', canActivate: [authGuard], component: DashboardComponent },
       { path: 'alerts', component: AlertsComponent },
       { path: 'forms', component: FormsComponent },
       { path: 'table', component: ProductComponent },
@@ -59,19 +60,20 @@ export const routes: Routes = [
       { path: 'button', component: ButtonsComponent },
 
       { path: "orders", component: OrdersComponent },
-      { path: 'create', component: CreateAdminComponent},
-      { path: 'admins', component: AdminListComponent},
-      { path: 'users', component:UserListComponent},
-      { path: 'logs', component: LogsComponent},
+      { path: 'create', component: CreateAdminComponent },
+      { path: 'admins', component: AdminListComponent },
+      { path: 'users', component: UserListComponent },
+      { path: 'logs', component: LogsComponent },
       { path: 'foods', component: FoodCrudComponent },
       { path: 'foods/:id', component: FoodCrudComponent },
-      { path:'change-pass', component: ChangePassComponent },
-     { path: 'categories', component: CategoryCrudComponent },
+      { path: 'change-pass', component: ChangePassComponent },
+      { path: 'categories', component: CategoryCrudComponent },
       { path: 'categories/:id', component: CategoryCrudComponent },
       { path: 'delivery', component: DeliveryComponent },
+      { path: 'chat', component: ChatComponent },
     ],
   },
-  {path:"login", component:LoginComponent},
+  { path: "login", component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
@@ -81,4 +83,4 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

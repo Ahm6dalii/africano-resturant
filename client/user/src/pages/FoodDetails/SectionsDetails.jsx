@@ -20,8 +20,6 @@ const CustomerReviews = ({ id, reviews }) => {
             setReviewsList(reviews);
         }
     }, [reviews]);
-    console.log(reviews, "reviews");
-    console.log(newReview, "newReview");
 
     useEffect(() => {
         socket.on('newReview', (addedReview) => {

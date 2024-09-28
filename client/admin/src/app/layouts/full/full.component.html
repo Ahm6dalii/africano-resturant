@@ -1,10 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
 
   <!-- Sidebar -->
-  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  <mat-sidenav #drawer class="sidenav " fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
 
-    <div class="p-16">
+    <div class="p-16 ">
       <div class="mb-16">
         <a routerLink="/home" class="d-flex align-items-center">
           <img src="assets/logo/logo.li.png" alt="" />
@@ -17,8 +17,14 @@
               class="sidebar-menu w-100 d-flex align-items-center" [routerLinkActive]="routerActive">
               <i-feather name="{{ sidenav.icon }}" class="feather-base me-12"></i-feather> <span class="ps-4">{{
                 sidenav.menu }}</span>
+              @if(sidenav.menu === 'Chat' && read === true ){
+              <span class="ms-auto bg-red-400 p-1 font-semibold rounded-lg animate-pulse">
+                new
+              </span>
+              }
             </a>
           </li>
+
         </ul>
       </div>
 

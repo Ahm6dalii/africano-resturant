@@ -21,8 +21,8 @@ export default function Footer() {
         </div>
         {/* Contact Info */}
         <div className="text-center">
-          <h3 className="text-xl font-semibold">{translation.Phone}</h3>
-          <p className="mt-2">Phone: <a href="tel:+123456789" className="text-blue-600 dark:text-blue-400">+201020142743</a></p>
+          <h3 className="text-xl font-semibold">{translation.footerPhone}</h3>
+          <p className="mt-2">{translation.Phone} <a href="tel:+123456789" className="text-blue-600 dark:text-blue-400">+201020142743</a></p>
         </div>
         {/* Social Media */}
         <div className="text-center">

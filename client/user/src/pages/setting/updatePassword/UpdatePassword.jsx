@@ -5,11 +5,10 @@ import * as yup from "yup";
 import { TextInput, Button, Label, List } from "flowbite-react";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
-import AddressIcon from "../../components/ReactI-cons/AdressIcon/AddressIcon";
-import LockIcon from "../../components/ReactI-cons/lockIcon/LockIcon";
+import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
+import LockIcon from "../../../components/ReactI-cons/lockIcon/LockIcon";
 import { HiXCircle } from "react-icons/hi";
 import { toast } from 'react-hot-toast';
-import SettingIcon from "../../components/ReactI-cons/setting/settingIcon";
 
 // Schema using Yup
 
@@ -77,7 +76,7 @@ const UpdatePassword = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-6">
+      <h2 className="flex items-center gap-2  justify-center text-3xl font-semibold text-center mb-6  dark:text-orange-200">
       <SettingIcon/>
         {translation.change_pass}
       </h2>
