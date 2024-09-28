@@ -25,10 +25,10 @@ export class PaymentWebhookService {
   private baseUrl = 'https://accept.paymob.com/api';
 
 
-  async handleSuccessfulPayment(token, id, res, redirectURL, req): Promise<void> {
+  async handleSuccessfulPayment(token, id, res, redirectURL,afterRedirectURL, req): Promise<void> {
     const decoded = this._jwtservice.verify(token, { secret: "mo2" });
     await this.removeAllCartItems(token)
-    return await this.createPaymentIntention(token, id, res, redirectURL, req)
+    return await this.createPaymentIntention(token, id, res, redirectURL,afterRedirectURL,req)
     // return res.redirect('https://example.com/success');
 
   }
@@ -48,7 +48,7 @@ export class PaymentWebhookService {
   }
 
 
-  async createPaymentIntention(token, id, res, redirectURL, req): Promise<any> {
+  async createPaymentIntention(token, id, res, redirectURL,afterRedirectURL, req): Promise<any> {
     const decoded = this._jwtservice.verify(token, { secret: "mo2" });
     const mytoken = await this.authenticate()
     const apiUrl = 'https://accept.paymob.com/api/acceptance/transactions';
@@ -84,7 +84,12 @@ export class PaymentWebhookService {
 
 
 
-      return res.redirect(redirectURL);
+      const urlParts = redirectURL.split('/');
+      const desiredPath = '/' + urlParts.slice(-1)[0];
+      const newUrl =afterRedirectURL + desiredPath;
+
+      return res.redirect(newUrl);
+
     } catch (error) {
       console.error('Error creating Paymob intention:', error);
       throw error;

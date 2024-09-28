@@ -72,7 +72,7 @@ export default function About() {
                               </p>
                             </motion.div>
 
-                        
+
                     </div>
                     
             </motion.div>

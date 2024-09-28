@@ -79,10 +79,9 @@ export class PaymobService {
         'Content-Type': 'application/json',
         'Authorization': "Token egy_sk_test_1c71ccc75a2761762253e30052d7196cabe79a9c80aa8340c5f3fe824603d63d"
       };
-      body.redirection_url = `${body.redirection_url}/payment-webhook/?token=${token}&redirectURL=${body.redirection_url}/allOrder`
+      body.redirection_url = `${body.redirection_url}/payment-webhook/?token=${token}&afterRedirectURL=${body.after_redirect_url}&redirectURL=${body.redirection_url}/allOrder`
 
       let allItems = myCart.items.map(item => item)
-      // allItems.forEach(item => { item.description = item.description['en'], item.name = item.name['en'] })
       const updatedProducts = (products) => {
         return products.map(product => ({
           name: `${product?.name?.en} - ${product?.size}`,
@@ -95,9 +94,7 @@ export class PaymobService {
       const paymobData = updatedProducts(allItems)
       console.log(paymobData, 'updatedProductsupdatedProducts');
 
-      // allItems.forEach(item => item.amount = Math.ceil(item.amount))
-      // allItems.forEach(item => item.amount *= 100)
-      // console.log(allItems,'allllllllllllllllllllllllllllllllllllllll');
+  
 
       const delivery = {
         "name": "delivery",
@@ -128,9 +125,7 @@ export class PaymobService {
         intention_detail.items.forEach(item => {
           item.amount /= 100;
         });
-        //   // const myorder=await this.orderModel.insertMany({userId:decoded.userId,intention_detail})
-        //   // this.removeAllCartItems(token)
-
+  
         return response.data;
       } catch (error) {
         console.error('Error creating Paymob intention:', error);

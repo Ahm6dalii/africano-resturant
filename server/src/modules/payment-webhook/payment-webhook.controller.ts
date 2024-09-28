@@ -10,12 +10,12 @@ export class PaymentWebhookController {
     const event = req.body;
 
     // console.log(query);
-    const { id, pending, success, order, hmac, token, redirectURL } = query
+    const { id, pending, success, order, hmac, token, redirectURL,afterRedirectURL } = query
 
     if (query.success) {
 
 
-      return await this.paymentWebhookService.handleSuccessfulPayment(token, id, res, redirectURL, req);
+      return await this.paymentWebhookService.handleSuccessfulPayment(token, id, res, redirectURL,afterRedirectURL,req);
     }
 
 

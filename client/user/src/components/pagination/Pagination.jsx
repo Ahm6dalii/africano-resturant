@@ -13,7 +13,7 @@ export default function Paginations({current,totalPages ,getNext}) {
       setCurrentPage(1)
     },[id])
   return <>
-  <div className="flex overflow-hidden m-auto w-fit sm:justify-center ">
+  <div className="flex overflow-hidden m-auto w-fit sm:justify-center " dir="ltr">
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
     </div>
   </>

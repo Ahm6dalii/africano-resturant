@@ -1,5 +1,5 @@
 import React from 'react'
-import contactImg from "../../assets/media/restrunt.png"
+import contactImg from "../../assets/media/restrunt.jpg"
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import MapLocation from '../../components/map-loaction/MapLocation';
@@ -14,7 +14,7 @@ export default function Contact() {
         visible :{
           opacity:1,
         },
-      }
+    }
     
 
   return (

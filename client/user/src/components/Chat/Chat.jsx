@@ -190,7 +190,7 @@ const Chat = () => {
             )}
           </div>
           <form onSubmit={handleSubmit(submitTheForm)} className="p-4 border-t border-gray-200">
-            <div className="flex items-center">
+            <div className="flex items-center" dir='ltr'>
               <input
                 type="text"
                 {...register('message', { required: 'Message is required' })}
