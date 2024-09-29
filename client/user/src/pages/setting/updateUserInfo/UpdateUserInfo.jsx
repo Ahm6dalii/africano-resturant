@@ -8,12 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { HiXCircle } from "react-icons/hi";
 import toast from "react-hot-toast";
-import { changeProfileInfo } from "../../../redux/reducers/userAuthSlice";
-import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
-import LabelIcon from "../../../components/ReactI-cons/label/LabelIcon";
 import AddressIcon from './../../../components/ReactI-cons/AdressIcon/AddressIcon';
-import PhoneIcon from "../../../components/ReactI-cons/phoneIcon/PhoneIcon";
 import { Helmet } from "react-helmet-async";
+import LabelIcon from './../../../components/ReactI-cons/label/LabelIcon';
+import { PhoneIcon } from "lucide-react";
+import { changeProfileInfo } from "../../../redux/reducers/userAuthSlice";
+import SettingIcon from "../../../components/ReactI-cons/setting/SettingIcon";
 
 const UpdateUserInfo = () => {
   const { translation } = useSelector((state) => state.lang);
