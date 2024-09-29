@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { SocketIoService } from 'src/app/services/socket-io.service';
 
@@ -16,7 +17,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   dropdownOpen = false;
   notifications: any[] = [];
   adminId: any
-  constructor(private _notificationService: NotificationsService, private _socketIoService: SocketIoService, private _authService: AuthService) {
+  constructor(private _notificationService: NotificationsService, private _socketIoService: SocketIoService, private _chatService: ChatService, private _authService: AuthService) {
     this.getAllNotifications();
   }
 
@@ -43,6 +44,19 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       this.notifications.push(notifications)
 
     })
+    this._socketIoService.startListening();
+    this._socketIoService.on('connect', () => {
+      console.log('Connected to socket server');
+    });
+
+    this._socketIoService.newMessage$.subscribe((message) => {
+      if (message) {
+        console.log(message, "New message received");
+        if (message.senderModel !== "Admin") {
+          this._chatService.changeRead(true)
+        }
+      }
+    });
   }
 
   toggleDropdown() {
@@ -75,7 +89,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this._socketIoService.disconnect();
+    this._socketIoService.stopListening();
   }
 
 

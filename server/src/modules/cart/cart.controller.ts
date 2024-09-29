@@ -42,7 +42,7 @@ export class CartController {
   deleteProduct(@Param('id') param: any, @Body() body: any, @Headers() header: any) {
     const { size } = body;
     const { token } = header
-    console.log(token, "token")
+
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
@@ -67,7 +67,7 @@ export class CartController {
   getUserCart(@Headers() header) {
     const { token } = header
 
-    console.log(token, "token");
+
 
     if (!token) {
       throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);

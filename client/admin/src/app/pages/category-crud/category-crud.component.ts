@@ -6,6 +6,8 @@ import { MatIconModule } from '@angular/material/icon'; // Add this import
 import { MatDialog } from '@angular/material/dialog';
 import { AddCategoryDialogComponent } from 'src/app/adminComponents/add-category-dialog/add-category-dialog.component';
 import { EditCategoryDialogComponent } from 'src/app/adminComponents/edit-category-dialog/edit-category-dialog.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { SocketIoService } from 'src/app/services/socket-io.service';
 
 @Component({
   selector: 'app-category-crud',
@@ -25,16 +27,23 @@ export class CategoryCrudComponent implements OnInit {
   selectedCategory: any = null;
   categoryForm: FormGroup;
   categories: any[] = [];
-
+  adminId: any
   selectedLanguage: string = 'ar';
 
   showConfirmationPopup = false;
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
+    private _socketIoService: SocketIoService,
+    private _authService: AuthService,
     private dialog: MatDialog
-  ) {}
+  ) { }
   ngOnInit(): void {
+    this.adminId = this._authService.tokenUserId.getValue();
+    console.log(this.adminId, "adminId");
+    this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
+    this._socketIoService.startListening();
+    this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this.categoryForm = this.fb.group({
       name: this.fb.group({
         ar: [''],

@@ -13,6 +13,8 @@ import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/materi
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { SocketIoService } from 'src/app/services/socket-io.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 export class CustomMatPaginatorIntl extends MatPaginatorIntl {
   override itemsPerPageLabel = 'Users per page';
@@ -34,7 +36,7 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule,ToastModule, MatIconModule, MatPaginatorModule,MatFormFieldModule,MatInputModule,FormsModule],
+  imports: [CommonModule, MatTableModule, ToastModule, MatIconModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, FormsModule],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss',
   providers: [
@@ -43,25 +45,33 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
   ]
 
 })
-export class UserListComponent implements OnInit  {
-  users:any = [];
-  displayedColumns: string[] = ['index','username', 'userEmail', 'isConfirmed', 'createdAt','actions'];
-  errorMessage:string=""
+export class UserListComponent implements OnInit {
+  users: any = [];
+  displayedColumns: string[] = ['index', 'username', 'userEmail', 'isConfirmed', 'createdAt', 'actions'];
+  errorMessage: string = ""
   searchTerm: string = "";
   currentPage: number = 0;
   pageSize: number = 10;
   totalUsers: number = 0;
+  adminId: any
 
-  constructor(private _usersService:UsersService, private dialog: MatDialog,private messageService: MessageService) {}
-  
+  constructor(private _usersService: UsersService, private dialog: MatDialog, private messageService: MessageService,
+    private _authService: AuthService,
+    private _socketIoService: SocketIoService) { }
+
   ngOnInit() {
+    this.adminId = this._authService.tokenUserId.getValue();
+    console.log(this.adminId, "adminId");
+    this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
+    this._socketIoService.startListening();
+    this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this.loadUsers();
   }
 
   loadUsers() {
-    this._usersService.getAllUsers(this.searchTerm,  this.pageSize,this.currentPage + 1,).subscribe(
-      (res:any) => {
-        let{data,total,totalPages,page,limit}=res
+    this._usersService.getAllUsers(this.searchTerm, this.pageSize, this.currentPage + 1,).subscribe(
+      (res: any) => {
+        let { data, total, totalPages, page, limit } = res
         console.log(data);
         this.users = data;
         this.totalUsers = total;
@@ -69,7 +79,7 @@ export class UserListComponent implements OnInit  {
       error => {
         console.error('Error loading Users:', error);
         this.messageService.add({ severity: 'error', summary: '', detail: error.error.message });
-        this.errorMessage=error.error.message
+        this.errorMessage = error.error.message
 
       }
     );
@@ -77,40 +87,40 @@ export class UserListComponent implements OnInit  {
 
 
 
-  
-    confirmDelete(user:any) {
-      const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
-        width: '300px',
-        data: { username: user.username }
-      });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === true) {
-          this._usersService.deleteUser(user._id).subscribe(
-            () => {
-              this.loadUsers(); // Refresh the list after deletion
-              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'deleted successfully ' });
+  confirmDelete(user: any) {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '300px',
+      data: { username: user.username }
+    });
 
-            },
-            error => {
-              console.error('Error deleting admin:', error);
-              this.messageService.add({ severity: 'error', summary: '', detail: error.error.message});
-            }
-      );
-    }
-  })
-}
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this._usersService.deleteUser(user._id).subscribe(
+          () => {
+            this.loadUsers(); // Refresh the list after deletion
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'deleted successfully ' });
 
-onSearch() {
-  this.currentPage = 0;
-  this.loadUsers();
-}
+          },
+          error => {
+            console.error('Error deleting admin:', error);
+            this.messageService.add({ severity: 'error', summary: '', detail: error.error.message });
+          }
+        );
+      }
+    })
+  }
 
-onPageChange(event: PageEvent) {
-  this.currentPage = event.pageIndex;
-  this.pageSize = event.pageSize;
-  this.loadUsers();
-}
-  
+  onSearch() {
+    this.currentPage = 0;
+    this.loadUsers();
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadUsers();
+  }
+
 }
 

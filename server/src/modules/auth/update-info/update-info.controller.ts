@@ -5,22 +5,22 @@ import { CloudinaryService } from 'src/core/utils/cloudinary/cloudinary.service'
 
 @Controller('update-info')
 export class UpdateInfoController {
-    constructor(private readonly _updateInfoService: UpdateInfoService,private readonly cloudinaryService: CloudinaryService) {}
+    constructor(private readonly _updateInfoService: UpdateInfoService, private readonly cloudinaryService: CloudinaryService) { }
 
-@Patch()  
-@UseInterceptors(FileInterceptor('file'))
-async updateInfo(@Body() body:any ,@Headers() header,@UploadedFile() file: Express.Multer.File){
+    @Patch()
+    @UseInterceptors(FileInterceptor('file'))
+    async updateInfo(@Body() body: any, @Headers() header, @UploadedFile() file: Express.Multer.File) {
 
-    console.log(file,'sdsdssds');
+        console.log(file, 'sdsdssds');
 
-    const {token} =header
-    console.log(token);
-    if (!token) {
-        throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
+        const { token } = header
+
+        if (!token) {
+            throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
+        }
+
+        console.log(body);
+
+        return this._updateInfoService.updateInfo(body, token, file)
     }
-   
-      console.log(body);
-      
-return this._updateInfoService.updateInfo(body,token,file)
-}
 }

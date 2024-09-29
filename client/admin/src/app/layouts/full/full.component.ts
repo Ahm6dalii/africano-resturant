@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,12 +17,13 @@ interface sidebarMenu {
   templateUrl: './full.component.html',
   styleUrls: ['./full.component.scss'],
 })
-export class FullComponent implements OnInit {
+export class FullComponent implements OnInit, OnDestroy {
   search: boolean = false;
   read: any
   unReadMessages: any[] = []
   userName: string = '';
   local: any
+  private subscriptions: Subscription[] = [];
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -32,15 +33,20 @@ export class FullComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, private _authService: AuthService, private _chatService: ChatService, private socketIoService: SocketIoService) {
     this.userName = _authService.tokenUserInfo.getValue().username
+    this.socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
+    console.log(this._authService.tokenUserInfo.getValue().userId);
+
     console.log(_authService.tokenUserInfo.getValue(), 'pppppppppppppp');
     this.getUnReadChat();
-    this._chatService.read.subscribe({
-      next: (res) => {
-        this.read = res
-        console.log(this.read);
-
-      }
-    })
+    this.subscriptions.push(
+      this._chatService.read.subscribe({
+        next: (res) => {
+          this.read = res;
+          console.log(this.read);
+        },
+        error: (err) => console.error('Error in read subscription:', err)
+      })
+    );
   }
 
   ngOnInit() {
@@ -50,14 +56,19 @@ export class FullComponent implements OnInit {
       console.log('Connected to socket server');
     });
 
-    this.socketIoService.newMessage$.subscribe((message) => {
-      if (message) {
-        console.log(message, "New message received");
-        if (message.senderModel !== "Admin") {
-          this._chatService.changeRead(true)
-        }
-      }
-    });
+    this.subscriptions.push(
+      this.socketIoService.newMessage$.subscribe({
+        next: (message) => {
+          if (message) {
+            console.log("New message received:", message);
+            if (message.senderModel !== "Admin") {
+              this._chatService.changeRead(true);
+            }
+          }
+        },
+        error: (err) => console.error('Error in newMessage subscription:', err)
+      })
+    );
 
   }
   getUnReadChat() {
@@ -139,5 +150,9 @@ export class FullComponent implements OnInit {
 
   logOut() {
     this._authService.logOut()
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.socketIoService.stopListening();
   }
 }

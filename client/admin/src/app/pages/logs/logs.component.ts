@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { SocketIoService } from 'src/app/services/socket-io.service';
 export class CustomMatPaginatorIntl extends MatPaginatorIntl {
   override itemsPerPageLabel = 'Logs per page';
   override nextPageLabel = 'Next page';
@@ -40,8 +41,8 @@ interface Log {
 
 @Component({
   selector: 'app-logs',
-  standalone:true,
-  imports: [CommonModule, MatTableModule,ToastModule, MatPaginatorModule,MatFormFieldModule,MatInputModule,FormsModule],
+  standalone: true,
+  imports: [CommonModule, MatTableModule, ToastModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, FormsModule],
   templateUrl: './logs.component.html',
   styleUrls: ['./logs.component.scss'],
   providers: [
@@ -56,12 +57,18 @@ export class LogsComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 10;
   totalLogs: number = 0;
+  adminId: any
   displayedColumns: string[] = ['index', 'username', 'action', 'createdAt'];
 
-  constructor(private authService: AuthService,private messageService: MessageService) {}
+  constructor(private authService: AuthService, private messageService: MessageService, private _socketIoService: SocketIoService) { }
 
   ngOnInit(): void {
     this.getLogs();
+    this.adminId = this.authService.tokenUserId.getValue();
+    console.log(this.adminId, "adminId");
+    this._socketIoService.setUserId(this.authService.tokenUserInfo.getValue().userId);
+    this._socketIoService.startListening();
+    this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
   }
 
   getLogs(): void {
