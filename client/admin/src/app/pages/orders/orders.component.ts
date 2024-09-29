@@ -54,19 +54,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private dialog: MatDialog,
   ) {
-    console.log(this.searchTerm, "search");
+
 
   }
 
   ngOnInit() {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this.getOrders(this.currentStatus);
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this._socketIoService.on('newOrder', (newOrder) => {
-      console.log(`Received newOrder: ${newOrder[0]}`);
+
       this.orders.push(newOrder[0])
     })
   }
@@ -74,9 +74,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
   getOrders(status: string) {
     this._orderService.getOrdersByStatus(status).subscribe({
       next: (res) => {
-        console.log(status, "status");
+
         this.orders = res;
-        console.log(res);
+
       },
       error: (err) => {
         console.error(err);
@@ -89,7 +89,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   updateOrderStatus(orderId: string, newStatus: string) {
     this._orderService.updateOrderStatus(orderId, { status: newStatus }).subscribe({
       next: (updatedOrder) => {
-        console.log('Order updated:', updatedOrder);
+
 
         this.orders = this.orders.filter((order: any) => order._id !== orderId);
 
@@ -112,7 +112,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       if (result === true) {
         this._orderService.deleteOrder(orderId).subscribe({
           next: (deletedOrder) => {
-            console.log('Order deletedOrder:', deletedOrder);
+
             this.orders = this.orders.filter((order: any) => order._id !== orderId);
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Order Deleted' });
           },

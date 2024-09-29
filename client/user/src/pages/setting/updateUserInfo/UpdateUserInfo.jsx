@@ -68,7 +68,7 @@ const UpdateUserInfo = () => {
         toast.success(translation.userUpdated);
       })
       .catch((err) => {
-        console.log("error", err);
+        
         setLoading(false);
         if (err?.response?.data.message) {
           toast.error("Faile to Update User Info");

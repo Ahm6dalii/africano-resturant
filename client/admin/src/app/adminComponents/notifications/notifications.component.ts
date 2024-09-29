@@ -24,34 +24,34 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getAllNotifications();
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
 
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
 
     this._socketIoService.on('notifications', (notification) => {
-      console.log(`Received notification: ${notification}`);
+
       this.notifications.push(notification)
     })
     this._socketIoService.on('userNotification', (notifications) => {
-      console.log(`Received userNotification: ${notifications}`);
+
 
       this.notifications.push(notifications)
 
     })
     this._socketIoService.on('adminNotification', (notifications) => {
-      console.log(`Received adminNotification: ${notifications}`);
+
 
       this.notifications.push(notifications)
 
     })
     this._socketIoService.startListening();
     this._socketIoService.on('connect', () => {
-      console.log('Connected to socket server');
+
     });
 
     this._socketIoService.newMessage$.subscribe((message) => {
       if (message) {
-        console.log(message, "New message received");
+
         if (message.senderModel !== "Admin") {
           this._chatService.changeRead(true)
         }
@@ -65,7 +65,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   getAllNotifications() {
     this._notificationService.fetchNotifications().subscribe({
       next: (res: any) => {
-        console.log(res, "notifications");
+
         this.notifications = res.filter((noti: any) => noti.read === false && noti.type !== 'Delivery_Changed' && noti.type !== 'order_status_updated')
       },
       error: (err) => {
@@ -76,7 +76,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   markAllAsRead() {
     this._notificationService.markAllAsRead().subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+
         this.notifications = [];
       },
       error: (err) => {

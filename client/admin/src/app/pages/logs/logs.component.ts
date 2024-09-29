@@ -65,7 +65,7 @@ export class LogsComponent implements OnInit {
   ngOnInit(): void {
     this.getLogs();
     this.adminId = this.authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this.authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });

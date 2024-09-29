@@ -25,7 +25,7 @@ export class SocketIoService {
   }
   private setupSocketListeners() {
     this.socket.on('connect', () => {
-      console.log('Connected to socket server');
+
       this.reconnectAttempts = 0;
 
       if (this.userId) {
@@ -34,7 +34,7 @@ export class SocketIoService {
     });
 
     this.socket.on('disconnect', (reason) => {
-      console.log('Disconnected from socket server:', reason);
+
       if (reason === 'io server disconnect') {
         this.tryReconnect();
       }
@@ -49,7 +49,7 @@ export class SocketIoService {
       this.newMessageSubject.next(message);
     });
     this.socket.on('reconnect_attempt', () => {
-      console.log('Reconnection attempt in progress...');
+
     });
 
     this.socket.on('reconnect_failed', () => {
@@ -61,7 +61,7 @@ export class SocketIoService {
   private tryReconnect() {
     if (this.reconnectAttempts < this.maxReconnectAttempts) {
       setTimeout(() => {
-        console.log('Attempting to reconnect...');
+
         this.socket.connect();
         this.reconnectAttempts++;
       }, this.reconnectInterval);

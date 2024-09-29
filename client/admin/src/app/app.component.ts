@@ -18,7 +18,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
 
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
 
@@ -27,12 +27,12 @@ export class AppComponent {
 
     this._socketIoService.startListening();
     this._socketIoService.on('connect', () => {
-      console.log('Connected to socket server');
+
     });
 
     this._socketIoService.newMessage$.subscribe((message) => {
       if (message) {
-        console.log(message, "New message received");
+
         if (message.senderModel !== "Admin") {
           this._chatService.changeRead(true)
         }

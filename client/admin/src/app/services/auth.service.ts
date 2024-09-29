@@ -34,7 +34,7 @@ export class AuthService implements OnInit {
           this.tokenUserInfo.next(jwtDecode(localStorage.getItem('token')))
           this._socketIoService.emit('register', this.tokenUserInfo.getValue().userId)
         } catch (error) {
-          console.log(error);
+
 
         }
       this.userToken.next(localStorage.getItem('token'))
@@ -70,7 +70,7 @@ export class AuthService implements OnInit {
   }
   getAllAmins(search, page, limit): Observable<any> {
     const token = this.userToken.getValue();
-    console.log(this.apiLink, 'this.apiLink');
+
 
     const headers = new HttpHeaders({
       'token': token,
@@ -80,7 +80,7 @@ export class AuthService implements OnInit {
 
   getAllLogs(search, page, limit): Observable<any> {
     const token = this.userToken.getValue();
-    console.log(this.apiLink, 'this.apiLink');
+
 
     const headers = new HttpHeaders({
       'token': token,

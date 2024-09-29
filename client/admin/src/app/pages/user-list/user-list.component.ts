@@ -61,7 +61,7 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
@@ -72,7 +72,7 @@ export class UserListComponent implements OnInit {
     this._usersService.getAllUsers(this.searchTerm, this.pageSize, this.currentPage + 1,).subscribe(
       (res: any) => {
         let { data, total, totalPages, page, limit } = res
-        console.log(data);
+
         this.users = data;
         this.totalUsers = total;
       },

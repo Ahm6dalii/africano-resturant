@@ -173,18 +173,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.getUsers();
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
 
     this.socketIoService.emit('register', { adminId: this.adminId, userId: null });
 
     this.socketIoService.startListening();
     this.socketIoService.on('connect', () => {
-      console.log('Connected to socket server');
+
     });
 
     this.socketIoService.newMessage$.subscribe((message) => {
       if (message) {
-        console.log(message, "New message received");
+
         this.chat.push(message);
         this.markUserWithNewMessage(message.sender._id);
         this.scrollToBottom();
@@ -194,7 +194,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
 
     this.socketIoService.on('disconnect', () => {
-      console.log('Disconnected from socket server');
+
     });
     this.getUnReadChat();
   }
@@ -227,7 +227,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this._usersService.getAllUsers(this.searchTerm, this.pageSize, this.currentPage).subscribe({
       next: (res: any) => {
         let { data, total, totalPages, page, limit } = res;
-        console.log(res, "res");
+
         this.userList = data.map((user: any) => ({ ...user, hasNewMessage: false }));
       },
       error: (err) => {
@@ -300,7 +300,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   getUserChat(currentUserId: string) {
     this._chatService.getUsersChat(currentUserId).subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+
         if (res && res.messages) {
           this.chat = res.messages;
           this.scrollToBottom();
@@ -319,9 +319,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   selectUser(userId: string) {
     this.currentUserId = userId;
     this.getUserChat(this.currentUserId);
-    console.log(this.currentUserId, "this.currentUserId this.currentUserId");
 
-    console.log(`User selected: ${this.currentUserId}`);
+
+
     this.clearNewMessageIndicator(userId);
     this.functionn(userId)
     this._chatService.changeRead(false)
@@ -333,7 +333,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     const messageIds = this.unReadMessages.flatMap((userMessages) =>
       userMessages.messages.map((message) => message._id)
     );
-    console.log(messageIds, "messageIds to update");
+
 
 
     messageIds.forEach((messageId) => {
@@ -341,7 +341,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
 
 
-    console.log(this.unReadMessages, "this.unReadMessages");
+
   }
   onPageChange(event: any) {
     this.currentPage = event.pageIndex + 1;

@@ -14,22 +14,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this._socketIoService.on('connect', () => {
-      console.log('Connected to socket server');
+
     });
 
-    this._socketIoService.newMessage$.subscribe((message) => {
-      if (message) {
-        console.log(message, "New message received");
-        if (message.senderModel !== "Admin") {
-          this._chatService.changeRead(true)
-        }
-      }
-    });
   }
 
 }

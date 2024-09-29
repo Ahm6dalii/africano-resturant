@@ -32,22 +32,15 @@ export class DeliveryComponent implements OnInit {
   })
   ngOnInit(): void {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this._socketIoService.on('connect', () => {
-      console.log('Connected to socket server');
+
     });
 
-    this._socketIoService.newMessage$.subscribe((message) => {
-      if (message) {
-        console.log(message, "New message received");
-        if (message.senderModel !== "Admin") {
-          this._chatService.changeRead(true)
-        }
-      }
-    });
+
     this.getDeliveryPrice()
   }
   getDeliveryPrice() {
@@ -57,7 +50,7 @@ export class DeliveryComponent implements OnInit {
 
       },
       error: (err) => {
-        console.log(err);
+
       },
     })
   }
@@ -71,18 +64,18 @@ export class DeliveryComponent implements OnInit {
     else {
       this.errorMessage = ""
       this.isLoading = true
-      console.log(this.changeDeliveryForm.value);
+
 
       this._deliveryService.updateDeliveryPrice(price).subscribe({
         next: (res: any) => {
-          console.log(res, 'resresres');
+
 
           this.changeDeliveryForm.reset();
           this.isLoading = false
           this.getDeliveryPrice()
         },
         error: (err: any) => {
-          console.log(err);
+
           this.errorMessage = err.error.message
           this.isLoading = false
         },

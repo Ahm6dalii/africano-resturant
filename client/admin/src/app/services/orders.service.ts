@@ -19,7 +19,7 @@ export class OrdersService {
   }
 
   getOrdersByStatus(status: string): Observable<any> {
-    console.log(status, "status");
+
 
     return this._httpClient.get(`${this.apiUrl}/order/ordersByStatus?status=${status}`);
   }

@@ -29,7 +29,7 @@ export class TotalCountsComponent implements OnInit {
   getOrders() {
     this._totalsService.getOrders().subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+
         this.totalOrders = res.total
       },
       error: (err) => {
@@ -40,7 +40,7 @@ export class TotalCountsComponent implements OnInit {
   getFoods() {
     this._totalsService.getFoods().subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+
         this.totalMenu = res.total
       },
       error: (err) => {
@@ -51,7 +51,7 @@ export class TotalCountsComponent implements OnInit {
   getCategories() {
     this._totalsService.getCategories().subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+
         this.totalCategories = res.length
       },
       error: (err) => {
@@ -62,7 +62,7 @@ export class TotalCountsComponent implements OnInit {
   getUsers() {
     this._totalsService.getUsers().subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+
         this.totalUsers = res.total
       },
       error: (err) => {
@@ -73,7 +73,7 @@ export class TotalCountsComponent implements OnInit {
   getAllAmins() {
     this._totalsService.getAllAmins().subscribe({
       next: (res: any) => {
-        console.log(res, "res");
+
         this.totalAdmins = res.total
       },
       error: (err) => {

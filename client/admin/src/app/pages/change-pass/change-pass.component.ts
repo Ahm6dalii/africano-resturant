@@ -22,7 +22,7 @@ export class ChangePassComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
@@ -58,7 +58,7 @@ export class ChangePassComponent implements OnInit {
     else {
       this.errorMessage = ""
       this.isLoading = true
-      console.log(this.changePasswordForm.value);
+
 
       this._authService.changePassword(passwordData).subscribe({
         next: (res: any) => {
@@ -66,7 +66,7 @@ export class ChangePassComponent implements OnInit {
           this.isLoading = false
         },
         error: (err: any) => {
-          console.log(err);
+
           this.errorMessage = err.error.message
           this.isLoading = false
         },

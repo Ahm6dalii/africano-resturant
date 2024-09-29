@@ -16,7 +16,7 @@ export class NotificationsService {
   constructor(private _apiLink: ApiLinkService, private _authService: AuthService) {
     this.apiUrl = this._apiLink.apiLink.getValue();
     this.userId = this._authService.tokenUserId.getValue();
-    console.log(this.userId, " this.userId o gess the admin");
+
 
 
   }
