@@ -93,7 +93,7 @@ const NotificationsModel = () => {
                     {dropdownOpen && (
                         <div
 
-                            className="absolute right-16 w-[90%] sm:w-[50%] md:w-[50%] xl:w-[30%] mt-2 bg-zinc-200 dark:bg-slate-800   rounded-md shadow-lg overflow-hidden z-20 max-h-80 overflow-y-auto"
+                            className="absolute right-5 w-[90%] sm:w-[50%] md:w-[50%] xl:w-[30%] mt-2 bg-zinc-200 dark:bg-slate-800   rounded-md shadow-lg overflow-hidden z-20 max-h-80 overflow-y-auto"
 
                         >
                             <div className="py-2">

@@ -102,7 +102,7 @@ const OrderList = () => {
             <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3">
               {translation.orderData}
             </Table.HeadCell>
-            <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3 hidden sm:table-cell">
+            <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3 sm:table-cell">
               {translation.orderTime}
             </Table.HeadCell>
             <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3">
@@ -114,7 +114,7 @@ const OrderList = () => {
             <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3">
               {translation.orderStatus}
             </Table.HeadCell>
-            <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3 hidden sm:table-cell">
+            <Table.HeadCell className="dark:text-white px-2 py-2 sm:px-4 sm:py-3  sm:table-cell">
               {translation.orderMethod}
             </Table.HeadCell>
           </Table.Head>
@@ -129,7 +129,7 @@ const OrderList = () => {
                     ? moment(order.createdAt).format("MM DD YYYY")
                     : "N/A"}
                 </Table.Cell>
-                <Table.Cell className="dark:bg-slate-900 dark:bg-opacity-90 dark:text-white px-2 py-2 sm:px-4 sm:py-3 hidden sm:table-cell">
+                <Table.Cell className="dark:bg-slate-900 dark:bg-opacity-90 dark:text-white px-2 py-2 sm:px-4 sm:py-3  sm:table-cell">
                   {order.createdAt
                     ? new Date(order.createdAt).toLocaleTimeString()
                     : "N/A"}
@@ -159,7 +159,7 @@ const OrderList = () => {
                   </span>
                 </Table.Cell>
                 <Table.Cell
-                  className={`dark:bg-slate-900 dark:bg-opacity-90 text-green-700 px-2 py-2 sm:px-4 sm:py-3 hidden sm:table-cell ${order.payment_method == "online"
+                  className={`dark:bg-slate-900 dark:bg-opacity-90 text-green-700 px-2 py-2 sm:px-4 sm:py-3  sm:table-cell ${order.payment_method == "online"
                       ? "dark:text-green-500 "
                       : "text-yellow-600"
                     }`}
