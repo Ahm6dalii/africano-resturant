@@ -41,11 +41,11 @@ export default function Setting() {
             <h2 className="text-2xl  text-black dark:text-orange-200 font-semibold  flex items-center">
               <i className="fas fa-gear mr-3"></i>{translation?.setting}
             </h2>
-            <button onClick={toggleMenu} className="md:hidden text-white">
+            <button onClick={toggleMenu} className="md:hidden text-black dark:text-white">
               <Menu size={24} />
             </button>
           </div>
-          <nav className={`flex flex-col my-3 gap-2 ${isMenuOpen ? 'block' : 'hidden md:block'}`}>
+          <nav className={`flex flex-col my-3 gap-2  ${isMenuOpen ? 'block' : 'hidden md:block'}`}>
             {menuItems.map((item) => (
               <SettingLink key={item.to} to={item.to} isActive={pathname === item.to}>
                 {item.label}
@@ -54,7 +54,7 @@ export default function Setting() {
           </nav>
         </div>
       </aside>
-      <main className="w-full h-[50vh] py-4 md:w-2/3 lg:w-3/4">
+      <main className="w-full h-[70vh] md:h-[60vh] py-4 md:w-2/3 lg:w-3/4">
         <Outlet />
       </main>
     </div>
