@@ -12,11 +12,11 @@ import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoLight from "../../assets/logo/logo.li.png"
 import logoDark from "../../assets/logo/logo-dr.png"
-import Order from './../../pages/order/Order';
 import { LoginModal } from './../modal/login/Modal.login';
 
 export function Navbaar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { mode } = useSelector((state) => state.mode);
   const { translation } = useSelector((state) => state.lang);
   const { user, userInfo } = useSelector((state) => state.auth);
@@ -25,8 +25,16 @@ export function Navbaar() {
 
   useEffect(() => {
     socket.emit('register', userInfo?.userId);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
     return () => {
       socket.off('register');
+      window.removeEventListener('resize', handleResize);
     }
   }, [userInfo]);
 
@@ -57,16 +65,16 @@ export function Navbaar() {
         <Navbar.Brand as={Link} to="/" className="flex items-center">
           <img src={mode === "dark" ? logoDark : logoLight} className="h-10 mr-3" alt="Logo" />
         </Navbar.Brand>
-        <div className="flex items-center md:order-2 sm:p-1 sm:mx-1">
+        <div className="flex items-center gap-1  md:order-2 sm:p-1 sm:mx-1">
           <LanuageButton />
           <button
             onClick={() => dispatch(changeMode(mode === "light" ? "dark" : "light"))}
             className="text-gray-500 ms-3 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm inline-flex items-center mr-2"
           >
             {mode === "dark" ? (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd"></path></svg>
+              <svg className="w-5 h-5 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd"></path></svg>
             ) : (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+              <svg className="w-5 h-5 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
             )}
           </button>
           {user ? (
@@ -120,11 +128,11 @@ export function Navbaar() {
           </button>
         </div>
         <AnimatePresence>
-          {(isOpen || window.innerWidth > 768) && (
+          {((isMobile && isOpen) || !isMobile) && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={isMobile ? { opacity: 0, height: 0 } : false}
+              animate={isMobile ? { opacity: 1, height: "auto" } : false}
+              exit={isMobile ? { opacity: 0, height: 0 } : false}
               transition={{ duration: 0.3 }}
               className="items-center justify-between w-full md:flex md:w-auto md:order-1"
               id="mobile-menu"
@@ -136,11 +144,11 @@ export function Navbaar() {
                       to={item.href}
                       className={({ isActive }) =>
                         `block py-2 pl-3 pr-4 flex-1 ${isActive
-                          ? " dark:text-orange-500 border-b-2 font-bold border-b-orange-200  bg-orange-700 md:bg-transparent md:text-orange-700 "
-                          : "text-gray-900 hover:bg-orange-100 md:hover:bg-transparent md:hover:text-orange-700 dark:text-white dark:hover:bg-orange-700 dark:hover:bg-opacity-30 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                          ? "text-white  dark:text-orange-100 md:dark:text-orange-500 border-b-2 font-bold border-b-orange-200  bg-orange-700 md:bg-transparent md:text-orange-700 "
+                          : "text-gray-900  hover:bg-orange-100 md:hover:bg-transparent md:hover:text-orange-700 dark:text-white dark:hover:bg-orange-700 dark:hover:bg-opacity-30 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                         } md:p-0 transition-colors duration-200`
                       }
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => isMobile && setIsOpen(false)}
                     >
                       <span className='text-nowrap'>
                         {item.name}

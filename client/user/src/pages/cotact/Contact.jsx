@@ -20,7 +20,7 @@ export default function Contact() {
 
     return (
 
-        <div className=" shadow-2xl  border rounded-3xl max-w-7xl mx-auto p-12">
+        <div className=" shadow-2xl  border rounded-3xl max-w-7xl mx-auto py-12 px-1">
             <Helmet>
                 <title>Contact</title>
                 <meta name="description" content="About Page" />

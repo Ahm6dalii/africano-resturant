@@ -19,7 +19,7 @@ export default function LanuageButton() {
 
   return (
     <Menu as="div" className="relative block me-auto dark:text-black  ">
-      <div className='w-[50px] sm:w-[80px] me-3 ms-1 sm:me-5 sm:ms-2 '>
+      <div className='w-[50px] sm:w-[80px] me-3 ms-2 sm:me-5 sm:ms-2 '>
         <MenuButton className=" inline-flex me-auto  justify-center gap-x-1.5 rounded-md bg-[transparent] px-1 py-2 text-sm font-semibold  shadow-sm ">
           <span className=" dark:text-white flex gap-2 items-center">
                        {language=="en"?<ReactCountryFlag countryCode='US' svg />:<ReactCountryFlag countryCode='EG' svg />} 
@@ -27,7 +27,7 @@ export default function LanuageButton() {
 
 
           </span>
-          <ChevronDownIcon aria-hidden="true" className="-mr-1 h-5 w-5 text-gray-400" />
+          <ChevronDownIcon aria-hidden="true" className="ms-1  h-5 w-5 text-gray-400" />
         </MenuButton>
       </div>
 
@@ -39,7 +39,7 @@ export default function LanuageButton() {
           <MenuItem>
             <span
               onClick={() => handleLangChange('en')}
-              className="flex items-center justify-center dark:text-white gap-2 cursor-pointer px-9 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-gray-100"
+              className="flex items-center justify-center dark:text-white gap-2 cursor-pointer px-9 py-2 text-sm text-gray-700 hover:bg-slate-500 dark:hover:bg-gray-900 hover:text-gray-100"
             >
               <ReactCountryFlag countryCode='US' svg />
               EN
@@ -48,7 +48,7 @@ export default function LanuageButton() {
           <MenuItem>
             <span
               onClick={() => handleLangChange('ar')}
-              className="flex items-center justify-center gap-2 dark:text-white  cursor-pointer px-9 py-2 text-sm text-gray-700 hover:bg-gray-900 hover:text-gray-100"
+              className="flex items-center justify-center gap-2 dark:text-white  cursor-pointer px-9 py-2 text-sm text-gray-700 hover:bg-slate-500 dark:hover:bg-gray-900 hover:text-gray-100"
             >
              <ReactCountryFlag countryCode='EG' svg />
               العربية

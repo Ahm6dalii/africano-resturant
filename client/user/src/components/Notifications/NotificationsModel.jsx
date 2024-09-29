@@ -101,7 +101,7 @@ const NotificationsModel = () => {
                                     notifi.map((notification, index) => (
                                         <div
                                             key={index}
-                                            className="flex items-center px-4 py-3 border-b  dark:hover:bg-gray-900 hover:bg-zinc-500 hover:text-orange-200 -mx-2"
+                                            className="flex items-center px-4 py-3 border-b  dark:hover:bg-gray-900 hover:bg-slate-600 hover:text-white -mx-2"
                                         >
                                             <img
                                                 className="size-12 rounded-full object-cover mx-1"
@@ -112,7 +112,7 @@ const NotificationsModel = () => {
                                                 <p className=" text-sm">
                                                     <span className="font-bold">Notification</span>: {notification?.message}
                                                 </p>
-                                                <p className="text-gray-500 text-xs">
+                                                <p className="text-gray-200 dark:text-gray-500  text-xs">
                                                     {moment(notification?.createdAt).fromNow()}
                                                 </p>
                                             </div>

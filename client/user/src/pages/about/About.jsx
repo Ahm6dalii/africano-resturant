@@ -2,7 +2,6 @@ import React from 'react'
 import img1 from "../../assets/media/download1.png"
 import img2 from "../../assets/media/download2.png"
 import img3 from "../../assets/media/download3.png"
-import img8 from "../../assets/media/download8.png"
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux';
 
@@ -29,7 +28,7 @@ export default function About() {
         <title>About</title>
         <meta name="description" content="About Page" />
       </Helmet>
-      <div className=" rounded-3xl max-w-7xl mx-auto p-12">
+      <div className=" rounded-3xl max-w-7xl mx-auto py-12 px-1">
         <h3 className="flex items-center gap-2 justify-center text-2xl sm:text-3xl  md:text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
           <i className="fa-brands fa-font-awesome"></i>
           {translation.aboutUs}
