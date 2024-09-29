@@ -53,7 +53,7 @@ export class FoodCrudComponent implements OnInit {
   }
   ngOnInit(): void {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
@@ -79,17 +79,17 @@ export class FoodCrudComponent implements OnInit {
     });
 
     this.loadFoods();
-    console.log(this.pages);
 
-    console.log(this.foodForm);
-    console.log(this.foodForm.get('amount'));
+
+
+
   }
 
   loadFoods(): void {
     this.foodService
       .getAllFoods(this.currentPage, this.limit)
       .subscribe((food) => {
-        console.log(food);
+
         this.foods = food.data;
         this.totalPageCount = Math.ceil(food.total / this.limit);
         this.pages = Array.from(
@@ -138,12 +138,12 @@ export class FoodCrudComponent implements OnInit {
         formData.append(key, control.value);
       }
     });
-    console.log(formData, 'ahmed above');
+
 
     this.foodService.createFood(formData).subscribe(
 
       (createdFood) => {
-        console.log(createdFood, 'ahmed ahmed');
+
         this.foods.push(createdFood); // Add new food to list
         this.messageService.add({ severity: 'success', summary: 'Success', detail: "Food Added successfully" });
 
@@ -199,7 +199,7 @@ export class FoodCrudComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+
       if (result) {
         this.foodService.createFood(result).subscribe(
 
@@ -227,7 +227,7 @@ export class FoodCrudComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result, 'result result ');
+
         this.foodService
           .updateFood(food._id, result)
           .subscribe(

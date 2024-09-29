@@ -66,7 +66,7 @@ export class SalesComponent implements OnInit {
   getTopSoldItemsMonthly() {
     this._orderService.getTopSoldItemsMonthly().subscribe({
       next: (res) => {
-        console.log(res);
+
         this.totalSoldItemsMonthly = res;
         this.updateChart('monthly', res);
       },
@@ -79,7 +79,7 @@ export class SalesComponent implements OnInit {
   getTopSoldItemsYearly() {
     this._orderService.getTopSoldItemsYearly().subscribe({
       next: (res) => {
-        console.log(res);
+
         this.totalSoldItemsYearly = res;
         this.updateChart('yearly', res);
       },
@@ -91,7 +91,7 @@ export class SalesComponent implements OnInit {
 
   // Update chart data dynamically based on the time period (weekly, monthly, yearly)
   updateChart(period: string, data: any) {
-    console.log(data, "data");
+
 
     const soldItemsData = data?.totalEarnings?.map((item: any) => item.totalSold);
     const soldItemsNames = data?.totalEarnings?.map((item: any) => item._id);

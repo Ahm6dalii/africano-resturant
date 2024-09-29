@@ -32,7 +32,7 @@ const FoodDetails = () => {
 
 
     const food = data;
-    // console.log(food, "what i want");
+    // 
 
     const currentIndex = foods?.findIndex(f => f._id === id);
 
@@ -90,7 +90,7 @@ const FoodDetails = () => {
                 <meta name="description" content="About Page" />
             </Helmet>
             <h3 style={{ "fontFamily": "Marhey" }} className="text-5xl font-extrabold  text-orange-500 dark:text-orange-200 mb-8 text-center">
-                <i class="fa-solid fa-bowl-food pe-2"></i>
+                <i className="fa-solid fa-bowl-food pe-2"></i>
                 {translation.foodDetails}
             </h3>
 

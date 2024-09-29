@@ -61,12 +61,12 @@ const Chat = () => {
 
   //     },
   // })
-  // console.log(data, "chat data");
+  // 
 
   useEffect(() => {
     socket.emit('register', { adminId: null, userId: userInfo?.userId });
     socket.on('newMessage', (getMessages) => {
-      console.log(getMessages, "from socket io chat");
+
       setChat((prev) => [...prev, getMessages]);
       if (!isOpen) {
         setHasNewMessage(true);
@@ -76,7 +76,7 @@ const Chat = () => {
       socket.off('newMessage')
     }
   }, [userInfo, isOpen])
-  console.log(chat, "chat");
+
 
   useEffect(() => {
     const fetchPreviousMessages = async () => {

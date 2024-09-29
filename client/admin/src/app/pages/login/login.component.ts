@@ -39,7 +39,7 @@ export class LoginComponent {
       this.isLoading = true
       this._authService.login(this.loginForm.value).subscribe({
         next: (res: any) => {
-          console.log(res);
+
           // localStorage.setItem('token', res.token)
           this._authService.saveUserToken(res.token)
           this.loginForm.reset();
@@ -51,7 +51,7 @@ export class LoginComponent {
           // this._hasToken.hasToken.next(true);
         },
         error: (err: any) => {
-          console.log(err);
+
           this.errorMessage = err.error.message
           this.messageService.add({ severity: 'error', summary: '', detail: 'invalid email or password' });
           this.loginForm.markAsUntouched()

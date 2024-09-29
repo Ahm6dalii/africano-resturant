@@ -73,10 +73,10 @@ export class AddFoodDialogComponent implements OnInit {
   onSubmit() {
     if (this.foodForm.valid) {
       const foodData = { ...this.foodForm.value, quantity: 1 };
-      // console.log(foodData);
+      //
       this.dialogRef.close(foodData);
     }
   }
 
 }
-  
+

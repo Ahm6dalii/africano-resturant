@@ -18,7 +18,7 @@ const ForgetPass = () => {
   const { link } = useSelector(state => state.apiLink)
 
   const { path } = useParams()
-  //  console.log(path);
+  //  
 
   const navigate = useNavigate()
   const formik = useFormik({
@@ -34,7 +34,7 @@ const ForgetPass = () => {
       setIsLoading(true)
       try {
         const response = await axios.post(`${link}/reset-password/request`, values);
-        // console.log(response.data.message);
+        // 
         toast.success(translation.otpsucess, {
           duration: 4000,
           position: 'top-right',
@@ -74,8 +74,8 @@ const ForgetPass = () => {
             name="email"
             type="email"
             className={`mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200  ${formik.touched.email && formik.errors.email
-                ? 'border-red-500'
-                : ''
+              ? 'border-red-500'
+              : ''
               }`}
             {...formik.getFieldProps('email')}
           />

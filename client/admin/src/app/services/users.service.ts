@@ -12,7 +12,7 @@ export class UsersService {
   token:string
   constructor(private _http: HttpClient,private _apiLink:ApiLinkService,private _authService:AuthService) {
 
-    this.apiLink= this._apiLink.apiLink.getValue() 
+    this.apiLink= this._apiLink.apiLink.getValue()
     this.token=this._authService.userToken.getValue()
 
    }
@@ -20,8 +20,8 @@ export class UsersService {
 
 
   getAllUsers(search='',limit,page=1): Observable<any> {
-    console.log(search,limit,page);
-    
+
+
     const headers = new HttpHeaders({
       'token':this.token,
     });

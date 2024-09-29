@@ -29,7 +29,7 @@ export class CreateAdminComponent implements OnInit {
   isLoading: boolean = false;
   ngOnInit(): void {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
@@ -70,11 +70,11 @@ export class CreateAdminComponent implements OnInit {
       permissions: permissions,
       isSuperAdmin: formValue.isSuperAdmin
     };
-    console.log(requestBody);
+
 
     this._authService.createAdmin(requestBody).subscribe({
       next: (res: any) => {
-        console.log(res);
+
         this.CreateForm.reset();
         this.isLoading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'created successfully ' });
@@ -82,7 +82,7 @@ export class CreateAdminComponent implements OnInit {
         // this.router.navigate(["/home"]);
       },
       error: (err: any) => {
-        console.log(err);
+
         this.errorMessage = err.error.message;
         this.messageService.add({ severity: 'error', summary: '', detail: err.error.message });
         this.isLoading = false;

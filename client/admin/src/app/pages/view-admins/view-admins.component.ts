@@ -85,7 +85,7 @@ export class AdminListComponent implements OnInit {
 
   ngOnInit() {
     this.adminId = this.authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this.authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
@@ -96,7 +96,7 @@ export class AdminListComponent implements OnInit {
     this.authService.getAllAmins(this.searchTerm, this.currentPage + 1, this.pageSize).subscribe(
 
       (response: any) => {
-        console.log(this.currentPage + 1);
+
         this.admins = response.data;
         this.totalAdmins = response.total;
       },

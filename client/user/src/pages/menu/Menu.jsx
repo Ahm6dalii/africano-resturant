@@ -13,7 +13,7 @@ export default function Menu() {
     </Helmet>
     <div>
       <p className="flex items-center gap-2 justify-center text-2xl sm:text-3xl  md:text-5xl font-extrabold   text-orange-500 dark:text-orange-200 mb-8 text-center">
-        <i class="fa-brands fa-readme"></i>
+        <i className="fa-brands fa-readme"></i>
         {translation.menuRestaurant}
       </p>
     </div>

@@ -33,7 +33,7 @@ export class FoodService {
 
   createFood(foodData: any): Observable<any> {
     const headers = this.getHeaders();
-    console.log(foodData, 'Ahmed createFood');
+
 
     // Create a new FormData object
     const formData = new FormData();
@@ -61,7 +61,7 @@ export class FoodService {
 
   updateFood(foodId: string, foodData: any): Observable<any> {
     const headers = this.getHeaders();
-    console.log(foodData, 'Ahmed updateFood');
+
 
     // Create a new FormData object
     const formData = new FormData();

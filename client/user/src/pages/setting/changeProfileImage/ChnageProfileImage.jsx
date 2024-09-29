@@ -34,7 +34,7 @@ const ProfileImage = () => {
 
   // Handle form submission (upload the image)
   const onSubmit = async () => {
-    console.log(user);
+
     setLoading(true)
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -46,7 +46,7 @@ const ProfileImage = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data);
+
         setLoading(false)
         dispatch(changeProfileImg(data.updatedUser.image))
         toast.success(translation.updatedImg)

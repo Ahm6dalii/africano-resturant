@@ -36,17 +36,17 @@ const NotificationsModel = () => {
         },
     });
 
-    // console.log(data, "user notification from database");
+    // 
 
     useEffect(() => {
         const handleUserNotification = (notification) => {
-            // console.log(notification, "notification from socket io");
+            // 
             if (!notification.read) {
                 setNotifi((prevNotifications) => [notification, ...prevNotifications]);
             }
         };
         const handleNotification = (notifications) => {
-            // console.log(notifications, "notifications2 from socket io");
+            // 
 
             setNotifi((prevNotifications) => [notifications, ...prevNotifications]);
 
@@ -94,7 +94,7 @@ const NotificationsModel = () => {
                         <div
 
                             className="absolute right-16 w-[90%] sm:w-[50%] md:w-[50%] xl:w-[30%] mt-2 bg-zinc-200 dark:bg-slate-800   rounded-md shadow-lg overflow-hidden z-20 max-h-80 overflow-y-auto"
-                            
+
                         >
                             <div className="py-2">
                                 {notifi.length > 0 ? (

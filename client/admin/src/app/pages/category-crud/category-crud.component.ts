@@ -40,7 +40,7 @@ export class CategoryCrudComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.adminId = this._authService.tokenUserId.getValue();
-    console.log(this.adminId, "adminId");
+
     this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
     this._socketIoService.startListening();
     this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
@@ -58,25 +58,25 @@ export class CategoryCrudComponent implements OnInit {
 
     this.loadCategories();
 
-    console.log(this.categoryForm);
-    console.log(this.categoryForm.get('amount'));
+
+
   }
 
   loadCategories(): void {
     this.categoryService.getCategories().subscribe((category) => {
       this.categories = category;
-      console.log(this.categories);
+
     });
   }
 
   confirmDelete(category: any): void {
     this.selectedCategory = category;
     this.showConfirmationPopup = true; // Show the confirmation popup
-    console.log(category, 'Selected Category');
+
   }
 
   deleteConfirmed(categoryId: any): void {
-    console.log(categoryId);
+
     this.categoryService.deleteCategory(categoryId).subscribe(
       () => {
         this.categories = this.categories.filter(
@@ -135,7 +135,7 @@ export class CategoryCrudComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res) => {
       if (res && res.file) {
         this.categoryService.createCategory(res).subscribe((newCategory) => {
-          console.log(newCategory, 'New Category Created');
+
           this.categories.push(newCategory);
         });
       }
@@ -143,7 +143,7 @@ export class CategoryCrudComponent implements OnInit {
   }
 
   openEditCategoryDialog(category: any): void {
-    console.log(category, 'Category for open edit');
+
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       width: '400px',
       data: { ...category, id: category._id },

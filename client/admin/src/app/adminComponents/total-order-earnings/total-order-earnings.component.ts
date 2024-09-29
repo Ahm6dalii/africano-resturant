@@ -125,7 +125,7 @@ export class TotalOrderEarningsComponent implements OnInit {
   getMonthlyEarnings() {
     this._orderService.getMonthlyEarnings().subscribe({
       next: (res) => {
-        console.log(res);
+
         this.totalEarningMonthly = res.totalEarnings
       },
       error: (err) => {
@@ -138,7 +138,7 @@ export class TotalOrderEarningsComponent implements OnInit {
   getYearlyEarnings() {
     this._orderService.getYearlyEarnings().subscribe({
       next: (res) => {
-        console.log(res);
+
         this.totalEarningYearly = res.totalEarnings
       },
       error: (err) => {

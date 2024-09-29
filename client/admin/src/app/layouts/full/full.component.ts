@@ -34,15 +34,15 @@ export class FullComponent implements OnInit, OnDestroy {
   constructor(private breakpointObserver: BreakpointObserver, private _authService: AuthService, private _chatService: ChatService, private socketIoService: SocketIoService) {
     this.userName = _authService.tokenUserInfo.getValue().username
     this.socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
-    console.log(this._authService.tokenUserInfo.getValue().userId);
 
-    console.log(_authService.tokenUserInfo.getValue(), 'pppppppppppppp');
+
+
     this.getUnReadChat();
     this.subscriptions.push(
       this._chatService.read.subscribe({
         next: (res) => {
           this.read = res;
-          console.log(this.read);
+
         },
         error: (err) => console.error('Error in read subscription:', err)
       })
@@ -53,14 +53,14 @@ export class FullComponent implements OnInit, OnDestroy {
 
     this.socketIoService.startListening();
     this.socketIoService.on('connect', () => {
-      console.log('Connected to socket server');
+
     });
 
     this.subscriptions.push(
       this.socketIoService.newMessage$.subscribe({
         next: (message) => {
           if (message) {
-            console.log("New message received:", message);
+
             if (message.senderModel !== "Admin") {
               this._chatService.changeRead(true);
             }
@@ -79,7 +79,7 @@ export class FullComponent implements OnInit, OnDestroy {
           this._chatService.changeRead(true)
           // this.read = true
         }
-        console.log(this.unReadMessages, "this.unReadMessages");
+
 
       },
       error: (err) => {

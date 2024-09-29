@@ -24,6 +24,7 @@ export class FoodService {
     @InjectModel(Category.name) private categoryModel: Model<Category>,
     private _jwtservice: JwtService,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly notificationGateway: NotifictionsGateway,
   ) { }
 
   options = {
@@ -210,6 +211,7 @@ export class FoodService {
         .populate('review.user', 'name')
         .exec();
 
+      this.notificationGateway.sendNewReviewToAll(addedReview.review[addedReview.review.length - 1]);
 
       return { message: 'Review added successfully', addedReview };
     } catch (error) {
