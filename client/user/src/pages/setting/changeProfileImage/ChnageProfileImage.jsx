@@ -4,8 +4,8 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { changeProfileImg } from "../../../redux/reducers/userAuthSlice";
-import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
 import { Helmet } from "react-helmet-async";
+import SettingIcon from './../../../components/ReactI-cons/setting/SettingIcon';
 
 const ProfileImage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

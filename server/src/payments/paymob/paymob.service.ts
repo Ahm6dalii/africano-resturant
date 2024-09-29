@@ -1,5 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Body, HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -20,7 +21,8 @@ export class PaymobService {
     private _jwtservice: JwtService
     , private readonly httpService: HttpService
     , private readonly notificationGateway: NotifictionsGateway
-    , private readonly notificationService: NotifictionsService) { }
+    , private readonly notificationService: NotifictionsService,
+    private configService: ConfigService) { }
 
   async createPaymentIntention(body, param, token): Promise<any> {
 
@@ -77,7 +79,9 @@ export class PaymobService {
       const apiUrl = 'https://accept.paymob.com/v1/intention/';
       const headers = {
         'Content-Type': 'application/json',
+        // 'Authorization': this.configService.get<string>('PAYMOB_SECRET')
         'Authorization': "Token egy_sk_test_1c71ccc75a2761762253e30052d7196cabe79a9c80aa8340c5f3fe824603d63d"
+
       };
       body.redirection_url = `${body.redirection_url}/payment-webhook/?token=${token}&afterRedirectURL=${body.after_redirect_url}&redirectURL=${body.redirection_url}/allOrder`
 
