@@ -3,12 +3,12 @@ import { UpdatePaswordService } from './update-pasword.service';
 
 @Controller('update-pasword')
 export class UpdatePaswordController {
-    constructor(private _updatePaswordService:UpdatePaswordService){}
+    constructor(private _updatePaswordService: UpdatePaswordService) { }
     @Put()
     async resetPassword(
-        @Headers() header ,@Body('newPassword') newPassword: string) {
-        const {token} =header
-        console.log(token);
+        @Headers() header, @Body('newPassword') newPassword: string) {
+        const { token } = header
+
         if (!token) {
             throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
         }

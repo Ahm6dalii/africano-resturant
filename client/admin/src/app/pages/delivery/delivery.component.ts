@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from 'src/app/services/auth.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { DeliveryService } from 'src/app/services/delivery.service';
+import { SocketIoService } from 'src/app/services/socket-io.service';
+
 
 @Component({
   selector: 'app-delivery',
@@ -14,26 +18,46 @@ import { DeliveryService } from 'src/app/services/delivery.service';
 })
 export class DeliveryComponent implements OnInit {
 
-  deliveyPrice:number=0;
+  deliveyPrice: number = 0;
   errorMessage: string = "";
   isLoading: boolean = false;
-  constructor(private _deliveryService:DeliveryService) { }
+  adminId: any
+  constructor(private _deliveryService: DeliveryService, private _socketIoService: SocketIoService, private _authService: AuthService, private _chatService: ChatService) {
+
+  }
 
   changeDeliveryForm: FormGroup = new FormGroup({
     price: new FormControl(null, [Validators.required, Validators.min(0)]),
- 
+
   })
   ngOnInit(): void {
-   
+    this.adminId = this._authService.tokenUserId.getValue();
+    console.log(this.adminId, "adminId");
+    this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
+    this._socketIoService.startListening();
+    this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
+    this._socketIoService.on('connect', () => {
+      console.log('Connected to socket server');
+    });
+
+    this._socketIoService.newMessage$.subscribe((message) => {
+      if (message) {
+        console.log(message, "New message received");
+        if (message.senderModel !== "Admin") {
+          this._chatService.changeRead(true)
+        }
+      }
+    });
     this.getDeliveryPrice()
   }
-  getDeliveryPrice(){
+  getDeliveryPrice() {
     this._deliveryService.getDeliveryPrice().subscribe({
-      next:(res)=>{
-        this.deliveyPrice=res.price
+      next: (res) => {
+        this.deliveyPrice = res.price
+
       },
-      error:(err)=>{
-        console.log(err); 
+      error: (err) => {
+        console.log(err);
       },
     })
   }
@@ -48,11 +72,11 @@ export class DeliveryComponent implements OnInit {
       this.errorMessage = ""
       this.isLoading = true
       console.log(this.changeDeliveryForm.value);
-      
+
       this._deliveryService.updateDeliveryPrice(price).subscribe({
-        next: (res: any) => {   
-          console.log(res,'resresres');
-            
+        next: (res: any) => {
+          console.log(res, 'resresres');
+
           this.changeDeliveryForm.reset();
           this.isLoading = false
           this.getDeliveryPrice()

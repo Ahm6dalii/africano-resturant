@@ -8,27 +8,27 @@ export class UserDashboardController {
 
   }
   @Get()
-  getAllUser(@Headers() header,@Query('search') search: string,
-  @Query('limit') limit: number = 10,
-  @Query('page') page: number = 1 ){
-    const {token} =header
-    console.log(token);
+  getAllUser(@Headers() header, @Query('search') search: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1) {
+    const { token } = header
+
     if (!token) {
-        throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
+      throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
     return this._userDashboardService.getAllUser(search, limit, page)
   }
 
-  
+
   @Delete(':id')
-  delete(@Param('id') id: string,@Headers() header) {
-    const {token} =header
+  delete(@Param('id') id: string, @Headers() header) {
+    const { token } = header
     console.log(token);
     if (!token) {
-        throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
+      throw new HttpException('Token not provided', HttpStatus.FORBIDDEN);
     }
     return this._userDashboardService.deleteUser(id);
-  } 
+  }
 
 
 }

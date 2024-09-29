@@ -1,48 +1,85 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-
 import { io, Socket } from 'socket.io-client';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketIoService {
-
   private socket: Socket;
+  private reconnectInterval = 5000; // 5 seconds
+  private maxReconnectAttempts = 5;
+  private reconnectAttempts = 0;
+  userId: any = '';
   private newMessageSubject = new BehaviorSubject<any>(null);
-  public newMessage$: Observable<any> = this.newMessageSubject.asObservable();
-  private isListening: boolean = false;
+  newMessage$ = this.newMessageSubject.asObservable();
+
   constructor() {
+
     this.socket = io('http://localhost:3000', {
       transports: ['websocket'],
       withCredentials: true,
     });
+    this.setupSocketListeners()
+  }
+  private setupSocketListeners() {
+    this.socket.on('connect', () => {
+      console.log('Connected to socket server');
+      this.reconnectAttempts = 0;
 
+      if (this.userId) {
+        this.emit('register', this.userId);
+      }
+    });
+
+    this.socket.on('disconnect', (reason) => {
+      console.log('Disconnected from socket server:', reason);
+      if (reason === 'io server disconnect') {
+        this.tryReconnect();
+      }
+    });
+
+    this.socket.on('connect_error', (error) => {
+      console.error('Connection error:', error);
+      this.tryReconnect();
+    });
+
+    this.socket.on('newMessage', (message: any) => {
+      this.newMessageSubject.next(message);
+    });
+    this.socket.on('reconnect_attempt', () => {
+      console.log('Reconnection attempt in progress...');
+    });
+
+    this.socket.on('reconnect_failed', () => {
+      console.error('Reconnection failed');
+    });
   }
 
 
+  private tryReconnect() {
+    if (this.reconnectAttempts < this.maxReconnectAttempts) {
+      setTimeout(() => {
+        console.log('Attempting to reconnect...');
+        this.socket.connect();
+        this.reconnectAttempts++;
+      }, this.reconnectInterval);
+    } else {
+      console.error('Max reconnection attempts reached');
+    }
+  }
+
   startListening() {
-    if (!this.isListening) {
-      console.log('Starting to listen for messages');
-      this.setupSocketListeners();
-      this.isListening = true;
+    if (!this.socket.connected) {
+      this.socket.connect();
     }
   }
 
   stopListening() {
-    if (this.isListening) {
-      console.log('Stopping listening for messages');
-      this.socket.off('newMessage');
-      this.isListening = false;
-    }
+    this.socket.disconnect();
   }
-  private setupSocketListeners() {
-    console.log('Setting up socket listeners');
-    this.socket.on('newMessage', (message) => {
-      console.log('New message received:', message);
-      this.newMessageSubject.next(message);
-    });
-  }
+
   emit(event: string, data: any) {
     this.socket.emit(event, data);
   }
@@ -50,9 +87,11 @@ export class SocketIoService {
   on(event: string, callback: (data: any) => void) {
     this.socket.on(event, callback);
   }
-
-  disconnect() {
-    this.socket.disconnect();
+  // Method to set the user ID
+  setUserId(userId: string) {
+    this.userId = userId;
+    if (this.socket.connected) {
+      this.emit('register', userId); // Emit immediately if already connected
+    }
   }
-
 }

@@ -14,6 +14,7 @@ import { DeleteConfirmationDialogComponent } from 'src/app/adminComponents/delet
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { SocketIoService } from 'src/app/services/socket-io.service';
 
 // Custom paginator labels
 export class CustomMatPaginatorIntl extends MatPaginatorIntl {
@@ -74,14 +75,20 @@ export class AdminListComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 10;
   totalAdmins: number = 0;
-
+  adminId: any
   constructor(
     private authService: AuthService,
     private dialog: MatDialog,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private _socketIoService: SocketIoService
+  ) { }
 
   ngOnInit() {
+    this.adminId = this.authService.tokenUserId.getValue();
+    console.log(this.adminId, "adminId");
+    this._socketIoService.setUserId(this.authService.tokenUserInfo.getValue().userId);
+    this._socketIoService.startListening();
+    this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this.loadAdmins();
   }
 
@@ -89,7 +96,7 @@ export class AdminListComponent implements OnInit {
     this.authService.getAllAmins(this.searchTerm, this.currentPage + 1, this.pageSize).subscribe(
 
       (response: any) => {
-        console.log( this.currentPage + 1);
+        console.log(this.currentPage + 1);
         this.admins = response.data;
         this.totalAdmins = response.total;
       },

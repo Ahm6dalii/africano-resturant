@@ -9,13 +9,13 @@ const useCart = () => {
     const { user } = useSelector((state) => state.auth);
 
     const { data, isLoading, error } = useQuery('cart', async () => {
-
         const headers = {
             token: `${user}`
         }
         const response = await axios(`${api}/cart/userCart`, { headers })
-
         return response?.data
+    }, {
+        enabled: !!user
     })
 
 

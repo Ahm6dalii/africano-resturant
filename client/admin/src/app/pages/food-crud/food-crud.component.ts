@@ -10,6 +10,8 @@ import { AddFoodDialogComponent } from '../../adminComponents/add-food-dialog/ad
 import { EditFoodDialogComponent } from '../../adminComponents/edit-food-dialog/edit-food-dialog.component';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { SocketIoService } from 'src/app/services/socket-io.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-food-crud',
@@ -19,36 +21,42 @@ import { ToastModule } from 'primeng/toast';
     NgIf,
     ReactiveFormsModule,
     NgClass,
-    SlicePipe ,
+    SlicePipe,
     ToastModule,
     MatDialogModule,
     MatIconModule,
   ],
   templateUrl: './food-crud.component.html',
   styleUrl: './food-crud.component.scss',
-   providers: [MessageService]
+  providers: [MessageService]
 })
 export class FoodCrudComponent implements OnInit {
   selectedFood: any = null;
   foodForm: FormGroup;
   foods: any[] = [];
-  editError:string='';
+  editError: string = '';
   selectedLanguage: string = 'ar';
-
+  admin: any
   currentPage = 1;
   limit = 10;
   totalPageCount = 0;
   pages = [];
-
+  adminId: any
   showConfirmationPopup = false;
   constructor(
     private fb: FormBuilder,
     private foodService: FoodService,
     private dialog: MatDialog,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private _socketIoService: SocketIoService, private _authService: AuthService,
   ) {
   }
   ngOnInit(): void {
+    this.adminId = this._authService.tokenUserId.getValue();
+    console.log(this.adminId, "adminId");
+    this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
+    this._socketIoService.startListening();
+    this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this.foodForm = this.fb.group({
       name: this.fb.group({
         ar: [''],
@@ -103,16 +111,16 @@ export class FoodCrudComponent implements OnInit {
   deleteConfirmed(id: string): void {
     this.showConfirmationPopup = false;
     this.foodService.deleteFood(id).subscribe(
-      ()=>{
-      this.loadFoods();
-      this.selectedFood = null;
-      this.messageService.add({ severity: 'success', summary: 'success', detail:"deleted successfully"});
-    },
-    (error) => {
-      console.error('Failed to add food:', error);
-      this.showConfirmationPopup = false;
-      this.messageService.add({ severity: 'error', summary: 'error', detail:error.error.message});
-    }
+      () => {
+        this.loadFoods();
+        this.selectedFood = null;
+        this.messageService.add({ severity: 'success', summary: 'success', detail: "deleted successfully" });
+      },
+      (error) => {
+        console.error('Failed to add food:', error);
+        this.showConfirmationPopup = false;
+        this.messageService.add({ severity: 'error', summary: 'error', detail: error.error.message });
+      }
     );
   }
   addFood(): void {
@@ -130,19 +138,19 @@ export class FoodCrudComponent implements OnInit {
         formData.append(key, control.value);
       }
     });
-    console.log(formData,'ahmed above');
+    console.log(formData, 'ahmed above');
 
     this.foodService.createFood(formData).subscribe(
 
       (createdFood) => {
-        console.log(createdFood,'ahmed ahmed');
+        console.log(createdFood, 'ahmed ahmed');
         this.foods.push(createdFood); // Add new food to list
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Food Added successfully"});
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: "Food Added successfully" });
 
       },
       (error) => {
         console.error('Failed to add food:', error);
-        this.messageService.add({ severity: 'error', summary: 'error', detail: "Fail to Add Food"});
+        this.messageService.add({ severity: 'error', summary: 'error', detail: "Fail to Add Food" });
 
       }
     );
@@ -196,15 +204,15 @@ export class FoodCrudComponent implements OnInit {
         this.foodService.createFood(result).subscribe(
 
           () => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: "food update successfully"});
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: "food update successfully" });
             this.loadFoods();
 
           },
           (error) => {
             console.error('Error :', error);
-            this.messageService.add({ severity: 'error', summary: 'error', detail: error.error.message});
+            this.messageService.add({ severity: 'error', summary: 'error', detail: error.error.message });
 
-          this.editError=error?.error?.message
+            this.editError = error?.error?.message
 
           }
         );
@@ -219,23 +227,23 @@ export class FoodCrudComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result,'result result ');
+        console.log(result, 'result result ');
         this.foodService
           .updateFood(food._id, result)
           .subscribe(
             (updatedFood) => {
-            const index = this.foods.findIndex(
-              (f) => f._id === updatedFood._id
-            );
-            this.foods[index] = updatedFood;
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: "food update successfully"});
+              const index = this.foods.findIndex(
+                (f) => f._id === updatedFood._id
+              );
+              this.foods[index] = updatedFood;
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: "food update successfully" });
 
-          },
-          (error)=>{
-            this.messageService.add({ severity: 'error', summary: 'error', detail: error.error.message});
+            },
+            (error) => {
+              this.messageService.add({ severity: 'error', summary: 'error', detail: error.error.message });
 
-          }
-        );
+            }
+          );
       }
     });
   }

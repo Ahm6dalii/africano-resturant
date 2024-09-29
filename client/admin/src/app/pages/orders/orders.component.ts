@@ -21,6 +21,7 @@ import html2canvas from 'html2canvas';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDeleteDialogComponent } from 'src/app/adminComponents/order-delete-dialog/order-delete-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-orders',
@@ -36,6 +37,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   currentStatus: string = 'preparing';
   searchTerm = '';
   selectedOrders: any[] = [];
+  adminId: any
   statusOptions = [
     { label: 'Preparing', value: 'preparing' },
     { label: 'On the Way', value: 'on_the_way' },
@@ -47,6 +49,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private _orderService: OrdersService,
     private _socketIoService: SocketIoService,
     private route: ActivatedRoute,
+    private _authService: AuthService,
     private router: Router,
     private messageService: MessageService,
     private dialog: MatDialog,
@@ -56,9 +59,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.adminId = this._authService.tokenUserId.getValue();
+    console.log(this.adminId, "adminId");
     this.getOrders(this.currentStatus);
-
+    this._socketIoService.setUserId(this._authService.tokenUserInfo.getValue().userId);
+    this._socketIoService.startListening();
+    this._socketIoService.emit('register', { adminId: this.adminId, userId: null });
     this._socketIoService.on('newOrder', (newOrder) => {
       console.log(`Received newOrder: ${newOrder[0]}`);
       this.orders.push(newOrder[0])
@@ -235,6 +241,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._socketIoService.disconnect();
+    this._socketIoService.stopListening();
   }
 }
