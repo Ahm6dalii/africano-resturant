@@ -4,21 +4,27 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { AuthService } from 'src/app/services/auth.service';
 import { SocketIoService } from 'src/app/services/socket-io.service';
 
 @Component({
   selector: 'app-change-pass',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, ToastModule, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './change-pass.component.html',
-  styleUrl: './change-pass.component.scss'
+  styleUrl: './change-pass.component.scss',
+  providers: [
+    MessageService
+  ]
 })
 export class ChangePassComponent implements OnInit {
 
   adminId: any
   constructor(private _authService: AuthService,
     private _socketIoService: SocketIoService,
+    private messageService: MessageService
   ) { }
   ngOnInit(): void {
     this.adminId = this._authService.tokenUserId.getValue();
@@ -64,10 +70,11 @@ export class ChangePassComponent implements OnInit {
         next: (res: any) => {
           this.changePasswordForm.reset();
           this.isLoading = false
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Password changed successfully' });
         },
         error: (err: any) => {
-
           this.errorMessage = err.error.message
+          this.messageService.add({ severity: 'error', summary: '', detail: err.error.message });
           this.isLoading = false
         },
       })
