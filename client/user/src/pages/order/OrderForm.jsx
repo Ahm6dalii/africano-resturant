@@ -72,8 +72,8 @@ const OrderForm = () => {
     async ({ billing_data, payment_method }) => {
       const headers = { token: `${user}` };
       const dataToSend = {
-        redirection_url: payment_method === 'online' ? "https://bee8-197-59-172-173.ngrok-free.app" : undefined,
-        after_redirect_url: "http://localhost:5173",
+        redirection_url: payment_method === 'online' ? "https://ea60-197-59-139-0.ngrok-free.app" : undefined,
+        after_redirect_url: "http://localhost:8080",
         billing_data: billing_data,
         payment_method: payment_method
       };

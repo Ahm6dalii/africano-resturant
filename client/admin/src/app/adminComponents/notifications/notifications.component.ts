@@ -30,6 +30,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
     this._socketIoService.on('notifications', (notification) => {
 
+      this.notifications = notification.filter((noti: any) => noti.type !== 'Delivery_Changed')
       this.notifications.push(notification)
     })
     this._socketIoService.on('userNotification', (notifications) => {
@@ -39,7 +40,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
     })
     this._socketIoService.on('adminNotification', (notifications) => {
-
 
       this.notifications.push(notifications)
 

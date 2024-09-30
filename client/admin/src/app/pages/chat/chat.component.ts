@@ -46,7 +46,7 @@ import { ChatService } from 'src/app/services/chat.service';
               <div class="flex items-center p-3">
                 <div class="relative">
                   <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center text-white font-bold text-lg mr-4 shadow">
-                    {{ user.name.charAt(0) }}
+                    {{ user.name.trim().charAt(0).toUpperCase() }}
                   </div>
                   <div *ngIf="user.hasNewMessage" class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full"></div>
                 </div>
@@ -356,7 +356,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   getUserInitial(userId: string): string {
     const name = this.getUserName(userId);
-    return name.charAt(0).toUpperCase();
+    return name.trim().charAt(0).toUpperCase()
   }
 
   markUserWithNewMessage(userId: string) {
