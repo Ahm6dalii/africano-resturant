@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        default: 'master'
+        default: 'main'
         description: 'building the images from the main branch'
         required: true
         type: string
