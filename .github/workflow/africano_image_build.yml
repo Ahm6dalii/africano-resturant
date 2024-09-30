@@ -1,0 +1,57 @@
+name: Africano CI Images building
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        default: 'master'
+        description: 'building the images from the main branch'
+        required: true
+        type: string
+
+jobs:
+  CI:
+    name: pushing Image To Docker Hub
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.set-date.outputs.image_tag }}
+      
+    steps:
+      - name: check repository
+        uses: actions/checkout@v4
+
+      - name: Set Date Environment Variable
+        id: set-date
+        run: echo "DATE_TAG=$( date +'%d.%m.%y-%I.%M.%p' | sed 's/AM/am/g; s/PM/pm/g' | sed 's/^0//g' )" >> $GITHUB_ENV
+
+      - name: login to docker registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKER_USENAME}}
+          password: ${{secrets.DOCKER_PASSWD}}
+
+      - name: build and push docker image to registry
+        uses: docker/build-push-action@v5
+        with:
+          context: /server/.
+          push: true
+          tags: |
+            ahm6dali/private:BKND${{ env.DATE_TAG }}
+
+
+      - name: build and push docker image to registry
+        uses: docker/build-push-action@v5
+        with:
+          context: /client/user/.
+          push: true
+          tags: |
+            ahm6dali/private:WS${{ env.DATE_TAG }}
+
+
+      - name: build and push docker image to registry
+        uses: docker/build-push-action@v5
+        with:
+          context: /client/admin/.
+          push: true
+          tags: |
+            ahm6dali/private:DBD${{ env.DATE_TAG }}
