@@ -25,14 +25,16 @@
         <mat-option value="Drinks">Drinks</mat-option>
         <mat-option value="Desserts">Desserts</mat-option>
         <mat-option value="Salads">Salads</mat-option>
-        
+
         <!-- Add more options as needed -->
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Quantity</mat-label>
-      <input matInput type="number" formControlName="quantity">
-    </mat-form-field>
+    <div class="hidden">
+      <mat-form-field>
+        <mat-label>Quantity</mat-label>
+        <input matInput type="number" formControlName="quantity">
+      </mat-form-field>
+    </div>
     <div formGroupName="amount">
       <mat-form-field *ngIf="amountSizes.includes('S')">
         <mat-label>Amount (S)</mat-label>

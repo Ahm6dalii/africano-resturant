@@ -103,7 +103,7 @@
               @if (order?.payment_method === 'online') {
               <td class="py-3 px-4 text-right">{{ order?.intention_detail?.total.toFixed(2) / 100 }} LE</td>
               }@else {
-              <td class="py-3 px-4 text-right">{{ order?.intention_detail?.total.toFixed(0) }} LE</td>
+              <td class="py-3 px-4 text-right">{{ +order?.intention_detail?.total.toFixed(0) + +deliveyPrice }} LE</td>
               }
               <td class="py-3 px-4 text-center cursor-pointer hover:text-orange-500"
                 (click)="toggleRowExpansion(order._id, 'order')">
@@ -171,20 +171,23 @@
                       }
                     </tr>
                   </ng-container>
+                  @if(order?.payment_method === 'cash'){
                   <tr>
-                    <td class="">Delvriey</td>
-                    <td class="price">$15</td>
+                    <td class="">Delivery</td>
+                    <td class="price">{{deliveyPrice}} LE</td>
                   </tr>
+                  }
+
                 </table>
               </div>
               @if (order?.payment_method === 'online') {
               <div class="receipt-total">
-                Total: {{ order?.intention_detail?.total.toFixed(2) / 100 }} LE
+                Total: {{ order?.intention_detail?.total.toFixed(2) / 100 }}LE
               </div>
               }
               @else{
               <div class="receipt-total">
-                Total: {{ order?.intention_detail?.total.toFixed(0)}} LE
+                Total: {{ +order?.intention_detail?.total.toFixed(0) + +deliveyPrice }} LE
               </div>
               }
 
