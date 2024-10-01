@@ -27,7 +27,7 @@ const UpdateUserInfo = () => {
     name: yup
       .string()
       .required(translation.required_name)
-      .min(2, translation.min_char_name)
+      .min(3, translation.min_char_name)
       .matches(/^[A-Za-z]+$/, translation.characters_only),
     address: yup
       .string()
