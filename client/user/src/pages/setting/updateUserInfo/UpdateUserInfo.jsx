@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { HiXCircle } from "react-icons/hi";
 import toast from "react-hot-toast";
 import { changeProfileInfo } from "../../../redux/reducers/userAuthSlice";
-import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
-import LabelIcon from "../../../components/ReactI-cons/label/LabelIcon";
 import AddressIcon from "./../../../components/ReactI-cons/AdressIcon/AddressIcon";
-import PhoneIcon from "../../../components/ReactI-cons/phoneIcon/PhoneIcon";
 import { Helmet } from "react-helmet-async";
+import SettingIcon from './../../../components/ReactI-cons/setting/SettingIcon';
+import LabelIcon from './../../../components/ReactI-cons/label/LabelIcon';
+import PhoneIcon from './../../../components/ReactI-cons/phoneIcon/PhoneIcon';
 
 const UpdateUserInfo = () => {
   const { translation } = useSelector((state) => state.lang);
@@ -92,7 +92,7 @@ const UpdateUserInfo = () => {
         <div className="mb-4">
           <div className="flex items-center gap-1">
             <LabelIcon></LabelIcon>
-            <Label
+            <LabelIcon
               className="dark:text-white"
               htmlFor="name"
               value={translation.name}

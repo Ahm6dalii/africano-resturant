@@ -4,12 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { TextInput, Button, Label, List } from "flowbite-react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import SettingIcon from "../../../components/ReactI-cons/setting/settingIcon";
-import LockIcon from "../../../components/ReactI-cons/lockIcon/LockIcon";
-import { HiXCircle, HiEye, HiEyeOff } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
+import SettingIcon from './../../../components/ReactI-cons/setting/SettingIcon';
+import LockIcon from './../../../components/ReactI-cons/lockIcon/LockIcon';
+import { HiEye, HiEyeOff, HiXCircle } from "react-icons/hi";
 
 const UpdatePassword = () => {
   // localization
@@ -17,7 +17,6 @@ const UpdatePassword = () => {
   const { user } = useSelector((state) => state.auth);
   const { link } = useSelector((state) => state.apiLink);
   const [isLoading, setLoading] = useState(false);
-  const dispatch = useDispatch();
 
   // States to manage password visibility
   const [showNewPassword, setShowNewPassword] = useState(false);

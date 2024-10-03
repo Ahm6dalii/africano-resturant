@@ -5,14 +5,15 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import LabelIcon from '../../components/ReactI-cons/label/LabelIcon';
-import PhoneIcon from '../../components/ReactI-cons/phoneIcon/PhoneIcon';
-import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
+
 import toast, { LoaderIcon } from 'react-hot-toast';
 import LockIcon from './../../components/ReactI-cons/lockIcon/LockIcon';
 import { List } from 'flowbite-react';
 import { HiXCircle } from 'react-icons/hi';
 import { Helmet } from 'react-helmet-async';
+import LabelIcon from './../../components/ReactI-cons/label/LabelIcon';
+import EmailIcon from './../../components/ReactI-cons/EmailIcon/EmailIcon';
+import PhoneIcon from './../../components/ReactI-cons/phoneIcon/PhoneIcon';
 const Register = ({ setOpenModal }) => {
   const { translation, language } = useSelector(state => state.lang)
   const { link } = useSelector(state => state.apiLink)
