@@ -12,7 +12,7 @@ export const En = {
   confirm_pass: "Confirm New Password",
   change_pass_btn: "Change Password",
   required_name: "Name is required",
-  min_char_name: "Name must be at least 2 characters",
+  min_char_name: "Name must be at least 3 characters",
   required_address: "Address is required",
   min_char_address: "Address must be at least 5 characters",
   required_phone: "Phone number is required",

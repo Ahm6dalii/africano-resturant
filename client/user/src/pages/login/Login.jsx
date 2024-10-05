@@ -7,11 +7,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { List } from 'flowbite-react';
 import { HiXCircle } from "react-icons/hi";
-import EmailIcon from '../../components/ReactI-cons/EmailIcon/EmailIcon';
-import LockIcon from '../../components/ReactI-cons/lockIcon/LockIcon';
 import toast from 'react-hot-toast';
 import { setUser } from '../../redux/reducers/userAuthSlice';
 import { Helmet } from 'react-helmet-async';
+import EmailIcon from './../../components/ReactI-cons/EmailIcon/EmailIcon';
+import LockIcon from './../../components/ReactI-cons/lockIcon/LockIcon';
 
 
 const Login = ({ closeModal }) => {

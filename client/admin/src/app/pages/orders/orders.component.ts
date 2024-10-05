@@ -22,6 +22,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { OrderDeleteDialogComponent } from 'src/app/adminComponents/order-delete-dialog/order-delete-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from 'src/app/services/auth.service';
+import { DeliveryService } from 'src/app/services/delivery.service';
 
 @Component({
   selector: 'app-orders',
@@ -36,6 +37,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   orders: any = []
   currentStatus: string = 'preparing';
   searchTerm = '';
+  deliveyPrice: number = 0;
   selectedOrders: any[] = [];
   adminId: any
   statusOptions = [
@@ -53,6 +55,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private router: Router,
     private messageService: MessageService,
     private dialog: MatDialog,
+    private _deliveryService: DeliveryService
   ) {
 
 
@@ -69,8 +72,19 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
       this.orders.push(newOrder[0])
     })
+    this.getDeliveryPrice()
   }
+  getDeliveryPrice() {
+    this._deliveryService.getDeliveryPrice().subscribe({
+      next: (res) => {
+        this.deliveyPrice = res.price
 
+      },
+      error: (err) => {
+
+      },
+    })
+  }
   getOrders(status: string) {
     this._orderService.getOrdersByStatus(status).subscribe({
       next: (res) => {
